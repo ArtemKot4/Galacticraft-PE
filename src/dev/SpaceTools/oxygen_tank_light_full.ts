@@ -1,0 +1,1 @@
+SpacesUtils.balloneRegistry("oxygentank_lightfull","Oxygen Tank Light Full","Oxygen Tank Light Full",900)

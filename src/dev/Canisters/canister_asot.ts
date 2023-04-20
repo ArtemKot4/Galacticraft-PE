@@ -1,0 +1,8 @@
+SpacesUtils.canisterRegistry("asot_canister","Asot Canister","canister_partial_ln2")
+SpacesUtils.canisterRegistry("h2o_canister","h2o Canister","cerosin_canister_partial")
+SpacesUtils.canisterRegistry("cerosin_canister","Kerosene Canister","cerosin_canister_partial")
+SpacesUtils.canisterRegistry("fuel_canister","Clean Fuel Canister","Fuel_Canister_Partial")
+SpacesUtils.canisterRegistry("masut_canister","Masut Canister","masut_canister_partial")
+SpacesUtils.canisterRegistry("methane_canister","Methane Canister","methane_canister_partial")
+SpacesUtils.canisterRegistry("oil_canister","Oil Canister","Oil_Canister_Partial")
+SpacesUtils.canisterRegistry("rubber_canister","Rubber Canister","rubber_canister_partial")
