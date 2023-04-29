@@ -245,7 +245,7 @@ var SpacesUtils = {
 
 
     // },
-     canisterRegistry: function (id, name, tex0: string) {
+     canisterRegistry: function (id, name, tex0: string,liquid) {
         IDRegistry.genItemID(id);
         Item.createItem(id,
             name,
@@ -306,6 +306,20 @@ var SpacesUtils = {
                     };
                 }
             });
+
+    Item.registerUseFunction(id, function (coords, item, block, player){
+        var region = BlockSource.getDefaultForActor(player);
+        var place = coords.relative;
+if(item.data==6){
+        region.setBlock(place.x, place.y, place.z, liquid,0)}else if(item.data==0&&
+            region.getBlockId(place.x,place.y,place.z)==liquid){
+                region.setBlock(place.x, place.y, place.z, 0,0)
+                Entity.setCarriedItem(player, item.id, item.count, item.data+6);
+            
+        }else if(item.data!=0 && item.data<=5 && region.getBlockId(place.x,place.y,place.z)==liquid){
+            Entity.setCarriedItem(player, item.id, item.count, item.data+1);
+        }
+    })
     }, placeBlockRegistry: function (itemid: any, name: string, textureI: string, stackct: number, blockid: any, blockname: string, textureB: string, blocktype: any) {
         IDRegistry.genBlockID(blockid);
         Block.createBlock(blockid, [{

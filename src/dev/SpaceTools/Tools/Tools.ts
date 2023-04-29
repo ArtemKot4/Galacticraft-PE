@@ -142,7 +142,9 @@ ToolAPI.addToolMaterial("SteelHoe", {durability: 350, level: 2, efficiency: 4, d
 ToolAPI.addToolMaterial("DeshHoe", {durability: 700, level: 2, efficiency: 6, damage: 2, //enchantability:8
 });
 
-ToolAPI.addToolMaterial("TitaniumHoe", {durability: 750, level: 3, efficiency: 6, damage: 3, //enchantability:10
+ToolAPI.addToolMaterial("TitaniumHoe", {durability: 750, level: 3, efficiency:
+   6, damage: 3, 
+   //enchantability:10
 });
 
 
@@ -160,40 +162,42 @@ ToolAPI.addToolMaterial("SteelAxe", {durability: 350, level: 2, efficiency: 4, d
 ToolAPI.addToolMaterial("DeshAxe", {durability: 700, level: 3, efficiency: 6, damage: 2, //enchantability:8
 });
 
-ToolAPI.addToolMaterial("TitaniumAxe", {durability: 750, level: 3, efficiency: 6, damage: 3, //enchantability10
+ToolAPI.addToolMaterial("TitaniumAxe", {durability: 750, level: 3, 
+  efficiency: 6, damage: 3,
+   //enchantability: 10
 });
 
 
 
 
-ToolAPI.setTool(ItemID["Steel axe"], "SteelAxe", ToolType.AXE);
-ToolAPI.setTool(ItemID["Desh axe"], "DeshAxe", ToolType.AXE);
-ToolAPI.setTool(ItemID["Titanium axe"], "TitaniumAxe", ToolType.AXE);
-ToolAPI.setTool(ItemID["Iron Steel Axe"], "IronSteelAxe", ToolType.AXE);
+ToolAPI.setTool(ItemID["Steel axe"], "SteelAxe", ToolType.axe);
+ToolAPI.setTool(ItemID["Desh axe"], "DeshAxe", ToolType.axe);
+ToolAPI.setTool(ItemID["Titanium axe"], "TitaniumAxe", ToolType.axe);
+ToolAPI.setTool(ItemID["Iron Steel Axe"], "IronSteelAxe", ToolType.axe);
 
 
-ToolAPI.setTool(ItemID["Steel shovel"], "SteelShovel", ToolType.SHOVEL);
-ToolAPI.setTool(ItemID["Desh spade"], "DeshSpade", ToolType.SHOVEL);
-ToolAPI.setTool(ItemID["Titanium shovel"], "TitaniumShovel", ToolType.SHOVEL);
-ToolAPI.setTool(ItemID["Iron Steel Shovel"], "IronSteelShovel", ToolType.SHOVEL);
+ToolAPI.setTool(ItemID["Steel shovel"], "SteelShovel", ToolType.shovel);
+ToolAPI.setTool(ItemID["Desh spade"], "DeshSpade", ToolType.shovel);
+ToolAPI.setTool(ItemID["Titanium shovel"], "TitaniumShovel", ToolType.shovel);
+ToolAPI.setTool(ItemID["Iron Steel Shovel"], "IronSteelShovel", ToolType.shovel);
 
 
-ToolAPI.setTool(ItemID["Steel hoe"], "SteelHoe", ToolType.HOE);
-ToolAPI.setTool(ItemID["Desh hoe"], "DeshHoe", ToolType.HOE);
-ToolAPI.setTool(ItemID["Titanium hoe"], "TitaniumHoe", ToolType.HOE);
-ToolAPI.setTool(ItemID["Iron Steel Hoe"], "IronSteelHoe", ToolType.HOE);
+ToolAPI.setTool(ItemID["Steel hoe"], "SteelHoe", ToolType.hoe);
+ToolAPI.setTool(ItemID["Desh hoe"], "DeshHoe", ToolType.hoe);
+ToolAPI.setTool(ItemID["Titanium hoe"], "TitaniumHoe", ToolType.hoe);
+ToolAPI.setTool(ItemID["Iron Steel Hoe"], "IronSteelHoe", ToolType.hoe);
 
 
-ToolAPI.setTool(ItemID["Steel sword"], "SteelSword", ToolType.SWORD);
-ToolAPI.setTool(ItemID["Desh sword"], "DeshSword", ToolType.SWORD);
-ToolAPI.setTool(ItemID["Titanium sword"], "TitaniumSword", ToolType.SWORD);
-ToolAPI.setTool(ItemID["Iron Steel Sword"], "IronSteelSword", ToolType.SWORD);
+ToolAPI.setTool(ItemID["Steel sword"], "SteelSword", ToolType.sword);
+ToolAPI.setTool(ItemID["Desh sword"], "DeshSword", ToolType.sword);
+ToolAPI.setTool(ItemID["Titanium sword"], "TitaniumSword", ToolType.sword);
+ToolAPI.setTool(ItemID["Iron Steel Sword"], "IronSteelSword", ToolType.sword);
 
 
 
-ToolAPI.setTool(ItemID["Steel pickaxe"], "SteelPickaxe", ToolType.PICKAXE);
-ToolAPI.setTool(ItemID["Desh pickaxe"], "DeshPickaxe", ToolType.PICKAXE);
-ToolAPI.setTool(ItemID["Desh pickaxe slime"], "DeshPickaxe", ToolType.PICKAXE);
-ToolAPI.setTool(ItemID["Volcanic pickaxe"], "VolcanicPickaxe", ToolType.PICKAXE);
-ToolAPI.setTool(ItemID["Titanium pickaxe"], "TitaniumPickaxe", ToolType.PICKAXE);
-ToolAPI.setTool(ItemID["Iron Steel Pickaxe"], "IronSteelPickaxe", ToolType.PICKAXE);
+ToolAPI.setTool(ItemID["Steel pickaxe"], "SteelPickaxe", ToolType.pickaxe);
+ToolAPI.setTool(ItemID["Desh pickaxe"], "DeshPickaxe", ToolType.pickaxe);
+ToolAPI.setTool(ItemID["Desh pickaxe slime"], "DeshPickaxe", ToolType.pickaxe);
+ToolAPI.setTool(ItemID["Volcanic pickaxe"], "VolcanicPickaxe", ToolType.pickaxe);
+ToolAPI.setTool(ItemID["Titanium pickaxe"], "TitaniumPickaxe", ToolType.pickaxe);
+ToolAPI.setTool(ItemID["Iron Steel Pickaxe"], "IronSteelPickaxe", ToolType.pickaxe);

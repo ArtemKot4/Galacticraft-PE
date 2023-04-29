@@ -17,7 +17,7 @@ ru: "Плотный лёд"
 
 var marsmesh = new RenderMesh(); 
 marsmesh.setBlockTexture("Mars",0); 
-marsmesh.importFromFile(__dir__+"/models/mars.obj","obj",null); 
+marsmesh.importFromFile(__dir__+"/resources/models/mars.obj","obj",null); 
 IDRegistry.genBlockID("charged_mars"); 
 Block.createBlock("charged_mars", [ 
  {name: "A little Mars", texture: [["Mars", 0],["Mars", 1],["Mars", 2],["Mars", 3],["Mars", 4],["Mars", 5]], inCreative: true} 

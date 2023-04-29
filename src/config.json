@@ -4,13 +4,20 @@
       "ShiftHints":true,
       "ElectricInformation":false,
       "Special_Effects":true,
-      "Heating":false,
       "MusicVolume":0.6,
       "SpacesMusic":true,
       "LoadDimensionMusic":false,
       "SpawnAsteroids":false,
       "NewOxygenScale":true,
       "OxygenScaleCreative":true
+    },
+    "Difficulty":{
+      "Machine":{
+        "PanelDischarging": true,
+        "GeothermalDischarging": true,
+        "NewRecipes": false,
+        "Heating":false
+      }
     },
     "Equipment":{
       "coords":101,

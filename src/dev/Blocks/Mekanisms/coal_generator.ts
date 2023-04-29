@@ -8,17 +8,7 @@ Block.createBlockWithRotation("coal_generator", [{
 }], STONE);
 
 
-IDRegistry.genItemID("soot_coal");
-Item.createItem("soot_coal", "Soot", {
-    name: "soot", meta: 0
-}, {
-    stack: 64
-});
-Translation.addTranslation("Soot", {
-    ru: "Пепел"
-});
-
-   // if(__config__.getBool("Gameplay.Heating")==true){
+   // if(__config__.getBool("Difficulty.Machine.Heating")==true){
 let CoalEnergy = new UI.StandartWindow(
     {
         standard: {
@@ -50,21 +40,8 @@ let CoalEnergy = new UI.StandartWindow(
             y: 110,
             bitmap: "arrow_bar_background",
             scale: 4.2
-        },
-        {
-            type: "bitmap",
-            x: 580,
-            y: 110,
-            bitmap: "generators.Crashed_1",
-            scale: 5.0
-        },
-        {
-            type: "bitmap",
-            x: 760,
-            y: 110,
-            bitmap: "energy_small_background",
-            scale: 5.0
         
+       
     }],
     elements: {
         coalSlot: {
@@ -87,41 +64,8 @@ let CoalEnergy = new UI.StandartWindow(
                 }}
         },
         
-            // firescale: {
-            //     type: "scale",
-            //     x: 402,
-            //     y: 45,
-            //     scale: 3.4,
-            //     direction: 0,
-            //     bitmap: "generators.coalscale0",
-            //     clicker: {
-            //         onClick: function() {
-            //             RV && RV.RecipeTypeRegistry.openRecipePage("generator 1");
-            //         }}
-            // },
-        crashing: {
-            type: "scale",
-            x: 580,
-            y: 110,
-            direction: 1,
-            bitmap: "generators.Crashed_2",
-            scale: 5.0
-        },
-        trash: {
-            type: "slot",
-            x: 670,
-            y: 110,
-            bitmap: "trashslot",
-            size: 80
-        },
-        spaceJoule: {
-            type: "scale",
-            x: 760,
-            y: 110,
-            scale: 5.0,
-            direction: 1,
-            bitmap: "energy_small_scale"
-        },
+          
+      
         EnergiA: {
             type: "text",
             x: 400,
@@ -148,7 +92,7 @@ let CoalEnergy = new UI.StandartWindow(
         // },
     }
 });
-/*}if(__config__.getBool("Gameplay.Heating")==false){
+/*}if(__config__.getBool("Difficulty.Machine.Heating")==false){
     let CoalEnergy = new UI.StandartWindow({
     standart: {
         header: {
@@ -271,7 +215,10 @@ SpacesMachine.registerStandartMachine(BlockID.coal_generator, {
 
     tick: function() {
         this.container.sendChanges();
-        if (this.data.fire >= 1 && __config__.getBool("Gameplay.Special_Effects")==true && __config__.getBool("Gameplay.Heating")==true) {
+        if (
+            this.data.fire >= 1 && 
+            __config__.getBool("Gameplay.Special_Effects")==true &&
+             __config__.getBool("Difficulty.Machine.Heating")==true) {
                 Particles.addParticle(
                     7, this.x + 0.1,
                     this.y + 0.8,
@@ -282,9 +229,11 @@ SpacesMachine.registerStandartMachine(BlockID.coal_generator, {
             };
 
         let coalSlot = this.container.getSlot("coalSlot");
-        var energyStorage = this.getEnergyStorage(); for (var i in burnItems) {
+        var energyStorage = this.getEnergyStorage(); for (var i in burnItems)
+         {
 
-            if (this.data.burn <= 0 && this.data.energy + 15 < energyStorage && (coalSlot.id == burnItems[i].id && coalSlot.count >= 1 && coalSlot.data == 0)) {
+            if (this.data.burn <= 0 && this.data.energy + 15 < energyStorage
+                 && (coalSlot.id == burnItems[i].id && coalSlot.count >= 1 && coalSlot.data == 0)) {
                 coalSlot.count -= 1;
                 this.container.validateSlot("coalSlot");
                 this.data.burn = this.data.burnMax = 1600 / 4
@@ -293,18 +242,16 @@ SpacesMachine.registerStandartMachine(BlockID.coal_generator, {
             this.data.energy += 15;
             this.data.burn--;
         }
-        if (this.data.energy >= 6000 && this.container.getSlot("trash").count == 0 && this.data.soot == 0) {
-            this.container.setSlot("trash", ItemID.soot_coal, 1, 0); this.data.soot = 1;
-        }
+        
         this.data.energy = Math.min(this.data.energy, energyStorage);
 
         this.container.setScale("progress_scale", this.data.energy / 6000);
 
-        this.container.setScale("spaceJoule", this.data.energy / 6000);
+      
         this.container.setText("EnergiA", "Sj :" + this.data.energy + " / " + this.data.energyMax);
 
-        this.container.setScale("crashing", this.data.energy / 6000);
-        if (this.data.energy >= 0) {
+       
+        if (this.data.energy >= 1) {
             this.container.setText("Status", Translation.translate("Status: working"));
         }
        else if (this.data.energy <= 0) {
@@ -314,22 +261,16 @@ SpacesMachine.registerStandartMachine(BlockID.coal_generator, {
 
         if (this.data.energy >= 6000) {
             this.container.setText("Status", Translation.translate("Status: storage full"));
-            if (__config__.getBool("Gameplay.Heating")==true) {
+            if (__config__.getBool("Difficulty.Machine.Heating")==true) {
                 // this.container.setScale("firescale", this.data.fire / 100);
                 // this.container.setText("FiringStatus", Translation.translate("Heating : ") + this.data.fire + "%");
 
                 if (this.data.fire >= 100) {
                     this.blockSource.explode(this.x, this.y, this.z, 1, true)}
-                if (World.getThreadTime()%100 == 0 && __config__.getBool("Gameplay.Heating")==true) {
+                if (World.getThreadTime()%200 == 0 && __config__.getBool("Difficulty.Machine.Heating")==true) {
                     this.data.fire += 1
                 };
-                for (var i in Colding) {
-
-                    if (this.container.getSlot("trash").id == Colding[i].id && this.data.fire >= 1 && __config__.getBool("Gameplay.Heating")==true
-                    ) {
-                        this.container.setSlot("trash", 325, 1, 0);
-                        this.data.fire = this.data.fire / 2
-                    }}
+              
                 }}},
 
     
@@ -337,7 +278,7 @@ SpacesMachine.registerStandartMachine(BlockID.coal_generator, {
         return 6015
     },
     destroy: function () {
-        if (this.data.fire >= 75 && __config__.getBool("Gameplay.Heating")==true) {
+        if (this.data.fire >= 75 && __config__.getBool("Difficulty.Machine.Heating")==true) {
             this.blockSource.explode(this.x, this.y, this.z, 1, true)}
     },
     canReceiveEnergy: function() {
@@ -375,7 +316,7 @@ SpacesMachine.registerStandartMachine(BlockID.coal_generator, {
 
 });
     
-SpacesMachine.addIce({ice: VanillaItemID.water_bucket});
+
 
 
 /*

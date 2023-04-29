@@ -1,6 +1,6 @@
 var pkamesh = new RenderMesh(); 
 pkamesh.setBlockTexture("PkOf",0); 
-pkamesh.importFromFile(__dir__+"/models/PkOff.obj","obj",null); 
+pkamesh.importFromFile(__dir__+"/resources/models/PkOff.obj","obj",null); 
 IDRegistry.genBlockID("computer_a"); 
 Block.createBlock("computer_a", [ 
  {name: "Computer", texture: [["PkOf", 0],["PkOf", 1],["PkOf", 2],["PkOf", 3],["PkOf", 4],["PkOf", 5]], inCreative: true} 

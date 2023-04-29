@@ -1,6 +1,6 @@
 ﻿var Solarmesh = new RenderMesh(); 
 Solarmesh.setBlockTexture("solar panel",0); 
-Solarmesh.importFromFile(__dir__+"/models/solar_panel.obj","obj",{
+Solarmesh.importFromFile(__dir__+"/resources/models/solar_panel.obj","obj",{
     translate: [0.5, 0, 0.5],
     scale: [1.6, 1.6, 1.6],
     invertV: false,
@@ -197,7 +197,7 @@ if(
     this.y + 1,
     this.z) <= 1 && 
     this.data.energy<=1){
-			this.data.energy-=1
+			if(__config__.getBool("Difficulty.Machine.PanelDischarging")==true){this.data.energy-=1}
        this.container.setText(
    	    "Status",
    	    Translation.translate("Status: waiting"));

@@ -145,7 +145,7 @@
            },"description": {
                 "en": "If enabled,at planets can music starts",
                 "ru": "Если включено,на планетах может воспроизводиться музыка"} },
-           "Gameplay.Heating": {
+           "Difficulty.Machine.Heating": {
             "name": {
                 "en": "«Heating»",
                 "ru": "«Нагрев»"
@@ -155,6 +155,26 @@
                 "ru": "Если включена эта функция,то угольный генератор может нагреваться"
             }
           },
+          "Difficulty.Machine": {
+            "name": {
+                "en": "«Difficult machine»",
+                "ru": "«Усложнение механизмов»"
+            }},
+            "Difficulty.Machine.PanelDischarging": {
+                "name": {
+                    "en": "«Discharging the solar panel at night»",
+                    "ru": "«Разрядка солнечной панели в ночное время суток»"
+                }},
+                "Difficulty.Machine.GeothermalDischarging": {
+                    "name": {
+                        "en": "«Discharge of a geothermal generator without a geyser»",
+                        "ru": "«Разрядка геотермального генератора без наличия гейзера»"
+                    }},
+                    "Difficulty.Machine.NewRecipes": {
+                        "name": {
+                            "en": "«Hard recipes of machine»",
+                            "ru": "«Усложнённые рецепты механизмов»"
+                        }},
               "Equipment.coords": {
               	"name": {
               		"en":"Equipment coords",

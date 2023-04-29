@@ -286,13 +286,6 @@ var SpacesMachine = {
             id: coal.id
         })
     },
-    addIce: function(ice) {
-       ice = ice || {};
-       ice.id = ice.id || 0;
-       Colding.push({
-            id: ice.id
-        })
-    },
 	 liquidRegistry: function(id,data,voId,voData,liquid){
         liquids.push({id: id,data: data,voId: voId,voData: voData,liquid: liquid})
     },

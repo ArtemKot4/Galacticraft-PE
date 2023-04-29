@@ -27,6 +27,12 @@ IMPORT("RenderUtil");
             If you have question and want ask,you can write to ArtemOn's email adress artemon4xxl@gmail.com;
 */
 
+function checkDimension(thread,player?,dimensionId?){
+    if( World.getThreadTime()%thread==0){
+    if(
+    Player.getDimension()==Moon.id||Player.getDimension()==Mars.id||Player.getDimension()==Venus.id||
+    Player.getDimension()==Asteroids.id||Player.getDimension()==SpacesStation.id){return true}}};
+
 const Click = new Sound("click.ogg");
 
 const Bucket = new Sound("bucket.ogg");

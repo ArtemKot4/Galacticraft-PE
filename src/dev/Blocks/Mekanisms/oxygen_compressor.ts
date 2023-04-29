@@ -56,17 +56,35 @@ let CompressorUI = new UI.StandartWindow({
         {
             type: "slot",
             x: 400,
-            y: 110,
+            y: 120,
             size: 70,
             bitmap: "Others.O2Slot"
+        },
+        firstput:
+        {
+            type: "text",
+            x: 470,
+            y: 120,
+            width: 100,
+            height: 30,
+            text: "Input:"
+        },
+        secondput:
+        {
+            type: "text",
+            x: 470,
+            y: 130,
+            width: 100,
+            height: 30,
+            text: "Input:"
         },
         scala:
         {
             type: "scale",
             x: 400,
-            y: 190,
+            y: 120,
             bitmap: "Others.Scala2",
-            scale: 4.3,
+            scale: 2.3,
             direction: 0
         },
         o2:

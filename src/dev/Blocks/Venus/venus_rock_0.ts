@@ -135,7 +135,7 @@ if(
 
 var Venusmesh = new RenderMesh(); 
 Venusmesh.setBlockTexture("VenusT",0); 
-Venusmesh.importFromFile(__dir__+"/models/Venus.obj","obj",null); 
+Venusmesh.importFromFile(__dir__+"/resources/models/Venus.obj","obj",null); 
 IDRegistry.genBlockID("charged_venus"); 
 Block.createBlock("charged_venus", [ 
  {name: "A little Venus", texture: [["VenusT", 0],["VenusT", 1],["VenusT", 2],["VenusT", 3],["VenusT", 4],["VenusT", 5]], inCreative: true} 

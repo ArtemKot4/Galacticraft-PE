@@ -3,7 +3,8 @@ Callback.addCallback("LocalTick", function(container) {
         let bal1 = Equi.getSlot("Ballone1");
             let bal2 = Equi.getSlot("Ballone2");
         if (
-            O2UI.isOpened() == false && Equi.getSlot("Glass").id == ItemID.oxygen_mask && Equi.getSlot("Module").id == ItemID.oxygen_gear) {
+            O2UI.isOpened() == false && Equi.getSlot("Glass").id == ItemID.oxygen_mask && 
+            Equi.getSlot("Module").id == ItemID.oxygen_gear && World.getThreadTime()%20==0) {
                 if(__config__.getBool("Gameplay.OxygenScaleCreative")==true && Game.getGameMode()==1){
             O2UI.openAs(OxygenTILE);}
             if(Game.getGameMode()!=1){
@@ -11,18 +12,21 @@ Callback.addCallback("LocalTick", function(container) {
             }
         };
         //Opening
-        if (Equi.getSlot("Module").id !== ItemID.oxygen_gear && O2UI.isOpened() == true || Equi.getSlot("Glass").id !== ItemID.oxygen_mask && O2UI.isOpened() == true) {
+        if (Equi.getSlot("Module").id !== ItemID.oxygen_gear && O2UI.isOpened() == true || 
+        Equi.getSlot("Glass").id !== ItemID.oxygen_mask && O2UI.isOpened() == true) {
             O2UI.close();
+            
 
         };
         //Damage&Clousing
-        if (Player.getDimension() !== 0 && O2UI.isOpened() == false && Game.getGameMode() !== 1) {
+        if (checkDimension(10) && O2UI.isOpened() == false && Game.getGameMode() !== 1) {
             Entity.damageEntity(Player.get(), 2)
             Game.tipMessage(Translation.translate("§4Warning!Air is not"))
         }
         //Warning and damage 
                   
-        if (O2UI.isOpened() == true && Game.getGameMode() !== 1 && bal2.id == OS[i].id || O2UI.isOpened() == true && Game.getGameMode() !== 1 && bal1.id == OS[i].id) {
+        if (O2UI.isOpened() == true && Game.getGameMode() !== 1 && bal2.id == OS[i].id || O2UI.isOpened() 
+        == true && Game.getGameMode() !== 1 && bal1.id == OS[i].id) {
             
             if (__config__.getBool("Gameplay.NewOxygenScale") == true) {
                 O2UI.setText("Status", Item.getMaxDamage(bal2.id)+Item.getMaxDamage(bal1.id)+"/"+"5000");
@@ -45,20 +49,20 @@ Callback.addCallback("LocalTick", function(container) {
                 if (bal2.id == OS[i].id) {
                     O2UI.setScale(
                         "O2TWO",
-                        Item.getMaxDamage(bal2.id)/ Item.getMaxDamage(bal2.id)+Item.getMaxDamage(bal2.id)
+                        Item.getMaxDamage(bal2.id)/ Item.getMaxDamage(bal2.id)+Item.getMaxDamage(bal1.id)
                     );
                 }
                 if (bal1.id == OS[i].id) {
                     O2UI.setScale(
                         "O2ONE",
-                        Item.getMaxDamage(bal1.id)/ Item.getMaxDamage(bal1.id)+Item.getMaxDamage(bal1.id)
+                        Item.getMaxDamage(bal1.id)/ Item.getMaxDamage(bal1.id)+Item.getMaxDamage(bal2.id)
                     );
                 }}
 
             if (
-                World.getThreadTime()%20 == 0 &&
-                Item.getMaxDamage(bal1.id) <= 0 && Player.getDimension() !== 0 || World.getThreadTime()%20 == 0 &&
-                 Item.getMaxDamage(bal2.id) <= 0 && Player.getDimension() !== 0) {
+                checkDimension(20)
+                Item.getMaxDamage(bal1.id) <= 0  || checkDimension(20)
+                 Item.getMaxDamage(bal2.id) <= 0 ) {
                 Entity.damageEntity(Player.get(), 2);
                     Game.tipMessage(Translation.translate("§4Warning!Air is not"))
                 }

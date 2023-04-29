@@ -19,7 +19,7 @@ ru: "Лунная почва"
 
 var moonmesh = new RenderMesh(); 
 moonmesh.setBlockTexture("Lunar",0); 
-moonmesh.importFromFile(__dir__+"/models/luna.obj","obj",null); 
+moonmesh.importFromFile(__dir__+"/resources/models/luna.obj","obj",null); 
 IDRegistry.genBlockID("charged_moon"); 
 Block.createBlock("charged_moon", [ 
  {name: "A little Moon", texture: [["Lunar", 0],["Lunar", 1],["Lunar", 2],["Lunar", 3],["Lunar", 4],["Lunar", 5]], inCreative: true} 

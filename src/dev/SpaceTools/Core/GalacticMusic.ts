@@ -1,20 +1,28 @@
 Callback.addCallback("LocalTick", function() {
-if(__config__.getBool("Gameplay.SpacesMusic")){
+if(__config__.getBool("Gameplay.SpacesMusic") && Player.getDimension()!=0){
     if (Player.getDimension() == Moon.id && World.getThreadTime()%18000 == 0) {
         SpaceRace.play();
+    }else{
+        SpaceRace.stop()
     }
 
     if (Player.getDimension() == Mars.id && World.getThreadTime()%18000 == 0) {
         MarsS.play();
+    }else{
+        MarsS.stop();
     }
 
     if (Player.getDimension() == Venus.id && World.getThreadTime()%18000 == 0) {
         MimasS.play();
+    }else{
+        MimasS.stop();
     }
     
-    if (Player.getDimension() ==Asteroids.id && World.getThreadTime()%18000 == 0) {
+    if (Player.getDimension() == Asteroids.id && World.getThreadTime()%18000 == 0) {
        OrbitS.play();
-    }}
+    }}else{
+        OrbitS.stop();
+    }
 
     /*if (Player.getDimension() == Vic.id) {
 
@@ -29,31 +37,22 @@ Callback.addCallback("DimensionLoaded", function(dimensionId) {
     if (
         dimensionId == Moon.id
     ) {
-MimasS.stop();
-MarsS.stop();
-OrbitS.stop();
+
         SpaceRace.play()}
     if (
         dimensionId == Mars.id
     ) {
-SpaceRace.stop()
-MimasS.stop();
-OrbitS.stop();
+
+
         MarsS.play()}
             if (
         dimensionId == Asteroids.id
     ) {
-SpaceRace.stop();
-MimasS.stop();
-MarsS.stop();
         OrbitS.play();
     }
     if (
         dimensionId == Venus.id
     ) {
-SpaceRace.stop();
-MarsS.stop();
-OrbitS.stop();
         MimasS.play()}};
         if(
             __config__.getBool(
@@ -61,5 +60,6 @@ OrbitS.stop();
                 ) && dimensionId == 0){
                     Dimensions.transfer(Player.get(), Asteroids.id);
 };
-    if(Equi.getSlot("Frequency").id!=ItemID.frequency_module&&Player.getDimension()!=0){Game.message(Translation.translate("I don't think I hear anything.I need a high frequency module"))}
+    if(Equi.getSlot("Frequency").id!=ItemID.frequency_module&&Player.getDimension()!=0){
+        Game.message(Translation.translate("I don't think I hear anything.I need a high frequency module"))}
 });

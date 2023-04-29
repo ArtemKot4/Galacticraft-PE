@@ -1740,6 +1740,15 @@ declare namespace ToolType {
     const HOE: ToolParams;
     const SHEARS: ToolParams;
 }
+
+declare namespace ToolType {
+    const sword: ToolParams;
+    const shovel: ToolParams;
+    const pickaxe: ToolParams;
+    const axe: ToolParams;
+    const hoe: ToolParams;
+    const shears: ToolParams;
+}
 /**
  * Module to convert item ids depending on the game version.
  */

@@ -1,4 +1,4 @@
-
+ 
 IDRegistry.genBlockID("deco_block");
 Block.createBlock("deco_block",[{name: "Deco Block", texture: [["Deco Block", 0]], inCreative: true} ],STONE);
 Translation.addTranslation("Deco Block",{
@@ -72,7 +72,6 @@ Translation.addTranslation("Torch Stone On",{
 ru: "Зажжённый каменный факел"
 })
 
-
 IDRegistry.genBlockID("torch_off_lit");
 Block.createBlock("torch_off_lit",[{name: "Torch stone off", texture: [["unlit_torch_stone", 0]], inCreative: true} ], TORCH_OFFSPACETYPE);
 Translation.addTranslation("Torch stone off",{
@@ -95,7 +94,8 @@ IDRegistry.genBlockID("vine_web");
 Block.createBlock("vine_web",[{name: "Spaces Web", texture: [["web_torch", 0]], inCreative: false} ], WEB);
 
 IDRegistry.genItemID("vine_web_1"); 
-Item.createItem("vine_web_1", "Spaces Web", {name: "web_torch", meta: 0}, {stack: 64, inCreative:true});
+Item.createItem("vine_web_1", "Spaces Web", {name: "web_torch", meta: 0}, {stack: 64, 
+    isTech:true});
 
 SpacesUtils.placeBlockRegistry("galactic_web","Spaces Web","WebGalactical",64,"spaces_web","Spaces Web","WebGalactical",WEB)
 
@@ -103,13 +103,39 @@ SpacesUtils.placeBlockRegistry("galactic_web","Spaces Web","WebGalactical",64,"s
 Item.registerUseFunction("vine_web_1", function(coords, item, block, player){
 	var region = BlockSource.getDefaultForActor(player);
         var place = coords.relative;
-region.setBlock(place.x, place.y, place.z,BlockID.vine_web); 
+region.setBlock(place.x, place.y, place.z,BlockID.vine_web,0); 
 Entity.setCarriedItem(player, item.id, item.count - 1 , item.data);
 });
 
 Block.registerDropFunction("vine_web", function(coords, blockID){
     return [[ItemID.vine_web_1, 1, 0]] 
 });
+
+
+
+
+
+TileEntity.registerPrototype(BlockID.torch_on_lit,{
+	useNetworkItemContainer: true,
+    tick: function(){
+    	if(checkDimension(20)){
+    this.blockSource.setBlock(this.x,this.y,this.z,BlockID.torch_off_lit,0)
+        }
+	},
+	});
+
+    TileEntity.registerPrototype(VanillaBlockID.torch,{
+        useNetworkItemContainer: true,
+        tick: function(){
+            if(checkDimension(20)){
+        this.blockSource.setBlock(this.x,this.y,this.z,BlockID.torch_off_unlit,0)
+            }
+        },
+        });
+
+
+
+
 
 
 IDRegistry.genBlockID("oxygen_tile");
@@ -122,13 +148,13 @@ IDRegistry.genBlockID("vine_torch");
 Block.createBlock("vine_torch",[{name: "Torch glowstone", texture: [["web_torch", 1]], inCreative: false} ], TORCH_SPACESTYPE);
 
 IDRegistry.genItemID("vine_torch_1"); 
-Item.createItem("vine_torch_1", "Torch glowtite", {name: "web_torch", meta: 1}, {stack: 64, inCreative:true});
+Item.createItem("vine_torch_1", "Torch glowtite", {name: "web_torch", meta: 1}, {stack: 64, isTech:true});
 
 Item.registerUseFunction("vine_torch_1", function(coords, item, block, player){
 	var region = BlockSource.getDefaultForActor(player);
         var place = coords.relative;
         if(region.getBlockId(coords.x,coords.y-1,coords.z)==0){
-region.setBlock(place.x, place.y, place.z,BlockID.vine_torch); 
+region.setBlock(place.x, place.y, place.z,BlockID.vine_torch,0); 
 Entity.setCarriedItem(player, item.id, item.count - 1 , item.data);}
 });
 

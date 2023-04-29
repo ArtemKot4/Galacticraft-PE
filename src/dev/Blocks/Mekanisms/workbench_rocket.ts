@@ -293,7 +293,7 @@ drawing:SignRocketbench — drsrb.
 
 var Workbenchmesh = new RenderMesh();
 Workbenchmesh.setBlockTexture("assembly", 0);
-Workbenchmesh.importFromFile(__dir__+"/models/workbench.obj", "obj", null);
+Workbenchmesh.importFromFile(__dir__+"/resources/models/workbench.obj", "obj", null);
 IDRegistry.genBlockID("workbench_nasa");
 Block.createBlock("workbench_nasa", [{
     name: "Workbench Nasa",

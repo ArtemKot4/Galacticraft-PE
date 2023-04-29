@@ -185,47 +185,47 @@ Callback.addCallback('EntityInteract', function (entity, player,coords) {
 
 
 
-var Rockemesh = new RenderMesh();
-Rockemesh.setBlockTexture("rocket_t2", 0);
-Rockemesh.importFromFile(__dir__+"/models/rocket_tier2.obj", "obj", null);
-IDRegistry.genBlockID("rocket_2_tier");
-Block.createBlockWithRotation("rocket_2_tier", [{
-    name: "Rocket Tier 2",
-    texture: [["rocket_t2",
-        0],
-        ["rocket_t2",
-            1],
-        ["rocket_t2",
-            2],
-        ["rocket_t2",
-            3],
-        ["rocket_t2",
-            4],
-        ["rocket_t2",
-            5]],
-    inCreative: false
-}]);
-var Rockerender = new ICRender.Model();
-Rockerender.addEntry(new BlockRenderer.Model(Rockemesh));
-BlockRenderer.setStaticICRender(BlockID.rocket_2_tier, 0, Rockerender);
+// var Rockemesh = new RenderMesh();
+// Rockemesh.setBlockTexture("rocket_t2", 0);
+// Rockemesh.importFromFile(__dir__+"/models/rocket_tier2.obj", "obj", null);
+// IDRegistry.genBlockID("rocket_2_tier");
+// Block.createBlockWithRotation("rocket_2_tier", [{
+//     name: "Rocket Tier 2",
+//     texture: [["rocket_t2",
+//         0],
+//         ["rocket_t2",
+//             1],
+//         ["rocket_t2",
+//             2],
+//         ["rocket_t2",
+//             3],
+//         ["rocket_t2",
+//             4],
+//         ["rocket_t2",
+//             5]],
+//     inCreative: false
+// }]);
+// var Rockerender = new ICRender.Model();
+// Rockerender.addEntry(new BlockRenderer.Model(Rockemesh));
+// BlockRenderer.setStaticICRender(BlockID.rocket_2_tier, 0, Rockerender);
 
-IDRegistry.genItemID("rocket_2");
-Item.createItem("rocket_2", "Rocket Tier 2", {
-    name: "rocket_tierik2",
-    meta: 0
-}, {
-    stack: 1,
-    isTech: true
-});
-Translation.addTranslation("Rocket Tier 2", {
-    ru: "Ракета 2-го уровня"
-});
+// IDRegistry.genItemID("rocket_2");
+// Item.createItem("rocket_2", "Rocket Tier 2", {
+//     name: "rocket_tierik2",
+//     meta: 0
+// }, {
+//     stack: 1,
+//     isTech: true
+// });
+// Translation.addTranslation("Rocket Tier 2", {
+//     ru: "Ракета 2-го уровня"
+// });
 
-Block.registerDropFunction("rocket_2_tier", function(coords, blockID) {
-    return [[ItemID.rocket_2,
-        1,
-        0]]
-});
+// Block.registerDropFunction("rocket_2_tier", function(coords, blockID) {
+//     return [[ItemID.rocket_2,
+//         1,
+//         0]]
+// });
 
 // Item.registerUseFunction("rocket_2", function(coords, item, block, player) {
 //     var region = BlockSource.getDefaultForActor(player);
@@ -279,97 +279,97 @@ Block.registerDropFunction("rocket_2_tier", function(coords, blockID) {
 
 
 
-var Rocktmesh = new RenderMesh();
-Rocktmesh.setBlockTexture("rocket_t3", 0);
-Rocktmesh.importFromFile(__dir__+"/models/rocket_tier3.obj", "obj", {
-    translate: [0.5, 0.5, 0.0],
-    invertV: false,
-    noRebuild: false
-});
-IDRegistry.genBlockID("rocket_3_tier");
-Block.createBlockWithRotation("rocket_3_tier", [{
-    name: "Rocket Tier 3",
-    texture: [["rocket_t3",
-        0],
-        ["rocket_t3",
-            1],
-        ["rocket_t3",
-            2],
-        ["rocket_t3",
-            3],
-        ["rocket_t3",
-            4],
-        ["rocket_t3",
-            5]],
-    inCreative: false
-}]);
-var Rocktrender = new ICRender.Model();
-Rocktrender.addEntry(new BlockRenderer.Model(Rocktmesh));
-BlockRenderer.setStaticICRender(BlockID.rocket_3_tier, 0, Rocktrender);
+// var Rocktmesh = new RenderMesh();
+// Rocktmesh.setBlockTexture("rocket_t3", 0);
+// Rocktmesh.importFromFile(__dir__+"/models/rocket_tier3.obj", "obj", {
+//     translate: [0.5, 0.5, 0.0],
+//     invertV: false,
+//     noRebuild: false
+// });
+// IDRegistry.genBlockID("rocket_3_tier");
+// Block.createBlockWithRotation("rocket_3_tier", [{
+//     name: "Rocket Tier 3",
+//     texture: [["rocket_t3",
+//         0],
+//         ["rocket_t3",
+//             1],
+//         ["rocket_t3",
+//             2],
+//         ["rocket_t3",
+//             3],
+//         ["rocket_t3",
+//             4],
+//         ["rocket_t3",
+//             5]],
+//     inCreative: false
+// }]);
+// var Rocktrender = new ICRender.Model();
+// Rocktrender.addEntry(new BlockRenderer.Model(Rocktmesh));
+// BlockRenderer.setStaticICRender(BlockID.rocket_3_tier, 0, Rocktrender);
 
-IDRegistry.genItemID("rocket_3");
-Item.createItem("rocket_3", "Rocket Tier 3", {
-    name: "rocket_tierik3",
-    meta: 0
-}, {
-    stack: 1,
-    isTech: true
-});
-Translation.addTranslation("Rocket Tier 3", {
-    ru: "Ракета 3-го уровня"
-});
+// IDRegistry.genItemID("rocket_3");
+// Item.createItem("rocket_3", "Rocket Tier 3", {
+//     name: "rocket_tierik3",
+//     meta: 0
+// }, {
+//     stack: 1,
+//     isTech: true
+// });
+// Translation.addTranslation("Rocket Tier 3", {
+//     ru: "Ракета 3-го уровня"
+// });
 
-Block.registerDropFunction("rocket_3_tier", function(coords, blockID) {
-    return [[ItemID.rocket_3,
-        1,
-        0]]
-});
+// Block.registerDropFunction("rocket_3_tier", function(coords, blockID) {
+//     return [[ItemID.rocket_3,
+//         1,
+//         0]]
+// });
 
-Item.registerUseFunction("rocket_3", function(coords, item, block, player) {
-    var region = BlockSource.getDefaultForActor(player);
-    var place = coords.relative;
-    if (region.getBlockId(place.x, place.y-1, place.z) == BlockID.Padding1lvl) {
-        region.setBlock(place.x, place.y-1, place.z, BlockID.rocket_3_tier,0);
-        Player.setCarriedItem(player, item.id, item.count - 1, item.extra);
-        Game.message("§7Ракета третьего уровня успешно состыкована с посадочной площадкой")
-    }
-});
+// Item.registerUseFunction("rocket_3", function(coords, item, block, player) {
+//     var region = BlockSource.getDefaultForActor(player);
+//     var place = coords.relative;
+//     if (region.getBlockId(place.x, place.y-1, place.z) == BlockID.Padding1lvl) {
+//         region.setBlock(place.x, place.y-1, place.z, BlockID.rocket_3_tier,0);
+//         Player.setCarriedItem(player, item.id, item.count - 1, item.extra);
+//         Game.message("§7Ракета третьего уровня успешно состыкована с посадочной площадкой")
+//     }
+// });
 
-var SPC_d1 = new UI.Container();
-var InterFaccce = new UI.Container();
-Callback.addCallback("ItemUse", function (coords, item, block) {
-    if (block.id === BlockID.rocket_3_tier) {
-        Player.setPosition(coords.x, coords.y + 2, coords.z);
-        SPC_d1.openAs(wvrum);
-        //SPC_b2.openAs(exit);
-        //SPC_b3.openAs(rocketgui);
-        //Player.addEffect(Player.get(), Native.PotionEffect.movementSlowdown, 100000, 100000000);
-        Player.setFlyingEnabled(true);
-        Player.setFlying(true);
-        Game.message("§c§lВы находитесь в ракете,убедитесь что вы надели скафандр,загрузили и заправили ракету.")
-    }
-});
+// var SPC_d1 = new UI.Container();
+// var InterFaccce = new UI.Container();
+// Callback.addCallback("ItemUse", function (coords, item, block) {
+//     if (block.id === BlockID.rocket_3_tier) {
+//         Player.setPosition(coords.x, coords.y + 2, coords.z);
+//         SPC_d1.openAs(wvrum);
+//         //SPC_b2.openAs(exit);
+//         //SPC_b3.openAs(rocketgui);
+//         //Player.addEffect(Player.get(), Native.PotionEffect.movementSlowdown, 100000, 100000000);
+//         Player.setFlyingEnabled(true);
+//         Player.setFlying(true);
+//         Game.message("§c§lВы находитесь в ракете,убедитесь что вы надели скафандр,загрузили и заправили ракету.")
+//     }
+// });
 
 
 
-var wvrum = new UI.Window({
-    location: {
-        x: 1000 / 2 - 80,
-        y: 350,
-        width: 48,
-        height: 24
-    },
-    drawing: [],
-    elements: {
-        "btn": {
-            type: "button",
-            x: 0,
-            y: 0,
-            bitmap: "SPC.SPC_button",
-            bitmap2: "SPC.SPC_button2",
-            text: "полёт",
-            scale: 250,
-            clicker: {
-                onClick: function () {},
-            }
-        }}});
+// var wvrum = new UI.Window({
+//     location: {
+//         x: 1000 / 2 - 80,
+//         y: 350,
+//         width: 48,
+//         height: 24
+//     },
+//     drawing: [],
+//     elements: {
+//         "btn": {
+//             type: "button",
+//             x: 0,
+//             y: 0,
+//             bitmap: "SPC.SPC_button",
+//             bitmap2: "SPC.SPC_button2",
+//             text: "полёт",
+//             scale: 250,
+//             clicker: {
+//                 onClick: function () {},
+//             }
+//         }}});

@@ -558,19 +558,6 @@ Recipes.addShaped({id: ItemID.engine_tier1_booster, count: 1, data: 0}, [
 ], ['a', VanillaBlockID.wool, 4, 'b', ItemID.compressed_meteoric_iron, 0, 'f', ItemID.air_vent, 0, 'j', ItemID.heavy_plating, 0, 'w', ItemID.fuel_canister_6, 0]);
 //Ускоритель ракеты 
 
-Recipes.addShaped({id: BlockID.oxygen_storage_module, count: 1, data: 0}, [
-    "aaa",
-    "bbb",
-    "aca"
-], ['a', ItemID.compressed_steel, 0, 'b', ItemID.oxygentank_heavyfull, 0,'c',BlockID.mekanism_block,0]);
-//хранилище кислорода
-
-Recipes.addShaped({id: BlockID.refinery_sc, count: 1, data: 0}, [
-    " b ",
-    "aba",
-    "dcd"
-], ['a',VanillaBlockID.stone, 0, 'b', ItemID.canister_copper, 0, 'c', VanillaBlockID.furnace, 0, 'd',BlockID.mekanism_block_ports, 0]);
-//Центрифуга
 
 Recipes.addShaped({id: ItemID.steel_shards, count: 3, data: 0}, [
     "a",
@@ -587,7 +574,8 @@ Recipes.addShaped({id: BlockID.coal_generator, count: 1, data: 0}, [
     "aaa",
     "bcb",
     "aea"
-], ['a', ItemID.ingot_copper_sc, 0, 'b', VanillaItemID.iron_ingot, 0, 'c', VanillaBlockID.furnace, 0, 'e', BlockID.AluminumWire, 0]);
+], ['a', ItemID.ingot_copper_sc, 0, 'b', VanillaItemID.iron_ingot, 0, 
+'c', VanillaBlockID.furnace, 0, 'e', BlockID.AluminumWire, 0]);
 //Угольный генератор
 Recipes.addShaped({id: BlockID.compressor_sj, count: 1, data: 0}, [
     "baf",
@@ -608,29 +596,6 @@ Recipes.addShaped({id: BlockID.mekanism_block, count: 1, data: 0}, [
     "bab"
 ], ['a', ItemID.gear_wheel_tin, 0, 'b', VanillaItemID.iron_ingot, 0, 'c', BlockID.block_tin_sc, 0]);
 //машинный блок
-
-Recipes.addShaped({id: BlockID.mekanism_block_ports_1, count: 1, data: 0}, [
-    "",
-    "aba",
-    ""
-], ['a', BlockID.ImprovedAluminumWire, 0, 'b',BlockID.mekanism_block, 0]);
-//машинный блок
-
-Recipes.addShaped({id: BlockID.mekanism_block_ports, count: 1, data: 0}, [
-    "",
-    "aba",
-    "c  "
-], ['a', BlockID.ImprovedAluminumWire, 0, 'b',BlockID.mekanism_block, 0,'c',VanillaItemID.redstone,0]);
-//машинный блок
-
-
-
-Recipes.addShaped({id: ItemID.gear_wheel_tin, count: 1, data: 0}, [
-    "bab",
-    "a a",
-    "bab"
-], ['a', ItemID.ingot_tin_sc, 0, 'b', ItemID.tin_shard, 0]);
-//шестерёнка
 
 
 Recipes.addShaped({id: ItemID.tin_shard, count: 9, data: 0}, [
@@ -698,6 +663,31 @@ Recipes.addShaped({id: ItemID.solar_module_1, count: 1, data: 0}, [
     "bbb"
 ], ['a', BlockID.AluminumWire, 0, 'b', ItemID.solar_module_0,0]);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if(__config__.getBool("Difficulty.Machine.NewRecipes")==true){
 Recipes.addShaped({id: BlockID.basic_solar_panel, count: 1, data: 0}, [
     "bab",
     "bcb",
@@ -710,6 +700,149 @@ Recipes.addShaped({id: BlockID.basic_solar_panel, count: 1, data: 0}, [
     'e',BlockID.AluminumWire,0
     ]);
 
+    Recipes.addShaped({id: BlockID.electric_compressor_sj, count: 1, data: 0}, [
+        "aba",
+        "aaa",
+        "cec"
+    ], ['a', ItemID.compressed_steel, 0, 'b', VanillaBlockID.anvil, 0, 'c', BlockID.AluminumWire, 0, 'e', ItemID.wafer_advanced, 0]);
+    
+    Recipes.addShaped({id: BlockID.advanced_mekanism_block_ports_1, count: 1, data: 0}, [
+        "ccc",
+        "aba",
+        "ccc"
+    ], ['a', ItemID.wafer_advanced, 0,'b',BlockID.mekanism_block_ports_1,0,'c',ItemID.compressed_steel,0]);
+    
+    Recipes.addShaped({id: BlockID.advanced_mekanism_block, count: 1, data: 0}, [
+        "ccc",
+        "aba",
+        "ccc"
+    ], ['a', ItemID.wafer_advanced, 0,'b',BlockID.mekanism_block,0,'c',ItemID.compressed_steel,0]);
+    
+    Recipes.addShaped({id: BlockID.workbench_rocket, count: 1, data: 0}, [
+        "ccc",
+        "aba",
+        "ccc"
+    ], ['a', ItemID.wafer_advanced, 0,'b',BlockID.advanced_mekanism_block,0,'c',ItemID.compressed_steel,0]);
+    
+
+    Recipes.addShaped({id: BlockID.mekanism_block_ports_1, count: 1, data: 0}, [
+        "",
+        "aba",
+        ""
+    ], ['a', BlockID.ImprovedAluminumWire, 0, 'b',BlockID.mekanism_block, 0]);
+    //машинный блок
+    
+    Recipes.addShaped({id: BlockID.mekanism_block_ports, count: 1, data: 0}, [
+        "",
+        "aba",
+        "c  "
+    ], ['a', BlockID.ImprovedAluminumWire, 0, 'b',BlockID.mekanism_block, 0,'c',VanillaItemID.redstone,0]);
+    //машинный блок
+    
+    
+    
+    Recipes.addShaped({id: ItemID.gear_wheel_tin, count: 1, data: 0}, [
+        "bab",
+        "a a",
+        "bab"
+    ], ['a', ItemID.ingot_tin_sc, 0, 'b', ItemID.tin_shard, 0]);
+    //шестерёнка
+    
+
+    Recipes.addShaped({id: BlockID.oxygen_storage_module, count: 1, data: 0}, [
+        "aaa",
+        "bbb",
+        "aca"
+    ], ['a', ItemID.compressed_steel, 0, 'b',
+     ItemID.oxygentank_heavyfull, 0,'c',BlockID.mekanism_block,0]);
+    //хранилище кислорода
+    
+    Recipes.addShaped({id: BlockID.refinery_sc, count: 1, data: 0}, [
+        " b ",
+        "aba",
+        "dcd"
+    ], ['a',VanillaBlockID.stone, 0, 'b', ItemID.canister_copper, 0, 'c',
+     VanillaBlockID.furnace, 0, 'd',BlockID.mekanism_block_ports, 0]);
+    //Центрифуга
+
+
+}else{
+
+    Recipes.addShaped({id: BlockID.basic_solar_panel, count: 1, data: 0}, [
+        "bab",
+        "bcb",
+        "ede"
+    ], [
+        'a', ItemID.solar_module_1, 0,
+        'b', ItemID.compressed_steel, 0,
+        'c',ItemID.flag_cane,0,
+        'd',ItemID.wafer_basic,0,
+        'e',BlockID.AluminumWire,0
+        ]);
+    
+        Recipes.addShaped({id: BlockID.electric_compressor_sj, count: 1, data: 0}, [
+            "aba",
+            "aaa",
+            "cec"
+        ], ['a', ItemID.compressed_steel, 0, 'b', VanillaBlockID.anvil, 0, 
+        'c', BlockID.AluminumWire, 0, 'e', ItemID.wafer_advanced, 0]);
+      
+      
+        Recipes.addShaped({id: BlockID.workbench_rocket, count: 1, data: 0}, [
+            "ccc",
+            "aba",
+            "ccc"
+        ], ['a', ItemID.wafer_advanced, 0,'b',
+        ItemID.wafer_advanced,0,'c',ItemID.compressed_steel,0]);
+        
+    
+       
+        
+    
+        Recipes.addShaped({id: BlockID.oxygen_storage_module, count: 1, data: 0}, [
+            "aaa",
+            "bbb",
+            "aaa"
+        ], ['a', ItemID.compressed_steel, 0, 'b',
+         ItemID.oxygentank_heavyfull, 0]);
+        //хранилище кислорода
+        
+        Recipes.addShaped({id: BlockID.refinery_sc, count: 1, data: 0}, [
+            " b ",
+            "aba",
+            "dcd"
+        ], ['a',VanillaBlockID.stone, 0, 'b', ItemID.canister_copper, 0, 'c',
+         VanillaBlockID.furnace, 0, 'd',ItemID.compressed_steel, 0]);
+        //Центрифуга
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Recipes.addShaped({id: BlockID.block_tin_sc, count: 1, data: 0}, [
     "aaa",
@@ -717,29 +850,6 @@ Recipes.addShaped({id: BlockID.block_tin_sc, count: 1, data: 0}, [
     "aaa"
 ], ['a', ItemID.ingot_tin_sc, 0]);
 
-Recipes.addShaped({id: BlockID.electric_compressor_sj, count: 1, data: 0}, [
-    "aba",
-    "aaa",
-    "cec"
-], ['a', ItemID.compressed_steel, 0, 'b', VanillaBlockID.anvil, 0, 'c', BlockID.AluminumWire, 0, 'e', ItemID.wafer_advanced, 0]);
-
-Recipes.addShaped({id: BlockID.advanced_mekanism_block_ports_1, count: 1, data: 0}, [
-    "ccc",
-    "aba",
-    "ccc"
-], ['a', ItemID.wafer_advanced, 0,'b',BlockID.mekanism_block_ports_1,0,'c',ItemID.compressed_steel,0]);
-
-Recipes.addShaped({id: BlockID.advanced_mekanism_block, count: 1, data: 0}, [
-    "ccc",
-    "aba",
-    "ccc"
-], ['a', ItemID.wafer_advanced, 0,'b',BlockID.mekanism_block,0,'c',ItemID.compressed_steel,0]);
-
-Recipes.addShaped({id: BlockID.workbench_rocket, count: 1, data: 0}, [
-    "ccc",
-    "aba",
-    "ccc"
-], ['a', ItemID.wafer_advanced, 0,'b',BlockID.advanced_mekanism_block,0,'c',ItemID.compressed_steel,0]);
 
 Recipes.addShaped({id: ItemID.nose_cone, count: 1, data: 0}, [
     " b ",

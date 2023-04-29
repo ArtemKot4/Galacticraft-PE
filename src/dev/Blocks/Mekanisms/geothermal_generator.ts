@@ -37,11 +37,13 @@ let GeothermalSpout = new UI.StandartWindow(
             y:60,
             scale:3.0,
             bitmap:"generators.geoscale_1",direction:1},
-        EnergiA: { type: "text", x: 390, y: 75, width: 100, height: 30, text: "Space Joule" },button:{type:"button",x:390,y:110,scale:1.4,bitmap:"butdeact",bitmap2:"butact",          clicker: {
-            onClick: function() {
-    Click.play();
-            }
-         } }
+    //     EnergiA: { type: "text", x: 390, y: 75, width: 100, height: 30, text: "Space Joule" },
+    button:{type:"button",x:390,y:110,scale:1.4,bitmap:"butdeact",bitmap2:"butact",          clicker: {
+    //         onClick: function() {
+    // Click.play();
+    //         } 
+  }
+         }
     }    
       }
     );
@@ -82,7 +84,8 @@ var tile = TileEntity.getTileEntity(
         this.z,
         this.blockSource
           )
-if(tile && this.blockSource.getBlockId(this.x,this.y-1,this.z)==BlockID.venus_spout){
+if(tile && this.blockSource.getBlockId(this.x,this.y-1,this.z)==
+BlockID.venus_spout){
     if(tile.data.spout==0){
         
         if(__config__.getBool("Игра.Special_Effects")){
@@ -123,7 +126,7 @@ if(tile && this.blockSource.getBlockId(this.x,this.y-1,this.z)==BlockID.venus_sp
         }
       
     
-}else{if(World.getThreadTime()%40 == 0){
+}else{if(World.getThreadTime()%40 == 0&&__config__.getBool("Difficulty.Machine.GeothermalDischarging")==true){
        this.data.energy-=1;
        
 

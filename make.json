@@ -1,7 +1,7 @@
 {
     "global": {
         "info": {
-            "name": "Galacticraft Universe",
+            "name": "Galacticraft Universal",
             "author": "ArtemOn",
             "version": "Alpha Pre-release 1.0.0",
             "description": "",
@@ -26,6 +26,10 @@
     "resources": [
         {
 			"path": "src/assets",
+			"type": "resource_directory"
+		},
+        {
+			"path": "src/models",
 			"type": "resource_directory"
 		},
         {

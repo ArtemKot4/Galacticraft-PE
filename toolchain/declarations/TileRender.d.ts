@@ -37,4 +37,5 @@ declare namespace TileRenderer {
     function setSlabShape(): void;
     /** @deprecated not supported */
     function setSlabPlaceFunction(): void;
+    function makeSlab(block1: string | number,block2: string | number): void
 }
