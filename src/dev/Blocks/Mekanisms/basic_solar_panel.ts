@@ -154,7 +154,7 @@ class SolarPanel extends Generator {
             "EnergyText",
             "Sj :" +
             this.data.energy
-            + " / " + this.getEnergyStorage());
+            + " / " + this.getCapacity());
 
         if (
             World.getThreadTime() % 1 == 0 && this.blockSource.getLightLevel(

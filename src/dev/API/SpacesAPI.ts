@@ -1,30 +1,48 @@
-abstract class Machine extends TileEntityBase {
-   readonly window: UI.StandartWindow;
+interface EnergyProperties {
+    getCapacity(): number;
+    canReceiveEnergy(side, type): boolean;
+    canExtractEnergy(side, type): boolean;
+    energyTick(type: string, src: EnergyTileNode): void;
+    energyReceive(type: string, amount: number, voltage: number): number;
+};
+
+abstract class Machine extends TileEntityBase implements EnergyProperties {
+    readonly window: UI.StandartWindow;
     constructor(window) {
         super();
         this.window = window
-    }
-    getScreenByName(): UI.StandartWindow {
+    };
+    public getScreenByName(): UI.StandartWindow {
         return this.window;
-    }
+    };
     defaultValues = {
         energy: 0,
+        energyMax: 0
     };
     useNetworkItemContainer: true;
-
-};
-
-abstract class InputMachine extends Machine {
-
-    getCapacity(): number {
-        return 0
+    public getCapacity(): number {
+        return this.data.energyMax
     };
-    energyReceive(type: string, amount: number, voltage: number): number {
-        amount = Math.min(amount, 1500)
+    public canReceiveEnergy(side, type): boolean {
+        return side
+    };
+    public canExtractEnergy(side, type): boolean {
+        return side
+    };
+    public energyTick(type: string, src: EnergyTileNode): void {
+        let output = Math.min(500, this.data.energy)
+        this.data.energy += src.add(output) - output;
+    };
+    public energyReceive(type: string, amount: number, voltage: number): number {
+        amount = Math.min(amount, this.data.energyMax/2)
         var add = Math.min(amount, this.getCapacity() - this.data.energy);
         this.data.energy += add
         return add
     };
+};
+
+abstract class InputMachine extends Machine {
+
     canReceiveEnergy(type: number, side: string): boolean {
         return true;
     };
@@ -58,37 +76,25 @@ abstract class Generator extends Machine {
         let output = Math.min(1, this.data.energy);
         this.data.energy += src.add(output) - output;
     };
-    getEnergyStorage(): number {
+    getCapacity(): number {
         return this.data.energyMax
     }
 }
 
 abstract class MachineStorage extends Machine {
-    defaultValues = { energy: 0, 
+    defaultValues = {
+        energy: 0,
         energyMax: 0
     };
-    getCapacity(): number {
-        return this.data.energyMax
-    };
-    energyReceive (type, amount, voltage) {
-        amount = Math.min(amount, 50000)
-        var add = Math.min(amount, this.getCapacity() - this.data.energy);
-        this.data.energy += add
-        return add
-    };
-     canReceiveEnergy (side,type): boolean {
+   
+    canReceiveEnergy(side, type): boolean {
         return side == 2
     };
 
-     canExtractEnergy(side,type): boolean {
+    canExtractEnergy(side, type): boolean {
         return side != 2
     };
-    energyTick (type: string, src: EnergyTileNode): void {
 
-        let output = Math.min(1000, this.data.energy)
-        this.data.energy += src.add(output) - output;
-
-    };
 }
 
 
