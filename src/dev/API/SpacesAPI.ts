@@ -63,11 +63,36 @@ abstract class Generator extends Machine {
     }
 }
 
-abstract class EnergyStorage extends Machine {
+abstract class MachineStorage extends Machine {
     defaultValues = { energy: 0, 
         energyMax: 0
     };
+    getCapacity(): number {
+        return this.data.energyMax
+    };
+    energyReceive (type, amount, voltage) {
+        amount = Math.min(amount, 50000)
+        var add = Math.min(amount, this.getCapacity() - this.data.energy);
+        this.data.energy += add
+        return add
+    };
+     canReceiveEnergy (side,type): boolean {
+        return side == 2
+    };
+
+     canExtractEnergy(side,type): boolean {
+        return side != 2
+    };
+    energyTick (type: string, src: EnergyTileNode): void {
+
+        let output = Math.min(1000, this.data.energy)
+        this.data.energy += src.add(output) - output;
+
+    };
 }
+
+
+
 
 Translation.addTranslation("\n§7Infinity⚡", {
     ru: "\n§7Бесконечность§6⚡"

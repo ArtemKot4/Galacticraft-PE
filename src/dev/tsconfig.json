@@ -132,7 +132,6 @@
 		"Blocks/Mekanisms/fuel_loader.ts",
 		"Blocks/Mekanisms/refinery.ts",
 		"SpaceTools/Integrations/Recipe Viewer Integration.ts",
-		"recepts.ts",
 		"SpaceTools/Core/world_ore_generation.ts",
 		"SpaceTools/Integrations/Industrial Craft 2 Experimental Integration.ts",
 		"SpaceTools/Integrations/Classic UI Integration.ts",
@@ -141,7 +140,8 @@
 		"SpaceTools/Core/oxygen_working.ts",
 		"SpaceTools/Core/planet_music.ts",
 		"SpaceTools/Core/liquid_tank.ts",
-		"groups.ts"
+		"groups.ts",
+		"recipes.ts"
 	],
 	"files": [
 		"C:\\Users\\\u041f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044c\\Desktop\\\u0418\u0433\u0440\u044b\\HORIZON MODDING KERNEL\\Galacticraft 4 PE developing\\toolchain\\declarations\\android-declarations.d.ts",

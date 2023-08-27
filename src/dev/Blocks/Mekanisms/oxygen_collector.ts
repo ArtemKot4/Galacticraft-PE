@@ -138,13 +138,14 @@ SpacesMachine.registerO2SJMachine(BlockID.collector_sc, {
         if (this.dimension != 0) {
             if (World.getThreadTime() % 20 == 0) {
                 for (var i in leaves) {
+                    for (let n; n<6;n++){
                     if (this.data.energy != 0) {
-                        if (this.blockSource.getBlockId(this.x, this.y + 1, this.z) == leaves[i].id ||
-                            this.blockSource.getBlockId(this.x, this.y, this.z + 1) == leaves[i].id ||
-                            this.blockSource.getBlockId(this.x + 1, this.y, this.z) == leaves[i].id ||
-                            this.blockSource.getBlockId(this.x, this.y, this.z - 1) == leaves[i].id ||
-                            this.blockSource.getBlockId(this.x - 1, this.y, this.z) == leaves[i].id ||
-                            this.blockSource.getBlockId(this.x, this.y - 1, this.z) == leaves[i].id) {
+                        if (this.blockSource.getBlockId(this.x, this.y + n, this.z) == leaves[i].id ||
+                            this.blockSource.getBlockId(this.x, this.y, this.z - n) == leaves[i].id ||
+                            this.blockSource.getBlockId(this.x + n, this.y, this.z) == leaves[i].id ||
+                            this.blockSource.getBlockId(this.x, this.y, this.z - n) == leaves[i].id ||
+                            this.blockSource.getBlockId(this.x - n, this.y, this.z) == leaves[i].id ||
+                            this.blockSource.getBlockId(this.x, this.y - n, this.z) == leaves[i].id) {
                             this.data.oxygen += 1;
                             this.data.energy -= 5;
                             this.data.leaveS++
@@ -157,18 +158,18 @@ SpacesMachine.registerO2SJMachine(BlockID.collector_sc, {
                             if (this.data.leaveS == 999) {
                                 this.data.leaveS = 0;
                                 if (
-                                    this.blockSource.getBlockId(this.x, this.y + 1, this.z) == leaves[i].id) {
-                                    this.blockSource.destroyBlock(this.x, this.y + 1, this.z, false);
-                                    this.blockSource.spawnDroppedItem(this.x, this.y + 1, this.z, ItemID.damaged_leave, 1, 0)
+                                    this.blockSource.getBlockId(this.x, this.y + n, this.z) == leaves[i].id) {
+                                    this.blockSource.destroyBlock(this.x, this.y + n, this.z, false);
+                                    this.blockSource.spawnDroppedItem(this.x, this.y + n, this.z, ItemID.damaged_leave, 1, 0)
                                 };
                                 if (
-                                    this.blockSource.getBlockId(this.x, this.y, this.z + 1) == leaves[i].id) {
-                                    this.blockSource.destroyBlock(this.x, this.y + 1, this.z, false);
-                                    this.blockSource.spawnDroppedItem(this.x, this.y, this.z + 1, ItemID.damaged_leave, 1, 0)
+                                    this.blockSource.getBlockId(this.x, this.y, this.z + n) == leaves[i].id) {
+                                    this.blockSource.destroyBlock(this.x, this.y + n, this.z, false);
+                                    this.blockSource.spawnDroppedItem(this.x, this.y, this.z + n, ItemID.damaged_leave, 1, 0)
                                 };
-                                if (this.blockSource.getBlockId(this.x + 1, this.y, this.z) == leaves[i].id) {
-                                    this.blockSource.destroyBlock(this.x + 1, this.y, this.z, false);
-                                    this.blockSource.spawnDroppedItem(this.x + 1, this.y, this.z, ItemID.damaged_leave, 1, 0)
+                                if (this.blockSource.getBlockId(this.x + n, this.y, this.z) == leaves[i].id) {
+                                    this.blockSource.destroyBlock(this.x + n, this.y, this.z, false);
+                                    this.blockSource.spawnDroppedItem(this.x + n, this.y, this.z, ItemID.damaged_leave, 1, 0)
                                 };
 
                                 if (this.blockSource.getBlockId(this.x, this.y, this.z - 1) == leaves[i].id) {
@@ -184,7 +185,7 @@ SpacesMachine.registerO2SJMachine(BlockID.collector_sc, {
                                     this.blockSource.destroyBlock(this.x, this.y - 1, this.z, false);
                                     this.blockSource.spawnDroppedItem(this.x, this.y - 1, this.z, ItemID.damaged_leave, 1, 0)
 
-                                }
+                                }}
                             }
                         }
                     }

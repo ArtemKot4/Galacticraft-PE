@@ -260,130 +260,17 @@ Translation.addTranslation("Oxygen Storage Module", {
     ru: "Кислородное хранилище"
 });
 
-TileEntity.registerPrototype(BlockID.oxygen_storage_module, {
-    useNetworkItemContainer: true,
-    getScreenName() {
-        return "main";
-    },
-    getScreenByName() {
-        return OxygenStorage
-    },
-    defaultValues: {
-        progress: 0,
-        progressMax: 0,
-        active: false,
-        energy: 0,
-        energyMax: 20000,
-    },
-    isEnergySource: function() {
-        return false
-    },
-    canReceiveEnergy: function(type) {
-     return true
-    },
-    getCapacity: function() {
-        return 20000
-    },
-    energyReceive: function(type, amount, voltage) {
-        
-            amount = Math.min(amount, 20000)
-            var add = Math.min(amount, this.getCapacity() - this.data.energy);
-            this.data.energy += add
-            return add
-        
-    },
-    
-    tick: function() {
-        this.container.sendChanges();
-        
-
-        
-        if (this.dimension == 0) {
-            if (World.getThreadTime()%20 == 0) {
-                this.data.energy += Math.min(1, this.data.energyMax - this.data.energy);
-            }}
+class OxygenStorage extends MachineStorage {
+    defaultValues = { energy: 0, energyMax: 2500000 };
+    onTick(): void {
         let slot1 = this.container.getSlot("slot1");
 
-        this.container.setScale("scala", this.data.energy / 20000);
+        this.container.setScale("scala", this.data.energy / 2500000);
         this.container.setScale("o2", this.data.energy / 100);
-        this.container.setText("OXYGEN", "Ob: " + this.data.energy + " / " + this.data.energyMax);
-    },
-    energyTick: function(type, src) {
-        
-            let output = Math.min(20000, this.data.energy)
-            this.data.energy += src.add(output) - output;
-        }
-});
-
-
-
-let OxygenStorage = new UI.StandartWindow(
-    {
-        standard: {
-            header: {
-                text: {
-                    text: Translation.translate("Кислородное хранилище")
-                },
-            },
-            inventory: {
-                standard: true
-            },
-            background: {
-                standard: true
-            }
-        },
-    drawing: [{
-        type: "bitmap",
-        x: 400,
-        y: 190,
-        bitmap: "Others.Scala",
-        scale: 4.3
-    },
-        {
-            type: "bitmap",
-            x: 680,
-            y: 150,
-            bitmap: "o2_noy",
-            scale: 4.0
-        }],
-    elements: {
-        slot1:
-        {
-            type: "slot",
-            x: 400,
-            y: 110,
-            size: 70,
-            bitmap: "Others.O2Slot"
-        },
-        scala:
-        {
-            type: "scale",
-            x: 400,
-            y: 190,
-            bitmap: "Others.Scala2",
-            scale: 4.3,
-            direction: 0
-        },
-        o2:
-        {
-            type: "scale",
-            x: 680,
-            y: 150,
-            bitmap: "o2_yes",
-            scale: 4.0,
-            direction: 1
-        },
-        OXYGEN:
-        {
-            type: "text",
-            x: 480,
-            y: 135,
-            width: 100,
-            height: 30,
-            text: "Oxygen Bar"
-        },
+        this.container.setText("OXYGEN", "Oxygen: " + this.data.energy + " / " + this.data.energyMax);
     }
 }
-);
+
+TileEntity.registerPrototype(BlockID.oxygen_storage_module,new OxygenStorage("OxygenStorageUI"));
 ﻿
 ﻿EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_storage_module, ob);

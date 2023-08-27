@@ -113,67 +113,23 @@ let EnergyUI = new UI.StandartWindow(
     }
 });
 
-SpacesMachine.registerStandartMachine(BlockID.energy_storage_module, {
-    useNetworkItemContainer: true,
-    getScreenName() {
-        return "main";
-    },
-    getScreenByName() {
-        return EnergyUI
-    },
-    defaultValues: {
-        progress: 0,
-        progressMax: 0,
-        active: false,
-        energy: 0,
-        energyMax: 2500000,
-    },
-    getCapacity: function() {
-        
-        return 27500000
-    },
-    energyReceive: function(type, amount, voltage) {
-        amount = Math.min(amount, 50000)
-        var add = Math.min(amount, this.getCapacity() - this.data.energy);
-        this.data.energy += add
-        return add
-    },
-    canReceiveEnergy: function(side,type) {
-        return side == 2
-    },
-
-    canExtractEnergy: function(side,type) {
-        return side != 2
-    },
-    tick: function() {
-        this.container.sendChanges();
-        this.container.validateAll();
-  this.container.setText("Energy",this.data.energy);
-  
+class EnergyStorage extends MachineStorage {
+    defaultValues = { energy: 0, energyMax: 2500000 };
+    onTick(): void {
         for(var i in batt){
-if(this.container.getSlot("EnergySlot").id==batt[i].id){
-        this.container.setScale("EnergyScale",this.data.energy / 27500000);
-        this.container.setText("MaxEnergy",Translation.translate("out: ")+ "27500000")
-}else{ this.container.setScale("EnergyScale",this.data.energy / 2500000)
-this.container.setText("MaxEnergy",Translation.translate("out: ")+ "2500000")
-}};
-        battery.add(this.container, this.data, "EnergySlot");
-        battery.addInfinite(this.container, this.data, "EnergySlot")
+            if(this.container.getSlot("EnergySlot").id==batt[i].id){
+                this.data.energyMax = 27500000;
+                    this.container.setScale("EnergyScale",this.data.energy / this.data.energyMax);
+                    this.container.setText("MaxEnergy",Translation.translate("out: ")+ "" + this.data.energyMax)
+            }else{ this.data.energyMax = 2500000;
+                this.container.setScale("EnergyScale",this.data.energy / 2500000)
+            this.container.setText("MaxEnergy",Translation.translate("out: ")+ "" + this.data.energyMax)
+            }};
+                    battery.add(this.container, this.data, "EnergySlot");
+                    battery.addInfinite(this.container, this.data, "EnergySlot")
+                
+                }
     
-    },
-    energyTick: function(type, src) {
+}
 
-        let output = Math.min(1000, this.data.energy)
-        this.data.energy += src.add(output) - output;
-
-    },
-    click: function(id, count, data, coords) {
-
-
-    
-
-
-        
-
-    }
-});
+SpacesMachine.registerStandartMachine(BlockID.energy_storage_module,new EnergyStorage("EnergyStorageUI"));
