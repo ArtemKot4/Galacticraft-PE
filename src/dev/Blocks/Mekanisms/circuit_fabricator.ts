@@ -277,10 +277,13 @@ SpacesMachine.registerStandartMachine(BlockID.circuit_fabricator, {
         var ResultatSlot = this.container.getSlot("ResultatSlot")
 
         for (let i in circuit) {
-            if (DiamondSlot.id == circuit[i].diamond && FabrSlot1.id == circuit[i].fabricator_1 && FabrSlot0.id == circuit[i].fabricator_0 && DustSlot.id == circuit[i].dust && Slot1.id == circuit[i].slot && this.data.energy >= 500 && this.data.progress <= 700) {
+            if (DiamondSlot.id == circuit[i].diamond && FabrSlot1.id == circuit[i].fabricator_1 && 
+                FabrSlot0.id == circuit[i].fabricator_0 && DustSlot.id == circuit[i].dust &&
+                 Slot1.id == circuit[i].slot && this.data.energy >= 500 && this.data.progress <= 700) {
                 this.data.progress++
             }
-            if (this.data.progress >= 700 && ResultatSlot.id == 0 || this.data.progress >= 700 && ResultatSlot.id == circuit[i].resultat) {
+            if (this.data.progress >= 700 && ResultatSlot.id == 0 || this.data.progress >= 700 &&
+                 ResultatSlot.id == circuit[i].resultat) {
                 this.data.progress = 0;
                 this.data.energy -= 500;
                 DiamondSlot.count -= 1;
@@ -347,5 +350,46 @@ SpacesMachine.registerStandartMachine(BlockID.circuit_fabricator, {
 
         }
 
+    }
+});
+
+StorageInterface.createInterface(BlockID.circuit_fabricator, {
+    slots: {
+        "DiamondSlot": {
+            input: true,
+            side: "down",
+            isValid: function(item, side){
+                return SpacesMachine.getCircuitRecipe();
+            }
+        },
+        "FabrSlot0": {
+            input: true,
+            side: "down",
+            isValid: function(item, side){
+                return SpacesMachine.getCircuitRecipe();
+            }
+        },
+        "FabrSlot1": {
+            input: true,
+            side: "down",
+            isValid: function(item, side){
+                return SpacesMachine.getCircuitRecipe();
+            }
+        },
+        "DustSlot": {
+            input: true,
+            side: "down",
+            isValid: function(item, side){
+                return SpacesMachine.getCircuitRecipe();
+            }
+        },
+        "Slot1": {
+            input: true,
+            side: "down",
+            isValid: function(item, side){
+                return SpacesMachine.getCircuitRecipe();
+            }
+        },
+        "ResultatSlot": {output: true}
     }
 });

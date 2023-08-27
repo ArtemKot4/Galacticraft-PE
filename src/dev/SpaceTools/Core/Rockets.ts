@@ -1,9 +1,5 @@
-Block.registerDropFunction("Padding1lvl", function(coords, blockID) {
-    return [[BlockID.Pad_Normal, 1, 0]]
-});
-
-IDRegistry.genItemID("rocket_1");
-Item.createItem("rocket_1", "Rocket Tier 1", {
+IDRegistry.genItemID("rocket_tier_1");
+Item.createItem("rocket_tier_1", "Rocket Tier 1", {
     name: "rocket_tierik1", meta: 0
 }, {
     stack: 1, isTech: true
@@ -14,8 +10,8 @@ Translation.addTranslation("Rocket Tier 1", {
 
 
 
-Item.registerUseFunction("rocket_1", function(coords, item, block, player) {
-    if (block.id == BlockID.Padding1lvl) {
+Item.registerUseFunction("rocket_tier_1", function(coords, item, block, player) {
+    if (block.id == BlockID.rocket_padding_completed) {
 
         var region = BlockSource.getDefaultForActor(player);
 
@@ -56,8 +52,9 @@ var Roket = new UI.Container();
 
 Callback.addCallback('EntityInteract', function (entity, player,coords) {
     if (Entity.getTypeName(entity)=="spacescraft:rocket_1") {
-		alert(Entity.getTypeName(entity))
-        Game.message(Translation.translate("§cYou are in a rocket, make sure you put on a spacesuit, loaded and refueled the rocket"))
+		alert(Entity.getTypeName(entity));
+        alert("DEBUG");
+                Game.message(Translation.translate("§cYou are in a rocket, make sure you put on a spacesuit, loaded and refueled the rocket"))
       /*  Entity.setVelocity(coords.x, coords.y+0.3, coords.z, "spacescraft:rocket_1");
         Entity.addPosition("spacescraft:rocket_1", coords.x , coords.y+0.1, coords.z);*/
 		 if (__config__.getBool("Gameplay.Special_Effects")==true) {
@@ -70,7 +67,7 @@ Callback.addCallback('EntityInteract', function (entity, player,coords) {
                     Math.random()/20,
                     Math.random()/20);
 		 }}
-         alert("Congratulation ArtemOn!")
+         alert("Congratulations ArtemOn!")
     }
 	
    /* if (
@@ -187,7 +184,7 @@ Callback.addCallback('EntityInteract', function (entity, player,coords) {
 
 // var Rockemesh = new RenderMesh();
 // Rockemesh.setBlockTexture("rocket_t2", 0);
-// Rockemesh.importFromFile(__dir__+"/models/rocket_tier2.obj", "obj", null);
+// Rockemesh.importFromFile(__dir__+"/resources/models/rocket_tier2.obj", "obj", null);
 // IDRegistry.genBlockID("rocket_2_tier");
 // Block.createBlockWithRotation("rocket_2_tier", [{
 //     name: "Rocket Tier 2",
@@ -281,7 +278,7 @@ Callback.addCallback('EntityInteract', function (entity, player,coords) {
 
 // var Rocktmesh = new RenderMesh();
 // Rocktmesh.setBlockTexture("rocket_t3", 0);
-// Rocktmesh.importFromFile(__dir__+"/models/rocket_tier3.obj", "obj", {
+// Rocktmesh.importFromFile(__dir__+"/resources/models/rocket_tier3.obj", "obj", {
 //     translate: [0.5, 0.5, 0.0],
 //     invertV: false,
 //     noRebuild: false

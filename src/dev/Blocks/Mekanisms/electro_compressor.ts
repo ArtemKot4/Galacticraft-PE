@@ -112,21 +112,21 @@ var CompressinGElectric = new UI.StandartWindow({
             bitmap: "Others.en_slot",
             size: 60
         },
-        "slot1": {
+        "slot_1": {
             type: "slot",
             x: 410,
             y: 110,
             bitmap: "slot",
             size: 60
         },
-        "slot2": {
+        "slot_2": {
             type: "slot",
             x: 470,
             y: 110,
             bitmap: "slot",
             size: 60
         },
-        "slot3": {
+        "slot_3": {
             type: "slot",
             x: 530,
             y: 110,
@@ -134,21 +134,21 @@ var CompressinGElectric = new UI.StandartWindow({
             size: 60
         },
 
-        "slot4": {
+        "slot_4": {
             type: "slot",
             x: 410,
             y: 170,
             bitmap: "slot",
             size: 60
         },
-        "slot5": {
+        "slot_5": {
             type: "slot",
             x: 470,
             y: 170,
             bitmap: "slot",
             size: 60
         },
-        "slot6": {
+        "slot_6": {
             type: "slot",
             x: 530,
             y: 170,
@@ -156,21 +156,21 @@ var CompressinGElectric = new UI.StandartWindow({
             size: 60
         },
 
-        "slot7": {
+        "slot_7": {
             type: "slot",
             x: 410,
             y: 230,
             bitmap: "slot",
             size: 60
         },
-        "slot8": {
+        "slot_8": {
             type: "slot",
             x: 470,
             y: 230,
             bitmap: "slot",
             size: 60
         },
-        "slot9": {
+        "slot_9": {
             type: "slot",
             x: 530,
             y: 230,
@@ -229,7 +229,7 @@ SpacesMachine.registerStandartMachine(BlockID.electric_compressor_sj, {
     },
     defaultValues: {
         progress: 0,
-        progressMax: 500,
+       
         energy: 0,
         energyMax: 1000,
     },
@@ -258,64 +258,34 @@ SpacesMachine.registerStandartMachine(BlockID.electric_compressor_sj, {
         if (this.data.progress != 0) {
             this.container.setText("Status", Translation.translate("Status: working"))};
 
-       var slot1 = this.container.getSlot("slot1");
-        var slot2 = this.container.getSlot("slot2");
-                var slot3 = this.container.getSlot("slot3");
-                        var slot4 = this.container.getSlot("slot4");
-                                var slot5 = this.container.getSlot("slot5");
-                                        var slot6 = this.container.getSlot("slot6");
-                                                var slot7 = this.container.getSlot("slot7");
-                                                        var slot8 = this.container.getSlot("slot8");
-                                                                var slot9 = this.container.getSlot("slot9");
-                                                                var slotResult2 = this.container.getSlot("slotResult2")
+      
+                                                                var slotResult = this.container.getSlot("slotResult2")
             var slotResult1 = this.container.getSlot("slotResult1")
-        
-                for(let i in compressorRecipe){
-             if(slot1.id == compressorRecipe[i].id1 && slot2.id == compressorRecipe[i].id2 && slot3.id == compressorRecipe[i].id3 && slot4.id == compressorRecipe[i].id4 && slot5.id == compressorRecipe[i].id5 && slot6.id == compressorRecipe[i].id6 && slot7.id == compressorRecipe[i].id7 && slot8.id == compressorRecipe[i].id8 &&
-             slot9.id == compressorRecipe[i].id9 &&
-             this.data.energy >= 100 && this.data.progress<=500){
-         this.data.progress++
-         if(this.data.progress>=500){
-                      if(slotResult1.id && slotResult2.id == 0 || slotResult1.id && slotResult2.id == compressorRecipe[i].recept0){
-           slot1.count-=1;
-           slot2.count-=1;
-           slot3.count-=1;
-           slot4.count-=1;
-           slot5.count-=1;
-           slot6.count-=1;
-           slot7.count-=1;
-           slot8.count-=1;
-           slot9.count-=1;
+            for (let n = 0; n < 10; n++) {
+            var slots = this.container.getSlot("slot_"+n);
            
-           this.container.setSlot("slot1",slot1.id,slot1.count,slot1.data)
-           
-           this.container.setSlot("slot2",slot2.id,slot2.count,slot2.data)
-           
-           this.container.setSlot("slot3",slot3.id,slot3.count,slot3.data)
-           
-        this.container.setSlot("slot4",slot4.id,slot4.count,slot4.data)
-        
- this.container.setSlot("slot5",slot5.id,slot5.count,slot5.data)
- 
-  this.container.setSlot("slot6",slot6.id,slot6.count,slot6.data)
-  
-         this.container.setSlot("slot7",slot7.id,slot7.count,slot7.data)   
-         
-        this.container.setSlot("slot8",slot8.id,slot8.count,slot8.data)  
-         
-         this.container.setSlot("slot9",slot9.id,slot9.count,slot9.data) 
-         
-         
-            this.data.energy-=100;
-            this.data.progress=0;
-            
-            
-            this.container.setSlot("slotResult2",compressorRecipe[i].recept0,slotResult2.count+1,0);
-            this.container.setSlot("slotResult1",compressorRecipe[i].recept0,slotResult1.count+1,0)
-           
-           
+            for (let i in compressorRecipe) {
+                if (slots.id == compressorRecipe[i]+[slots] &&
+                    this.data.energy >= 100 && this.data.progress < 500) {
+                    this.data.progress++
+                    if (slotResult.id == 0 || slotResult.id == compressorRecipe[i].result) {
+                        if (this.data.progress >= 500) {
+                            slots.count -= 1;
+                            this.container.setSlot("slot" + n, slots.id, slots.count, slots.data)
+                            this.data.energy -= 100;
+                            this.data.progress = 0;
+                            this.container.setSlot("slotResult1", compressorRecipe[i].result,
+                             slotResult1.count + 1, 0)
+                             this.container.setSlot("slotResult2", compressorRecipe[i].result,
+                             slotResult.count + 1, 0)
+                             
+                        }
+                    }                                                                           
+                }
             }
-        }}
+
+        
+        
          
           
     }
@@ -355,3 +325,17 @@ this.container.setText("ELECTRIC", "Sj :" + this.data.energy + " / " + this.data
 );
 ﻿
 ﻿
+// StorageInterface.createInterface(BlockID.electric_compressor_sj, {
+//     slots: {
+//         "slot^1-9": {
+//             input: true,
+//             side: "verctical",
+//             isValid: function(item, side){
+//                 return SpacesMachine.getCompressorRecipe();
+//             }
+//         },
+        
+//         "slotResult1": {output: true},
+//         "slotResult2": {output: true},
+//     }
+// });

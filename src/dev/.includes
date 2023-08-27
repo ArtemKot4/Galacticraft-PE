@@ -1,7 +1,8 @@
-SpaceTools/SpacesTRANSLATION.ts
-SpaceTools/Core/Core.ts
-SpaceTools/Core/Liquids.ts
-
+SpaceTools/translations.ts
+SpaceTools/Core/core.ts
+SpaceTools/block_types.ts
+SpaceTools/Core/liquids.ts
+Blocks/Mekanisms/machine_api.ts
 
 API/DungeonCore.ts
 API/MachineAPI.ts
@@ -10,17 +11,16 @@ API/SpacesAPI.ts
 battery.ts
 Blocks/Mekanisms/rocket_padding.ts
 
-Blocks/Mekanisms/Mekanisms.ts
-
 
 
 Blocks/Mekanisms/coal_generator.ts
 Blocks/Mekanisms/oxygen_compressor.ts
-Blocks/Mekanisms/compressed_drill.ts
 
+Blocks/Mekanisms/energy_storage.ts
 
+Blocks/Mekanisms/electric_furnace.ts
 
-
+machine_parts.ts
 
 Caution/radioisotope_core.ts
 Blocks/Mekanisms/crushed_probe.ts
@@ -40,8 +40,6 @@ Ores/shard_titanium.ts
 Ores/ingot_titanium.ts
 
 Ores/ingot_desh.ts
-
-
 
 Ores/dust_titanium.ts
 
@@ -79,8 +77,7 @@ Ores/compressed_iron.ts
 
 Ores/compressed_bronze.ts
 Ores/compressed_tin.ts
-compressed_aluminum.ts
-Ores/compressed_aluminum.ts
+Ores/ores.ts
 compressed_steel.ts
 Ores/compressed_steel.ts
 compressed_copper.ts
@@ -93,40 +90,33 @@ wafer_advanced.ts
 wafer_basic.ts
 wafer_basic.ts
 engine_tier1_buster.ts
-engine_tier1_buster.ts
+
 
 schematic_rocket_2.ts
-schematic_rocket_2.ts
+
 schematic_rocket_t3.ts
-schematic_rocket_t3.ts
-schematic_buggy.ts
+
 schematic_buggy.ts
 
+
 thermal_controller.ts
-thermal_controller.ts
-solar_module_1.ts
+
 solar_module_1.ts
 buggymat_sit.ts
-buggymat_sit.ts
+
 heavy_plating.ts
-heavy_plating.ts
+
 
 SpaceTools/oxygen_concentrator.ts
 proj.ts
 SpaceTools/proj.ts
 buggymat_wheel.ts
-buggymat_wheel.ts
-wafer_solar.ts
 wafer_solar.ts
 
 
-oxygen_tank_heavy_full.ts
-SpaceTools/oxygen_tank_heavy_full.ts
-oxygen_tank_med_full.ts
-SpaceTools/oxygen_tank_med_full.ts
-oxygen_tank_light_full.ts
-SpaceTools/oxygen_tank_light_full.ts
-frequency_module.ts
+
+SpaceTools/oxygen_tanks.ts
+
 SpaceTools/frequency_module.ts
 SpaceTools/shield_controller.ts
 SpaceTools/Tools/Tools.ts
@@ -213,12 +203,12 @@ buggymat_storage.ts
 
 
 
-Parachute/parachute_black.ts
+Parachute/parachutes.ts
 
 
 
-deco_block.ts
-Blocks/Decorative/deco_block.ts
+
+Blocks/Decorative/decorations.ts
 block_aluminum.ts
 Blocks/Ores/block_aluminum.ts
 block_tin.ts
@@ -374,15 +364,11 @@ Dimensions/Mars.ts
 
 Dimensions/Asteroids.ts
 
-Dimensions/Venera.ts
+Dimensions/Venus.ts
 
-Blocks/Mekanisms/PKOff.ts
+Blocks/Mekanisms/magnetic_crafting_table.ts
 
-Blocks/Mekanisms/DebugPK.ts
-
-Blocks/Mekanisms/ChestablePK.ts
-
-Blocks/Mekanisms/PKPlanet.ts
+SpaceTools/prelaunch_checklist.ts
 
 
 
@@ -395,10 +381,9 @@ Blocks/Mekanisms/PKPlanet.ts
 
 
 
+Blocks/Mekanisms/planet_teleporter.ts
 
-Blocks/Mekanisms/TeleporterToPlanets.ts
-
-SpaceTools/Core/Rockets.ts
+SpaceTools/Core/rockets.ts
 
 
 SpaceTools/Categories.ts
@@ -424,24 +409,23 @@ Blocks/Mekanisms/geothermal_generator.ts
 
 
 Blocks/Mekanisms/workbench_rocket.ts
-Blocks/Mekanisms/Wind Power Plant.ts
-Blocks/Mekanisms/collector_sc.ts
+Blocks/Mekanisms/oxygen_collector.ts
 Blocks/Mekanisms/oxygen_storage.ts
 Blocks/Mekanisms/circuit_fabricator.ts
 Blocks/Mekanisms/electro_compressor.ts
 Blocks/Mekanisms/compressor.ts
 Blocks/Mekanisms/enclosed_blocks.ts
-Blocks/Mekanisms/Basic solar panel.ts
-Blocks/Mekanisms/Advanced solar panel.ts
+Blocks/Mekanisms/basic_solar_panel.ts
+Blocks/Mekanisms/advanced_solar_panel.ts
 Blocks/Mekanisms/fuel_loader.ts
 Blocks/Mekanisms/refinery.ts
 SpaceTools/Integrations/Recipe Viewer Integration.ts
 
-recepts.ts
 
 
 
-SpaceTools/Core/SpawnOres.ts
+
+SpaceTools/Core/world_ore_generation.ts
 
 SpaceTools/Integrations/Industrial Craft 2 Experimental Integration.ts
 
@@ -450,11 +434,11 @@ SpaceTools/Integrations/Futurepack Research Integration.ts
 SpaceTools/Integrations/RuntimeSettings Integration.ts
 
 
-SpaceTools/Core/SystemOXYGEN.ts
-SpaceTools/Core/GalacticMusic.ts
+SpaceTools/Core/oxygen_working.ts
+SpaceTools/Core/planet_music.ts
 
-SpaceTools/Core/LiquidTankGALACTICRAFT.ts
-
+SpaceTools/Core/liquid_tank.ts
+food.ts
 groups.ts
 
-food.ts
+recipes.ts

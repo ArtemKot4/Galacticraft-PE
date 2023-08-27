@@ -20,7 +20,7 @@
             "nativejs"
         ],
         "excludeFromRelease": [],
-        "pushTo": "C:/Users/Пользователь/Desktop/Galacticraft Universal",
+        "pushTo": "storage/emulated/0/games/horizon/packs/Inner_Core_2/modpacks/coop-tech/mods/Galacticraft4",
         "ndkPath": null
     },
     "resources": [
@@ -68,6 +68,10 @@
     "additional": [
         {
             "source": "src/config.json",
+            "targetDir": "."
+        },
+        {
+            "source": "src/config.info.json",
             "targetDir": "."
         }
     ]

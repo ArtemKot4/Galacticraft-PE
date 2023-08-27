@@ -1,11 +1,14 @@
 IDRegistry.genBlockID("workbench_rocket");
 Block.createBlockWithRotation("workbench_rocket", [
     {
-    name: "Workbench Rocket", texture: [["workbench_nasa_side", 0], ["rocket_workbench", 0], ["workbench_nasa_side", 0], ["workbench_nasa_side", 0], ["workbench_nasa_port", 0], ["workbench_nasa_port", 0]], inCreative: true
+    name: "Workbench Rocket", texture: [["workbench_nasa_side", 0], ["rocket_workbench", 0], ["workbench_nasa_side", 0],
+     ["workbench_nasa_side", 0], ["workbench_nasa_side", 0], ["workbench_nasa_side", 0]], inCreative: true
      },    {
-    name: "Workbench Rocket", texture: [["workbench_nasa_side", 0], ["rocket_workbench", 0], ["workbench_nasa_side", 0], ["workbench_nasa_side", 0], ["workbench_nasa_port", 0], ["workbench_nasa_port", 0]], inCreative: false
+    name: "Workbench Rocket", texture: [["workbench_nasa_side", 0], ["rocket_workbench", 0], ["workbench_nasa_side", 0], 
+    ["workbench_nasa_side", 0], ["workbench_nasa_side", 0], ["workbench_nasa_side", 0]], inCreative: false
      },    {
-    name: "Workbench Rocket", texture: [["workbench_nasa_side", 0], ["rocket_workbench", 0], ["workbench_nasa_side", 0], ["workbench_nasa_side", 0], ["workbench_nasa_port", 0], ["workbench_nasa_port", 0]], inCreative: false
+    name: "Workbench Rocket", texture: [["workbench_nasa_side", 0], ["rocket_workbench", 0], ["workbench_nasa_side", 0],
+     ["workbench_nasa_side", 0], ["workbench_nasa_side", 0], ["workbench_nasa_side", 0]], inCreative: false
      }
 ],STONE);
 Translation.addTranslation("Workbench Rocket", {
@@ -43,20 +46,7 @@ let WorkbencheableUI = new UI.StandartWindow(
             }
         }, drawing: [{
             type: "bitmap", x: 725, y: 195, bitmap: "SignRocketbench", scale: 3.2
-        }, {
-            type: "bitmap",
-            x: 340,
-            y: 70,
-            bitmap: "slace_en_0",
-            scale: 3
-        },
-        {
-            type: "bitmap",
-            x: 480,
-            y: 70,
-            bitmap: "en_noy",
-            scale: 3
-        },
+        }
     ], elements: {
         slot1: {
             type: "slot", x: 550, y: 50, size: 50
@@ -96,22 +86,7 @@ let WorkbencheableUI = new UI.StandartWindow(
         }, craftable: {
             type: "slot", x: 775, y: 240, size: 85, bitmap: "RocketSlots"
         },
-        ENERGYBar: {
-            type: "scale",
-            x: 340,
-            y: 70,
-            bitmap: "slace_en_1",
-            scale: 3,
-            direction: 0
-        },
-        Energy: {
-            type: "scale",
-            x: 480,
-            y: 70,
-            bitmap: "en_yes",
-            scale: 3,
-            direction: 1
-        },
+     
     }});
 
 
@@ -143,9 +118,7 @@ SpacesMachine.registerStandartMachine(BlockID.workbench_rocket, {
        tick: function() {
         this.container.sendChanges();
         this.container.validateAll();
-                this.container.setScale("Energy", this.data.energy / 1000);
-        this.container.setScale("ENERGYBar", this.data.energy / 1000);
-        
+                
         
         let slot1 = this.container.getSlot("slot1")
         let slot2 = this.container.getSlot("slot2")
@@ -185,8 +158,8 @@ SpacesMachine.registerStandartMachine(BlockID.workbench_rocket, {
             chestable2.id == er.
             storage_2&& 
             chestable3.id==er.storage_3 && 
-            this.data.energy >= 1000
-           && craftable.id == 0 ){
+            
+            craftable.id == 0 ){
                slot2.count-=1;
               slot1.count-=1;
               slot3.count-=1;
@@ -243,7 +216,7 @@ this.container.setSlot("chestable2",chestable2.id,chestable2.count,chestable2.da
            
            
               this.container.setSlot("craftable",er.rocket,1,0)
-              this.data.energy=0;
+          
             }
         }
 
@@ -382,4 +355,31 @@ Block.registerDropFunction("workbench_nasa", function(coords, blockID) {
     return [[BlockID.workbench_rocket,
         1,
         0]]
+});
+
+StorageInterface.createInterface(BlockID.coal_generator, {
+    slots: {
+        "slot^1-10": {
+            input: true,
+            side: "down",
+            isValid: function(item, side){
+                return SpacesMachine.getDefaultRocketRecipe();
+            }
+        },
+        "slotuer^1-2": {
+            input: true,
+            side: "down",
+            isValid: function(item, side){
+                return SpacesMachine.getDefaultRocketRecipe();
+            }
+        },
+        "slotuel^1-2": {
+            input: true,
+            side: "down",
+            isValid: function(item, side){
+                return SpacesMachine.getDefaultRocketRecipe();
+            }
+        },
+        "craftable": {output: true}
+    }     
 });

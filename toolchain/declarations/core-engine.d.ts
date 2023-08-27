@@ -16330,7 +16330,7 @@ declare namespace Saver {
      * @param loadFunc function used to load saved data
      * @param saveFunc function used to save data
      */
-    function addSavesScope(name: string, loadFunc: LoadScopeFunc, saveFunc: SaveScopeFunc): void;
+    function addSavesScope(name:string | number,func: any,str: any)
 
     /**
      * Registers object as scope saver

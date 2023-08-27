@@ -1,61 +1,73 @@
-class Machine extends TileEntityBase {
-    defaultValues : {
+abstract class Machine extends TileEntityBase {
+   readonly window: UI.StandartWindow;
+    constructor(window) {
+        super();
+        this.window = window
+    }
+    getScreenByName(): UI.StandartWindow {
+        return this.window;
+    }
+    defaultValues = {
         energy: 0,
-        progress: 0
     };
     useNetworkItemContainer: true;
-  
+
 };
 
-class InputMachine extends Machine { 
-    getCapacity (): number {
+abstract class InputMachine extends Machine {
+
+    getCapacity(): number {
         return 0
     };
     energyReceive(type: string, amount: number, voltage: number): number {
-        amount = Math.min(amount, 1000)
+        amount = Math.min(amount, 1500)
         var add = Math.min(amount, this.getCapacity() - this.data.energy);
         this.data.energy += add
         return add
     };
-    canReceiveEnergy (type: number, side:string): boolean{
+    canReceiveEnergy(type: number, side: string): boolean {
         return true;
     };
- };
+    getTier(): number { return 1 };
 
-class Generator extends Machine {
-    canReceiveEnergy(): boolean {
-        return false;
-     };
-  
-     canExtractEnergy (): boolean {
-        return true;
-     };
-  
-     energyTick(type:string, src:EnergyTileNode): void {
-        let output = Math.min(1, this.data.energy);
-        this.data.energy += src.add(output) - output;
-     }
-}
-
-
-class padding extends TileEntityBase {
-    useNetworkItemContainer: true;
-	tick(): void {
-        for(var i;i<3;i++){
-        if(this.blockSource.getBlockId(this.x,this.y,this.z)==this.blockID && 
-        this.blockSource.getBlockId(this.x-i,this.y,this.z)==this.blockID && 
-        this.blockSource.getBlockId(this.x,this.y,this.z-i)==BlockID.Pad_Normal && 
-        this.blockSource.getBlockId(this.x-i,this.y,this.z-i)==BlockID.Pad_Normal ){ 
-            this.blockSource.setBlock(this.x-1, this.y, this.z-1, BlockID.Padding1lvl,0);}}
+    // charge (slot: string) {
+    //     this.data.energy -= ChargeItemRegistry.addEnergyToSlot(this.container.getSlot(slot), "spacejoule", 
+    //     this.data.energy, this.getTier());
+    // };
+    discharge(slot: string) {
+        let amount = this.getCapacity() - this.data.energy;
+        this.data.energy += ChargeItemRegistry.getEnergyFromSlot(this.container.getSlot(slot), "spacejoule",
+            amount, this.getTier());
     }
 };
 
+abstract class Generator extends Machine {
+    defaultValues = {
+        energy: 0,
+        energyMax: 0
+    };
+    canReceiveEnergy(): boolean {
+        return false;
+    };
 
-//TileEntity.registerPrototype(BlockID.compressor, new Compressor())
+    canExtractEnergy(): boolean {
+        return true;
+    };
 
+    energyTick(type: string, src: EnergyTileNode): void {
+        let output = Math.min(1, this.data.energy);
+        this.data.energy += src.add(output) - output;
+    };
+    getEnergyStorage(): number {
+        return this.data.energyMax
+    }
+}
 
-
-
+abstract class EnergyStorage extends Machine {
+    defaultValues = { energy: 0, 
+        energyMax: 0
+    };
+}
 
 Translation.addTranslation("\n§7Infinity⚡", {
     ru: "\n§7Бесконечность§6⚡"
@@ -197,12 +209,12 @@ var SpacesCraft = {
     },
     addElectroLevel: function (id: string | number, word: string) {
         Item.registerNameOverrideFunction(id, function (id, name: string) {
-            if ( !Entity.getSneaking(
-                    Player.get())
+            if (!Entity.getSneaking(
+                Player.get())
             ) {
                 return name + Translation.translate("\n§7Electrolevel: ") + word;
             };
-    });
+        });
     }, addSHIFTtext: function (id: string | number,
         word: string) {
         Item.registerNameOverrideFunction(id,
@@ -245,7 +257,7 @@ var SpacesUtils = {
 
 
     // },
-     canisterRegistry: function (id, name, tex0: string,liquid) {
+    canisterRegistry: function (id, name, tex0: string, liquid) {
         IDRegistry.genItemID(id);
         Item.createItem(id,
             name,
@@ -269,57 +281,58 @@ var SpacesUtils = {
 
         Item.registerIconOverrideFunction(id,
             function (item, data) {
-                if (item.data == 6) {
-                    return {
+                switch (item.data) {
+                    case 6: return {
                         name: tex0,
                         meta: 6
                     };
-                } if (item.data == 5) {
-                    return {
-                        name: tex0,
-                        meta: 5
-                    };
-                } if (item.data == 4) {
-                    return {
-                        name: tex0,
-                        meta: 4
-                    };
-                } if (item.data == 3) {
-                    return {
-                        name: tex0,
-                        meta: 3
-                    };
-                } if (item.data == 2) {
-                    return {
-                        name: tex0,
-                        meta: 2
-                    };
-                } if (item.data == 1) {
-                    return {
-                        name: tex0,
-                        meta: 1
-                    };
-                } if (item.data == 0) {
-                    return {
-                        name: "Empty Liquid Canister",
-                        meta: 0
-                    };
+                    case 5:
+                        return {
+                            name: tex0,
+                            meta: 5
+                        };
+                    case 4:
+                        return {
+                            name: tex0,
+                            meta: 4
+                        };
+                    case 3:
+                        return {
+                            name: tex0,
+                            meta: 3
+                        };
+                    case 2:
+                        return {
+                            name: tex0,
+                            meta: 2
+                        };
+                    case 1:
+                        return {
+                            name: tex0,
+                            meta: 1
+                        };
+                    case 0:
+                        return {
+                            name: "Empty Liquid Canister",
+                            meta: 0
+                        };
                 }
             });
 
-    Item.registerUseFunction(id, function (coords, item, block, player){
-        var region = BlockSource.getDefaultForActor(player);
-        var place = coords.relative;
-if(item.data==6){
-        region.setBlock(place.x, place.y, place.z, liquid,0)}else if(item.data==0&&
-            region.getBlockId(place.x,place.y,place.z)==liquid){
-                region.setBlock(place.x, place.y, place.z, 0,0)
-                Entity.setCarriedItem(player, item.id, item.count, item.data+6);
-            
-        }else if(item.data!=0 && item.data<=5 && region.getBlockId(place.x,place.y,place.z)==liquid){
-            Entity.setCarriedItem(player, item.id, item.count, item.data+1);
-        }
-    })
+        Item.registerUseFunction(id, function (coords, item, block, player) {
+            var region = BlockSource.getDefaultForActor(player);
+            var place = coords.relative;
+            if (item.data == 6) {
+                region.setBlock(place.x, place.y, place.z, liquid, 0)
+            } else if (item.data == 0 &&
+                region.getBlockId(place.x, place.y, place.z) == liquid) {
+                region.setBlock(place.x, place.y, place.z, 0, 0)
+                Entity.setCarriedItem(player, item.id, item.count, item.data + 6);
+
+            } else if (item.data != 0 && item.data <= 5 && region.getBlockId(place.x, place.y, place.z) == liquid) {
+                Entity.setCarriedItem(player, item.id, item.count, item.data + 1);
+            }
+        })
     }, placeBlockRegistry: function (itemid: any, name: string, textureI: string, stackct: number, blockid: any, blockname: string, textureB: string, blocktype: any) {
         IDRegistry.genBlockID(blockid);
         Block.createBlock(blockid, [{

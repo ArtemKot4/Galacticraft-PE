@@ -37,15 +37,15 @@ let GeothermalSpout = new UI.StandartWindow(
             y:60,
             scale:3.0,
             bitmap:"generators.geoscale_1",direction:1},
-    //     EnergiA: { type: "text", x: 390, y: 75, width: 100, height: 30, text: "Space Joule" },
-    button:{type:"button",x:390,y:110,scale:1.4,bitmap:"butdeact",bitmap2:"butact",          clicker: {
+        EnergiA: { type: "text", x: 390, y: 75, width: 100, height: 30, text: "Space Joule" },
+    // button:{type:"button",x:390,y:110,scale:1.4,bitmap:"butdeact",bitmap2:"butact",          clicker: {
     //         onClick: function() {
     // Click.play();
     //         } 
-  }
+ // }
          }
     }    
-      }
+      
     );
 
 SpacesMachine.registerStandartMachine(BlockID.geothermal_generator_sc,{
@@ -119,7 +119,7 @@ BlockID.venus_spout){
    	  }
        
               
-        if(World.getThreadTime()%10 == 0){
+        if(World.getThreadTime()%2 == 0){
        this.data.energy+=1;
        
               

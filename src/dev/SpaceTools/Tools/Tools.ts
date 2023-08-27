@@ -68,11 +68,6 @@ Translation.addTranslation("Standart gear wheel", {
 ru: "Стандартная зубчатая шестерёнка"
 });
 
-IDRegistry.genItemID("gear_wheel_gravetite"); 
-Item.createItem("gear_wheel_gravetite", "Advanced gear wheel", {name: "gear_wheel_gravetite", meta: 0}, {stack: 64});
-Translation.addTranslation("Advanced gear wheel", {
-ru: "§9Продвинутая зубчатая шестерёнка"
-});
 
 // IDRegistry.genItemID("chip_industrialization"); 
 // Item.createItem("chip_industrialization", "Chip industrialization", {name: "chip", meta: 0}, {stack: 64});

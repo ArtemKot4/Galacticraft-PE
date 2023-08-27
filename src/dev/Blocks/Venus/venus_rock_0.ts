@@ -49,50 +49,21 @@ TileEntity.registerPrototype(BlockID.venus_spout,{
 	},
     tick: function(){
         
-        
+        for(var i;i<5;i++){
             
       if(
     this.blockSource.getBlockId
     (
         this.x,
-        this.y-4,
+        this.y-i,
         this.z)==
         BlockID.spacescraft_sulphuric_acid_still || this.blockSource.getBlockId
     (
         this.x,
-        this.y-4,
+        this.y-i,
         this.z)==
-        VanillaBlockID.lava || this.blockSource.getBlockId
-    (
-        this.x,
-        this.y-3,
-        this.z)==
-        BlockID.spacescraft_sulphuric_acid_still || this.blockSource.getBlockId
-    (
-        this.x,
-        this.y-3,
-        this.z)==
-        VanillaBlockID.lava || this.blockSource.getBlockId
-    (
-        this.x,
-        this.y-2,
-        this.z)==
-        BlockID.spacescraft_sulphuric_acid_still || this.blockSource.getBlockId
-    (
-        this.x,
-        this.y-2,
-        this.z)==
-        VanillaBlockID.lava || this.blockSource.getBlockId
-    (
-        this.x,
-        this.y-1,
-        this.z)==
-        BlockID.spacescraft_sulphuric_acid_still || this.blockSource.getBlockId
-    (
-        this.x,
-        this.y-1,
-        this.z)==
-        VanillaBlockID.lava){
+        VanillaBlockID.lava
+        ){
          this.data.spout=0}else{this.data. spout=1}
          
 
@@ -121,7 +92,7 @@ if(
             entity,40,true
             )
     }
-  
+}
 	}}},
 	click: function(item,id,count,data,coords){
 

@@ -5,11 +5,7 @@ Item.setCategory(BlockID.glowstone_torch_lit, 4);
 Item.setCategory(BlockID.torch_off_unlit, 4);
 Item.setCategory(BlockID.torch_off_lit, 4);
 Item.setCategory(BlockID.torch_on_lit, 4);
-Item.setCategory(ItemID.tantros_cane_1, 3)
-Item.setCategory(ItemID.tantros_berry_1, 3)
-Item.setCategory(ItemID.tantros_short_grass_1, 3)
-Item.setCategory(ItemID.tantros_grass_1, 3);
-Item.setCategory(ItemID.bush_vic_1, 3)
+
 /*Item.setCategory(ItemID.extra_oxygen_tank, 3)
 Item.setCategory(ItemID.oxygen_mask, 3)
 Item.setCategory(ItemID.frequency_module, 3)
@@ -38,10 +34,6 @@ Item.setCategory(ItemID.lunar_sapphire, 4)
 Item.setCategory(ItemID.raw_silicon, 4)
 Item.setCategory(ItemID.raw_desh, 4)
 Item.setCategory(ItemID.solar_dust_sc, 4)
-Item.setCategory(ItemID.gravetite_ingot, 4)
-Item.setCategory(ItemID.ingot_coiper, 4)
-Item.setCategory(ItemID.coldgravetite_ingot, 4)
-Item.setCategory(ItemID.arkanite_ingot, 4)
 Item.setCategory(ItemID.meteoric_iron_raw, 4)
 Item.setCategory(ItemID.ingot_lead_sc, 4)
 
@@ -74,37 +66,20 @@ Item.setCategory(ItemID.compressed_iron_steel, 4)
 Item.setCategory(ItemID.compressed_meteoric_iron, 4)
 Item.setCategory(ItemID.compressed_steel, 4)
 Item.setCategory(ItemID.compressed_titanium, 4)
-Item.setCategory(ItemID.compressed_arkanite, 4)
-Item.setCategory(ItemID.compressed_coiper, 4)
-Item.setCategory(ItemID.compressed_gravetite, 4)
-Item.setCategory(ItemID.compressed_coldgravetite, 4)
-Item.setCategory(ItemID.old_plate, 4)
-
 
 
 
 
 Item.setCategory(ItemID.shard_titanium, 4)
-Item.setCategory(ItemID.shard_gravetite, 4)
-Item.setCategory(ItemID.shard_coldgravetite, 4)
 Item.setCategory(ItemID.tin_shard, 4)
 Item.setCategory(ItemID.copper_shard, 4)
 Item.setCategory(ItemID.aluminum_shard, 4)
 Item.setCategory(ItemID.iron_steel_shard, 4)
-
-Item.setCategory(ItemID.coiper_shard, 4)
-
-Item.setCategory(ItemID.arkanite_shard, 4)
 Item.setCategory(ItemID.steel_shards, 4)
 Item.setCategory(ItemID.meteoric_iron_shard, 4)
 
 
 
-Item.setCategory(ItemID.arkanite_dust, 4)
-Item.setCategory(ItemID.gravetite_dust, 4)
-
-Item.setCategory(ItemID.coldgravetite_dust, 4)
-Item.setCategory(ItemID.coiper_dust, 4)
 Item.setCategory(ItemID.dust_titanium, 4)
 Item.setCategory(ItemID.solar_dust_sc, 4)
 Item.setCategory(ItemID.iron_steel_dust, 4)

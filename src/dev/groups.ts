@@ -1,8 +1,4 @@
 Item.addCreativeGroup("Ores", Translation.translate("Руда"), [
-    BlockID.arkanite_ore,
-    BlockID.gravetite_ore,
-    BlockID.coldgravetite_ore,
-    BlockID.coiper_ore,
     BlockID.desh,
     BlockID.moonore_cheese,
     BlockID.moonore_sapphire,
@@ -29,10 +25,7 @@ Item.addCreativeGroup("Ores", Translation.translate("Руда"), [
 
 Item.addCreativeGroup("block ores",
     Translation.translate("Блоки руды"), [
-        BlockID.gravetite_block,
-        BlockID.coldgravetite_block,
-        BlockID.arkanite_block,
-        BlockID.coiper_block,
+        
         BlockID.block_aluminum_sc,
         BlockID.block_copper_sc,
         BlockID.block_iron_steel,
@@ -54,10 +47,6 @@ Item.addCreativeGroup("block ingots",
         ItemID.ingot_desh,
         ItemID.ingot_lead_sc,
         ItemID.ingot_tin_sc,
-        ItemID.coldgravetite_ingot,
-        ItemID.gravetite_ingot,
-        ItemID.ingot_coiper,
-        ItemID.arkanite_ingot,
         ItemID.iron_steel_ingot,
         ItemID.ingot_bronze_sc,
         ItemID.ingot_steel_spacescraft,
@@ -75,10 +64,7 @@ Item.addCreativeGroup("Shard ores",
         ItemID.iron_steel_shard,
 
         ItemID.shard_titanium,
-        ItemID.shard_gravetite,
-        ItemID.shard_coldgravetite,
-        ItemID.coiper_shard,
-        ItemID.arkanite_shard,
+    
         ItemID.steel_shards,
         ItemID.meteoric_iron_shard
 
@@ -86,10 +72,9 @@ Item.addCreativeGroup("Shard ores",
 
 Item.addCreativeGroup("Dust ores",
     Translation.translate("Пыль"), [
-        ItemID.arkanite_dust,
+       
         ItemID.iron_steel_dust,
-        ItemID.coiper_dust,
-        ItemID.gravetite_dust,
+    
         ItemID.dust_titanium,
 
         ItemID.solar_dust_sc
@@ -428,354 +413,6 @@ Item.addCreativeGroup("Space gear",
        ItemID.oxygen_canister_infinite
     ]);
 
-SpacesCraft.addGroup(
-    ItemID.oxygentank_lightfull,
-    Translation.translate("Equipment")
-)
-
-SpacesCraft.addGroup(
-    ItemID.oxygentank_heavyfull,
-    Translation.translate("Equipment")
-)
-
-SpacesCraft.addGroup(
-    ItemID.oxygentank_medfull,
-    Translation.translate("Equipment")
-)
-
-SpacesCraft.addGroup(
-    ItemID.frequency_module,
-    Translation.translate("Equipment")
-)
-
-SpacesCraft.addGroup(
-    ItemID.sensor_glasses,
-    Translation.translate("Equipment")
-)
-
-SpacesCraft.addGroup(
-    ItemID.oxygen_mask,
-    Translation.translate("Equipment")
-)
-
-SpacesCraft.addGroup(
-    ItemID.shield_controller,
-    Translation.translate("Equipment")
-)
-
-SpacesCraft.addGroup(
-    ItemID.oxygen_canister_infinite,
-    Translation.translate("Equipment")
-)
-
-
-
-SpacesCraft.addGroup(
-    BlockID.lunar_stone,
-    Translation.translate("Moon")
-)
-
-SpacesCraft.addGroup(
-    BlockID.lunar_middle,
-    Translation.translate("Moon")
-)
-
-SpacesCraft.addGroup(
-    BlockID.lunar_stone_slab,
-    Translation.translate("Moon")
-)
-
-SpacesCraft.addGroup(
-    BlockID.lunar_middle_slab,
-    Translation.translate("Moon")
-)
-
-SpacesCraft.addGroup(
-    BlockID.moon_top_side,
-    Translation.translate("Moon")
-)
-
-SpacesCraft.addGroup(
-    BlockID.moon_top_side_slab,
-    Translation.translate("Moon")
-)
-
-SpacesCraft.addGroup(
-    BlockID.moonore_sapphire,
-    Translation.translate("Moon")
-)
-
-SpacesCraft.addGroup(
-    BlockID.moonore_cheese,
-    Translation.translate("Moon")
-)
-
-SpacesCraft.addGroup(
-    BlockID.ore_tin_moon,
-    Translation.translate("Moon")
-)
-
-SpacesCraft.addGroup(
-    BlockID.ore_copper_moon,
-    Translation.translate("Moon")
-)
-
-SpacesCraft.addGroup(
-    BlockID.lapiz_moon,
-    Translation.translate("Moon")
-)
-
-
-
-
-SpacesCraft.addGroup(
-    BlockID.cobblestone_mars,
-    Translation.translate
-    ("Mars")
-)
-
-SpacesCraft.addGroup(
-    BlockID.mars_stone_fence,
-    Translation.translate("Mars")
-)
-
-SpacesCraft.addGroup(
-    BlockID.dense_ice,
-    Translation.translate("Mars")
-)
-
-SpacesCraft.addGroup(
-    BlockID.mars_top_stone,
-    Translation.translate("Mars")
-)
-
-SpacesCraft.addGroup(
-    BlockID.mars_middle_stone,
-    Translation.translate("Mars")
-)
-
-SpacesCraft.addGroup(
-    BlockID.mars_bottom_stone,
-    Translation.translate("Mars")
-)
-
-SpacesCraft.addGroup(
-    BlockID.mars_top_stone_slab,
-    Translation.translate("Mars")
-)
-
-SpacesCraft.addGroup(
-    BlockID.mars_middle_stone_slab,
-    Translation.translate("Mars")
-)
-
-SpacesCraft.addGroup(
-    BlockID.mars_bottom_stone_slab,
-    Translation.translate("Mars")
-)
-
-SpacesCraft.addGroup(
-    BlockID.ore_copper_mars,
-    Translation.translate("Mars")
-)
-
-SpacesCraft.addGroup(
-    BlockID.ore_tin_mars,
-    Translation.translate("Mars")
-)
-
-SpacesCraft.addGroup(
-    BlockID.ore_iron_mars,
-    Translation.translate("Mars")
-)
-
-SpacesCraft.addGroup(
-    BlockID.desh,
-    Translation.translate("Mars")
-)
-
-
-
-
-
-
-SpacesCraft.addGroup(
-    BlockID.venus_rock_0,
-    Translation.translate("Venus")
-)
-
-SpacesCraft.addGroup(
-    BlockID.venus_rock_0_slab,
-    Translation.translate("Venus")
-)
-
-SpacesCraft.addGroup(
-    BlockID.venus_rock_1,
-    Translation.translate("Venus")
-)
-
-SpacesCraft.addGroup(
-    BlockID.venus_rock_1_slab,
-    Translation.translate("Venus")
-)
-
-SpacesCraft.addGroup(
-    BlockID.venus_rock_2,
-    Translation.translate("Venus")
-)
-
-SpacesCraft.addGroup(
-    BlockID.venus_rock_2_slab,
-    Translation.translate("Venus")
-)
-
-SpacesCraft.addGroup(
-    BlockID.venus_rock_0_fence,
-    Translation.translate("Venus")
-)
-
-SpacesCraft.addGroup(
-    BlockID.venus_rock_1_fence,
-    Translation.translate("Venus")
-)
-
-SpacesCraft.addGroup(
-    BlockID.venus_rock_2_fence,
-    Translation.translate("Venus")
-)
-
-/*SpacesCraft.addGroup(
-    BlockID.ore_quartz_venus,
-    Translation.translate("Venus")
-)
-
-SpacesCraft.addGroup(
-    BlockID.ore_tin_venus,
-    Translation.translate("Venus")
-)
-
-SpacesCraft.addGroup(
-    BlockID.ore_silicon_venus,
-    Translation.translate("Venus")
-)
-
-SpacesCraft.addGroup(
-    BlockID.ore_aluminum_venus,
-    Translation.translate("Venus")
-)
-
-SpacesCraft.addGroup(
-    BlockID.ore_copper_venus,
-    Translation.translate("Venus")
-)
-
-
-*/
-
-SpacesCraft.addGroup(
-    BlockID.asteroid_stones_1,
-    Translation.translate("Asteroids")
-)
-
-SpacesCraft.addGroup(
-    BlockID.asteroid_stones_0,
-    Translation.translate("Asteroids")
-)
-
-SpacesCraft.addGroup(
-    BlockID.asteroid_stones,
-    Translation.translate("Asteroids")
-)
-
-SpacesCraft.addGroup(
-    BlockID.ore_aluminum_asteroids,
-    Translation.translate("Asteroids")
-)
-
-SpacesCraft.addGroup(
-    BlockID.ore_iron_asteroids,
-    Translation.translate("Asteroids")
-)
-
-
-
-
-
-/*
-SpacesCraft.addGroup(
-    BlockID.vic_a1_sand,
-    Translation.translate("Vic A - 1")
-)
-
-SpacesCraft.addGroup(
-    BlockID.vic_a1_stonesand,
-    Translation.translate("Vic A - 1")
-)
-
-SpacesCraft.addGroup(
-    BlockID.vic_a1_stone,
-    Translation.translate("Vic A - 1")
-)
-
-SpacesCraft.addGroup(
-    BlockID.vic_coal,
-    Translation.translate("Vic A - 1")
-)
-
-SpacesCraft.addGroup(
-    ItemID.burned_coal,
-    Translation.translate("Vic A - 1")
-)
-
-SpacesCraft.addGroup(
-    BlockID.vic_iron,
-    Translation.translate("Vic A - 1")
-)
-
-SpacesCraft.addGroup(
-    BlockID.marble_sc,
-    Translation.translate("Vic A - 1")
-)
-
-SpacesCraft.addGroup(
-    ItemID.bush_vic_1,
-    Translation.translate("Vic A - 1")
-)
-
-
-
-*/
-
-if (__config__.getBool("Gameplay.ElectricInformation")) {
-
-    SpacesCraft.addElectroLevel(BlockID.coal_generator, "1");
-
-    SpacesCraft.addElectroLevel(BlockID.fuel_loader, "3");
-
-    SpacesCraft.addElectroLevel(BlockID.refinery_sc, "3");
-
-    SpacesCraft.addElectroLevel(BlockID.compressor_sj, "0");
-
-    SpacesCraft.addElectroLevel(BlockID.electric_compressor_sj, "3");
-
-    SpacesCraft.addElectroLevel(BlockID.collector_sc, "4");
-
-    SpacesCraft.addElectroLevel(BlockID.oxygen_compressor, "5");
-
-    SpacesCraft.addElectroLevel(BlockID.oxygen_decompressor, "5");
-
-   // SpacesCraft.addElectroLevel(BlockID.compressed_drill, "?");
-
-    SpacesCraft.addElectroLevel(BlockID.circuit_fabricator, "3");
-
-    SpacesCraft.addElectroLevel(BlockID.oxygen_storage_module, "4");
-
-    SpacesCraft.addElectroLevel(BlockID.geothermal_generator_sc, "1");
-
-    SpacesCraft.addElectroLevel(BlockID.basic_solar_panel, "1");
-
-    SpacesCraft.addElectroLevel(BlockID.workbench_rocket, "1");
-}
 
 
 

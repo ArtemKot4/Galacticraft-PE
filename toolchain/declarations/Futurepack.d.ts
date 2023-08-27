@@ -21,3 +21,9 @@ declare namespace MachineRecipeRegistry {
 //    };
    
 }
+declare namespace player {function func (): void}
+declare namespace KEX {
+  namespace GlobalContext { function getLocalPlayer()}
+ 
+}
+

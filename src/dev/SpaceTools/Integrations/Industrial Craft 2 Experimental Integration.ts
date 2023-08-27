@@ -18,14 +18,14 @@ function isToolboxEmpty(slot) {
 }
 
 IDRegistry.genBlockID("enclosed_copper_cable");
-Block.createBlockWithRotation("enclosed_copper_cable",[{name: "Enclosed Copper Cable", texture: [["Oxygentile 3", 0],["Oxygentile 3", 0],["Enclosed Copper Cable", 0],["Enclosed Copper Cable", 0],["Enclosed Copper Cable", 0],["Enclosed Copper Cable", 0]], inCreative: true} ]);
+Block.createBlockWithRotation("enclosed_copper_cable",[{name: "Enclosed Copper Cable", texture: [["Enclosed Copper Cable", 0]], inCreative: true} ]);
 Translation.addTranslation("Enclosed Copper Cable",{
 ru: "Герметичный медный кабель §6(IC2)"
 });
 EU.registerWire(BlockID.enclosed_copper_cable, 128);
 
 IDRegistry.genBlockID("enclosed_gold_cable");
-Block.createBlockWithRotation("enclosed_gold_cable",[{name: "Enclosed Gold Cable", texture: [["Oxygentile 3", 0],["Oxygentile 3", 0],["Enclosed Gold Cable", 0],["Enclosed Gold Cable", 0],["Enclosed Gold Cable", 0],["Enclosed Gold Cable", 0]], inCreative: true} ]);
+Block.createBlockWithRotation("enclosed_gold_cable",[{name: "Enclosed Gold Cable", texture: [["Enclosed Gold Cable", 0]], inCreative: true} ]);
 Translation.addTranslation("Enclosed Gold Cable",{
 ru: "Герметичный золотой кабель §6(IC2)"
 });
@@ -1277,12 +1277,7 @@ Recipes.addShaped({ id: ItemID.EUMeter, count: 1, data: 0 }, [
         " b "
     ], ['#', BlockID.mekanism_block, 0, 'x', ItemID.circuitBasic, 0, 'b', BlockID.miningPipe, 0]);
     
-    Recipes.addShaped({ id: BlockID.advancedMiner, count: 1, data: 0 }, [
-        "pmp",
-        "e#a",
-        "pmp"
-    ], ['#', BlockID.advanced_mekanism_block, 0, 'a', BlockID.teleporter, 0, 'e', BlockID.storageMFE, -1, 'm', BlockID.miner, -1, 'p', ItemID.plateAlloy, 0]);
-    
+       
       Recipes.addShaped({ id: BlockID.cropHarvester, count: 1, data: 0 }, [
         "zcz",
         "s#s",
@@ -1313,30 +1308,15 @@ Recipes.addShaped({ id: ItemID.EUMeter, count: 1, data: 0 }, [
         "nnn"
     ], ['#', BlockID.mekanism_block, 0, 'x', 54, -1, 'c', ItemID.circuitBasic, 0, 'a', ItemID.empty_liquid_canister, 0, 'n', ItemID.cropStick, 0]);
     
-        Recipes.addShaped({ id: BlockID.teleporter, count: 1, data: 0 }, [
-        "xax",
-        "c#c",
-        "xdx"
-    ], ['#', BlockID.advanced_mekanism_block, 0, 'x', ItemID.circuitAdvanced, 0, 'a', ItemID.freqTransmitter, 0, 'c', ItemID.cableOptic, 0, 'd', 264, 0]);
-    
-    Recipes.addShaped({ id: BlockID.teslaCoil, count: 1, data: 0 }, [
-        "ror",
-        "r#r",
-        "cxc"
-    ], ['#', BlockID.advanced_mekanism_block, 0, 'x', ItemID.circuitBasic, 0, 'c', ItemID.casingIron, 0, 'o', ItemID.coil, 0, 'r', 331, 0]);
-    
+      
+
     Recipes.addShaped({ id: ItemID.quantumLeggings, count: 1, data: ELECTRIC_ITEM_MAX_DAMAGE }, [
     "m#m",
     "axa",
     "c c"
 ], ['#', ItemID.storageLapotronCrystal, -1, 'x', ItemID.nanoLeggings, -1, 'a', ItemID.plateReinforcedIridium, 0, 'm', BlockID.mekanism_block, 0, 'c', 348, 0], ChargeItemRegistry.transferEnergy);
 
-Recipes.addShaped({ id: ItemID.upgradeMFSU, count: 1, data: 0 }, [
-        "aca",
-        "axa",
-        "aba"
-    ], ['b', ItemID.bronzeWrench, 0, 'a', ItemID.storageLapotronCrystal, -1, 'x', BlockID.advanced_mekanism_block, 0, 'c', ItemID.circuitAdvanced, -1]);
-    
+
     Recipes.addShaped({ id: BlockID.machineBlockAdvanced, count: 1, data: 0 }, [
         "scs",
         "a#a",
@@ -1439,12 +1419,7 @@ Recipes.addShaped({ id: ItemID.upgradeMFSU, count: 1, data: 0 }, [
         "bab"
     ], ['x', BlockID.mekanism_block, 0, 'a', ItemID.storageCrystal, -1, 'b', ItemID.cableGold2, -1]);
     
-    Recipes.addShaped({ id: BlockID.storageMFSU, count: 1, data: 0 }, [
-        "aca",
-        "axa",
-        "aba"
-    ], ['b', BlockID.storageMFE, -1, 'a', ItemID.storageLapotronCrystal, -1, 'x', BlockID.advanced_mekanism_block, 0, 'c', ItemID.circuitAdvanced, 0]);
-    
+ 
     Recipes.addShaped({ id: BlockID.transformerMV, count: 1, data: 0 }, [
         "b",
         "x",
@@ -1509,12 +1484,6 @@ Recipes.addShaped({ id: ItemID.upgradeMFSU, count: 1, data: 0 }, [
         "cmc",
         "a#a",
         "axa"
-    ], ['#', BlockID.advanced_mekanism_block, 0, 'x', ItemID.electricMotor, 0, 'a', 265, 0, 'm', ItemID.miningLaser, -1, 'c', ItemID.coil, 0]);
-    
-        Recipes.addShaped({ id: BlockID.thermalCentrifuge, count: 1, data: 0 }, [
-        "cmc",
-        "a#a",
-        "axa"
     ], ['#', BlockID.machineBlockAdvanced, 0, 'x', ItemID.electricMotor, 0, 'a', 265, 0, 'm', ItemID.miningLaser, -1, 'c', ItemID.coil, 0]);
     
     Recipes.addShaped({ id: BlockID.blastFurnace, count: 1, data: 0 }, [
@@ -1522,13 +1491,7 @@ Recipes.addShaped({ id: ItemID.upgradeMFSU, count: 1, data: 0 }, [
         "asa",
         "axa"
     ], ['s', BlockID.mekanism_block, 0, 'a', ItemID.casingIron, 0, 'x', ItemID.heatConductor, 0]);
-    
-   Recipes.addShaped({ id: BlockID.massFabricator, count: 1, data: 0 }, [
-        "xax",
-        "b#b",
-        "xax"
-    ], ['b', BlockID.advanced_mekanism_block, 0, 'x', 348, 0, 'a', ItemID.circuitAdvanced, 0, '#', ItemID.storageLapotronCrystal, -1]);
-    
+
     Recipes.addShaped({ id: BlockID.pump, count: 1, data: 0 }, [
         "cxc",
         "c#c",
@@ -1561,15 +1524,6 @@ Recipes.addShaped({ id: ItemID.upgradeMFSU, count: 1, data: 0 }, [
     ICTool.addRecipe({ id: ItemID.compressed_meteoric_iron, count: 1, data: 0 }, [{ id: ItemID.meteoric_iron_ingot,data: 0 }], ItemID.craftingHammer);
     
     ICTool.addRecipe({ id: ItemID.desh_plate, count: 1, data: 0 }, [{ id: ItemID.ingot_desh,data: 0 }], ItemID.craftingHammer);
-    
-    ICTool.addRecipe({ id: ItemID.compressed_arkanite, count: 1, data: 0 }, [{ id: ItemID.arkanite_ingot,data: 0 }], ItemID.craftingHammer);
-
-    ICTool.addRecipe({ id: ItemID.compressed_gravetite, count: 1, data: 0 }, [{ id: ItemID.gravetite_ingot,data: 0 }], ItemID.craftingHammer);
-    
-    ICTool.addRecipe({ id: ItemID.compressed_coldgravetite, count: 1, data: 0 }, [{ id: ItemID.coldgravetite_ingot,data: 0 }], ItemID.craftingHammer);
-    
-    ICTool.addRecipe({ id: ItemID.compressed_coiper, count: 1, data: 0 }, [{ id: ItemID.ingot_coiper,data: 0 }], ItemID.craftingHammer);
-
 
 MachineRecipeRegistry.registerRecipesFor("metalFormer1", {
         "ItemID.compressed_copper": { id: BlockID.copper_wire_bare, count: 3 },
@@ -1603,16 +1557,12 @@ MachineRecipeRegistry.registerRecipesFor("metalFormer1", {
         "ItemID.iron_steel_ingot": { id: BlockID.iron_steel_block, count: 1, data: 0, sourceCount: 9 },
         "ItemID.ingot_steel": { id: BlockID.steel_block_sc, count: 1, data: 0, sourceCount: 9 },
         "ItemID.ingot_bronze_sc": { id: BlockID.bronze_block_sc, count: 1, data: 0, sourceCount: 9 },
-         "ItemID.arkanite_ingot": { id: ItemID.compressed_arkanite, count: 1, data: 0 },
-        "ItemID.gravetite_ingot": { id: ItemID.compressed_gravetite, count: 1, data: 0 },
-        "ItemID.coldgravetite_ingot": { id: ItemID.compressed_coldgravetite, count: 1, data: 0 },},
+    },
     true);
     
         MachineRecipeRegistry.registerRecipesFor("metalFormer0", {
         // ingots
-        "ItemID.arkanite_ingot": { id: ItemID.compressed_arkanite, count: 1 },
-        "ItemID.gravetite_ingot": { id: ItemID.compressed_gravetite, count: 1 },
-        "ItemID.coldgravetite_ingot": { id: ItemID.compressed_coldgravetite, count: 1 },
+       
         "ItemID.copper_ingot_sc": { id: ItemID.compressed_copper, count: 1 },
         "ItemID.ingot_tin_sc": { id: ItemID.compressed_tin, count: 1 },
         "ItemID.ingot_bronze_sc": { id: ItemID.compressed_bronze, count: 1 },

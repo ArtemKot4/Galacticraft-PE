@@ -85,7 +85,7 @@ let DisplayUI = new UI.StandardWindow({
         drawing: [],
         elements:
         {
-            slot0:
+            "slot0":
             {
                 type: "slot",
                 x: 380,
@@ -93,7 +93,7 @@ let DisplayUI = new UI.StandardWindow({
                 size: 70
 
             },
-            slot1:
+            "slot1":
             {
                 type: "slot",
                 x: 450,
@@ -101,7 +101,7 @@ let DisplayUI = new UI.StandardWindow({
                 size: 70
 
             },
-            slot2:
+            "slot2":
             {
                 type: "slot",
                 x: 520,
@@ -109,7 +109,7 @@ let DisplayUI = new UI.StandardWindow({
                 size: 70
 
             },
-            slot3:
+            "slot3":
             {
                 type: "slot",
                 x: 590,
@@ -117,7 +117,7 @@ let DisplayUI = new UI.StandardWindow({
                 size: 70
 
             },
-            slot4:
+            "slot4":
             {
                 type: "slot",
                 x: 660,
@@ -125,7 +125,7 @@ let DisplayUI = new UI.StandardWindow({
                 size: 70
 
             },
-            slot5:
+            "slot5":
             {
                 type: "slot",
                 x: 730,
@@ -160,4 +160,8 @@ TileEntity.registerPrototype(BlockID.crashed_probe, {
         }
 
     }
+});
+
+Block.registerDropFunction("ore_silicon", function(coords, blockID){
+    return [[ItemID.radioisotope_core, 1, 0]] 
 });

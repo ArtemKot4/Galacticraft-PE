@@ -84,7 +84,7 @@ let FuelLoader = new UI.StandartWindow({
             scale: 3
         }],
     elements: {
-        canisterFuel:
+        "canisterFuel":
         {
             type: "slot",
             x: 355,
@@ -92,7 +92,7 @@ let FuelLoader = new UI.StandartWindow({
             size: 70,
             bitmap: "SPC.SPC_Canister"
         },
-        FuelScale:
+        "FuelScale":
         {
             type: "scale",
             x: 268,
@@ -101,14 +101,14 @@ let FuelLoader = new UI.StandartWindow({
             scale: 3.8,
             direction: 1
         },
-        EnergySlot: {
+        "EnergySlot": {
             type: "slot",
             x: 455,
             y: 260,
             size: 70,
             bitmap: "Others.en_slot"
         },
-        ENERGYBar: {
+        "ENERGYBar": {
             type: "scale",
             x: 550,
             y: 70,
@@ -116,7 +116,7 @@ let FuelLoader = new UI.StandartWindow({
             scale: 3,
             direction: 0
         },
-        Energy: {
+        "Energy": {
             type: "scale",
             x: 690,
             y: 70,
@@ -124,7 +124,7 @@ let FuelLoader = new UI.StandartWindow({
             scale: 3,
             direction: 1
         },
-        ELECTRIC: {
+        "ELECTRIC": {
             type: "text",
             x: 565,
             y: 113,
@@ -178,6 +178,11 @@ SpacesMachine.registerStandartMachine(BlockID.fuel_loader, {
             this.data.liquid += 5;
             Bucket.play();
         }
+        for (let space = 0; space < 3; space++) {
+        if(World.getThreadTime()%20==0 && 
+        this.blockSource.getBlockId(this.x-space,this.y,this.z+space)==BlockID.rocket_padding){
+                      alert("Внимание!Заправка будет добавлена в будущем")
+        }}
     },
     energyTick: function(type, src) {
 

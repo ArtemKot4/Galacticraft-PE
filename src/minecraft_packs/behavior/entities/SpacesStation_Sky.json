@@ -1,0 +1,58 @@
+{
+	"format_version": "1.16.100",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "spacescraft:spaces_station_sky",
+			"is_spawnable": true,
+			"is_summonable": true,
+			"is_experimental": false
+		},
+		"component_groups": {
+		},
+		"components": {
+			"minecraft:type_family": {
+				 "family": ["mob","spaces"]
+			},
+			"minecraft:breathable": {
+			     "total_supply": 15,
+                 "suffocate_time": 0
+			},
+			"minecraft:nameable": {},
+			"minecraft:health": {
+				"value": 10000,
+				"max": 10000
+			},
+			"minecraft:movement": {
+				"value": 0
+			},
+			"minecraft:navigation.walk": {
+				"can_path_over_water":false,
+				"avoid_water": false,
+				"avoid_damage_blocks": false
+			},
+			"minecraft:movement.basic": {
+			},
+			"minecraft:jump.static": {},
+			"minecraft:can_climb": {},
+			"minecraft:collision_box": {
+				"width": 0,
+				"height": 0
+			},
+
+            "minecraft:scale": {
+             "value": 4
+            },
+			"minecraft:physics": {},
+			"minecraft:pushable": {
+				"is_pushable": false,
+				"is_pushable_by_piston": false
+			},
+			"minecraft:conditional_bandwidth_optimization": {
+			}
+		},
+		"events": {
+		    "minecraft:entity_spawned": {
+		    }
+		}
+	}
+}

@@ -34,7 +34,6 @@ var CompressinG = new UI.StandartWindow({
             type: "scale", x: 590, y: 150, direction: 0, bitmap: "compressor_slace", scale: 4.2,
             clicker: {
                 onClick: function () {
-
                     RV && RV.RecipeTypeRegistry.openRecipePage("Compressor");
 
                 }
@@ -47,40 +46,40 @@ var CompressinG = new UI.StandartWindow({
         "CoalSlot": {
             type: "slot", x: 530, y: 300, bitmap: "coalslot", size: 60
         },
-        "slot1": {
+        "slot_1": {
             type: "slot", x: 410, y: 110, bitmap: "slot", size: 60
         },
-        "slot2": {
+        "slot_2": {
             type: "slot", x: 470, y: 110, bitmap: "slot", size: 60
         },
-        "slot3": {
+        "slot_3": {
             type: "slot", x: 530, y: 110, bitmap: "slot", size: 60
         },
 
-        "slot4": {
+        "slot_4": {
             type: "slot", x: 410, y: 170, bitmap: "slot", size: 60
         },
-        "slot5": {
+        "slot_5": {
             type: "slot", x: 470, y: 170, bitmap: "slot", size: 60
         },
-        "slot6": {
+        "slot_6": {
             type: "slot", x: 530, y: 170, bitmap: "slot", size: 60
         },
 
-        "slot7": {
+        "slot_7": {
             type: "slot", x: 410, y: 230, bitmap: "slot", size: 60
         },
-        "slot8": {
+        "slot_8": {
             type: "slot", x: 470, y: 230, bitmap: "slot", size: 60
         },
-        "slot9": {
+        "slot_9": {
             type: "slot", x: 530, y: 230, bitmap: "slot", size: 60
         },
 
         "slotResult": {
             type: "slot", x: 830, y: 190, bitmap: "slot", size: 70
         },
-        Status:
+        "Status":
         {
             type: "text", x: 650, y: 290, width: 100, height: 30, text: "Status: "
         },
@@ -118,40 +117,47 @@ TileEntity.registerPrototype(BlockID.compressor_sj, {
         if (this.data.progress != 0) {
             this.container.setText("Status", Translation.translate("Status: working"))
         };
-        var CoalSlot = this.container.getSlot("CoalSlot")
-        for (let i in burnItems) {
+        let slotResult = this.container.getSlot("slotResult");
+        var CoalSlot = this.container.getSlot("CoalSlot");
+        for (var i in burnItems) {
             if (CoalSlot.id == burnItems[i].id && this.data.burning != 500) {
                 this.data.burning += 500;
-                CoalSlot.count--
+                this.container.getSlot("CoalSlot").count -=1;
+                CoalSlot.count--;
+              
                 this.data.active = true;
             }
         }
         if (this.data.burning == 500 && this.data.active == true) { this.data.energy++ }
         if (this.data.energy == 500) { this.data.active = false; this.data.burning = 0 }
 
-      
-        for (let n = 0; n < 10; n++) {
+     
+        for (var n = 0; n <= 9; n++) {
             
             
-var slots = this.container.getSlot("slot"+n);
-                var slotResult = this.container.getSlot("slotResult")
+//let slots = ["slot_1","slot_2","slot_3","slot_4","slot_5","slot_6","slot_7","slot_8","slot_9"];
+               
 
-                for (let i in compressorRecipe) {
-                    if (slots.id == compressorRecipe[i].slots &&
-                        this.data.energy >= 100 && this.data.progress <= 500) {
-                        this.data.progress++
+                for (var i in compressorRecipe) {
+                    if (this.container.getSlot("slot_"+n).id == compressorRecipe[i].slot_+n &&
+                        this.data.energy >= 100 && this.data.progress < 500) {
+                        this.data.progress++;}
                         if (slotResult.id == 0 || slotResult.id == compressorRecipe[i].result) {
                             if (this.data.progress >= 500) {
-                                compressorRecipe[i].count -= 1;
-                                this.container.setSlot("slot" + n, slots.id, slots.count, slots.data)
                                 this.data.energy -= 100;
                                 this.data.progress = 0;
-                                this.container.setSlot("slotResult", compressorRecipe[i].result, slotResult.count + 1, 0)
+                                this.container.getSlot("slot_"+n).count -= 1;
+                                this.container.setSlot(this.container.getSlot("slot_"+n), 
+                                this.container.getSlot("slot_"+n).id, 
+                                this.container.getSlot("slot_"+n).count, this.container.getSlot("slot_"+n).data);
+                                
+                                this.container.setSlot("slotResult", compressorRecipe[i].result,
+                                 slotResult.count += 1, 0)
                             }
-                        }
+                        }                                                                          
                     }
                 }
-            }
+            
 
         this.container.setScale("progressScale", this.data.progress / 500);
         this.container.setScale("BurningScale", this.data.energy / 500);
@@ -181,3 +187,23 @@ this.container.setText("ELECTRIC", "Sj :" + this.data.energy + " / " + this.data
 */
 }
 );
+
+// StorageInterface.createInterface(BlockID.compressor_sj, {
+//     slots: {
+//         "slot^1-9": {
+//             input: true,
+//             side: "down",
+//             isValid: function(item, side){
+//                 return SpacesMachine.getCompressorRecipe();
+//             }
+//         },
+//         "CoalSlot": {
+//             input: true,
+//             side: "horizontal",
+//             isValid: function(item, side){
+//                 return SpacesMachine.getCoal();
+//             }
+//         },
+//         "slotResult": {output: true}
+//     }
+// });

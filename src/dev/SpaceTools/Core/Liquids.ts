@@ -27,75 +27,8 @@ Block.createLiquidBlock("spacescraft_oil",
 
 
 
-LiquidRegistry.registerLiquid("spacescraft_rubber", "Rubber", ["rubber_spacescraft"]); 
- 
-Block.createLiquidBlock("spacescraft_rubber", 
-{ 
- name: "Rubber", 
- still: { 
- texture: ["rubber_spacescraft", 0], 
- id: "spacescraft_rubber_still",
- }, 
- flowing: { 
- texture: ["rubber_spacescraft", 0], 
- id: "spacescraft_rubber_flowing",
- }, 
- bucket: { 
- texture: { name: "rubber_bucket", meta: 0 }, 
- //name: "Bucket of rubber",
- id: "bucket_of_rubber",
- }, 
-}, BLOCK_TYPE_LIQUID);
 
 
-
-
-
-
-LiquidRegistry.registerLiquid("spacescraft_cerosin", "Cerosin", ["cerosin_sc"]); 
- 
-Block.createLiquidBlock("spacescraft_cerosin", 
-{ 
- name: "Cerosin", 
- still: { 
- texture: ["cerosin_sc", 0], 
- id: "spacescraft_cerosin_still",
- }, 
- flowing: { 
- texture: ["cerosin_sc", 0], 
- id: "spacescraft_cerosin_flowing",
- }, 
- bucket: { 
- texture: { name: "cerosin_bucket", meta: 0 }, 
- //name: "Bucket of kerosene",
- id: "bucket_of_kerosene",
- }, 
-}, BLOCK_TYPE_LIQUID);
-
-
-
- /*LiquidRegistry.registerLiquid("spacescraft_bad_fuel", "Dirty Fuel", ["bad_fuel"]); 
- 
-Block.createLiquidBlock("spacescraft_bad_fuel", 
-{ 
- name: "Dirty Fuel", 
- still: { 
- texture: ["bad_fuel", 0], 
- id: "spacescraft_bad_fuel_still",
- }, 
- flowing: { 
- texture: ["bad_fuel", 0], 
- id: "spacescraft_bad_fuel_flowing",
- }, 
- bucket: { 
- texture: { name: "bad_fuel_bucket", meta: 0 }, 
- name: "Bucket of dirty fuel",
- id: "bucket_of_bad_fuel",
- }, 
-}, BLOCK_TYPE_LIQUID);
-
-
-*/
 LiquidRegistry.registerLiquid("spacescraft_liquidoxygen", "Liquid Oxygen", ["liquidoxygen"]); 
  
 Block.createLiquidBlock("spacescraft_liquidoxygen", 
@@ -294,45 +227,6 @@ Block.createLiquidBlock("spacescraft_liquid_argon",
 }, BLOCK_TYPE_LIQUID);
 
 
-Translation.addTranslation("Bucket of kerosene", {ru: "Ведро с керосином"});
-
-Translation.addTranslation("Bucket of rubber",
-{ru: "Ведро с сырым каучуком"});
-
-Translation.addTranslation("Bucket of liquid oxygen", {ru: "Ведро с жидким H2O"});
-
-Translation.addTranslation("Bucket of dirty fuel", {ru: "Ведро с загрязнённым топливом"});
-
-Translation.addTranslation("Bucket of methane", {ru: "Ведро с метаном"});
-
-Translation.addTranslation("Bucket of liquid methane", {ru: "Ведро с жидким метаном"});
-
-Translation.addTranslation("Bucket of argon", {ru: "Ведро с Аргоном"});
-
-Translation.addTranslation("Bucket of liquid argon", {ru: "Ведро с жидким Аргоном"});
-
-Translation.addTranslation("Bucket of nitrogen", {ru: "Ведро с Нитрогеном(азотом)"});
-
-Translation.addTranslation("Bucket of liquid nitrogen", {ru: "Ведро с жидким Нитрогеном§e(азотом)"});
-
-
-Translation.addTranslation("Bucket of carbon dioxide", {ru: "Ведро с жидким углекислым  газом"});
-
-Translation.addTranslation("Bucket of helium", {ru: "Ведро с жидким гелием"});
-
-
-Translation.addTranslation("Bucket of fuel", {ru: "Ведро с ракетным топливом"});
-
-Translation.addTranslation("Bucket of oil", {ru: "Ведро с нефтью"});
-
-Translation.addTranslation("Bucket of sulphuric acid", {ru: "Ведро серной кислоты"});
-
-Translation.addTranslation("Bucket of sludge", {ru: "Ведро бактериального осадка"});
-
-
-
-LiquidRegistry.registerLiquid("spacescraft_fuel", "spacescraft_fuel", ["fuel_gl_flow"]); 
- 
 Block.createLiquidBlock("spacescraft_fuel", 
 { 
  name: "Fuel", 

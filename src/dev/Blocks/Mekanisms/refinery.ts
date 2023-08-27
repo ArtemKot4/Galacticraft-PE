@@ -78,20 +78,7 @@ let ClearFuel = new UI.StandartWindow(
             bitmap: "Liquid_null",
             scale: 3.8
         },
-        {
-            type: "bitmap",
-            x: 667,
-            y: 190,
-            bitmap: "Liquid_null",
-            scale: 3.8
-        },
-        {
-            type: "bitmap",
-            x: 565,
-            y: 190,
-            bitmap: "Liquid_null",
-            scale: 3.8
-        },
+       
         {
             type: "bitmap",
             x: 500,
@@ -112,14 +99,6 @@ let ClearFuel = new UI.StandartWindow(
         {
             type: "slot",
             x: 355,
-            y: 120,
-            size: 70,
-            bitmap: "SPC.SPC_Canister"
-        },
-        canister1i1:
-        {
-            type: "slot",
-            x: 445,
             y: 120,
             size: 70,
             bitmap: "SPC.SPC_Canister"
@@ -156,42 +135,7 @@ let ClearFuel = new UI.StandartWindow(
             size: 70,
             bitmap: "SPC.SPC_Canister"
         },
-        canister3: {
-            type: "slot",
-            x: 755,
-            y: 120,
-            size: 70,
-            bitmap: "SPC.SPC_Canister"
-        },
-        canister4: {
-            type: "slot",
-            x: 651,
-            y: 120,
-            size: 70,
-            bitmap: "SPC.SPC_Canister"
-        },
-        CEROSINScall: {
-            type: "scale",
-            x: 667,
-            y: 190,
-            bitmap: "Others.Liquid_cerosin",
-            scale: 3.8,
-            direction: 1,
-            clicker: {
-                onClick: function() {
-                    /*    RV && RV.RecipeTypeRegistry.openRecipePage("refinery");*/
-                }}},
-        RUBBERScall: {
-            type: "scale",
-            x: 565,
-            y: 190,
-            bitmap: "Others.Liquid_rubber",
-            scale: 3.8,
-            direction: 1,
-            clicker: {
-                onClick: function() {
-                    /* RV && RV.RecipeTypeRegistry.openRecipePage("refinery");*/
-                }}},
+       
         ENERGYBar: {
             type: "scale",
             x: 500,
@@ -243,8 +187,6 @@ SpacesMachine.registerStandartMachine(BlockID.refinery_sc, {
         energyMax: 500,
         fuel: 0,
         oil: 0,
-        kerosene: 0,
-        rubber: 0,
     },
     energyReceive: function(type, amount, voltage) {
         amount = Math.min(amount, 450)
@@ -266,15 +208,6 @@ SpacesMachine.registerStandartMachine(BlockID.refinery_sc, {
         var canister2 = this.container.getSlot(
             "canister2");
 
-        var canister3 = this.container.getSlot(
-            "canister3");
-
-        var canister4 = this.container.getSlot(
-            "canister4");
-
-        var canister1i1 = this.container.getSlot(
-            "canister1i1");
-
         this.container.setScale("Energy", this.data.energy / 500);
         this.container.setScale("ENERGYBar", this.data.energy / 500);
         this.container.setScale("OilScall", this.data.oil / 40);
@@ -284,40 +217,24 @@ SpacesMachine.registerStandartMachine(BlockID.refinery_sc, {
         this.container.setText("ELECTRIC", "Sj :" + this.data.energy + " / " + this.data.energyMax);
         if (this.data.energy >= 50) {
 
-            if (this.container.getSlot("canister1").id == ItemID.bucket_of_oil && this.data.kerosene != 40 && this.data.fuel != 40 && this.data.rubber != 40) {
+            if (this.container.getSlot("canister1").id == ItemID.bucket_of_oil && this.data.fuel != 40 ||
+             this.container.getSlot("canister1").id == ItemID.oil_canister && this.container.getSlot("canister1").data == 6 && this.data.fuel != 40) {
                 this.container.setSlot("canister1", 325, 1, 0);
                 this.data.fuel += 5;
                 this.data.oil += 5;
                 this.data.energy -= 45;
                 Bucket.play();
-                if (this.data.kerosene != 40 && this.data.fuel != 40) {
+                if (this.data.fuel != 40) {
                     this.data.oil -= 5;
                 };
-                this.data.kerosene += 5;
-                this.data.rubber += 5
-                if (this.data.fuel == 40 || this.data.rubber == 40 || this.data.kerosene == 40 && this.container.getSlot("canister1").id == ItemID.bucket_of_oil) {
+               
+                if (this.data.fuel == 40 &&
+                    this.container.getSlot("canister1").id == ItemID.bucket_of_oil) {
                     this.container.setSlot("canister1", 325, 1, 0); this.data.oil += 0
                 }
             }
 
 
-            if (
-                this.container.getSlot(
-                    "canister4").id ==
-                ItemID.rubber_canister &&
-                this.container.getSlot(
-                    "canister4").data != 6 || this.container.getSlot("canister4").id ==
-                ItemID.empty_liquid_canister) {
-                if (
-                    World.getThreadTime()%20 == 0 &&
-                    this.data.rubber >= 1 &&
-                    this.data.energy >= 15
-                ) {
-                    this.container.setSlot("canister4", ItemID.rubber_canister, 1,  canister4.data+1);
-                    this.data.rubber -= 1;
-                    this.data.energy -= 3
-                }
-            }
             
             if(
             this.container.getSlot(
@@ -344,54 +261,9 @@ SpacesMachine.registerStandartMachine(BlockID.refinery_sc, {
         }
 
 
-    if (
-        this.container.getSlot(
-            "canister1i1").id ==
-        ItemID.oil_canister &&
-        this.container.getSlot(
-            "canister1i1").data != 6 || this.container.getSlot(
-            "canister1i1").id ==
-        ItemID.empty_liquid_canister) {
-        if (
-            World.getThreadTime()%20 == 0 &&
-            this.data.oil >= 1 &&
-            this.data.energy >= 15
-        ) {
-            this.container.setSlot(
-                "canister1i1",
-                ItemID.oil_canister,
-                1,
-                canister1i1.data+1);
-            this.data.oil -= 1;
-            this.data.energy -= 3
-        }
+    
 
     }
-
-    if (
-        this.container.getSlot(
-            "canister3").id ==
-        ItemID.cerosin_canister &&
-        this.container.getSlot(
-            "canister3").data != 6 || this.container.getSlot(
-            "canister3").id ==
-        ItemID.empty_liquid_canister) {
-        if (
-            World.getThreadTime()%20 == 0 &&
-            this.data.kerosene >=1 &&
-            this.data.energy >= 15
-        ) {
-            this.container.setSlot(
-                "canister3",
-                ItemID.cerosin_canister,
-                1,
-                canister3.data+1);
-            this.data.kerosene -= 1;
-            this.data.energy -= 3
-        }
-
-    }}
-
 
 },
 energyTick: function(type, src) {

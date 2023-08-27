@@ -19,7 +19,7 @@ Translation.addTranslation("Atomic battery", {
 ru: "§6Атомная батарейка"
 });
 
-battery.setInfinite(ItemID.battery_infinity,3)
+battery.setInfinite(ItemID.battery_infinity,0)
 
 battery.setInfinite(ItemID.atomic_battery,25)
 
