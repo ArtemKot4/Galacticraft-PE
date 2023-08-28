@@ -9,6 +9,31 @@ API/MachineAPI.ts
 API/SpacesAPI.ts
 
 battery.ts
+
+Ores/ores.ts
+
+
+Blocks/Ores/block_aluminum.ts
+Blocks/Ores/block_tin.ts
+Blocks/Ores/block_copper.ts
+Blocks/Ores/ore_tin_moon.ts
+Blocks/Ores/ore_copper_moon.ts
+Blocks/Ores/moonore_sapphire.ts
+Blocks/Ores/ore_tin_venus.ts
+Blocks/Ores/ore_copper_venus.ts
+Blocks/Ores/ore_silicon_venus.ts
+Blocks/Ores/ore_galena.ts
+Blocks/Ores/ore_iron_asteroids.ts
+Blocks/Ores/ore_ilmenite.ts
+Blocks/Ores/ore_aluminum_asteroids.ts
+Blocks/Ores/moonore_cheese.ts
+Blocks/Ores/ore_silicon.ts
+Blocks/Ores/ore_copper.ts
+Blocks/Ores/ore_tin.ts
+Blocks/Ores/ore_aluminum.ts
+Blocks/Ores/ore_quartz_venus.ts
+Blocks/Ores/ore_aluminum_venus.ts
+
 Blocks/Mekanisms/rocket_padding.ts
 
 
@@ -77,7 +102,7 @@ Ores/compressed_iron.ts
 
 Ores/compressed_bronze.ts
 Ores/compressed_tin.ts
-Ores/ores.ts
+
 compressed_steel.ts
 Ores/compressed_steel.ts
 compressed_copper.ts
@@ -209,53 +234,13 @@ Parachute/parachutes.ts
 
 
 Blocks/Decorative/decorations.ts
-block_aluminum.ts
-Blocks/Ores/block_aluminum.ts
-block_tin.ts
-Blocks/Ores/block_tin.ts
-block_copper.ts
-Blocks/Ores/block_copper.ts
-ore_tin_moon.ts
-Blocks/Ores/ore_tin_moon.ts
-ore_copper_moon.ts
-Blocks/Ores/ore_copper_moon.ts
-moonore_cheese.ts
-Blocks/Ores/moonore_cheese.ts
 
 
 TintedGlass/tinted_glass_pane_green.ts
 
 
-ore_silicon.ts
-Blocks/Ores/ore_silicon.ts
-ore_copper.ts
-Blocks/Ores/ore_copper.ts
-ore_tin.ts
-Blocks/Ores/ore_tin.ts
-ore_aluminum.ts
-Blocks/Ores/ore_aluminum.ts
-ore_quartz_venus.ts
-Blocks/Ores/ore_quartz_venus.ts
-ore_aluminum_venus.ts
-Blocks/Ores/ore_aluminum_venus.ts
-brick.ts
 Blocks/Decorative/brick.ts
-moonore_sapphire.ts
-Blocks/Ores/moonore_sapphire.ts
-ore_tin_venus.ts
-Blocks/Ores/ore_tin_venus.ts
-ore_copper_venus.ts
-Blocks/Ores/ore_copper_venus.ts
-ore_silicon_venus.ts
-Blocks/Ores/ore_silicon_venus.ts
-ore_galena.ts
-Blocks/Ores/ore_galena.ts
-ore_iron_asteroids.ts
-Blocks/Ores/ore_iron_asteroids.ts
-ore_ilmenite.ts
-Blocks/Ores/ore_ilmenite.ts
-ore_aluminum_asteroids.ts
-Blocks/Ores/ore_aluminum_asteroids.ts
+
 
 Blocks/Venus/venus_rock_0.ts
 
@@ -335,15 +320,6 @@ canister_copper.ts
 
 
 
-CoiperBelt/Ores/coiper_shard.ts
-
-CoiperBelt/Ores/ingot_coiper.ts
-
-CoiperBelt/Ores/coiper_dust.ts
-
-CoiperBelt/Ores/compressed_coiper.ts
-
-CoiperBelt/Ores/reinforced_plate_t7.ts
 
 
 
@@ -354,8 +330,6 @@ Blocks/Sun/SunLittle.ts
 
 
 
-Dimensions/Vic_A1.ts
-Dimensions/Vic A 2 - Tantros.ts
 Dimensions/Spaces Station.ts
 
 Dimensions/Moon.ts
@@ -438,7 +412,7 @@ SpaceTools/Core/oxygen_working.ts
 SpaceTools/Core/planet_music.ts
 
 SpaceTools/Core/liquid_tank.ts
-food.ts
+Food/food.ts
 groups.ts
 
 recipes.ts

@@ -35,8 +35,8 @@ ru: "Пемза"
 
 
 IDRegistry.genBlockID("venus_spout");
-Block.createBlock("venus_spout",[{name: "Venus Spout", texture: [["Venus Rock 0", 0],["spout",0],["Venus Rock 0",0]], inCreative: true} ],STONE);
-Translation.addTranslation("Venus Spout",{
+Block.createBlock("venus_spout",[{name: "§aVenus Spout", texture: [["Venus Rock 0", 0],["spout",0],["Venus Rock 0",0]], inCreative: true} ],STONE);
+Translation.addTranslation("§aVenus Spout",{
 ru: "§aВенерианский гейзер"
 })
 
@@ -64,7 +64,7 @@ TileEntity.registerPrototype(BlockID.venus_spout,{
         this.z)==
         VanillaBlockID.lava
         ){
-         this.data.spout=0}else{this.data. spout=1}
+         this.data.spout=0}else{this.data.spout=1}
          
 
         if(

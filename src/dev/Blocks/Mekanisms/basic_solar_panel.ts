@@ -143,7 +143,7 @@ class SolarPanel extends Generator {
         this.container.sendChanges();
 
         this.container.setScale("sunscale", this.data.energy / 10);
-        this.container.setScale("ENERGYBar", this.data.energy / 5000);
+        this.container.setScale("ENERGYBar", this.data.energy / this.data.energyMax);
         this.container.setScale("Energy", this.data.energy / 100);
         if (this.data.energy >= 5000) {
             this.container.setText(
@@ -160,8 +160,8 @@ class SolarPanel extends Generator {
             World.getThreadTime() % 1 == 0 && this.blockSource.getLightLevel(
                 this.x,
                 this.y + 1, this.z) == 15 &&
-            this.data.energy != 5000 
-         //   && this.data.energy <= this.getCapacity()
+                this.data.energy != this.data.energyMax
+         
             ) {
             this.data.energy += 1;
 

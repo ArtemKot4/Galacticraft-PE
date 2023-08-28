@@ -16,7 +16,7 @@ Block.createBlockWithRotation("energy_storage_module", [{
     inCreative: true
 }])
 
-let EnergyUI = new UI.StandartWindow(
+let EnergyStorageUI = new UI.StandartWindow(
     {
         standard: {
             header: {
@@ -116,14 +116,14 @@ let EnergyUI = new UI.StandartWindow(
 class EnergyStorage extends MachineStorage {
     defaultValues = { energy: 0, energyMax: 2500000 };
     onTick(): void {
+        this.container.setScale("EnergyScale",this.data.energy / this.data.energyMax)
+            this.container.setText("MaxEnergy",Translation.translate("out: ")+ this.getCapacity())
         for(var i in batt){
             if(this.container.getSlot("EnergySlot").id==batt[i].id){
                 this.data.energyMax = 27500000;
-                    this.container.setScale("EnergyScale",this.data.energy / this.data.energyMax);
-                    this.container.setText("MaxEnergy",Translation.translate("out: ")+ "" + this.data.energyMax)
+                  
             }else{ this.data.energyMax = 2500000;
-                this.container.setScale("EnergyScale",this.data.energy / 2500000)
-            this.container.setText("MaxEnergy",Translation.translate("out: ")+ "" + this.data.energyMax)
+                
             }};
                     battery.add(this.container, this.data, "EnergySlot");
                     battery.addInfinite(this.container, this.data, "EnergySlot")
@@ -132,4 +132,4 @@ class EnergyStorage extends MachineStorage {
     
 }
 
-SpacesMachine.registerStandartMachine(BlockID.energy_storage_module,new EnergyStorage("EnergyStorageUI"));
+SpacesMachine.registerStandartMachine(BlockID.energy_storage_module,new EnergyStorage(EnergyStorageUI));

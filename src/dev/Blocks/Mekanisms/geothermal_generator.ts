@@ -48,24 +48,19 @@ let GeothermalSpout = new UI.StandartWindow(
       
     );
 
-SpacesMachine.registerStandartMachine(BlockID.geothermal_generator_sc,{
-	useNetworkItemContainer: true,
-	getScreenName(){return "main";},
-	getScreenByName(){return GeothermalSpout},
-	defaultValues:{
+class GeothermalGenerator extends Generator {
+    defaultValues = {
 	    energy: 0,
-	    energyMaximal: 3000,
+	    energyMax: 3000,
 	    spouts: 1,
 	    
-	},
-    tick: function(){
+	};
+    destroy(): any {
+        if(this.data.energy>=2950){this.blockSource.explode(this.x,this.y,this.z,1,true)}
+    };
+    onTick(): void {
         this.container.sendChanges();
-      if(
-          this.data.energy>=3001
-          ){
-              this.data.energy=3000};
-      
-      this.container.setScale("geoscale", this.data.energy / 3000);
+        this.container.setScale("geoscale", this.data.energy / this.data.energyMax);
       
 
    	
@@ -74,7 +69,7 @@ SpacesMachine.registerStandartMachine(BlockID.geothermal_generator_sc,{
    	    "Sj :" + 
    	    this.data.energy 
    	    + " / " + 
-   	    this.data.energyMaximal);
+   	    this.data.energyMax);
    	
    	
 var tile = TileEntity.getTileEntity(
@@ -85,66 +80,65 @@ var tile = TileEntity.getTileEntity(
         this.blockSource
           )
 if(tile && this.blockSource.getBlockId(this.x,this.y-1,this.z)==
-BlockID.venus_spout){
+BlockID.venus_spout && World.getThreadTime()%1 == 0 && this.data.energy!=this.data.energyMax){
     if(tile.data.spout==0){
         
-        if(__config__.getBool("Игра.Special_Effects")){
+        if(__config__.getBool("Gameplay.Special_Effects")==true){
     Particles.addParticle(spouticle, this.x + 0.4, this.y + 1, this.z + 0.4,
         Math.random()/20,
         Math.random()/20,
         Math.random()/20);}
    
-  if(World.getThreadTime()%20 == 0){
-      this.blockSource.setBlock(
-        this.x,
-        this.y, 
-        this.z, 
-        BlockID.geothermal_generator_sc, this.blockSource.getBlockData(
-            this.x, 
-            this.y, 
-            this.z
-              )+4*2/2);
-  }
-   	  if(World.getThreadTime()%30== 0){
-   	      this.blockSource.setBlock(
-        this.x,
-        this.y, 
-        this.z, 
-        BlockID.geothermal_generator_sc, this.blockSource.getBlockData(
-            this.x, 
-            this.y, 
-            this.z
-             )
-             -4);
-   	  }
-       
+  
               
-        if(World.getThreadTime()%2 == 0){
+
        this.data.energy+=1;
        
               
-        }
+        
       
     
-}else{if(World.getThreadTime()%40 == 0&&__config__.getBool("Difficulty.Machine.GeothermalDischarging")==true){
+}else{if(World.getThreadTime()%100 == 0 &&__config__.getBool("Difficulty.Machine.GeothermalDischarging")==true){
        this.data.energy-=1;
        
 
-}}}},getEnergyStorage: function() {
-      return 3000
-   },
-   destroy: function (){
-       if(this.data.energy>=2950){this.blockSource.explode(this.x,this.y,this.z,1,true)}
-   },
-   canReceiveEnergy: function() {
-      return false;
-   },
+}}}
+    }
+}
 
-   canExtractEnergy: function() {
-      return true;
-   },
+ SpacesMachine.registerStandartMachine(BlockID.geothermal_generator_sc, new GeothermalGenerator(GeothermalSpout)
+// { 	useNetworkItemContainer: true,
+// 	getScreenName(){return "main";},
+// 	getScreenByName(){return GeothermalSpout},
+// 	defaultValues:{
+// 	    energy: 0,
+// 	    energyMax: 3000,
+// 	    spouts: 1,
+	    
+// 	},
+//     tick: function(){
+//         this.container.sendChanges();
+//       if(
+//           this.data.energy>=3001
+//           ){
+//               this.data.energy=3000};
+      
+//     },getEnergyStorage: function() {
+//       return 3000
+//    },
+//    destroy: function (){
+//        if(this.data.energy>=2950){this.blockSource.explode(this.x,this.y,this.z,1,true)}
+//    },
+//    canReceiveEnergy: function() {
+//       return false;
+//    },
 
-   energyTick: function(type, src) {
-      let output = Math.min(1, this.data.energy);
-      this.data.energy += src.add(output) - output;
-   }});
+//    canExtractEnergy: function() {
+//       return true;
+//    },
+
+//    energyTick: function(type, src) {
+//       let output = Math.min(1, this.data.energy);
+//       this.data.energy += src.add(output) - output;
+//    }}
+);

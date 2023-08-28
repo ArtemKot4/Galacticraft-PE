@@ -211,15 +211,20 @@ SpacesMachine.registerStandartMachine(BlockID.refinery_sc, {
         this.container.setScale("Energy", this.data.energy / 500);
         this.container.setScale("ENERGYBar", this.data.energy / 500);
         this.container.setScale("OilScall", this.data.oil / 40);
-        this.container.setScale("CEROSINScall", this.data.kerosene / 40);
-        this.container.setScale("RUBBERScall", this.data.rubber / 40);
         this.container.setScale("FUELScall", this.data.fuel / 40);
         this.container.setText("ELECTRIC", "Sj :" + this.data.energy + " / " + this.data.energyMax);
         if (this.data.energy >= 50) {
 
             if (this.container.getSlot("canister1").id == ItemID.bucket_of_oil && this.data.fuel != 40 ||
              this.container.getSlot("canister1").id == ItemID.oil_canister && this.container.getSlot("canister1").data == 6 && this.data.fuel != 40) {
-                this.container.setSlot("canister1", 325, 1, 0);
+              if(this.container.getSlot("canister1").id == ItemID.bucket_of_oil){ 
+                this.container.setSlot("canister1", 325, 1, 0);}else if( 
+                    this.container.getSlot("canister1").id == ItemID.oil_canister && 
+                    this.container.getSlot("canister1").data == 6 && this.data.fuel != 40){
+                    this.container.setSlot("canister1", ItemID.empty_liquid_canister,1,0)
+                }
+        
+               
                 this.data.fuel += 5;
                 this.data.oil += 5;
                 this.data.energy -= 45;

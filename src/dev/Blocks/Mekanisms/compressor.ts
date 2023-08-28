@@ -139,7 +139,7 @@ TileEntity.registerPrototype(BlockID.compressor_sj, {
                
 
                 for (var i in compressorRecipe) {
-                    if (this.container.getSlot("slot_"+n).id == compressorRecipe[i].slot_+n &&
+                    if (this.container.getSlot("slot_"+n).id == compressorRecipe.indexOf("slot_"+n) &&
                         this.data.energy >= 100 && this.data.progress < 500) {
                         this.data.progress++;}
                         if (slotResult.id == 0 || slotResult.id == compressorRecipe[i].result) {

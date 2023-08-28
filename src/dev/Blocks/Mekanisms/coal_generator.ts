@@ -103,6 +103,17 @@ class CoalGenerator extends Generator {
         fire: 0
     };
     onTick(): void {
+        if(__config__.getBool("Gameplay.Special_Effects") == true &&
+            __config__.getBool("Difficulty.Machine.Heating") == false&&this.data.energy>0){
+                Particles.addParticle(
+                    7, this.x + 0.1,
+                    this.y + 0.8,
+                    this.z + 0.1,
+                    Math.random() / 20,
+                    Math.random() / 20,
+                    Math.random() / 20);
+                    alert("DEBUG GRAPHIC")
+            }
         this.container.sendChanges();
         this.container.validateAll();
         if (
@@ -130,25 +141,26 @@ class CoalGenerator extends Generator {
                 this.data.active = true;
             }
         }
-        if (this.data.burning == 3000 && this.data.active == true && this.data.energy <= 2999) { this.data.energy += 1 }
-        if (this.data.energy == 3000) { this.data.active = false; this.data.burning = 0 }
+        if (this.data.burning == 3000 && this.data.active == true && this.data.energy <= this.data.energyMax) { 
+            this.data.energy += 1 }
+        if (this.data.energy == this.data.energyMax) { this.data.active = false; this.data.burning = 0 }
 
 
-        this.container.setScale("progress_scale", this.data.energy / 3000);
+        this.container.setScale("progress_scale", this.data.energy / this.data.energyMax);
 
 
         this.container.setText("EnergyText", "Sj :" + this.data.energy + " / " + this.getCapacity());
 
 
-        if (this.data.energy >= 1) {
+        if (this.data.energy > 0) {
             this.container.setText("Status", Translation.translate("Status: working"));
         }
-        else if (this.data.energy <= 0) {
+        else {
             this.container.setText("Status", Translation.translate("Status: fuel empty"));
 
         };
 
-        if (this.data.energy >= 3000) {
+        if (this.data.energy >= this.data.energyMax) {
             this.container.setText("Status", Translation.translate("Status: storage full"));
             if (__config__.getBool("Difficulty.Machine.Heating") == true) {
                 // this.container.setScale("firescale", this.data.fire / 100);
@@ -171,139 +183,6 @@ class CoalGenerator extends Generator {
 
 
 SpacesMachine.registerStandartMachine(BlockID.coal_generator, new CoalGenerator(CoalGeneratorUI))
-//     useNetworkItemContainer: true,
-//     getScreenName() {
-//         return "main";
-//     },
-//     getScreenByName() {
-//         return CoalEnergy
-//     },
-//     defaultValues: {
-//         burning: 0,
-
-//         active: false,
-//         energy: 0,
-
-
-//         fire: 0,
-//     },
-
-//     tick: function() {
-
-//         this.container.sendChanges();
-//         this.container.validateAll();
-//         if (
-//             this.data.fire >= 1 && 
-//             __config__.getBool("Gameplay.Special_Effects")==true &&
-//              __config__.getBool("Difficulty.Machine.Heating")==true) {
-//                 Particles.addParticle(
-//                     7, this.x + 0.1,
-//                     this.y + 0.8,
-//                     this.z + 0.1,
-//                     Math.random()/20,
-//                     Math.random()/20,
-//                     Math.random()/20);
-//             };
-
-
-//         var CoalSlot = this.container.getSlot("CoalSlot");
-//         for (let i in burnItems) {
-//             if (CoalSlot.id == burnItems[i].id && this.data.burning != 3000) {
-//                 this.data.burning += 3000;
-//                 this.container.getSlot("CoalSlot").count-=1;
-//                 CoalSlot.count--
-
-//                 this.data.active = true;
-//             }
-//         }
-//         if (this.data.burning == 3000 && this.data.active == true) { this.data.energy+=1 }
-//         if (this.data.energy == 3000) { this.data.active = false; this.data.burning = 0 }
-
-
-//         this.container.setScale("progress_scale", this.data.energy / 3000);
-
-
-//         this.container.setText("EnergiA", "Sj :" + this.data.energy + " / " + 3000);
-
-
-//         if (this.data.energy >= 1) {
-//             this.container.setText("Status", Translation.translate("Status: working"));
-//         }
-//        else if (this.data.energy <= 0) {
-//             this.container.setText("Status", Translation.translate("Status: fuel empty"));
-
-//         };
-
-//         if (this.data.energy >= 3000) {
-//             this.container.setText("Status", Translation.translate("Status: storage full"));
-//             if (__config__.getBool("Difficulty.Machine.Heating")==true) {
-//                 // this.container.setScale("firescale", this.data.fire / 100);
-//                 // this.container.setText("FiringStatus", Translation.translate("Heating : ") + this.data.fire + "%");
-
-//                 if (this.data.fire >= 100) {
-//                     this.blockSource.explode(this.x, this.y, this.z, 1, true)}
-//                 if (World.getThreadTime()%200 == 0 && __config__.getBool("Difficulty.Machine.Heating")==true && this.data.energy>=2950) {
-//                     this.data.fire += 1
-//                 }else if(this.data.fire>0){this.data.fire--}
-
-//                 }}},
-
-
-//     getEnergyStorage: function() {
-//         return 6015
-//     },
-//     destroy: function () {
-//         if (this.data.fire >= 75 && __config__.getBool("Difficulty.Machine.Heating")==true) {
-//             this.blockSource.explode(this.x, this.y, this.z, 1, true)}
-//     },
-//     canReceiveEnergy: function() {
-//         return false;
-//     },
-
-//     canExtractEnergy: function() {
-//         return true;
-//     },
-
-//     energyTick: function(type, src) {
-//         let output = Math.min(1, this.data.energy);
-//         this.data.energy += src.add(output) - output;
-//     },
-//     click: function(id, count, data, coords, player) {
-
-
-
-//         if (id == ItemID["Space wrench"] && Entity.getSneaking(player)) {
-
-//             this.blockSource.setBlock(
-//                 this.x,
-//                 this.y,
-//                 this.z,
-//                 BlockID.coal_generator, this.blockSource.getBlockData(
-//                     this.x,
-//                     this.y,
-//                     this.z
-//                 )+1);
-
-
-//         }
-
-//     }
-
-// });
-
-
-
-
-/*
- #1 - slot1
- cr - crashing scale
- =» - progress scale
- $ - trashslot
- √ - spaceJoule
- -----------------
- #1 =» cr $ √
- ---------------
- */
 
 StorageInterface.createInterface(BlockID.coal_generator, {
     slots: {

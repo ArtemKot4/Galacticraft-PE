@@ -1,3 +1,7 @@
+Translation.addTranslation("\n§7Infinity⚡", {
+    ru: "\n§7Бесконечность§6⚡"
+});
+
 Translation.addTranslation("Shield Controller", {
     ru: "Контроллер энергетического щита",
     zh: "能量屏蔽控制器"
@@ -292,7 +296,9 @@ Translation.addTranslation("Space Wrench", {
     zh: "扳手"
 })
 
-
+Translation.addTranslation("Oxygen Canister Infinite", {
+    ru: "Бесконечный кислородный баллон"
+});
 
 
 

@@ -19,7 +19,7 @@ abstract class Machine extends TileEntityBase implements EnergyProperties {
         energy: 0,
         energyMax: 0
     };
-    useNetworkItemContainer: true;
+   public useNetworkItemContainer: true;
     public getCapacity(): number {
         return this.data.energyMax
     };
@@ -30,7 +30,7 @@ abstract class Machine extends TileEntityBase implements EnergyProperties {
         return side
     };
     public energyTick(type: string, src: EnergyTileNode): void {
-        let output = Math.min(500, this.data.energy)
+        let output = Math.min(1, this.data.energy)
         this.data.energy += src.add(output) - output;
     };
     public energyReceive(type: string, amount: number, voltage: number): number {
@@ -71,14 +71,6 @@ abstract class Generator extends Machine {
     canExtractEnergy(): boolean {
         return true;
     };
-
-    energyTick(type: string, src: EnergyTileNode): void {
-        let output = Math.min(1, this.data.energy);
-        this.data.energy += src.add(output) - output;
-    };
-    getCapacity(): number {
-        return this.data.energyMax
-    }
 }
 
 abstract class MachineStorage extends Machine {
@@ -100,9 +92,7 @@ abstract class MachineStorage extends Machine {
 
 
 
-Translation.addTranslation("\n§7Infinity⚡", {
-    ru: "\n§7Бесконечность§6⚡"
-});
+
 
 
 

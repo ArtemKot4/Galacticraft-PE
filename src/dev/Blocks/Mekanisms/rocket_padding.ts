@@ -27,20 +27,26 @@ TileEntity.registerPrototype(BlockID.rocket_padding, {
 
 
 
+  for(var i;i<3;i++){
 
-		if (this.blockSource.getBlockId(this.x, this.y, this.z) == BlockID.rocket_padding &&
-			this.blockSource.getBlockId(this.x - 1, this.y, this.z) == BlockID.rocket_padding &&
-			this.blockSource.getBlockId(this.x - 2, this.y, this.z) == BlockID.rocket_padding &&
-			this.blockSource.getBlockId(this.x, this.y, this.z - 1) == BlockID.rocket_padding &&
-			this.blockSource.getBlockId(this.x - 1, this.y, this.z - 1) == BlockID.rocket_padding &&
-			this.blockSource.getBlockId(this.x - 2, this.y, this.z - 1) == BlockID.rocket_padding &&
-			this.blockSource.getBlockId(this.x, this.y, this.z - 2) == BlockID.rocket_padding &&
-			this.blockSource.getBlockId(this.x - 1, this.y, this.z - 2) == BlockID.rocket_padding &&
-			this.blockSource.getBlockId(this.x - 2, this.y, this.z - 2) == BlockID.rocket_padding &&
-			this.blockSource.getBlockId(this.x - 2, this.y, this.z - 1) == BlockID.rocket_padding) {
+		if (
+			//this.blockSource.getBlockId(this.x, this.y, this.z) == BlockID.rocket_padding &&
+		// 	this.blockSource.getBlockId(this.x - 1, this.y, this.z) == BlockID.rocket_padding &&
+		// 	this.blockSource.getBlockId(this.x - 2, this.y, this.z) == BlockID.rocket_padding &&
+		// 	this.blockSource.getBlockId(this.x, this.y, this.z - 1) == BlockID.rocket_padding &&
+		// 	this.blockSource.getBlockId(this.x - 1, this.y, this.z - 1) == BlockID.rocket_padding &&
+		// 	this.blockSource.getBlockId(this.x - 2, this.y, this.z - 1) == BlockID.rocket_padding &&
+		// 	this.blockSource.getBlockId(this.x, this.y, this.z - 2) == BlockID.rocket_padding &&
+		// 	this.blockSource.getBlockId(this.x - 1, this.y, this.z - 2) == BlockID.rocket_padding &&
+		// 	this.blockSource.getBlockId(this.x - 2, this.y, this.z - 2) == BlockID.rocket_padding &&
+		// 	this.blockSource.getBlockId(this.x - 2, this.y, this.z - 1) == BlockID.rocket_padding
+		this.blockSource.getBlockId(this.x - i, this.y, this.z) == BlockID.rocket_padding &&
+		this.blockSource.getBlockId(this.x - i, this.y, this.z - i) == BlockID.rocket_padding &&
+		this.blockSource.getBlockId(this.x, this.y, this.z - i) == BlockID.rocket_padding 
+		) {
 			this.blockSource.setBlock(this.x - 1, this.y, this.z - 1, BlockID.rocket_padding_completed);
 		}
-
+	 }
 	},
 });
 
