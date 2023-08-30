@@ -254,11 +254,11 @@ Block.createLiquidBlock("sulphuric_acid",
  name: "Sulphuric Acid", 
  still: { 
  texture: ["sulphuric_acid_still", 0],
- id: "spacescraft_sulphuric_acid_still",
+ id: "sulphuric_acid_still",
  }, 
  flowing: { 
  texture: ["sulphuric_acid_flow", 0], 
- id: "spacescraft_sulphuric_acid_flow",
+ id: "sulphuric_acid_flow",
  }, 
  bucket: { 
  texture: { name: "bucket_sulphuric_acid", meta: 0 }, 

@@ -103,11 +103,13 @@ class CoalGenerator extends Generator {
         fire: 0
     };
     onTick(): void {
+        this.container.sendChanges();
+        this.container.validateAll();
         if(__config__.getBool("Gameplay.Special_Effects") == true &&
             __config__.getBool("Difficulty.Machine.Heating") == false&&this.data.energy>0){
                 Particles.addParticle(
                     7, this.x + 0.1,
-                    this.y + 0.8,
+                    this.y + 0.6,
                     this.z + 0.1,
                     Math.random() / 20,
                     Math.random() / 20,
@@ -121,7 +123,7 @@ class CoalGenerator extends Generator {
             __config__.getBool("Difficulty.Machine.Heating") == true) {
             Particles.addParticle(
                 7, this.x + 0.1,
-                this.y + 0.8,
+                this.y + 0.6,
                 this.z + 0.1,
                 Math.random() / 20,
                 Math.random() / 20,

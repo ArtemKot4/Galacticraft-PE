@@ -22,7 +22,7 @@ SpacesCraft.addSHIFTtext(BlockID.coal_generator, "10 sJ/ t");
 
 SpacesCraft.addSHIFTtext(BlockID.rocket_padding, "Place blocks 3x3\nfor create rocket padding")
 
-SpacesCraft.addSHIFTtext(ItemID.rubber_item, "Rubber need to isolation wires")
+
 
 SpacesCraft.addSHIFTtext(BlockID.venus_spout, "Can be found on Venus, hot and scalding")
 
@@ -619,7 +619,7 @@ Recipes.addShaped({id: ItemID.shard_titanium, count: 9, data: 0}, [
 //самородки
 
 
-Recipes.addShaped({id: ItemID["Space wrench"], count: 1, data: 0}, [
+Recipes.addShaped({id: ItemID["machine_wrench"], count: 1, data: 0}, [
     "  a",
     "  b",
     "  b"

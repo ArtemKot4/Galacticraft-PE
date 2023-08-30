@@ -1,9 +1,10 @@
 interface EnergyProperties {
   getCapacity(): number;
-  canReceiveEnergy(side, type): boolean;
-  canExtractEnergy(side, type): boolean;
+  canReceiveEnergy?(side, type): boolean;
+  canExtractEnergy? (side, type): boolean;
   energyTick(type: string, src: EnergyTileNode): void;
   energyReceive(type: string, amount: number, voltage: number): number;
+  setWrenchable(id): any;
 }
 
 abstract class Machine extends TileEntityBase implements EnergyProperties {
@@ -23,12 +24,6 @@ abstract class Machine extends TileEntityBase implements EnergyProperties {
   public getCapacity(): number {
     return this.data.energyMax;
   }
-  public canReceiveEnergy(side, type): boolean {
-    return side;
-  }
-  public canExtractEnergy(side, type): boolean {
-    return side;
-  }
   public energyTick(type: string, src: EnergyTileNode): void {
     let output = Math.min(1, this.data.energy);
     this.data.energy += src.add(output) - output;
@@ -39,10 +34,10 @@ abstract class Machine extends TileEntityBase implements EnergyProperties {
     this.data.energy += add;
     return add;
   }
-  onTick(): void {
-    this.container.sendChanges();
-    this.container.validateAll();
-  }
+  // public onTick(): void {
+  //   this.container.sendChanges();
+  //   this.container.validateAll();
+  // }
   public setWrenchable(id): any {
     if (id == ItemID.machine_wrench) {
         alert("DEGUG WORK")
@@ -61,23 +56,32 @@ abstract class InputMachine extends Machine {
   canReceiveEnergy(type: number, side: string): boolean {
     return true;
   }
-  getTier(): number {
-    return 1;
+  canExtractEnergy(): boolean {
+    return false;
   }
+ getTier(): number {
+  return 1;
+}
   click(id): any {
    this.setWrenchable(id)
-  }
-
+  };
+  
   // charge (slot: string) {
   //     this.data.energy -= ChargeItemRegistry.addEnergyToSlot(this.container.getSlot(slot), "spacejoule",
   //     this.data.energy, this.getTier());
   // };
-  // discharge(slot: string) {
-  //     let amount = this.getCapacity() - this.data.energy;
-  //     this.data.energy += ChargeItemRegistry.getEnergyFromSlot(this.container.getSlot(slot), "spacejoule",
-  //         amount, this.getTier());
-  // }
-}
+  discharge(slot: string) {
+      let amount = this.getCapacity() - this.data.energy;
+      this.data.energy += ChargeItemRegistry.getEnergyFromSlot(this.container.getSlot(slot), "spacejoule",
+          amount, this.getTier());
+       
+          for (let i in infinitybatt) {
+            if (this.container.getSlot(slot).id == infinitybatt[i].id) {
+              if (World.getThreadTime() % infinitybatt[i].num == 0) {
+                this.data.energy += 1;
+              }
+  }}
+}}
 
 abstract class Generator extends Machine {
   defaultValues = {

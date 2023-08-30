@@ -95,7 +95,7 @@ Callback.addCallback("GenerateCustomDimensionChunk", function (chunkX, chunkZ, r
 
 Callback.addCallback("GenerateCustomDimensionChunk", function (chunkX, chunkZ, random, dimensionId) {
     if (dimensionId != Venus.id) return;
-    UniqueGen.generateOreInDimension(BlockID.spacescraft_sulphuric_acid_still, 0, chunkX, chunkZ, random, {
+    UniqueGen.generateOreInDimension(BlockID.sulphuric_acid_still, 0, chunkX, chunkZ, random, {
         veinCounts: __config__.getFloat("Fossils.Venus.sulphuric_acid"),
         minY: 2,
         maxY: 120,
@@ -224,27 +224,27 @@ Callback.addCallback("GenerateCustomDimensionChunk", function (chunkX, chunkZ, r
                       World.setBlock(coords.x - 1, coords.y - 3, coords.z - 2, 0,0);
                        World.setBlock(coords.x - 2, coords.y - 3, coords.z - 2, 0,0); 
                        World.setBlock(coords.x - 2, coords.y - 3, coords.z - 1, 0,0);
-                World.setBlock(coords.x, coords.y - 5, coords.z, BlockID.spacescraft_sulphuric_acid_still,0);
-                 World.setBlock(coords.x - 1, coords.y - 5, coords.z, BlockID.spacescraft_sulphuric_acid_still,0); 
-                 World.setBlock(coords.x - 2, coords.y - 5, coords.z, BlockID.spacescraft_sulphuric_acid_still,0); 
-                 World.setBlock(coords.x, coords.y - 5, coords.z - 1, BlockID.spacescraft_sulphuric_acid_still,0);
-                  World.setBlock(coords.x - 1, coords.y - 5, coords.z - 1, BlockID.spacescraft_sulphuric_acid_still,0); 
-                  World.setBlock(coords.x - 2, coords.y - 5, coords.z - 1, BlockID.spacescraft_sulphuric_acid_still,0); 
-                  World.setBlock(coords.x, coords.y - 5, coords.z - 2, BlockID.spacescraft_sulphuric_acid_still,0);
-                   World.setBlock(coords.x - 1, coords.y - 5, coords.z - 2, BlockID.spacescraft_sulphuric_acid_still,0); 
-                   World.setBlock(coords.x - 2, coords.y - 5, coords.z - 2, BlockID.spacescraft_sulphuric_acid_still,0);
-                    World.setBlock(coords.x - 2, coords.y - 5, coords.z - 1, BlockID.spacescraft_sulphuric_acid_still,0);
+                World.setBlock(coords.x, coords.y - 5, coords.z, BlockID.sulphuric_acid_still,0);
+                 World.setBlock(coords.x - 1, coords.y - 5, coords.z, BlockID.sulphuric_acid_still,0); 
+                 World.setBlock(coords.x - 2, coords.y - 5, coords.z, BlockID.sulphuric_acid_still,0); 
+                 World.setBlock(coords.x, coords.y - 5, coords.z - 1, BlockID.sulphuric_acid_still,0);
+                  World.setBlock(coords.x - 1, coords.y - 5, coords.z - 1, BlockID.sulphuric_acid_still,0); 
+                  World.setBlock(coords.x - 2, coords.y - 5, coords.z - 1, BlockID.sulphuric_acid_still,0); 
+                  World.setBlock(coords.x, coords.y - 5, coords.z - 2, BlockID.sulphuric_acid_still,0);
+                   World.setBlock(coords.x - 1, coords.y - 5, coords.z - 2, BlockID.sulphuric_acid_still,0); 
+                   World.setBlock(coords.x - 2, coords.y - 5, coords.z - 2, BlockID.sulphuric_acid_still,0);
+                    World.setBlock(coords.x - 2, coords.y - 5, coords.z - 1, BlockID.sulphuric_acid_still,0);
 
-                World.setBlock(coords.x, coords.y - 4, coords.z, BlockID.spacescraft_sulphuric_acid_still,0); 
-                World.setBlock(coords.x - 1, coords.y - 4, coords.z, BlockID.spacescraft_sulphuric_acid_still,0); 
-                World.setBlock(coords.x - 2, coords.y - 4, coords.z, BlockID.spacescraft_sulphuric_acid_still,0);
-                 World.setBlock(coords.x, coords.y - 4, coords.z - 1, BlockID.spacescraft_sulphuric_acid_still,0);
-                  World.setBlock(coords.x - 1, coords.y - 4, coords.z - 1, BlockID.spacescraft_sulphuric_acid_still,0);
-                   World.setBlock(coords.x - 2, coords.y - 4, coords.z - 1, BlockID.spacescraft_sulphuric_acid_still,0); 
-                   World.setBlock(coords.x, coords.y - 4, coords.z - 2, BlockID.spacescraft_sulphuric_acid_still,0); 
-                   World.setBlock(coords.x - 1, coords.y - 4, coords.z - 2, BlockID.spacescraft_sulphuric_acid_still,0); 
-                   World.setBlock(coords.x - 2, coords.y - 4, coords.z - 2, BlockID.spacescraft_sulphuric_acid_still,0); 
-                   World.setBlock(coords.x - 2, coords.y - 4, coords.z - 1, BlockID.spacescraft_sulphuric_acid_still,0);
+                World.setBlock(coords.x, coords.y - 4, coords.z, BlockID.sulphuric_acid_still,0); 
+                World.setBlock(coords.x - 1, coords.y - 4, coords.z, BlockID.sulphuric_acid_still,0); 
+                World.setBlock(coords.x - 2, coords.y - 4, coords.z, BlockID.sulphuric_acid_still,0);
+                 World.setBlock(coords.x, coords.y - 4, coords.z - 1, BlockID.sulphuric_acid_still,0);
+                  World.setBlock(coords.x - 1, coords.y - 4, coords.z - 1, BlockID.sulphuric_acid_still,0);
+                   World.setBlock(coords.x - 2, coords.y - 4, coords.z - 1, BlockID.sulphuric_acid_still,0); 
+                   World.setBlock(coords.x, coords.y - 4, coords.z - 2, BlockID.sulphuric_acid_still,0); 
+                   World.setBlock(coords.x - 1, coords.y - 4, coords.z - 2, BlockID.sulphuric_acid_still,0); 
+                   World.setBlock(coords.x - 2, coords.y - 4, coords.z - 2, BlockID.sulphuric_acid_still,0); 
+                   World.setBlock(coords.x - 2, coords.y - 4, coords.z - 1, BlockID.sulphuric_acid_still,0);
             }
 
         }

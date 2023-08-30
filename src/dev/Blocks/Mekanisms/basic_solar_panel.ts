@@ -140,7 +140,8 @@ class SolarPanel extends Generator {
     };
 
     onTick(): void {
-      
+        this.container.sendChanges();
+        this.container.validateAll();
 
         this.container.setScale("sunscale", this.data.energy / 10);
         this.container.setScale("ENERGYBar", this.data.energy / this.data.energyMax);

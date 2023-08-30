@@ -35,9 +35,10 @@ ru: "Пемза"
 
 
 IDRegistry.genBlockID("venus_spout");
-Block.createBlock("venus_spout",[{name: "§aVenus Spout", texture: [["Venus Rock 0", 0],["spout",0],["Venus Rock 0",0]], inCreative: true} ],STONE);
-Translation.addTranslation("§aVenus Spout",{
-ru: "§aВенерианский гейзер"
+Block.createBlock("venus_spout",[{name: "Venus Spout", texture: [["Venus Rock 0", 0],["spout",0],["Venus Rock 0",0]], inCreative: true} ],STONE);
+Translation.addTranslation("Venus Spout",{
+ru: "§aВенерианский гейзер",
+en: "§aVenus Spout"
 })
 
 
@@ -57,7 +58,7 @@ TileEntity.registerPrototype(BlockID.venus_spout,{
         this.x,
         this.y-i,
         this.z)==
-        BlockID.spacescraft_sulphuric_acid_still || this.blockSource.getBlockId
+        BlockID.sulphuric_acid_still || this.blockSource.getBlockId
     (
         this.x,
         this.y-i,
@@ -70,7 +71,7 @@ TileEntity.registerPrototype(BlockID.venus_spout,{
         if(
             this.data.spout==0
           ){
-         if(__config__.getBool("Gameplay.Special_Effects")){
+         if(__config__.getBool("Gameplay.Special_Effects")==true){
 Particles.addParticle(
       spouticle,
       this.x + 0.4,
