@@ -171,40 +171,14 @@ let ClearFuel = new UI.StandartWindow(
 }
 );
 
-SpacesMachine.registerStandartMachine(BlockID.refinery_sc, {
-    useNetworkItemContainer: true,
-    getScreenName() {
-        return "main";
-    },
-    getScreenByName() {
-        return ClearFuel
-    },
-    defaultValues: {
-        progress: 0,
-        progressMax: 0,
-        active: false,
+class Refinery extends InputMachine {
+    defaultValues = {
         energy: 0,
-        energyMax: 500,
+        energyMax: 0,
         fuel: 0,
-        oil: 0,
-    },
-    energyReceive: function(type, amount, voltage) {
-        amount = Math.min(amount, 450)
-        var add = Math.min(amount, this.getCapacity() - this.data.energy);
-        this.data.energy += add
-        return add
-    },
-    canReceiveEnergy: function(type, side) {
-        return true;
-    },
-    getCapacity: function() {
-        return 500
-    },
-    tick: function() {
-        this.container.sendChanges();
-        battery.add(this.container, this.data, "EnergySlot");
-        battery.addInfinite(this.container, this.data, "EnergySlot")
-
+        oil: 0
+    };
+    onTick(): void {
         var canister2 = this.container.getSlot(
             "canister2");
 
@@ -216,7 +190,8 @@ SpacesMachine.registerStandartMachine(BlockID.refinery_sc, {
         if (this.data.energy >= 50) {
 
             if (this.container.getSlot("canister1").id == ItemID.bucket_of_oil && this.data.fuel != 40 ||
-             this.container.getSlot("canister1").id == ItemID.oil_canister && this.container.getSlot("canister1").data == 6 && this.data.fuel != 40) {
+             this.container.getSlot("canister1").id == ItemID.oil_canister &&
+              this.container.getSlot("canister1").data == 6 && this.data.fuel != 40) {
               if(this.container.getSlot("canister1").id == ItemID.bucket_of_oil){ 
                 this.container.setSlot("canister1", 325, 1, 0);}else if( 
                     this.container.getSlot("canister1").id == ItemID.oil_canister && 
@@ -264,36 +239,135 @@ SpacesMachine.registerStandartMachine(BlockID.refinery_sc, {
             }
 
         }
+    }
+    }
+}
+
+SpacesMachine.registerStandartMachine(BlockID.refinery_sc, new Refinery(ClearFuel)
+//      {
+//     useNetworkItemContainer: true,
+//     getScreenName() {
+//         return "main";
+//     },
+//     getScreenByName() {
+//         return ClearFuel
+//     },
+//     defaultValues: {
+//         progress: 0,
+//         progressMax: 0,
+//         active: false,
+//         energy: 0,
+//         energyMax: 500,
+//         fuel: 0,
+//         oil: 0,
+//     },
+//     energyReceive: function(type, amount, voltage) {
+//         amount = Math.min(amount, 450)
+//         var add = Math.min(amount, this.getCapacity() - this.data.energy);
+//         this.data.energy += add
+//         return add
+//     },
+//     canReceiveEnergy: function(type, side) {
+//         return true;
+//     },
+//     getCapacity: function() {
+//         return 500
+//     },
+//     tick: function() {
+//         this.container.sendChanges();
+//         battery.add(this.container, this.data, "EnergySlot");
+//         battery.addInfinite(this.container, this.data, "EnergySlot")
+
+//         var canister2 = this.container.getSlot(
+//             "canister2");
+
+//         this.container.setScale("Energy", this.data.energy / 500);
+//         this.container.setScale("ENERGYBar", this.data.energy / 500);
+//         this.container.setScale("OilScall", this.data.oil / 40);
+//         this.container.setScale("FUELScall", this.data.fuel / 40);
+//         this.container.setText("ELECTRIC", "Sj :" + this.data.energy + " / " + this.data.energyMax);
+//         if (this.data.energy >= 50) {
+
+//             if (this.container.getSlot("canister1").id == ItemID.bucket_of_oil && this.data.fuel != 40 ||
+//              this.container.getSlot("canister1").id == ItemID.oil_canister && this.container.getSlot("canister1").data == 6 && this.data.fuel != 40) {
+//               if(this.container.getSlot("canister1").id == ItemID.bucket_of_oil){ 
+//                 this.container.setSlot("canister1", 325, 1, 0);}else if( 
+//                     this.container.getSlot("canister1").id == ItemID.oil_canister && 
+//                     this.container.getSlot("canister1").data == 6 && this.data.fuel != 40){
+//                     this.container.setSlot("canister1", ItemID.empty_liquid_canister,1,0)
+//                 }
+        
+               
+//                 this.data.fuel += 5;
+//                 this.data.oil += 5;
+//                 this.data.energy -= 45;
+//                 Bucket.play();
+//                 if (this.data.fuel != 40) {
+//                     this.data.oil -= 5;
+//                 };
+               
+//                 if (this.data.fuel == 40 &&
+//                     this.container.getSlot("canister1").id == ItemID.bucket_of_oil) {
+//                     this.container.setSlot("canister1", 325, 1, 0); this.data.oil += 0
+//                 }
+//             }
+
+
+            
+//             if(
+//             this.container.getSlot(
+//                 "canister2").id ==
+//             ItemID.fuel_canister &&
+//             this.container.getSlot(
+//                 "canister2").data != 6 || this.container.getSlot(
+//                 "canister2").id ==
+//             ItemID.empty_liquid_canister) {
+//             if (
+//                 World.getThreadTime()%20 == 0 &&
+//                 this.data.fuel >=1 &&
+//                 this.data.energy >= 15
+//             ) {
+//                 this.container.setSlot(
+//                     "canister2",
+//                     ItemID.fuel_canister,
+//                     1,
+//                     canister2.data+1);
+//                 this.data.fuel -= 1;
+//                 this.data.energy -= 3
+//             }
+
+//         }
 
 
     
 
-    }
+//     }
 
-},
-energyTick: function(type, src) {
+// },
+// energyTick: function(type, src) {
 
-let output = Math.min(450, this.data.energy)
-this.data.energy += src.add(output) - output;
+// let output = Math.min(450, this.data.energy)
+// this.data.energy += src.add(output) - output;
 
-}, click: function(id, count, data, coords) {
-
-
-
-if (id == ItemID["Space wrench"]) {
-
-this.blockSource.setBlock(
-this.x,
-this.y,
-this.z,
-BlockID.refinery_sc, this.blockSource.getBlockData(
-this.x,
-this.y,
-this.z
-)+1);
+// }, click: function(id, count, data, coords) {
 
 
-}
 
-}
-});
+// if (id == ItemID["Space wrench"]) {
+
+// this.blockSource.setBlock(
+// this.x,
+// this.y,
+// this.z,
+// BlockID.refinery_sc, this.blockSource.getBlockData(
+// this.x,
+// this.y,
+// this.z
+// )+1);
+
+
+// }
+
+// }
+// }
+);

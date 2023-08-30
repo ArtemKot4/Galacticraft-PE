@@ -112,10 +112,9 @@ class CoalGenerator extends Generator {
                     Math.random() / 20,
                     Math.random() / 20,
                     Math.random() / 20);
-                    alert("DEBUG GRAPHIC")
+                   
             }
-        this.container.sendChanges();
-        this.container.validateAll();
+    
         if (
             this.data.fire >= 1 &&
             __config__.getBool("Gameplay.Special_Effects") == true &&

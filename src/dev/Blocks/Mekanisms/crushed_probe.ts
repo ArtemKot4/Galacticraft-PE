@@ -140,26 +140,7 @@ let DisplayUI = new UI.StandardWindow({
 TileEntity.registerPrototype(BlockID.crashed_probe, {
     useNetworkItemContainer: true,
     getScreenName() { return "main"; },
-    getScreenByName() { return CrashedProbe }, click: function (id, count, data, coords, player) {
-
-
-
-        if (id == ItemID["Space wrench"]) {
-
-            this.blockSource.setBlock(
-                this.x,
-                this.y,
-                this.z,
-                BlockID.crashed_probe, this.blockSource.getBlockData(
-                    this.x,
-                    this.y,
-                    this.z
-                ) + 1);
-
-
-        }
-
-    }
+    getScreenByName() { return CrashedProbe }, 
 });
 
 Block.registerDropFunction("ore_silicon", function(coords, blockID){

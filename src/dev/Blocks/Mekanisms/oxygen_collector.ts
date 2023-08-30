@@ -213,26 +213,9 @@ SpacesMachine.registerO2SJMachine(BlockID.collector_sc, {
         let output = Math.min(1500, this.data.energy)
         this.data.energy += src.add(output) - output;
 
-    }, click: function (id, count, data, coords) {
+    }, 
 
-
-
-        if (id == ItemID["Space wrench"]) {
-
-            this.blockSource.setBlock(
-                this.x,
-                this.y,
-                this.z,
-                BlockID.collector_sc, this.blockSource.getBlockData(
-                    this.x,
-                    this.y,
-                    this.z
-                ) + 1);
-
-
-        }
-
-    }
+    
 });
 
 

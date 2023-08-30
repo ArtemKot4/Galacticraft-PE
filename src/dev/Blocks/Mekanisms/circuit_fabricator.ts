@@ -331,26 +331,7 @@ SpacesMachine.registerStandartMachine(BlockID.circuit_fabricator, {
         this.data.energy += src.add(output) - output;
 
     },
-    click: function(id, count, data, coords) {
-
-
-
-        if (id == ItemID["Space wrench"]) {
-
-            this.blockSource.setBlock(
-                this.x,
-                this.y,
-                this.z,
-                BlockID.circuit_fabricator, this.blockSource.getBlockData(
-                    this.x,
-                    this.y,
-                    this.z
-                )+1);
-
-
-        }
-
-    }
+   
 });
 
 StorageInterface.createInterface(BlockID.circuit_fabricator, {

@@ -59,7 +59,7 @@ class GeothermalGenerator extends Generator {
         if(this.data.energy>=2950){this.blockSource.explode(this.x,this.y,this.z,1,true)}
     };
     onTick(): void {
-        this.container.sendChanges();
+     
         this.container.setScale("geoscale", this.data.energy / this.data.energyMax);
       
 

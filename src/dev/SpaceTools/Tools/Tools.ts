@@ -1,16 +1,6 @@
 IMPORT("ToolLib");
-/*﻿IDRegistry.genItemID("blade"); 
-Item.createItem("blade", "Blade", {name: "Knife", meta: 0}, {stack: 3});
-Translation.addTranslation("Blade", {
-ru: "Лезвие"
-});
-Recipes.addShaped({id: ItemID.blade, count: 1, data: 0}, [
-    "a",
-    "a",
-    ""
-], ['a', VanillaItemID.iron_ingot, 0]);
-*/
-var toolspace = ["Steel axe","Steel sword","Steel hoe","Steel shovel","Steel pickaxe","Desh pickaxe slime","Desh spade","Desh sword","Desh hoe","Desh axe","Desh pickaxe","Titanium sword","Titanium shovel","Titanium pickaxe","Titanium hoe","Titanium axe","Volcanic pickaxe","Iron Steel Shovel","Iron Steel Sword","Iron Steel Hoe","Iron Steel Pickaxe","Iron Steel Axe","Space wrench"]
+
+var toolspace = ["Steel axe","Steel sword","Steel hoe","Steel shovel","Steel pickaxe","Desh pickaxe slime","Desh spade","Desh sword","Desh hoe","Desh axe","Desh pickaxe","Titanium sword","Titanium shovel","Titanium pickaxe","Titanium hoe","Titanium axe","Volcanic pickaxe","Iron Steel Shovel","Iron Steel Sword","Iron Steel Hoe","Iron Steel Pickaxe","Iron Steel Axe","machine_wrench"]
 for(var i in toolspace){
     ﻿IDRegistry.genItemID(toolspace[i]); 
 Item.createItem(toolspace[i], toolspace[i], {name: toolspace[i], meta: 0}, {stack: 1, isTech:true});

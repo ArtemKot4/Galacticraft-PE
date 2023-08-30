@@ -162,23 +162,9 @@ TileEntity.registerPrototype(BlockID.compressor_sj, {
         this.container.setScale("progressScale", this.data.progress / 500);
         this.container.setScale("BurningScale", this.data.energy / 500);
 
-    }, click: function (id, count, data, coords) {
-        if (id == ItemID["Space wrench"]) {
+    },
 
-            this.blockSource.setBlock(
-                this.x,
-                this.y,
-                this.z,
-                BlockID.compressor_sj, this.blockSource.getBlockData(
-                    this.x,
-                    this.y,
-                    this.z
-                ) + 1);
-
-
-        }
-
-    }
+    
     /*
 let canisterFuel = this.container.getSlot("canisterFuel");
 

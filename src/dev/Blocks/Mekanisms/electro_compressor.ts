@@ -295,26 +295,9 @@ SpacesMachine.registerStandartMachine(BlockID.electric_compressor_sj, {
         let output = Math.min(1000, this.data.energy)
         this.data.energy += src.add(output) - output;
 
-    },click: function(id, count, data, coords){
+    },
 
-        
-       
-          if(id==ItemID["Space wrench"]){
-              
-                    this.blockSource.setBlock(
-        this.x,
-        this.y, 
-        this.z, 
-        BlockID.electric_compressor_sj, this.blockSource.getBlockData(
-            this.x, 
-            this.y, 
-            this.z
-              )+1);
-              
-              
-          }
-
-     }
+     
     /*
 let canisterFuel = this.container.getSlot("canisterFuel");
 

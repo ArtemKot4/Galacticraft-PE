@@ -48,7 +48,7 @@ Block.createBlockWithRotation("fuel_loader", [
 },
 ],STONE);
 
-let FuelLoader = new UI.StandartWindow({
+let FuelLoaderUI = new UI.StandartWindow({
     standard: {
         header: {
             text: {
@@ -136,79 +136,88 @@ let FuelLoader = new UI.StandartWindow({
 }
 );
 
-SpacesMachine.registerStandartMachine(BlockID.fuel_loader, {
-    useNetworkItemContainer: true,
-    getScreenName() {
-        return "main";
-    },
-    getScreenByName() {
-        return FuelLoader
-    },
-    defaultValues: {
-        progress: 0,
-        progressMax: 0,
-        active: false,
+class FuelLoader extends InputMachine {
+    defaultValues = {
         energy: 0,
         energyMax: 1000,
         liquid: 0,
-    },
-    energyReceive: function(type, amount, voltage) {
-        amount = Math.min(amount, 950)
-        var add = Math.min(amount, this.getCapacity() - this.data.energy);
-        this.data.energy += add
-        return add
-    },
-    canReceiveEnergy: function(type, side) {
-        return true;
-    },
-    getCapacity: function() {
-        return 1000
-    },
-    tick: function() {
-        this.container.sendChanges();
-        battery.add(this.container, this.data, "EnergySlot");
-       battery.addInfinite(this.container,this.data,"EnergySlot")
+    };
+    onTick(): void {
         let canisterFuel = this.container.getSlot("canisterFuel");
         this.container.setScale("Energy", this.data.energy / 1000);
         this.container.setScale("ENERGYBar", this.data.energy / 1000);
         this.container.setScale("FuelScale", this.data.liquid / 40);
         this.container.setText("ELECTRIC", "Sj :" + this.data.energy + " / " + this.data.energyMax);
-        if (this.container.getSlot("canisterFuel").id == ItemID.bucket_of_fuel && this.data.liquid <= 40) {
+        if (this.container.getSlot("canisterFuel").id == ItemID.bucket_of_fuel && this.data.liquid <= 40&&this.data.energy>=50) {
+            this.data.energy-=50;
             this.container.setSlot("canisterFuel", 325, 1, 0);
             this.data.liquid += 5;
             Bucket.play();
         }
-        for (let space = 0; space < 3; space++) {
-        if(World.getThreadTime()%20==0 && 
-        this.blockSource.getBlockId(this.x-space,this.y,this.z+space)==BlockID.rocket_padding){
-                      alert("Внимание!Заправка будет добавлена в будущем")
-        }}
-    },
-    energyTick: function(type, src) {
+    }
+}
 
-        let output = Math.min(950, this.data.energy)
-        this.data.energy += src.add(output) - output;
+SpacesMachine.registerStandartMachine(BlockID.fuel_loader, new FuelLoader(FuelLoaderUI)
+//     {
+//     useNetworkItemContainer: true,
+//     getScreenName() {
+//         return "main";
+//     },
+//     getScreenByName() {
+//         return FuelLoader
+//     },
+//     defaultValues: {
+//         progress: 0,
+//         progressMax: 0,
+//         active: false,
+//         energy: 0,
+//         energyMax: 1000,
+//         liquid: 0,
+//     },
+//     energyReceive: function(type, amount, voltage) {
+//         amount = Math.min(amount, 950)
+//         var add = Math.min(amount, this.getCapacity() - this.data.energy);
+//         this.data.energy += add
+//         return add
+//     },
+//     canReceiveEnergy: function(type, side) {
+//         return true;
+//     },
+//     getCapacity: function() {
+//         return 1000
+//     },
+//     tick: function() {
+//         this.container.sendChanges();
+//         battery.add(this.container, this.data, "EnergySlot");
+//        battery.addInfinite(this.container,this.data,"EnergySlot")
+       
+        
+//     },
+//     energyTick: function(type, src) {
 
-    },click: function(id, count, data, coords){
+//         let output = Math.min(950, this.data.energy)
+//         this.data.energy += src.add(output) - output;
+
+//     },click: function(id, count, data, coords){
 
         
        
-          if(id==ItemID["Space wrench"]){
+//           if(id==ItemID["Space wrench"]){
               
-                    this.blockSource.setBlock(
-        this.x,
-        this.y, 
-        this.z, 
-        BlockID.fuel_loader, this.blockSource.getBlockData(
-            this.x, 
-            this.y, 
-            this.z
-              )+1);
+//                     this.blockSource.setBlock(
+//         this.x,
+//         this.y, 
+//         this.z, 
+//         BlockID.fuel_loader, this.blockSource.getBlockData(
+//             this.x, 
+//             this.y, 
+//             this.z
+//               )+1);
               
               
-          }
+//           }
 
-     }
-});
+//      }
+// }
+);
 
-﻿
