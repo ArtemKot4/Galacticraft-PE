@@ -13,12 +13,128 @@ abstract class Machine extends TileEntityBase implements EnergyProperties {
     super();
     this.window = window;
   }
+  public connectingWire(): any {
+    if (this.blockSource.getBlockData(this.x, this.y, this.z)==5) {
+      ((idblock, siz) => {
+        var group = ICRender.getGroup("sj-wire");
+        var id = idblock;
+        var width = siz;
+
+        var boxes = [
+          {
+            side: [1, 0, 0],
+            box: [
+              0.5 + width / 2,
+              0.5 - width / 2,
+              0.5 - width / 2,
+              1,
+              0.5 + width / 2,
+              0.5 + width / 2,
+            ],
+          },
+          {
+            side: [-1, 0, 0],
+            box: [
+              0,
+              0.5 - width / 2,
+              0.5 - width / 2,
+              0.5 - width / 2,
+              0.5 + width / 2,
+              0.5 + width / 2,
+            ],
+          },
+          {
+            side: [0, 1, 0],
+            box: [
+              0.5 - width / 2,
+              0.5 + width / 2,
+              0.5 - width / 2,
+              0.5 + width / 2,
+              1,
+              0.5 + width / 2,
+            ],
+          },
+          {
+            side: [0, -1, 0],
+            box: [
+              0.5 - width / 2,
+              0,
+              0.5 - width / 2,
+              0.5 + width / 2,
+              0.5 - width / 2,
+              0.5 + width / 2,
+            ],
+          },
+          {
+            side: [0, 0, 1],
+            box: [
+              0.5 - width / 2,
+              0.5 - width / 2,
+              0.5 + width / 2,
+              0.5 + width / 2,
+              0.5 + width / 2,
+              1,
+            ],
+          },
+          {
+            side: [0, 0, -1],
+            box: [
+              0.5 - width / 2,
+              0.5 - width / 2,
+              0,
+              0.5 + width / 2,
+              0.5 + width / 2,
+              0.5 - width / 2,
+            ],
+          },
+        ];
+
+        var model = new ICRender.Model();
+
+        model.addEntry(
+          new BlockRenderer.Model(
+            0.5 - width / 2,
+            0.5 - width / 2,
+            0.5 - width / 2,
+            0.5 + width / 2,
+            0.5 + width / 2,
+            0.5 + width / 2,
+            id,
+            0
+          )
+        );
+
+        for (var i in boxes) {
+          var box = boxes[i].box;
+          var side = boxes[i].side;
+
+          model
+            .addEntry(
+              new BlockRenderer.Model(
+                box[0],
+                box[1],
+                box[2],
+                box[3],
+                box[4],
+                box[5],
+                id,
+                0
+              )
+            )
+            .setCondition(
+              ICRender.BLOCK(side[0], side[1], side[2], group, false)
+            );
+        }
+
+        BlockRenderer.setStaticICRender(id, -1, model);
+      })();
+    }
+  }
   public getScreenByName(): UI.StandartWindow {
     return this.window;
   }
   defaultValues = {
     energy: 0,
-    energyMax: 0,
   };
   public useNetworkItemContainer: true;
   public getCapacity(): number {
@@ -109,6 +225,12 @@ abstract class MachineStorage extends Machine {
 
   canExtractEnergy(side, type): boolean {
     return side != 2;
+  }
+}
+
+var GalacticraftAPI = {
+  planetRegistry: function(): void {
+    
   }
 }
 

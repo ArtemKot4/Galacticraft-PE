@@ -133,7 +133,7 @@ SpacesMachine.registerO2SJMachine(BlockID.collector_sc, {
         this.container.setScale("ENERGYBar", this.data.energy / 1500);
         this.container.setScale("Energy", this.data.energy / 700);
         this.container.setScale("o2", this.data.oxygen / 100);
-        this.container.setText("OXYGEN", "Ob: " + this.data.oxygen + " / " + this.data.oxygenMax);
+        this.container.setText("OXYGEN", "Oxygen: " + this.data.oxygen + " / " + this.data.oxygenMax);
         this.container.setText("LeavesStatus", "Кислорода использовано: " + this.data.leaveS + " / " + this.data.leavesMax);
         if (this.dimension != 0) {
             if (World.getThreadTime() % 20 == 0) {
@@ -321,14 +321,6 @@ let Collector = new UI.StandartWindow({
             height: 20,
             text: "Кислорода использовано:"
         },
-        ENERGYBar: {
-            type: "scale",
-            x: 379,
-            y: 300,
-            bitmap: "slace_en_1",
-            scale: 3.4,
-            direction: 0
-        },
         Energy: {
             type: "scale",
             x: 370,
@@ -337,6 +329,15 @@ let Collector = new UI.StandartWindow({
             scale: 3.4,
             direction: 1
         },
+        ENERGYBar: {
+            type: "scale",
+            x: 379,
+            y: 300,
+            bitmap: "slace_en_1",
+            scale: 3.4,
+            direction: 0
+        },
+      
     }
 }
 );

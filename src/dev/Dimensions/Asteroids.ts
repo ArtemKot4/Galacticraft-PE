@@ -138,3 +138,8 @@ Callback.addCallback("GenerateCustomDimensionChunk", function(chunkX, chunkZ, ra
  check: [BlockID.asteroid_stones] 
  }); 
 });
+
+interface GPlanet {
+ 
+}
+

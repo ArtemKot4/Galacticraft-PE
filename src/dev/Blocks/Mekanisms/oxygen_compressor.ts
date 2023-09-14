@@ -7,7 +7,7 @@ ru: "Кислородный компрессор"
 })
 
 	
-/*EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_compressor, sj);
+/*EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_compressor, gj);
 EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_compressor, ob);
     EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_compressor, EU);
     EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_compressor, RF);*/
@@ -18,7 +18,7 @@ Translation.addTranslation("Oxygen Decompressor",{
 ru: "Кислородный декомпрессор"
 })
 
-/*EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_decompressor, sj);
+/*EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_decompressor, gj);
 EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_decompressor, ob);
     EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_decompressor, EU);
     EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_decompressor, RF);*/

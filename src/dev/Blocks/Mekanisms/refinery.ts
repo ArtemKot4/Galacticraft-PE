@@ -185,7 +185,7 @@ class Refinery extends InputMachine {
     this.container.setScale("FUELScall", this.data.fuel / 40);
     this.container.setText(
       "ELECTRIC",
-      "Sj :" + this.data.energy + " / " + this.data.energyMax
+      "Gj :" + this.data.energy + " / " + this.data.energyMax
     );
     if (this.data.energy >= 50) {
       if (canister1.id == ItemID.bucket_of_oil &&
@@ -293,7 +293,7 @@ SpacesMachine.registerStandartMachine(
   //         this.container.setScale("ENERGYBar", this.data.energy / 500);
   //         this.container.setScale("OilScall", this.data.oil / 40);
   //         this.container.setScale("FUELScall", this.data.fuel / 40);
-  //         this.container.setText("ELECTRIC", "Sj :" + this.data.energy + " / " + this.data.energyMax);
+  //         this.container.setText("ELECTRIC", "Gj :" + this.data.energy + " / " + this.data.energyMax);
   //         if (this.data.energy >= 50) {
 
   //             if (this.container.getSlot("canister1").id == ItemID.bucket_of_oil && this.data.fuel != 40 ||

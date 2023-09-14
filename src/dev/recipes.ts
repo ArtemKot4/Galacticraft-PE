@@ -571,7 +571,7 @@ Recipes.addShaped({id: BlockID.coal_generator, count: 1, data: 0}, [
 ], ['a', ItemID.ingot_copper_sc, 0, 'b', VanillaItemID.iron_ingot, 0, 
 'c', VanillaBlockID.furnace, 0, 'e', BlockID.AluminumWire, 0]);
 //Угольный генератор
-Recipes.addShaped({id: BlockID.compressor_sj, count: 1, data: 0}, [
+Recipes.addShaped({id: BlockID.compressor_gj, count: 1, data: 0}, [
     "bab",
     "aca",
     "aea"
@@ -682,7 +682,7 @@ Recipes.addShaped({id: BlockID.basic_solar_panel, count: 1, data: 0}, [
     'e',BlockID.AluminumWire,0
     ]);
 
-    Recipes.addShaped({id: BlockID.electric_compressor_sj, count: 1, data: 0}, [
+    Recipes.addShaped({id: BlockID.electric_compressor_gj, count: 1, data: 0}, [
         "aba",
         "aaa",
         "cec"
@@ -731,7 +731,7 @@ Recipes.addShaped({id: BlockID.basic_solar_panel, count: 1, data: 0}, [
         'e',BlockID.AluminumWire,0
         ]);
     
-        Recipes.addShaped({id: BlockID.electric_compressor_sj, count: 1, data: 0}, [
+        Recipes.addShaped({id: BlockID.electric_compressor_gj, count: 1, data: 0}, [
             "aba",
             "aaa",
             "cec"

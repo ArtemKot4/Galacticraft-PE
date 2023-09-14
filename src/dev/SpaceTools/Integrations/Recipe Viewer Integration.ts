@@ -312,7 +312,7 @@ RV.registerRecipeType("Collector", {
 RV.registerRecipeType("Compressor", {
    title: Translation.translate("Compressor recipes"),
    contents: {
-      icon: BlockID.compressor_sj,
+      icon: BlockID.compressor_gj,
       drawing: [
          {
             type: "bitmap",

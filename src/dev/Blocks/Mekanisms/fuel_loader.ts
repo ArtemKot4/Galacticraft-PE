@@ -146,7 +146,7 @@ class FuelLoader extends InputMachine {
 
     this.container.setText(
       "ELECTRIC",
-      "Sj :" + this.data.energy + " / " + this.data.energyMax
+      "Gj :" + this.data.energy + " / " + this.data.energyMax
     );
     if (
       (canisterFuel.id == ItemID.bucket_of_fuel &&

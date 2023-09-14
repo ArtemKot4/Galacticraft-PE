@@ -79,36 +79,36 @@ cableAPI.addGroup(BlockID.extractor);
 cableAPI.addGroup(BlockID.solidCanner);
 cableAPI.addGroup(BlockID.canner);
 
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.semifluidGenerator, sj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.solarPanel, sj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.primalGenerator, sj);
-                EnergyTileRegistry.addEnergyTypeForId(BlockID.electricHeatGenerator, sj);
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.rtGenerator, sj);
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.solidHeatGenerator, sj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.recycler, sj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.metalFormer, sj);
-                EnergyTileRegistry.addEnergyTypeForId(BlockID.oreWasher, sj);
-                    EnergyTileRegistry.addEnergyTypeForId(BlockID.thermalCentrifuge, sj);
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.blastFurnace, sj);
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.icFermenter, sj);
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.massFabricator, sj);
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.stirlingGenerator, sj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.ironFurnace, sj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.nuclearReactor, sj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageBatBox, sj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageCESU, sj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageMFE, sj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageMFSU, sj);
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.transformerHV, sj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.transformerLV, sj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.transformerEV, sj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.electricFurnace, sj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.inductionFurnace, sj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.macerator, sj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.compressor, sj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.extractor, sj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.canner, sj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.solidCanner, sj);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.semifluidGenerator, gj);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.solarPanel, gj);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.primalGenerator, gj);
+                EnergyTileRegistry.addEnergyTypeForId(BlockID.electricHeatGenerator, gj);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.rtGenerator, gj);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.solidHeatGenerator, gj);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.recycler, gj);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.metalFormer, gj);
+                EnergyTileRegistry.addEnergyTypeForId(BlockID.oreWasher, gj);
+                    EnergyTileRegistry.addEnergyTypeForId(BlockID.thermalCentrifuge, gj);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.blastFurnace, gj);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.icFermenter, gj);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.massFabricator, gj);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.stirlingGenerator, gj);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.ironFurnace, gj);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.nuclearReactor, gj);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageBatBox, gj);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageCESU, gj);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageMFE, gj);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageMFSU, gj);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.transformerHV, gj);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.transformerLV, gj);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.transformerEV, gj);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.electricFurnace, gj);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.inductionFurnace, gj);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.macerator, gj);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.compressor, gj);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.extractor, gj);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.canner, gj);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.solidCanner, gj);
         
    cableAPI.addGroup(BlockID.pump);
 ;
@@ -163,7 +163,7 @@ Recipes.addShaped({id: ItemID.canister_copper, count: 1, data: 0}, [
     "aaa"
 ], ['a', ItemID.plateCopper, 0]);
 
-Recipes.addShaped({id: BlockID.compressor_sj, count: 1, data: 0}, [
+Recipes.addShaped({id: BlockID.compressor_gj, count: 1, data: 0}, [
     "baf",
     "aca",
     "aea"
@@ -182,7 +182,7 @@ Recipes.addShaped({id: BlockID.coal_generator, count: 1, data: 0}, [
     "aea"
 ], ['a', ItemID.ingotCopper, 0, 'b', VanillaItemID.iron_ingot, 0, 'c', VanillaBlockID.furnace, 0, 'e', BlockID.AluminumWire, 0]);
 
-Recipes.addShaped({id: BlockID.compressor_sj, count: 1, data: 0}, [
+Recipes.addShaped({id: BlockID.compressor_gj, count: 1, data: 0}, [
     "baf",
     "aca",
     "aea"
@@ -1670,10 +1670,10 @@ SpacesMachine.addReceptForElectricCompressor({slot_1:ItemID.ingotCopper,
 SpacesMachine.addCollectorLeaves({leaf:BlockID.rubberTreeLeaves})
 
 
-ChargeItemRegistry.registerItem(ItemID.storageBattery, " sj", 10000, 20,0, true)
-	ChargeItemRegistry.registerItem(ItemID.storageAdvBattery, "sj", 100000, 20, 0, true);
-	ChargeItemRegistry.registerItem(ItemID.storageCrystal, "sj", 1000000, 20,0, true);
-	ChargeItemRegistry.registerItem(ItemID.storageLapotronCrystal, "sj", 10000000, 20, 0, true);
+ChargeItemRegistry.registerItem(ItemID.storageBattery, "GalacticraftJoule", 10000, 20,0, true)
+	ChargeItemRegistry.registerItem(ItemID.storageAdvBattery, "GalacticraftJoule", 100000, 20, 0, true);
+	ChargeItemRegistry.registerItem(ItemID.storageCrystal, "GalacticraftJoule", 1000000, 20,0, true);
+	ChargeItemRegistry.registerItem(ItemID.storageLapotronCrystal, "GalacticraftJoule", 10000000, 20, 0, true);
 	
 	euGroup.add(BlockID.enclosed_copper_cable,-1)
 euGroup.add(BlockID.enclosed_gold_cable,-1);

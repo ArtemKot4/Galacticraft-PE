@@ -150,7 +150,7 @@ class CoalGenerator extends Generator {
         this.container.setScale("progress_scale", this.data.energy / this.data.energyMax);
 
 
-        this.container.setText("EnergyText", "Sj :" + this.data.energy + " / " + this.getCapacity());
+        this.container.setText("EnergyText", "Gj :" + this.data.energy + " / " + this.getCapacity());
 
 
         if (this.data.energy > 0) {

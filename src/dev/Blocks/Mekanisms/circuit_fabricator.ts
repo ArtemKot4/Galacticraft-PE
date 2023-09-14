@@ -245,7 +245,7 @@ SpacesMachine.registerStandartMachine(BlockID.circuit_fabricator, {
     },
     defaultValues: {
         progress: 0,
-        progressMax: 0,
+        progressMax: 500,
         active: false,
         energy: 0,
         energyMax: 1000,

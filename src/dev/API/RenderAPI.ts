@@ -149,7 +149,7 @@ IDRegistry.genBlockID("StandartAluminumWire");
 Block.createBlock("StandartAluminumWire", [ {name: "standartAluminumWire", texture:
  [["aluminum_wire", 0]], inCreative: true}], WIRE);
 
-sj.registerWire(BlockID.AluminumWire, 200);
+gj.registerWire(BlockID.AluminumWire, 200);
 
 TileRenderer.setupWireModel(BlockID.StandartAluminumWire,-1, 4 / 32, "sj-wire");
 
@@ -163,7 +163,7 @@ TileRenderer.setupWireModel(BlockID.StandartAluminumWire,-1, 4 / 32, "sj-wire");
 IDRegistry.genBlockID("ImprovedAluminumWireLightBlue");
 Block.createBlock("ImprovedAluminumWireLightBlue", [ {name: "Improved Aluminum Wire", texture: [["LightBlueWire", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireLightBlue,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireLightBlue, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireLightBlue, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -182,7 +182,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireLightBlue, functio
 IDRegistry.genBlockID("ImprovedAluminumWire");
 Block.createBlock("ImprovedAluminumWire", [ {name: "Improved Aluminum Wire", texture: [["aluminum_wire", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWire,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWire, 400);
+gj.registerWire(BlockID.ImprovedAluminumWire, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -210,7 +210,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWire, function(item, n
 IDRegistry.genBlockID("ImprovedAluminumWireDarkLime");
 Block.createBlock("ImprovedAluminumWireDarkLime", [ {name: "Improved Aluminum Wire", texture: [["DarkLime", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireDarkLime,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireDarkLime, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireDarkLime, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -228,7 +228,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireDarkLime, function
 IDRegistry.genBlockID("ImprovedAluminumWireMagenta");
 Block.createBlock("ImprovedAluminumWireMagenta", [ {name: "Improved Aluminum Wire", texture: [["Magenta", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireMagenta,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireMagenta, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireMagenta, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -245,7 +245,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireMagenta, function(
 IDRegistry.genBlockID("ImprovedAluminumWireOrange");
 Block.createBlock("ImprovedAluminumWireOrange", [ {name: "Improved Aluminum Wire", texture: [["OrangeCopper", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireOrange,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireOrange, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireOrange, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -262,7 +262,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireOrange, function(i
 IDRegistry.genBlockID("ImprovedAluminumWireGray");
 Block.createBlock("ImprovedAluminumWireGray", [ {name: "Improved Aluminum Wire", texture: [["DemerrorColor", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireGray,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireGray, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireGray, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -278,7 +278,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireGray, function(ite
 IDRegistry.genBlockID("ImprovedAluminumWireDarkGrey");
 Block.createBlock("ImprovedAluminumWireDarkGrey", [ {name: "Improved Aluminum Wire", texture: [["ArtemOnColor", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireDarkGrey, 0,2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireDarkGrey, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireDarkGrey, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -295,7 +295,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireDarkGrey, function
 IDRegistry.genBlockID("ImprovedAluminumWireRed");
 Block.createBlock("ImprovedAluminumWireRed", [ {name: "Improved Aluminum Wire", texture: [["Red", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireRed,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireRed, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireRed, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -311,7 +311,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireRed, function(item
 IDRegistry.genBlockID("ImprovedAluminumWirePink");
 Block.createBlock("ImprovedAluminumWirePink", [ {name: "Improved Aluminum Wire", texture: [["Pink", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWirePink,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWirePink, 400);
+gj.registerWire(BlockID.ImprovedAluminumWirePink, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -329,7 +329,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWirePink, function(ite
 IDRegistry.genBlockID("ImprovedAluminumWireBlue");
 Block.createBlock("ImprovedAluminumWireBlue", [ {name: "Improved Aluminum Wire", texture: [["Blue", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireBlue,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireBlue, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireBlue, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -345,7 +345,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireBlue, function(ite
 IDRegistry.genBlockID("ImprovedAluminumWireOrange");
 Block.createBlock("ImprovedAluminumWireOrange", [ {name: "Improved Aluminum Wire", texture: [["OrangeS", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireOrange,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireOrange, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireOrange, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -362,7 +362,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireOrange, function(i
 IDRegistry.genBlockID("ImprovedAluminumWireYellow");
 Block.createBlock("ImprovedAluminumWireYellow", [ {name: "Improved Aluminum Wire", texture: [["Yellow", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireYellow,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireYellow, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireYellow, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -377,7 +377,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireYellow, function(i
 IDRegistry.genBlockID("ImprovedAluminumWireBlack");
 Block.createBlock("ImprovedAluminumWireBlack", [ {name: "Improved Aluminum Wire", texture: [["Black", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireBlack, 0,2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireBlack, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireBlack, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -393,7 +393,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireBlack, function(it
 IDRegistry.genBlockID("ImprovedAluminumWireWhite");
 Block.createBlock("ImprovedAluminumWireWhite", [ {name: "Improved Aluminum Wire", texture: [["Demerror&ArtemOn", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireWhite,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireWhite, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireWhite, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -408,7 +408,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireWhite, function(it
 IDRegistry.genBlockID("ImprovedAluminumWireDarkBlue");
 Block.createBlock("ImprovedAluminumWireDarkBlue", [ {name: "Improved Aluminum Wire", texture: [["DarkBlue", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireDarkBlue,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireDarkBlue, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireDarkBlue, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -422,7 +422,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireDarkBlue, function
 IDRegistry.genBlockID("ImprovedAluminumWireGreen");
 Block.createBlock("ImprovedAluminumWireGreen", [ {name: "Improved Aluminum Wire", texture: [["Green", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireGreen, 0,2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireGreen, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireGreen, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -437,7 +437,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireGreen, function(it
 IDRegistry.genBlockID("ImprovedAluminumWireDarkGreen");
 Block.createBlock("ImprovedAluminumWireDarkGreen", [ {name: "Improved Aluminum Wire", texture: [["DarkGreen", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedAluminumWireDarkGreen,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedAluminumWireDarkGreen, 400);
+gj.registerWire(BlockID.ImprovedAluminumWireDarkGreen, 400);
 Translation.addTranslation("Improved Aluminum Wire", {
 ru: "Улучшенный алюминиевый провод"
 })
@@ -448,7 +448,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedAluminumWireDarkGreen, functio
 IDRegistry.genBlockID("AluminumWire");
 Block.createBlock("AluminumWire", [ {name: "Aluminum Wire", texture: [["wire_aluminum", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.AluminumWire,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.AluminumWire, 200);
+gj.registerWire(BlockID.AluminumWire, 200);
 Translation.addTranslation("Aluminum Wire", {
 ru: "Алюминиевый провод"
 })
@@ -464,7 +464,7 @@ Item.registerNameOverrideFunction(BlockID.AluminumWire, function(item, name){
 IDRegistry.genBlockID("AluminumWireBlue");
 Block.createBlock("AluminumWireBlue", [ {name: "Aluminum Wire", texture: [["BlueW", 0]], inCreative: false}],WIRE);
 TileRenderer.setupWireModel(BlockID.AluminumWireBlue,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.AluminumWireBlue, 200);
+gj.registerWire(BlockID.AluminumWireBlue, 200);
 Translation.addTranslation("Aluminum Wire", {
 ru: "Алюминиевый провод"
 })
@@ -479,7 +479,7 @@ Item.registerNameOverrideFunction(BlockID.AluminumWireBlue, function(item, name)
 IDRegistry.genBlockID("AluminumWireWhite");
 Block.createBlock("AluminumWireWhite", [ {name: "Aluminum Wire", texture: [["WhiteW", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.AluminumWireWhite,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.AluminumWireWhite, 200);
+gj.registerWire(BlockID.AluminumWireWhite, 200);
 Translation.addTranslation("Aluminum Wire", {
 ru: "Алюминиевый провод"
 })
@@ -493,7 +493,7 @@ Item.registerNameOverrideFunction(BlockID.AluminumWireWhite, function(item, name
 IDRegistry.genBlockID("AluminumWireBlack");
 Block.createBlock("AluminumWireBlack", [ {name: "Aluminum Wire", texture: [["BlackW", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.AluminumWireBlack,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.AluminumWireBlack, 200);
+gj.registerWire(BlockID.AluminumWireBlack, 200);
 Translation.addTranslation("Aluminum Wire", {
 ru: "Алюминиевый провод"
 })
@@ -509,7 +509,7 @@ Item.registerNameOverrideFunction(BlockID.AluminumWireBlack, function(item, name
 IDRegistry.genBlockID("ImprovedCopperWire");
 Block.createBlock("ImprovedCopperWire", [ {name: "Improved Copper Wire", texture: [["wire_copper", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.ImprovedCopperWire,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.ImprovedCopperWire, 300);
+gj.registerWire(BlockID.ImprovedCopperWire, 300);
 Translation.addTranslation("Improved Copper Wire", {
 ru: "Улучшенный медный провод"
 })
@@ -526,7 +526,7 @@ Item.registerNameOverrideFunction(BlockID.ImprovedCopperWire, function(item, nam
 IDRegistry.genBlockID("CopperWire");
 Block.createBlock("CopperWire", [ {name: "Copper Wire", texture: [["copper_wire", 0]], inCreative: true}],WIRE);
 TileRenderer.setupWireModel(BlockID.CopperWire,0, 2/8,"sj-wire");
-sj.registerWire(BlockID.CopperWire, 100);
+gj.registerWire(BlockID.CopperWire, 100);
 Translation.addTranslation("Copper Wire", {
 ru: "Медный провод"
 })

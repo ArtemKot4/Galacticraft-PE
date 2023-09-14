@@ -57,7 +57,7 @@ Recipes.addShaped({id: ItemID.ingot_tin_sc, count: 1, data: 0}, [
 ], ['a', ItemID.ingotTin, 0]);
 
 
-Recipes.addShaped({id: BlockID.compressor_sj, count: 1, data: 0}, [
+Recipes.addShaped({id: BlockID.compressor_gj, count: 1, data: 0}, [
     "baf",
     "aca",
     "aea"
@@ -81,7 +81,7 @@ Recipes.addShaped({id: BlockID.coal_generator, count: 1, data: 0}, [
     "aea"
 ], ['a', ItemID.ingotCopper, 0, 'b', VanillaItemID.iron_ingot, 0, 'c', VanillaBlockID.furnace, 0, 'e', BlockID.AluminumWire, 0]);
 
-Recipes.addShaped({id: BlockID.compressor_sj, count: 1, data: 0}, [
+Recipes.addShaped({id: BlockID.compressor_gj, count: 1, data: 0}, [
     "baf",
     "aca",
     "aea"

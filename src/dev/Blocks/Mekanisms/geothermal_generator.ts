@@ -67,7 +67,7 @@ class GeothermalGenerator extends Generator {
    	
    	this.container.setText(
    	    "EnergiA",
-   	    "Sj :" + 
+   	    "Gj :" + 
    	    this.data.energy 
    	    + " / " + 
    	    this.data.energyMax);

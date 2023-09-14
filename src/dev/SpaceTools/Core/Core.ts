@@ -62,7 +62,7 @@ const rfGroup = ICRender.getGroup("rf-wire");
 
 const euGroup = ICRender.getGroup("ic-wire");
 
-let sj = EnergyTypeRegistry.assureEnergyType("spacejoule", 2);
+let gj = EnergyTypeRegistry.assureEnergyType("GalacticraftJoule", 2);
 //Космическая энергия
 let ob = EnergyTypeRegistry.assureEnergyType("oxygenbar", 2);
 

@@ -1,5 +1,5 @@
 IDRegistry.genBlockID("enclosed_aluminum_wire");
-Block.createBlockWithRotation("enclosed_aluminum_wire", [{
+Block.createBlock("enclosed_aluminum_wire", [{
     name: "Enclosed Aluminum Wire",
     texture: [["Enclosed Aluminum Wire", 0]],
     inCreative: true
@@ -8,10 +8,10 @@ Block.createBlockWithRotation("enclosed_aluminum_wire", [{
 Translation.addTranslation("Enclosed Aluminum Wire", {
     ru: "Герметичная алюминиевая труба"
 });
-sj.registerWire(BlockID.enclosed_aluminum_wire, 200);
+gj.registerWire(BlockID.enclosed_aluminum_wire, 200);
 
 IDRegistry.genBlockID("enclosed_fluid_pipe");
-Block.createBlockWithRotation("enclosed_fluid_pipe", [{
+Block.createBlock("enclosed_fluid_pipe", [{
     name: "Enclosed Oxygen Pipe",
     texture: [["Enclosed Fluid Pipe", 0]],
     inCreative: true
@@ -23,7 +23,7 @@ Translation.addTranslation("Enclosed Oxygen Pipe", {
 ob.registerWire(BlockID.enclosed_fluid_pipe, 400);
 
 IDRegistry.genBlockID("enclosed_heavy_aluminum_wire");
-Block.createBlockWithRotation("enclosed_heavy_aluminum_wire", [{
+Block.createBlock("enclosed_heavy_aluminum_wire", [{
     name: "Enclosed Heavy Aluminum Wire",
     texture: [["Enclosed Heavy Aluminum Wire", 0]],
     inCreative: true
@@ -32,4 +32,4 @@ Block.createBlockWithRotation("enclosed_heavy_aluminum_wire", [{
 Translation.addTranslation("Enclosed Heavy Aluminum Wire", {
     ru: "Герметичная улучшенная алюминиевая труба"
 });
-sj.registerWire(BlockID.enclosed_heavy_aluminum_wire, 400);
+gj.registerWire(BlockID.enclosed_heavy_aluminum_wire, 400);

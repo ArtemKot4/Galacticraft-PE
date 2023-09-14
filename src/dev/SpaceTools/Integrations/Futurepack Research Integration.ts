@@ -1,11 +1,11 @@
 ModAPI.addAPICallback("FuturepackAPI", function(api: any){
 	var Futurepack = api.Futurepack;
-	ChargeItemRegistry.registerItem(ItemID.battery_I, " sj", 300, 20, 0, true)
-	ChargeItemRegistry.registerItem(ItemID.battery_n, "sj", 420, 20, 0, true);
-	ChargeItemRegistry.registerItem(ItemID.neon_battery, "sj", 1000, 20, 0, true);
-	ChargeItemRegistry.registerItem(ItemID.energie_zelle, "sj", 760, 20, 0, true);
-	ChargeItemRegistry.registerItem(ItemID.compact_energie_zelle, "sj", 760, 20, 0, true);
-	ChargeItemRegistry.registerItem(ItemID.kristall_energie_zelle, "sj", 860, 20, 0, true);
+	ChargeItemRegistry.registerItem(ItemID.battery_I, "GalacticraftJoule", 300, 20, 0, true)
+	ChargeItemRegistry.registerItem(ItemID.battery_n, "GalacticraftJoule", 420, 20, 0, true);
+	ChargeItemRegistry.registerItem(ItemID.neon_battery, "GalacticraftJoule", 1000, 20, 0, true);
+	ChargeItemRegistry.registerItem(ItemID.energie_zelle, "GalacticraftJoule", 760, 20, 0, true);
+	ChargeItemRegistry.registerItem(ItemID.compact_energie_zelle, "GalacticraftJoule", 760, 20, 0, true);
+	ChargeItemRegistry.registerItem(ItemID.kristall_energie_zelle, "GalacticraftJoule", 860, 20, 0, true);
    
 	var batCryst = ["bioterium_battery","glowtite_batareika","wakurum_battery","neon_battery","quantanium_battery","retium_battery"]
 	var batTranslat = ["Bioterium Battery","Glowtite Battery","Wakurum Battery","Neon Battery","Quantanium Battery","Retium Battery"]
@@ -15,7 +15,7 @@ ModAPI.addAPICallback("FuturepackAPI", function(api: any){
 		var en = energa[crystal];
 		IDRegistry.genItemID(bat); 
 Item.createItem(bat, bt, {name: bat, meta: 0}, {stack: 1, isTech:false});
-		ChargeItemRegistry.registerItem(ItemID[bat], "sj", en, 20, 0, true);
+		ChargeItemRegistry.registerItem(ItemID[bat], "gj", en, 20, 0, true);
 		ChargeItemRegistry.registerItem(ItemID[bat], "ft", en, 20, 0, true);
 	};
 		
