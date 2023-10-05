@@ -136,7 +136,7 @@ class CoalGenerator extends Generator {
         for (let i in burnItems) {
             if (CoalSlot.id == burnItems[i].id && this.data.burning != 3000) {
                 this.data.burning += 3000;
-                this.container.getSlot("CoalSlot").count -= 1;
+            
                 CoalSlot.count--
 
                 this.data.active = true;
@@ -185,14 +185,14 @@ class CoalGenerator extends Generator {
 
 SpacesMachine.registerStandartMachine(BlockID.coal_generator, new CoalGenerator(CoalGeneratorUI))
 
-StorageInterface.createInterface(BlockID.coal_generator, {
-    slots: {
-        "coalSlot": {
-            input: true,
-            side: "down",
-            isValid: function (item, side) {
-                return SpacesMachine.getCoal();
-            }
-        },
-    }
-});
+// StorageInterface.createInterface(BlockID.coal_generator, {
+//     slots: {
+//         "coalSlot": {
+//             input: true,
+//             side: "down",
+//             isValid: function (item, side) {
+//                 return SpacesMachine.getCoal();
+//             }
+//         },
+//     }
+// });

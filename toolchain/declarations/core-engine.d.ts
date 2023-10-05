@@ -101,7 +101,7 @@ declare module com {
                          * @returns contents of the slot in a [[ItemContainerSlot]] object.
                          * You can modify it to change the contents of the slot
                          */
-                        getSlot(name: string): ItemContainerSlot;
+                        getSlot(name: string): ItemContainerSlot | any;
                         /** @deprecated */ getFullSlot(name: string): ItemContainerSlot;
                         markSlotDirty(name: string): void;
                         markAllSlotsDirty(): void;

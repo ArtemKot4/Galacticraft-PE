@@ -1,5 +1,8 @@
+type universal = string | number;
+
+
 var cableAPI = {
-  renderSet: function (idblock, siz) {
+  renderSet: function (idblock, siz): void {
     var group = ICRender.getGroup("sj-wire");
     var id = idblock;
     var width = siz;
@@ -322,19 +325,19 @@ var AirCable = {
   },
 };
 
-var leaves = [];
-var burnItems = [];
-var Colding = [];
-var compressorRecipe = [];
-var circuit = [];
-var rock1 = [];
-var liquids = [];
+var leaves: any[] = [];
+var burnItems: any[] = [];
+
+var compressorRecipe: any[] = [];
+var circuit: any[] = [];
+var rock1: any[] = [];
+var liquids: any[] = [];
 
 var Working = {
-  createStatus: function (scale: string, text: string) {
+  createStatus: function (scale: string, text: string): void {
     this.container.setText(scale, Translation.translate(text));
   },
-  addBattery: function (block: any, slot: any, data: any) {
+  addBattery: function (block: any, slot: any, data: any): void {
     this.data.energy -= ChargeItemRegistry.addEnergyToSlot(
       block.getSlot(slot),
       "gj",
@@ -345,8 +348,10 @@ var Working = {
   },
 };
 
+
+
 var SpacesMachine = {
-  addCollectorLeaves: function (leaf) {
+  addCollectorLeaves: function (leaf): void {
     leaf = leaf || {};
     leaf.id = leaf.id || 0;
     leaves.push({
@@ -358,12 +363,8 @@ var SpacesMachine = {
       id: id,
     });
   },
-  getCoal: function () {
-    for (var i in burnItems) {
-      return burnItems[i].coal;
-    }
-  },
-  liquidRegistry: function (id, data, voId, voData, liquid) {
+
+  liquidRegistry: function (id: universal, data: number, voId: universal, voData: number, liquid: any) {
     liquids.push({
       id: id,
       data: data,
@@ -415,39 +416,18 @@ var SpacesMachine = {
       result: out.result || 0,
     });
   },
-  getCompressorRecipe: function () {
-    for (var i in compressorRecipe) {
-      return compressorRecipe[i].inp;
-    }
-  },
-  getCompressorResult: function () {
-    for (var i in compressorRecipe) {
-      return compressorRecipe[i].out;
-    }
-  },
-  addCircuitRecept: function (inp, out) {
-    inp = inp || {};
-    out = out || {};
-    inp.diamond = inp.diamond || 0;
-    inp.fabricator_1 = inp.fabricator_1 || 0;
-    inp.fabricator_0 = inp.fabricator_0 || 0;
-    inp.dust = inp.dust || 0;
-    inp.slot = inp.slot || 0;
-    out.resultat = out.resultat || 0;
+ 
+  addCircuitRecept: function (inp: any = {}, out: any = {}) {
     circuit.push({
-      diamond: inp.diamond,
-      fabricator_1: inp.fabricator_1,
-      fabricator_0: inp.fabricator_0,
-      dust: inp.dust,
-      slot: inp.slot,
-      resultat: out.resultat,
+      slot_1: inp.slot_1 || 0,
+      slot_3: inp.fabricator_1 || 0,
+      slot_2: inp.fabricator_0 || 0,
+      slot_4: inp.slot_4 || 0,
+      slot_5: inp.slot_5 || 0,
+      result: out.result || 0,
     });
   },
-  getCircuitRecipe: function () {
-    for (var i in circuit) {
-      return circuit[i].inp;
-    }
-  },
+ 
   addDefaultRocketRecipe: function (rock, out) {
     rock = rock || {};
     out = out || {};
@@ -489,17 +469,7 @@ var SpacesMachine = {
       storage_3: rock.storage_3,
       rocket: out.rocket,
     });
-  },
-  getDefaultRocketRecipe: function () {
-    for (var i in rock1) {
-      return rock1[i].rock;
-    }
-  },
-  getDefaultRocketResult: function () {
-    for (var i in rock1) {
-      return rock1[i].out;
-    }
-  },
+  }
 };
 
 SpacesMachine.addCoal(VanillaItemID.coal);
@@ -507,21 +477,21 @@ SpacesMachine.addCoal(VanillaItemID.charcoal);
 
 SpacesMachine.addCoal(VanillaBlockID.coal_block);
 
-IDRegistry.genBlockID("spaces_lent");
-Block.createBlock(
-  "spaces_lent",
-  [
-    {
-      name: "Dangerous Lent",
-      texture: [["Dangerous Lent", 0]],
-      inCreative: true,
-    },
-  ],
-  STONE
-);
-Translation.addTranslation("Dangerous Lent", {
-  ru: "§6Аварийная лента",
-});
+// IDRegistry.genBlockID("spaces_lent");
+// Block.createBlock(
+//   "spaces_lent",
+//   [
+//     {
+//       name: "Dangerous Lent",
+//       texture: [["Dangerous Lent", 0]],
+//       inCreative: true,
+//     },
+//   ],
+//   STONE
+// );
+// Translation.addTranslation("Dangerous Lent", {
+//   ru: "§6Аварийная лента",
+// });
 
 /*
  $ - slot1

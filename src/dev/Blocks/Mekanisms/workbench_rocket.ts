@@ -264,7 +264,7 @@ drawing:SignRocketbench — drsrb.
         r2# #10 #l2   #cr
           Интерфейс*/
 
-var Workbenchmesh = new RenderMesh();
+var Workbenchmesh: RenderMesh = new RenderMesh();
 Workbenchmesh.setBlockTexture("assembly", 0);
 Workbenchmesh.importFromFile(__dir__+"/resources/models/workbench.obj", "obj", null);
 IDRegistry.genBlockID("workbench_nasa");
@@ -357,29 +357,29 @@ Block.registerDropFunction("workbench_nasa", function(coords, blockID) {
         0]]
 });
 
-StorageInterface.createInterface(BlockID.coal_generator, {
-    slots: {
-        "slot^1-10": {
-            input: true,
-            side: "down",
-            isValid: function(item, side){
-                return SpacesMachine.getDefaultRocketRecipe();
-            }
-        },
-        "slotuer^1-2": {
-            input: true,
-            side: "down",
-            isValid: function(item, side){
-                return SpacesMachine.getDefaultRocketRecipe();
-            }
-        },
-        "slotuel^1-2": {
-            input: true,
-            side: "down",
-            isValid: function(item, side){
-                return SpacesMachine.getDefaultRocketRecipe();
-            }
-        },
-        "craftable": {output: true}
-    }     
-});
+// StorageInterface.createInterface(BlockID.coal_generator, {
+//     slots: {
+//         "slot^1-10": {
+//             input: true,
+//             side: "down",
+//             isValid: function(item, side){
+//                 return SpacesMachine.getDefaultRocketRecipe();
+//             }
+//         },
+//         "slotuer^1-2": {
+//             input: true,
+//             side: "down",
+//             isValid: function(item, side){
+//                 return SpacesMachine.getDefaultRocketRecipe();
+//             }
+//         },
+//         "slotuel^1-2": {
+//             input: true,
+//             side: "down",
+//             isValid: function(item, side){
+//                 return SpacesMachine.getDefaultRocketRecipe();
+//             }
+//         },
+//         "craftable": {output: true}
+//     }     
+// });

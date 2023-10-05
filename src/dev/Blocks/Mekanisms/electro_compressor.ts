@@ -253,49 +253,55 @@ class ElectricCompressor extends InputMachine {
     var slotResult = this.container.getSlot("slotResult2");
     var slotResult1 = this.container.getSlot("slotResult1");
 
-for (var i in compressorRecipe) {
-          let recipe = compressorRecipe[i];
-          for (var n = 0; n <= 9; n++) {
-            if (
-              this.container.getSlot("slot_" + n).id == recipe["slot_" + n] &&
-              this.data.energy >= 100 &&
-              this.data.progress < 500
-            ) {
-              this.data.progress++;
-            }
+    for (var i in compressorRecipe) {
+      let recipe = compressorRecipe[i];
+      for (var n = 0; n <= 9; n++) {
+        if (
+          this.container.getSlot("slot_" + n).id == recipe["slot_" + n] &&
+          this.data.energy >= 100 &&
+          this.data.progress < 500
+        ) {
+          this.data.progress++;
+        }
 
-    if (slotResult.id == 0 || slotResult.id == compressorRecipe[i].result && this.data.progress >= 500) {
-    
-        
-            this.container.getSlot("slot_" + n).count -= 1;
+        if (
+          slotResult.id == 0 &&
+          this.data.progress >= 500 ||
+          (slotResult.id == recipe.result &&
+            this.data.progress >= 500)
+        ) {
+          this.container.getSlot("slot_" + n).count -= 1;
 
-            this.container.setSlot(
-              "slot_" + n,
-              this.container.getSlot("slot_" + n).id,
-              this.container.getSlot("slot_" + n).count,
-              this.container.getSlot("slot_" + n).data
-            );
-            this.data.energy -= 100;
-            this.data.progress = 0;
-            this.container.setSlot(
-              "slotResult1",
-              compressorRecipe[i].result,
-              slotResult1.count + 1,
-              0
-            );
-            this.container.setSlot(
-              "slotResult2",
-              compressorRecipe[i].result,
-              slotResult.count + 1,
-              0
-            );
-          }
+          this.container.setSlot(
+            this.container.getSlot("slot_" + n),
+            this.container.getSlot("slot_" + n).id,
+            this.container.getSlot("slot_" + n).count,
+            this.container.getSlot("slot_" + n).data
+          );
+          this.data.energy -= 100;
+          this.data.progress = 0;
+          this.container.setSlot(
+            "slotResult1",
+            recipe.result,
+            slotResult1.count + 1,
+            0
+          );
+          this.container.setSlot(
+            "slotResult2",
+            recipe.result,
+            slotResult.count + 1,
+            0
+          );
+        }
       }
     }
   }
 }
 
-SpacesMachine.registerStandartMachine(BlockID.electric_compressor_gj, new ElectricCompressor(CompressinGElectric))
+SpacesMachine.registerStandartMachine(
+  BlockID.electric_compressor_gj,
+  new ElectricCompressor(CompressinGElectric)
+);
 //   useNetworkItemContainer: true,
 //   getScreenName() {
 //     return "main";
@@ -361,8 +367,7 @@ SpacesMachine.registerStandartMachine(BlockID.electric_compressor_gj, new Electr
 //             }
 
 //     if (slotResult.id == 0 || slotResult.id == compressorRecipe[i].result && this.data.progress >= 500) {
-    
-        
+
 //             this.container.getSlot("slot_" + n).count -= 1;
 
 //             this.container.setSlot(
