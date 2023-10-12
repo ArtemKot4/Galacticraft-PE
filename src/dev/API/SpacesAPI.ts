@@ -421,7 +421,8 @@ var SpacesUtils = {
   //         toolnumber);
 
   // },
-  canisterRegistry: function (id, name, tex0: string, liquid) {
+ 
+  canisterRegistry: function (id: string, name: string, tex0: string, liquid: any): void {
     IDRegistry.genItemID(id);
     Item.createItem(
       id,

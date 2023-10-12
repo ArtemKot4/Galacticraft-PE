@@ -5,18 +5,18 @@ const BLOCK_TYPE_LIQUID = Block.createSpecialType({
     explosionres: 10000
 });
 
- LiquidRegistry.registerLiquid("spacescraft_oil", "Oil", ["oil_gl_flow"]); 
+ LiquidRegistry.registerLiquid("oil", "Oil", ["oil_gl_flow"]); 
  
-Block.createLiquidBlock("spacescraft_oil", 
+Block.createLiquidBlock("oil", 
 { 
  name: "Oil", 
  still: { 
  texture: ["oil_gl_still", 0], 
- id: "spacescraft_oil_still",
+ id: "oil_still",
  }, 
  flowing: { 
  texture: ["oil_gl_flow", 0], 
- id: "spacescraft_oil_flowing",
+ id: "oil_flowing",
  }, 
  bucket: { 
  texture: { name: "Bucket Oil", meta: 0 }, 
@@ -29,18 +29,18 @@ Block.createLiquidBlock("spacescraft_oil",
 
 
 
-LiquidRegistry.registerLiquid("spacescraft_liquidoxygen", "Liquid Oxygen", ["liquidoxygen"]); 
+LiquidRegistry.registerLiquid("liquidoxygen", "Liquid Oxygen", ["liquidoxygen"]); 
  
-Block.createLiquidBlock("spacescraft_liquidoxygen", 
+Block.createLiquidBlock("liquidoxygen", 
 { 
  name: "Liquid Oxygen", 
  still: { 
  texture: ["liquidoxygen", 0], 
- id: "spacescraft_liquidoxygen_still",
+ id: "liquidoxygen_still",
  }, 
  flowing: { 
  texture: ["liquidoxygen", 0], 
- id: "spacescraft_liquidoxygen_flowing",
+ id: "liquidoxygen_flowing",
  }, 
  bucket: { 
  texture: { name: "oxygenliquid_bucket", meta: 0 }, 
@@ -51,18 +51,18 @@ Block.createLiquidBlock("spacescraft_liquidoxygen",
 
 
 
-LiquidRegistry.registerLiquid("spacescraft_argon", "Argon", ["argon"]); 
+LiquidRegistry.registerLiquid("argon", "Argon", ["argon"]); 
  
-Block.createLiquidBlock("spacescraft_argon", 
+Block.createLiquidBlock("argon", 
 { 
  name: "Argon", 
  still: { 
  texture: ["argon", 0], 
- id: "spacescraft_argon_still",
+ id: "argon_still",
  }, 
  flowing: { 
  texture: ["argon", 0], 
- id: "spacescraft_argon_flowing",
+ id: "argon_flowing",
  }, 
  bucket: { 
  texture: { name: "argon_bucket", meta: 0 }, 
@@ -73,18 +73,18 @@ Block.createLiquidBlock("spacescraft_argon",
 
 
 
-LiquidRegistry.registerLiquid("spacescraft_methane", "Methane", ["methane"]); 
+LiquidRegistry.registerLiquid("methane", "Methane", ["methane"]); 
  
-Block.createLiquidBlock("spacescraft_methane", 
+Block.createLiquidBlock("methane", 
 { 
  name: "Methane", 
  still: { 
  texture: ["methane", 0], 
- id: "spacescraft_methane_still",
+ id: "methane_still",
  }, 
  flowing: { 
  texture: ["methane", 0], 
- id: "spacescraft_methane_flowing",
+ id: "methane_flowing",
  }, 
  bucket: { 
  texture: { name: "methane_bucket", meta: 1 }, 
@@ -95,18 +95,18 @@ Block.createLiquidBlock("spacescraft_methane",
 
 
 
-LiquidRegistry.registerLiquid("spacescraft_liquid_methane", "Liquid Methane", ["liquidmethane"]); 
+LiquidRegistry.registerLiquid("liquid_methane", "Liquid Methane", ["liquidmethane"]); 
  
-Block.createLiquidBlock("spacescraft_liquid_methane", 
+Block.createLiquidBlock("liquid_methane", 
 { 
  name: "Liquid Methane", 
  still: { 
  texture: ["liquidmethane", 0], 
- id: "spacescraft_liquid_methane_still",
+ id: "liquid_methane_still",
  }, 
  flowing: { 
  texture: ["liquidmethane", 0], 
- id: "spacescraft_liquid_methane_flowing",
+ id: "liquid_methane_flowing",
  }, 
  bucket: { 
  texture: { name: "liquidmethane_bucket", meta: 0 }, 
@@ -117,18 +117,18 @@ Block.createLiquidBlock("spacescraft_liquid_methane",
 
 
 
-LiquidRegistry.registerLiquid("spacescraft_carbondioxide", "Carbon dioxide", ["carbondioxide"]); 
+LiquidRegistry.registerLiquid("carbondioxide", "Carbon dioxide", ["carbondioxide"]); 
  
-Block.createLiquidBlock("spacescraft_carbondioxide", 
+Block.createLiquidBlock("carbondioxide", 
 { 
  name: "Carbon dioxide", 
  still: { 
  texture: ["carbondioxide", 0], 
- id: "spacescraft_carbondioxide_still",
+ id: "carbondioxide_still",
  }, 
  flowing: { 
  texture: ["carbondioxide", 0], 
- id: "spacescraft_carbondioxide_flowing",
+ id: "carbondioxide_flowing",
  }, 
  bucket: { 
  texture: { name: "carbondioxide_bucket", meta: 0 }, 
@@ -139,18 +139,18 @@ Block.createLiquidBlock("spacescraft_carbondioxide",
 
 
 
-LiquidRegistry.registerLiquid("spacescraft_helium", "Helium", ["helium"]); 
+LiquidRegistry.registerLiquid("helium", "Helium", ["helium"]); 
  
-Block.createLiquidBlock("spacescraft_helium", 
+Block.createLiquidBlock("helium", 
 { 
  name: "Helium", 
  still: { 
  texture: ["helium", 0], 
- id: "spacescraft_helium_still",
+ id: "helium_still",
  }, 
  flowing: { 
  texture: ["helium", 0], 
- id: "spacescraft_helium_flowing",
+ id: "helium_flowing",
  }, 
  bucket: { 
  texture: { name: "helium_bucket", meta: 0 }, 
@@ -161,18 +161,18 @@ Block.createLiquidBlock("spacescraft_helium",
 
 
 
-LiquidRegistry.registerLiquid("spacescraft_nitrogen", "Nitrogen", ["nitrogen"]); 
+LiquidRegistry.registerLiquid("nitrogen", "Nitrogen", ["nitrogen"]); 
  
-Block.createLiquidBlock("spacescraft_nitrogen", 
+Block.createLiquidBlock("nitrogen", 
 { 
  name: "Nitrogen", 
  still: { 
  texture: ["nitrogen", 0], 
- id: "spacescraft_nitrogen_still",
+ id: "nitrogen_still",
  }, 
  flowing: { 
  texture: ["nitrogen", 0], 
- id: "spacescraft_nitrogen_flowing",
+ id: "nitrogen_flowing",
  }, 
  bucket: { 
  texture: { name: "nitrogen_bucket", meta: 0 }, 
@@ -183,18 +183,18 @@ Block.createLiquidBlock("spacescraft_nitrogen",
 
 
 
-LiquidRegistry.registerLiquid("spacescraft_liquid_nitrogen", "Liquid Nitrogen", ["liquidnitrogen"]); 
+LiquidRegistry.registerLiquid("liquid_nitrogen", "Liquid Nitrogen", ["liquidnitrogen"]); 
  
-Block.createLiquidBlock("spacescraft_liquid_nitrogen", 
+Block.createLiquidBlock("liquid_nitrogen", 
 { 
  name: "Liquid Nitrogen", 
  still: { 
  texture: ["liquidnitrogen", 0], 
- id: "spacescraft_liquid_nitrogen_still",
+ id: "liquid_nitrogen_still",
  }, 
  flowing: { 
  texture: ["liquidnitrogen", 0], 
- id: "spacescraft_liquid_nitrogen_flowing",
+ id: "liquid_nitrogen_flowing",
  }, 
  bucket: { 
  texture: { name: "liquidnitrogen_bucket", meta: 0 }, 
@@ -206,18 +206,18 @@ Block.createLiquidBlock("spacescraft_liquid_nitrogen",
 
 
 
-LiquidRegistry.registerLiquid("spacescraft_liquid_argon", "Liquid Argon", ["liquidargon"]); 
+LiquidRegistry.registerLiquid("liquid_argon", "Liquid Argon", ["liquidargon"]); 
  
-Block.createLiquidBlock("spacescraft_liquid_argon", 
+Block.createLiquidBlock("liquid_argon", 
 { 
  name: "Liquid Argon", 
  still: { 
  texture: ["liquidargon", 0], 
- id: "spacescraft_liquid_argon_still",
+ id: "liquid_argon_still",
  }, 
  flowing: {  
  texture: ["liquidargon", 0], 
- id: "spacescraft_liquid_argon_flowing",
+ id: "liquid_argon_flowing",
  }, 
  bucket: { 
  texture: { name: "liquidargon_bucket", meta: 0 }, 
@@ -227,16 +227,16 @@ Block.createLiquidBlock("spacescraft_liquid_argon",
 }, BLOCK_TYPE_LIQUID);
 
 
-Block.createLiquidBlock("spacescraft_fuel", 
+Block.createLiquidBlock("fuel", 
 { 
  name: "Fuel", 
  still: { 
  texture: ["fuel_gl", 0], 
- id: "spacescraft_fuel_still",
+ id: "fuel_still",
  }, 
  flowing: { 
  texture: ["fuel_gl_flow", 0],
- id: "spacescraft_fuel_flowing",
+ id: "fuel_flowing",
  }, 
  bucket: { 
  texture: { name: "Bucket Fuel", meta: 0 }, 
@@ -274,11 +274,11 @@ Block.createLiquidBlock("sludge_liquid",
  name: "Sludge", 
  still: { 
  texture: ["sludge_still", 0], 
- id: "spacescraft_sludge_still",
+ id: "sludge_still",
  }, 
  flowing: { 
  texture: ["sludge_flow", 0],
- id: "spacescraft_sludge_flowing",
+ id: "sludge_flowing",
  }, 
  bucket: { 
  texture: { name: "bucket_sludge", meta: 0 }, 

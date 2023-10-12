@@ -11,7 +11,12 @@ API/SpacesAPI.ts
 battery.ts
 
 Ores/ores.ts
-
+Blocks/Ores/block_ores.ts
+Blocks/Ores/earth_ores.ts
+Blocks/Ores/moon_ores.ts
+Blocks/Ores/mars_ores.ts
+Blocks/Ores/asteroids_ores.ts
+Blocks/Ores/venus_ores.ts
 
 Blocks/Ores/block_aluminum.ts
 Blocks/Ores/block_tin.ts
