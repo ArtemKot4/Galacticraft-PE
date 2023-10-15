@@ -21,14 +21,14 @@ Item.registerUseFunction("rocket_tier_1", function(coords, item, block, player) 
             place.x+0.6,
             place.y,
             place.z-0.5,
-            "spacescraft:rocket_1")
+            "galacticraft:rocket_1")
 
         Entity.setCarriedItem(
             player,
             item.id,
             item.count - 1,
             item.data);
-        Game.message("§7Ракета первого уровня успешно состыкована с посадочной площадкой")
+        // Game.message("§7Ракета первого уровня успешно состыкована с посадочной площадкой")
     }
 });
 var SPC_b1 = new UI.Container();
@@ -51,10 +51,10 @@ var Roket = new UI.Container();
 
 
 Callback.addCallback('EntityInteract', function (entity, player,coords) {
-    if (Entity.getTypeName(entity)=="spacescraft:rocket_1") {
-		alert(Entity.getTypeName(entity));
+    if (Entity.getTypeName(entity)=="galacticraft:rocket_1<>") {
+
         alert("DEBUG");
-                Game.message(Translation.translate("§cYou are in a rocket, make sure you put on a spacesuit, loaded and refueled the rocket"))
+          Game.message(Translation.translate("§cYou are in a rocket, make sure you put on a spacesuit, loaded and refueled the rocket"))
       /*  Entity.setVelocity(coords.x, coords.y+0.3, coords.z, "spacescraft:rocket_1");
         Entity.addPosition("spacescraft:rocket_1", coords.x , coords.y+0.1, coords.z);*/
 		 if (__config__.getBool("Gameplay.Special_Effects")==true) {

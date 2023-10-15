@@ -10,7 +10,6 @@ IDRegistry.genBlockID("ore_ilmenite");
 Block.createBlock("ore_ilmenite",[{name: "Ore Ilmenite", texture: [["Ore Ilmenite", 0]], inCreative: true} ],STONE);
 
 
-
 IDRegistry.genBlockID("ore_aluminum_asteroids");
 Block.createBlock("ore_aluminum_asteroids",[{name: "Ore Aluminum Asteroids", texture: [["Ore Aluminum Asteroids", 0]], inCreative: true} ],STONE);
 

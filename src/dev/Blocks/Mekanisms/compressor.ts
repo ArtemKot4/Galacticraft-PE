@@ -186,6 +186,24 @@ var CompressinG = new UI.StandartWindow({
   },
 });
 
+function status(container: ItemContainer, data?: TileEntityBase["data"]): void {
+  if (data.progress && data.progress > 0)
+    return container.setText(
+      "Status",
+      Translation.translate("Status: working")
+    );
+  if (data.energy < 1)
+    return container.setText(
+      "Status",
+      Translation.translate("Status: don't have energy")
+    );
+  else if (data.energy > 0)
+    return container.setText(
+      "Status",
+      Translation.translate("Status: have energy")
+    );
+}
+
 class Compressor extends Machine {
   defaultValues = {
     energy: 0,
@@ -239,7 +257,7 @@ class Compressor extends Machine {
       for (var n = 0; n < 10; n++) {
         if (
           this.container.getSlot("slot_" + n).id == recipe["slot_" + n] &&
-          compressorRecipe[i].includes("slot_"+n)
+          compressorRecipe[i].includes("slot_" + n)
         ) {
           if (this.data.energy >= 100 && this.data.progress < 500) {
             this.data.progress++;

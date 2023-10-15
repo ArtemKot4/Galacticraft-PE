@@ -1,7 +1,7 @@
 interface EnergyProperties {
   getCapacity(): number;
   canReceiveEnergy?(side, type): boolean;
-  canExtractEnergy? (side, type): boolean;
+  canExtractEnergy?(side, type): boolean;
   energyTick(type: string, src: EnergyTileNode): void;
   energyReceive(type: string, amount: number, voltage: number): number;
   setWrenchable(id): any;
@@ -14,7 +14,7 @@ abstract class Machine extends TileEntityBase implements EnergyProperties {
     this.window = window;
   }
   public connectingWire(): any {
-    if (this.blockSource.getBlockData(this.x, this.y, this.z)==5) {
+    if (this.blockSource.getBlockData(this.x, this.y, this.z) == 5) {
       ((idblock, siz) => {
         var group = ICRender.getGroup("sj-wire");
         var id = idblock;
@@ -156,7 +156,7 @@ abstract class Machine extends TileEntityBase implements EnergyProperties {
   // }
   public setWrenchable(id): any {
     if (id == ItemID.machine_wrench) {
-        alert("DEGUG WORK")
+      alert("DEGUG WORK");
       this.blockSource.setBlock(
         this.x,
         this.y,
@@ -175,29 +175,35 @@ abstract class InputMachine extends Machine {
   canExtractEnergy(): boolean {
     return false;
   }
- getTier(): number {
-  return 1;
-}
+  getTier(): number {
+    return 1;
+  }
   click(id): any {
-   this.setWrenchable(id)
-  };
-  
+    this.setWrenchable(id);
+  }
+
   // charge (slot: string) {
   //     this.data.energy -= ChargeItemRegistry.addEnergyToSlot(this.container.getSlot(slot), "spacejoule",
   //     this.data.energy, this.getTier());
   // };
   discharge(slot: string) {
-      let amount = this.getCapacity() - this.data.energy;
-      this.data.energy += ChargeItemRegistry.getEnergyFromSlot(this.container.getSlot(slot), "spacejoule",
-          amount, this.getTier());
-       
-          for (let i in infinitybatt) {
-            if (this.container.getSlot(slot).id == infinitybatt[i].id) {
-              if (World.getThreadTime() % infinitybatt[i].num == 0) {
-                this.data.energy += 1;
-              }
-  }}
-}}
+    let amount = this.getCapacity() - this.data.energy;
+    this.data.energy += ChargeItemRegistry.getEnergyFromSlot(
+      this.container.getSlot(slot),
+      "spacejoule",
+      amount,
+      this.getTier()
+    );
+
+    for (let i in infinitybatt) {
+      if (this.container.getSlot(slot).id == infinitybatt[i].id) {
+        if (World.getThreadTime() % infinitybatt[i].num == 0) {
+          this.data.energy += 1;
+        }
+      }
+    }
+  }
+}
 
 abstract class Generator extends Machine {
   defaultValues = {
@@ -229,10 +235,8 @@ abstract class MachineStorage extends Machine {
 }
 
 var GalacticraftAPI = {
-  planetRegistry: function(): void {
-    
-  }
-}
+  planetRegistry: function (): void {},
+};
 
 let batt = [];
 var infinitybatt = [];
@@ -421,8 +425,13 @@ var SpacesUtils = {
   //         toolnumber);
 
   // },
- 
-  canisterRegistry: function (id: string, name: string, tex0: string, liquid: any): void {
+
+  canisterRegistry: function (
+    id: string,
+    name: string,
+    tex0: string,
+    liquid: any
+  ): void {
     IDRegistry.genItemID(id);
     Item.createItem(
       id,
@@ -576,7 +585,118 @@ var SpacesUtils = {
   },
 };
 
+
+
+interface IPrototype {
+  gravitation?: number[];
+  biome_uid: string | CustomBiome;
+  planet_uid: [string,number]
+  createPlanet(): void;
+  setGravitation(): void;
+  getPlanet(): [string,number]
+  getBiome(): string | CustomBiome
+  getGravitation(): void;
+}
+
+class IPlanet implements IPrototype {
+  public biome_uid: string | CustomBiome
+  public planet_uid: [string,number]
+  public gravitation?: number[];
+  public generator: Dimensions.TerrainLayerParams[];
+  public colors: [number, number, number];
+
+  constructor(
+    biome_uid: string,
+    planet_uid: [string,number],
+  
+    generator: Dimensions.TerrainLayerParams[],
+    colors: [number, number, number],
+    gravitation?: number[],
+  ) {
+    this.biome_uid = biome_uid,
+    this.planet_uid = planet_uid,
+    this.gravitation = gravitation,
+    this.generator = generator,
+    this.colors = colors
+  }
+
+  public createPlanet(): void {
+    this.biome_uid = new CustomBiome(String(this.biome_uid));
+    this.biome_uid.setSkyColor(
+      android.graphics.Color.rgb(this.colors[0], this.colors[1], this.colors[2])
+    );
+    var planet = new Dimensions.CustomDimension(
+      this.planet_uid[0],
+      this.planet_uid[1]
+    );
+    planet.setGenerator(
+      Dimensions.newGenerator({
+        biome: Number(this.biome_uid),
+        layers: 
+          this.generator
+        
+      })
+    );
+  }
+
+  public setGravitation(): void {
+
+  }
+ 
+
+  public getPlanet(): [string,number] {
+    return this.planet_uid;
+  }
+
+  public getBiome(): string | CustomBiome {
+    return this.biome_uid
+  }
+
+ public getGravitation(): number[] {
+  return this.gravitation
+ }
+
+ public getGenerator() {
+  return this.generator
+ }
+
+ public getSkyColors(): number[] {
+  return this.colors
+ }
+
+}
+
+new IPlanet("Moon", ["Name",3771], 
+ [ {
+    minY: 0,
+    maxY: 128,
+     yConversion: [[1, -0.99], [0.5, -.99], [.9, -0.99], [0.4, -.4], [0, 0.8]
+    ],
+    material: {
+        base: BlockID.lunar_stone,
+        surface: {
+            id: BlockID.lunar_middle,
+            data: 0,
+            width: 4
+        },
+        cover: BlockID.moon_top_side
+    },
+    noise: {
+        octaves: {
+           count: 4,
+           scale: 160,
+           weight: 1.5
+        },
+    }     
+},{ minY: 0,
+    maxY: 1,
+    material: {base: 7}}],
+    [.0,.0,.0]
+)
+
+
 ModAPI.registerAPI("SpacesAPI", {
+  IPlanet: IPlanet,
   cableAPI: cableAPI,
   AirCable: AirCable,
   battery: battery,
