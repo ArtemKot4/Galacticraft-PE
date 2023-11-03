@@ -130,7 +130,7 @@ class GeothermalGenerator extends Generator {
     if (
       !tile &&
       World.getThreadTime() % 100 == 0 &&
-      __config__.getBool("Difficulty.Machine.GeothermalDischarging") == true
+      __config__.getBool("Difficulty.Machine.GeothermalDischarging") == true && this.data.energy>0
     ) {
       this.data.energy -= 1;
     }

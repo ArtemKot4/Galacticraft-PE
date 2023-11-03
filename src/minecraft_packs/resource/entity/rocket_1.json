@@ -2,7 +2,7 @@
   "format_version": "1.8.0",
   "minecraft:client_entity": {
     "description": {
-      "identifier": "spacescraft:rocket_1",
+      "identifier": "galacticraft:rocket_1",
       "materials": { "default": "entity_alphatest" },
       "textures": {
         "default": "textures/entity/rocket_1"

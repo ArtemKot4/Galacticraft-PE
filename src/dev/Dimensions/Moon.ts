@@ -146,4 +146,40 @@ SkyBox.importFromFile(__dir__+"/models/basic_block.obj","obj", {
 		
 // 	}))});
 	
-	
+var a = new IPlanet("Moonj", ["Name",3771], 
+ [ {
+    minY: 0,
+    maxY: 128,
+     yConversion: [[1, -0.99], [0.5, -.99], [.9, -0.99], [0.4, -.4], [0, 0.8]
+    ],
+    material: {
+        base: BlockID.lunar_stone,
+        surface: {
+            id: BlockID.lunar_middle,
+            data: 0,
+            width: 4
+        },
+        cover: BlockID.moon_top_side
+    },
+    noise: {
+        octaves: {
+           count: 4,
+           scale: 160,
+           weight: 1.5
+        },
+    }     
+},{ minY: 0,
+    maxY: 1,
+    material: {base: 7}}],
+    [.0,.0,.0]
+)
+
+
+Callback.addCallback('ItemUse', function (coords, item, block, is, player) {
+    if(item.id==VanillaItemID.diamond) {
+    Dimensions.transfer(player, 3771); 
+    alert("Сработало?")
+    alert(JSON.stringify(a.getPlanet()))
+    alert(a.getPlanet())
+     }
+    });

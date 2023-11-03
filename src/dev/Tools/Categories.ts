@@ -6,7 +6,7 @@ Item.setCategory(BlockID.torch_off_unlit, 4);
 Item.setCategory(BlockID.torch_off_lit, 4);
 Item.setCategory(BlockID.torch_on_lit, 4);
 
-/*Item.setCategory(ItemID.extra_oxygen_tank, 3)
+
 Item.setCategory(ItemID.oxygen_mask, 3)
 Item.setCategory(ItemID.frequency_module, 3)
 Item.setCategory(ItemID.oxygen_gear, 3)
@@ -16,9 +16,6 @@ Item.setCategory(ItemID.oxygentank_medfull, 3)
 Item.setCategory(ItemID.oxygentank_heavyfull, 3)
 Item.setCategory(ItemID.shield_controller, 3)
 Item.setCategory(ItemID.sensor_glasses, 3)
-for(var i in toolspace){
-Item.setCategory(ItemID[toolspace[i]], 3)
-}*/
 
 
 Item.setCategory(ItemID.ingot_copper_sc, 4)

@@ -458,10 +458,10 @@ Translation.addTranslation("Oxygen Tank Med Full", {
 });
 
 Translation.addTranslation(
-  "§c§lYou are in a rocket, make sure you put on a spacesuit, loaded and refueled the rocket",
+  "You are in a rocket, make sure you put on a spacesuit, loaded and refueled the rocket",
   {
-    ru: "§c§lВы находитесь в ракете,убедитесь что вы надели скафандр,загрузили и заправили ракету",
-    zh: "§c§l你是在一个火箭，确保你穿上宇航服，加载和加油火箭",
+    ru: "Вы находитесь в ракете,убедитесь что вы надели скафандр,загрузили и заправили ракету",
+    zh: "你是在一个火箭，确保你穿上宇航服，加载和加油火箭",
   }
 );
 

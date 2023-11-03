@@ -156,20 +156,16 @@ RV.registerRecipeType("generator 1", {
    getAllList: function(id, data, count) {
       let list = []
       for (var i in burnItems) {
-         for (let e in Colding) {
+     
             list.push({
                input: [{
                   id: burnItems[i].id,
                   count: 1,
                   data: 0
                }],
-               output: [{
-                  id: ItemID.soot_coal,
-                  count: 1,
-                  data: 0
-               }]
+      
             })
-         }
+         
       }
       return list
    },

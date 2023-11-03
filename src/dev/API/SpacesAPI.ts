@@ -1,238 +1,4 @@
-interface EnergyProperties {
-  getCapacity(): number;
-  canReceiveEnergy?(side, type): boolean;
-  canExtractEnergy?(side, type): boolean;
-  energyTick(type: string, src: EnergyTileNode): void;
-  energyReceive(type: string, amount: number, voltage: number): number;
-  setWrenchable(id): any;
-}
 
-abstract class Machine extends TileEntityBase implements EnergyProperties {
-  readonly window: UI.StandartWindow;
-  constructor(window) {
-    super();
-    this.window = window;
-  }
-  public connectingWire(): any {
-    if (this.blockSource.getBlockData(this.x, this.y, this.z) == 5) {
-      ((idblock, siz) => {
-        var group = ICRender.getGroup("sj-wire");
-        var id = idblock;
-        var width = siz;
-
-        var boxes = [
-          {
-            side: [1, 0, 0],
-            box: [
-              0.5 + width / 2,
-              0.5 - width / 2,
-              0.5 - width / 2,
-              1,
-              0.5 + width / 2,
-              0.5 + width / 2,
-            ],
-          },
-          {
-            side: [-1, 0, 0],
-            box: [
-              0,
-              0.5 - width / 2,
-              0.5 - width / 2,
-              0.5 - width / 2,
-              0.5 + width / 2,
-              0.5 + width / 2,
-            ],
-          },
-          {
-            side: [0, 1, 0],
-            box: [
-              0.5 - width / 2,
-              0.5 + width / 2,
-              0.5 - width / 2,
-              0.5 + width / 2,
-              1,
-              0.5 + width / 2,
-            ],
-          },
-          {
-            side: [0, -1, 0],
-            box: [
-              0.5 - width / 2,
-              0,
-              0.5 - width / 2,
-              0.5 + width / 2,
-              0.5 - width / 2,
-              0.5 + width / 2,
-            ],
-          },
-          {
-            side: [0, 0, 1],
-            box: [
-              0.5 - width / 2,
-              0.5 - width / 2,
-              0.5 + width / 2,
-              0.5 + width / 2,
-              0.5 + width / 2,
-              1,
-            ],
-          },
-          {
-            side: [0, 0, -1],
-            box: [
-              0.5 - width / 2,
-              0.5 - width / 2,
-              0,
-              0.5 + width / 2,
-              0.5 + width / 2,
-              0.5 - width / 2,
-            ],
-          },
-        ];
-
-        var model = new ICRender.Model();
-
-        model.addEntry(
-          new BlockRenderer.Model(
-            0.5 - width / 2,
-            0.5 - width / 2,
-            0.5 - width / 2,
-            0.5 + width / 2,
-            0.5 + width / 2,
-            0.5 + width / 2,
-            id,
-            0
-          )
-        );
-
-        for (var i in boxes) {
-          var box = boxes[i].box;
-          var side = boxes[i].side;
-
-          model
-            .addEntry(
-              new BlockRenderer.Model(
-                box[0],
-                box[1],
-                box[2],
-                box[3],
-                box[4],
-                box[5],
-                id,
-                0
-              )
-            )
-            .setCondition(
-              ICRender.BLOCK(side[0], side[1], side[2], group, false)
-            );
-        }
-
-        BlockRenderer.setStaticICRender(id, -1, model);
-      })();
-    }
-  }
-  public getScreenByName(): UI.StandartWindow {
-    return this.window;
-  }
-  defaultValues = {
-    energy: 0,
-  };
-  public useNetworkItemContainer: true;
-  public getCapacity(): number {
-    return this.data.energyMax;
-  }
-  public energyTick(type: string, src: EnergyTileNode): void {
-    let output = Math.min(1, this.data.energy);
-    this.data.energy += src.add(output) - output;
-  }
-  public energyReceive(type: string, amount: number, voltage: number): number {
-    amount = Math.min(amount, this.data.energyMax / 2);
-    var add = Math.min(amount, this.getCapacity() - this.data.energy);
-    this.data.energy += add;
-    return add;
-  }
-  // public onTick(): void {
-  //   this.container.sendChanges();
-  //   this.container.validateAll();
-  // }
-  public setWrenchable(id): any {
-    if (id == ItemID.machine_wrench) {
-      alert("DEGUG WORK");
-      this.blockSource.setBlock(
-        this.x,
-        this.y,
-        this.z,
-        this.blockID,
-        this.blockSource.getBlockData(this.x, this.y, this.z) + 1
-      );
-    }
-  }
-}
-
-abstract class InputMachine extends Machine {
-  canReceiveEnergy(type: number, side: string): boolean {
-    return true;
-  }
-  canExtractEnergy(): boolean {
-    return false;
-  }
-  getTier(): number {
-    return 1;
-  }
-  click(id): any {
-    this.setWrenchable(id);
-  }
-
-  // charge (slot: string) {
-  //     this.data.energy -= ChargeItemRegistry.addEnergyToSlot(this.container.getSlot(slot), "spacejoule",
-  //     this.data.energy, this.getTier());
-  // };
-  discharge(slot: string) {
-    let amount = this.getCapacity() - this.data.energy;
-    this.data.energy += ChargeItemRegistry.getEnergyFromSlot(
-      this.container.getSlot(slot),
-      "spacejoule",
-      amount,
-      this.getTier()
-    );
-
-    for (let i in infinitybatt) {
-      if (this.container.getSlot(slot).id == infinitybatt[i].id) {
-        if (World.getThreadTime() % infinitybatt[i].num == 0) {
-          this.data.energy += 1;
-        }
-      }
-    }
-  }
-}
-
-abstract class Generator extends Machine {
-  defaultValues = {
-    energy: 0,
-    energyMax: 0,
-  };
-  canReceiveEnergy(): boolean {
-    return false;
-  }
-
-  canExtractEnergy(): boolean {
-    return true;
-  }
-}
-
-abstract class MachineStorage extends Machine {
-  defaultValues = {
-    energy: 0,
-    energyMax: 0,
-  };
-
-  canReceiveEnergy(side, type): boolean {
-    return side == 2;
-  }
-
-  canExtractEnergy(side, type): boolean {
-    return side != 2;
-  }
-}
 
 var GalacticraftAPI = {
   planetRegistry: function (): void {},
@@ -639,10 +405,14 @@ class IPlanet implements IPrototype {
     );
   }
 
+  
   public setGravitation(): void {
 
   }
- 
+
+  startTransfer(): void {
+    Dimensions.transfer(Player.get(), Number(this.getPlanet())); 
+  }
 
   public getPlanet(): [string,number] {
     return this.planet_uid;
@@ -665,6 +435,8 @@ class IPlanet implements IPrototype {
  }
 
 }
+
+
 
 new IPlanet("Moon", ["Name",3771], 
  [ {

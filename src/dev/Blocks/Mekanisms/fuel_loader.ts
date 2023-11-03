@@ -135,10 +135,12 @@ class FuelLoader extends InputMachine {
     energyMax: 1000,
     liquid: 0,
   };
+ 
   onTick(): void {
     this.discharge("EnergySlot");
     this.container.sendChanges();
     this.container.validateAll();
+
     let canisterFuel = this.container.getSlot("canisterFuel");
     this.container.setScale("Energy", this.data.energy / 1000);
     this.container.setScale("ENERGYBar", this.data.energy / 1000);
@@ -175,7 +177,17 @@ class FuelLoader extends InputMachine {
       this.data.liquid += 5;
       Bucket.play();
     }
+
+   if(rocketActive==true&&fuel<500&&fuel>=0&&this.data.liquid>=1){
+    fuel++;
+    this.data.liquid--;
+   if(rocket_storage.isOpened) rocket_storage.setScale("fuelScale",fuel/500)
+   }
+    
   }
+
+  
+
 }
 
 SpacesMachine.registerStandartMachine(

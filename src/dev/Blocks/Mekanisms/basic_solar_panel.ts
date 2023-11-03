@@ -184,46 +184,14 @@ let SolarGeneratorUI = new UI.StandartWindow({
   },
 });
 
-var stick = new Animation.Base(this.x, this.y, this.z);
-var panel = new Animation.Base(this.x, this.y, this.z);
-var Solarstick = new RenderMesh();
-var PanelSolar = new RenderMesh();
-Solarstick.importFromFile(
-  __dir__ + "/resources/models/solar_stick.obj",
-  "obj",
-  {
-    translate: [0.5, 0, 0.5],
-    scale: [1.6, 1.6, 1.6],
-    invertV: false,
-    noRebuild: false,
-  }
-);
-PanelSolar.importFromFile(
-  __dir__ + "/resources/models/solar_panel_top.obj",
-  "obj",
-  {
-    translate: [0.5, 0, 0.5],
-    scale: [1.6, 1.6, 1.6],
-    invertV: false,
-    noRebuild: false,
-  }
-);
 
-// stick.describe({ mesh: Solarstick, scale: 1, skin: "palka_solar" });
-// panel.describe({ mesh: PanelSolar, scale: 1, skin: "panel_solar" });
+
 class SolarPanel extends Generator {
   defaultValues = {
     energy: 0,
     energyMax: 5000,
   };
-  // created(): void {
-  //   stick.load();
-  //   panel.load();
-  // }
-  // destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
-  //   stick.destroy();
-  //   panel.destroy();
-  // }
+  
   onTick(): void {
     this.container.sendChanges();
     this.container.validateAll();

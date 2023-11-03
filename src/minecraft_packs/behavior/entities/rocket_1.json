@@ -2,7 +2,7 @@
 	"format_version": "1.16.100",
 	"minecraft:entity": {
 		"description": {
-			"identifier": "spacescraft:rocket_1",
+			"identifier": "galacticraft:rocket_1",
 			"is_spawnable": true,
 			"is_summonable": true,
 			"is_experimental": false
