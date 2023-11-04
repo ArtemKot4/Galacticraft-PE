@@ -54,7 +54,7 @@ var collecticle = Particles.registerParticleType({
 
 var rain_venus = Particles.registerParticleType({
     texture: "rain_venus",
-    render: 0,
+    render: 1,
     size: [8,8],
     lifetime: [100, 100],
   

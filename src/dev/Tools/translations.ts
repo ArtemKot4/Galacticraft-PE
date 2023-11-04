@@ -623,3 +623,12 @@ Translation.addTranslation("Sorry,but you must be in Venus,for changed weather t
 Translation.addTranslation("Sorry,but you can't use this command in the rain", {
   ru: "Извините,но вы не можете использовать эту команду во время дождя",
 });
+
+
+Translation.addTranslation("Game rule changed to true", {
+  ru: "Игровое правило успешно изменено на true",
+});
+
+Translation.addTranslation("Game rule changed to false", {
+  ru: "Игровое правило успешно изменено на false",
+});
