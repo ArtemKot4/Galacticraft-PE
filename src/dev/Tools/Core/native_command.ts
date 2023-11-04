@@ -3,21 +3,25 @@ function commandRegistry(description: string, action: () => void,msg?: string) {
   cmd.push({ description: description, action: action,msg: msg });
 }
 
-commandRegistry("dimensions start rain",()=>{
-    Callback.addCallback("LocalTick",()=>{
-        if(World.getThreadTime()%20==0&&Player.getDimension()==Venus.id){
-      var a = 0;
-      a++
-     
-      if(a<=20){
-         startRain(Player.getPosition())
-         Game.message(""+ a + "секунд прошло")
-      }
-      if(a>20){
-        Game.message(""+ a + " : Дождик закончился")
-      }
-    }
+commandRegistry("weather venus rain",()=>{
+  if(weather_rain==true){
+    Game.message(Translation.translate("Sorry,but you can't use this command in the rain"))
+  };
+  if(Player.getDimension()==Venus.id&&weather_rain==false){
+    Game.message(Translation.translate("Weather changed succesfully"))
+    weather_rain = true;
+  }
+   if(Player.getDimension()!=Venus.id){
+    Game.message(Translation.translate("Sorry,but you must be in Venus,for changed weather to rain"))
+  }
+ 
 })
+
+commandRegistry("weather venus clear",()=>{
+  weather_rain=false;
+  timer_weather=0;
+  timer_weather_start=0;
+  Game.message(Translation.translate("Weather changed succesfully"))
 })
 
 Callback.addCallback("NativeCommand", (command) => {

@@ -1,17 +1,78 @@
-function startRain(coords) {
-
-   
+let weather_rain:boolean = false;
+let timer_weather:number = 0;
+let timer_weather_start:number = 0;
+function startRain(coords): void {
+  for(var i = 0;i<4;i++){
       Particles.addParticle(
-        rain,
-        coords.x + randomInt(-20,20),
-        coords.y + 30,
-        coords.z + randomInt(-20,20),
+        rain_venus,
+        coords.x + i,
+        coords.y + 4,
+        coords.z,
         0,
-        -2,
+        -0.4,
         0
       );
-      // if(source.getLightLevel(x,y,z)<=4){
-      //  Particles.addParticle(star,posx,posy,0.5,0,-0.1,0)
-      // }
+
+      Particles.addParticle(
+        rain_venus,
+        coords.x - i,
+        coords.y + 4,
+        coords.z,
+        0,
+        -0.4,
+        0
+      );
+
+      Particles.addParticle(
+        rain_venus,
+        coords.x,
+        coords.y + 4,
+        coords.z + i,
+        0,
+        -0.4,
+        0
+      );
+
+      Particles.addParticle(
+        rain_venus,
+        coords.x,
+        coords.y + 4,
+        coords.z - i,
+        0,
+        -0.4,
+        0
+      );
+
+      Particles.addParticle(
+        rain_venus,
+        coords.x,
+        coords.y + 4,
+        coords.z,
+        0,
+        -0.4,
+        0
+      );
+
+      Particles.addParticle(
+        rain_venus,
+        coords.x - i,
+        coords.y + 4,
+        coords.z + i,
+        0,
+        -0.4,
+        0
+      );
+
+      Particles.addParticle(
+        rain_venus,
+        coords.x + i,
+        coords.y + 4,
+        coords.z - i,
+        0,
+        -0.4,
+        0
+      );
+
       }
+  }
   

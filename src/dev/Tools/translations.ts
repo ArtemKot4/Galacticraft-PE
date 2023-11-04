@@ -608,3 +608,18 @@ Translation.addTranslation("Ore Galena", {
 Translation.addTranslation("Ore Tin Venus", {
   ru: "Венерианская оловянная руда",
 });
+
+
+
+
+Translation.addTranslation("Weather changed succesfully", {
+  ru: "Погода успешно изменена",
+});
+
+Translation.addTranslation("Sorry,but you must be in Venus,for changed weather to rain", {
+  ru: "Извините,но вы должны находиться на Венере для изменения погоды",
+});
+
+Translation.addTranslation("Sorry,but you can't use this command in the rain", {
+  ru: "Извините,но вы не можете использовать эту команду во время дождя",
+});
