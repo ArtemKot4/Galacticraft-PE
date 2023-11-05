@@ -334,10 +334,17 @@ Translation.addTranslation(
   }
 );
 Translation.addTranslation(
-  "§6Modification Galacticraft has been downloaded!\n§7Thank's for downloading this modification!\n• You can join in the group of modification: §ahttps://vk.com/horizonspacescraft",
+  "§6Modification Galacticraft has been downloaded!",
   {
-    ru: "§6Мод Galacticraft был успешно загружен!\n§7Приятной игры!\n• Вы также можете посетить группу мода: §ahttps://vk.com/horizonspacescraft",
-    zh: "§6Galacticraft mod已成功下载！\n§7有一个不错的游戏！\n•您也可以访问mod组：§ahttps://vk.com/horizonspacescraft",
+    ru: "§6Мод Galacticraft был успешно загружен!",
+    zh: "§6Galacticraft mod已成功下载！",
+  }
+);
+
+Translation.addTranslation(
+  "For get list of commands write /gc:help",
+  {
+    ru: "§6Для получения списка команд,напишите §f/gc:help",
   }
 );
 

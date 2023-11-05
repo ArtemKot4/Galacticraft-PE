@@ -16,21 +16,25 @@ IMPORT("RenderUtil");
               \______| |_| |_| |_____||_| |_| \_____|   |_|   |_| \_____||_| \_\ |_| |_| |_|       |_|  
                                                     Space Race!
                             Galacticraft developing group of mans,his team named SpacesTEAM.
-                                            Artem - code developer;
-                                        Demerroremperror - addon texture worker;
-                                           playvad2k620 - addon texture worker;
-                                      nikitamorov - reporter of group in VK;
-                                       group of mode - @horizonspacescraft;
-                   If author give you agree to use code,you can use code of modification to your projects;
+                                            Artem - mod developer;
+                                       group of mod - @horizonspacescraft
                                last version - Galacticraft 4 Pre release 1.0.0;
-            If you have question and want ask,you can write to Artem's email adress artemon4xxl@gmail.com;
+             If you have question and want ask,you can write to Artem's email adress artemon4xxl@gmail.com;
 */
 
-function checkDimension(thread,player?,dimensionId?){
-    if( World.getThreadTime()%thread==0){
-    if(
-    Player.getDimension()==Moon.id||Player.getDimension()==Mars.id||Player.getDimension()==Venus.id||
-    Player.getDimension()==Asteroids.id||Player.getDimension()==SpacesStation.id){return true}}};
+function checkDimension(thread, player?, dimensionId?) {
+  if (World.getThreadTime() % thread == 0) {
+    if (
+      Player.getDimension() == Moon.id ||
+      Player.getDimension() == Mars.id ||
+      Player.getDimension() == Venus.id ||
+      Player.getDimension() == Asteroids.id ||
+      Player.getDimension() == SpacesStation.id
+    ) {
+      return true;
+    }
+  }
+}
 
 const Click = new Sound("click.ogg");
 
@@ -48,15 +52,13 @@ MimasS.setVolume(__config__.getFloat("Game.MusicVolume"));
 
 SpaceRace.setVolume(__config__.getFloat("Game.MusicVolume"));
 
-MarsS.setVolume(__config__.getFloat("Game.MusicVolume"))
+MarsS.setVolume(__config__.getFloat("Game.MusicVolume"));
 
-OrbitS.setVolume(__config__.getFloat("Game.MusicVolume"))
+OrbitS.setVolume(__config__.getFloat("Game.MusicVolume"));
 
-Bucket.setVolume(0.6)
+Bucket.setVolume(0.6);
 
-Click.setVolume(0.6)
-
-
+Click.setVolume(0.6);
 
 const rfGroup = ICRender.getGroup("rf-wire");
 
@@ -73,18 +75,21 @@ let ft = EnergyTypeRegistry.assureEnergyType("FutureTock", 0.25);
 //Кислород
 var RV;
 
-
-Callback.addCallback('LevelDisplayed', function () {
-    Game.message(Translation.translate("§6Modification Galacticraft has been downloaded!\n§7Thank's for downloading this modification!\n• You can join in the group of modification: §ahttps://vk.com/horizonspacescraft"))
+Callback.addCallback("LevelDisplayed", function () {
+  Game.message(
+    Translation.translate("§6Modification Galacticraft has been downloaded!") +
+      "\n" +
+      Translation.translate("\nFor get list of commands write /gc:help")
+  );
 });
 
 var SpacesConfiguration = {
-    Equipment: {
-        coords: __config__.getFloat('Equipment.coords'),
-        twocoords: __config__.getFloat('Equipment.twocoords'),
-        threecoords: __config__.getFloat('Equipment.threecoords')
-    },
-    /* Игра: {
+  Equipment: {
+    coords: __config__.getFloat("Equipment.coords"),
+    twocoords: __config__.getFloat("Equipment.twocoords"),
+    threecoords: __config__.getFloat("Equipment.threecoords"),
+  },
+  /* Игра: {
          ShiftHints: __config__.getBool('.ShiftHints'),
          ElectricInformation: __config__.getBool('Игра.ElectricInformation'),
          Special_Effects: __config__.getBool('Игра.Special_Effects'),
@@ -113,367 +118,59 @@ var SpacesConfiguration = {
      }*/
 };
 
-let Snariadjenie = new UI.Container();
-let O2UI = new UI.Container();
-var Equi = new UI.Container();
-Callback.addCallback("NativeGuiChanged", function (screenName) {
-    if (screenName == "survival_inventory_screen" || screenName == "creative_inventory_screen" || screenName == "inventory_screen" || screenName == "inventory_screen_pocket") {
-        Snariadjenie.openAs(openEquip);
-
-    } else {
-        Snariadjenie.close();
-
-    }
-});
-
-let openEquip = new UI.Window({
-    location: {
-        x: 0,
-        y: UI.getScreenHeight() / 2 - 150,
-        width: 52,
-        height: 52
-    },
-
-    drawing: [{
-        type: "background",
-        color: android.graphics.Color.argb(0, 0, 0, 0)
-    }],
-
-    elements: {
-        "button": {
-            type: "button",
-            x: 0,
-            y: 0,
-            bitmap: "SPC.SPC_but",
-            scale: 55,
-            clicker: {
-                onClick: function () {
-                    Equi.openAs(EquipMent);
-                    Snariadjenie.close();
-                    //Click.play();
-                }
-            }
-        }
-    }
-});
-
-var EquipMent = new UI.Window({
-    location: {
-        x: SpacesConfiguration.Equipment.coords / SpacesConfiguration.Equipment.twocoords - SpacesConfiguration.Equipment.threecoords,
-        y: 60,
-        width: 900,
-        height: 417
-    },
-    drawing: [{
-        type: "background",
-        color: android.graphics.Color.argb(0, 0, 0, 0)
-    },
-    {
-        type: "frame",
-        bitmap: "classic_frame_bg_light",
-        scale: 2,
-        width: 900,
-        height: 417,
-        y: 0
-    },
-    {
-        type: "bitmap",
-        bitmap: "arrow_bar_1",
-        scale: 3,
-        x: 140,
-        y: 110
-    }],
-    elements: {
-        "Head": {
-            type: "slot",
-            x: 30,
-            y: 30,
-            size: 50,
-            bitmap: "SPC.SPC_Head"
-        },
-        "Body": {
-            type: "slot",
-            x: 30,
-            y: 80,
-            size: 50,
-            bitmap: "SPC.SPC_Body"
-        },
-        "Legs": {
-            type: "slot",
-            x: 30,
-            y: 130,
-            size: 50,
-            bitmap: "SPC.SPC_Legs"
-        },
-        "Boots": {
-            type: "slot",
-            x: 30,
-            y: 180,
-            size: 50,
-            bitmap: "SPC.SPC_LegTwoS"
-        },
-        "Ballone1": {
-            type: "slot",
-            x: 30,
-            y: 270,
-            size: 50,
-            bitmap: "SPC.SPC_Tank"
-        },
-        "Ballone2": {
-            type: "slot",
-            x: 80,
-            y: 270,
-            size: 50,
-            bitmap: "SPC.SPC_Tank"
-        },
-        "AntiDamage": {
-            type: "slot",
-            x: 160,
-            y: 270,
-            size: 50,
-            bitmap: "SPC.SPC_AntiDamage"
-        },
-        "1Armor": {
-            type: "invSlot",
-            x: 210,
-            y: 30,
-            size: 50,
-            index: 103
-        },
-        "2Armor": {
-            type: "invSlot",
-            x: 210,
-            y: 80,
-            size: 50,
-            index: 102
-        },
-        "3Armor": {
-            type: "invSlot",
-            x: 210,
-            y: 130,
-            size: 50,
-            index: 101
-        },
-        "4Armor": {
-            type: "invSlot",
-            x: 210,
-            y: 180,
-            size: 50,
-            index: 100
-        },
-        "Glass": {
-            type: "slot",
-            x: 80,
-            y: 30,
-            size: 50,
-            bitmap: "SPC.SPC_Glass"
-        },
-        "Module": {
-            type: "slot",
-            x: 80,
-            y: 130,
-            size: 50,
-            bitmap: "SPC.SPC_Module"
-        },
-        "Frequency": {
-            type: "slot",
-            x: 80,
-            y: 80,
-            size: 50,
-            bitmap: "SPC.SPC_Frequency"
-        },
-        "Parachute": {
-            type: "slot",
-            x: 80,
-            y: 180,
-            size: 50,
-            bitmap: "SPC.SPC_Parachute"
-        },
-        "Inv1": {
-            type: "invSlot",
-            x: 250,
-            y: 340,
-            size: 50,
-            index: 0
-        },
-        "Inv2": {
-            type: "invSlot",
-            x: 300,
-            y: 340,
-            size: 50,
-            index: 1
-        },
-        "Inv3": {
-            type: "invSlot",
-            x: 350,
-            y: 340,
-            size: 50,
-            index: 2
-        },
-        "Inv4": {
-            type: "invSlot",
-            x: 400,
-            y: 340,
-            size: 50,
-            index: 3
-        },
-        "Inv5": {
-            type: "invSlot",
-            x: 450,
-            y: 340,
-            size: 50,
-            index: 4
-        },
-        "Inv6": {
-            type: "invSlot",
-            x: 500,
-            y: 340,
-            size: 50,
-            index: 5
-        },
-        "Inv7": {
-            type: "invSlot",
-            x: 550,
-            y: 340,
-            size: 50,
-            index: 6
-        },
-        "Inv8": {
-            type: "invSlot",
-            x: 600,
-            y: 340,
-            size: 50,
-            index: 7
-        },
-        "Inv9": {
-            type: "invSlot",
-            x: 650,
-            y: 340,
-            size: 50,
-            index: 8
-        },
-        /*"Info": {
-            type: "button",
-            x: 20,
-            y: 340,
-            scale: 5,
-            bitmap:"PKOn",
-            clicker: {
-            onClick: function(player){
-            ScrutinyAPI.open(player, "SpacesCraftTab");
-            }
-        }
-        },	*/
-        "Clousing": {
-            type: "button",
-            x: 20,
-            y: 340,
-            scale: 5,
-            bitmap: "PKOf",
-            clicker: {
-                onClick: function () {
-                    Snariadjenie.openAs(openEquip);
-                    Equi.close();
-                }
-            }
-        },
-    }
-}
-);
-
-
-var OxygenTILE = new UI.Window({
-    location: {
-        x: 850,
-        y: 10,
-        width: 145,
-        height: 155
-    },
-    drawing: [
-        {
-            type: "background",
-            color: android.graphics.Color.argb(0, 0, 0, 0)
-        }, {
-            type: "bitmap",
-            x: 215,
-            y: 0,
-            scale: 18,
-            bitmap: "SPC.OxygenTwo"
-        }, {
-            type: "bitmap",
-            x: 575,
-            y: 0,
-            scale: 18,
-            bitmap: "SPC.OxygenTwo"
-        }, {
-            type: "bitmap",
-            x: 40,
-            y: 0,
-            scale: 18,
-            bitmap: "SPC.SPC_Ox"
-        }
-    ],
-    elements: {
-        "O2ONE": {
-            type: "scale",
-            x: 215,
-            y: 0,
-            scale: 18,
-            bitmap: "SPC.OxygenOne",
-            direction: 1
-        },
-        "O2TWO": {
-            type: "scale",
-            x: 575,
-            y: 0,
-            scale: 18,
-            bitmap: "SPC.OxygenOne",
-            direction: 1
-        },
-        "Status": {
-            type: "text",
-            x: 240,
-            y: 843,
-            width: 2500,
-            height: 2000,
-            size: 100,
-            text: "0/0",
-
-        }
-    }
-}
-);
-OxygenTILE.setAsGameOverlay(true); OxygenTILE.setTouchable(false);
-
-
-EquipMent.setInventoryNeeded(true);
-
-
-
-
 function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 const UniqueGen = {
-    randomCoords: function (random, chunkX, chunkZ, minHeight, maxHeight) {
-        minHeight = minHeight || 0;
-        maxHeight = maxHeight || 220;
-        return {
-            x: chunkX * 16 + random.nextInt(16),
-            y: random.nextInt(maxHeight - minHeight + 1) - minHeight,
-            z: chunkZ * 16 + random.nextInt(16)
-        }
-    },
-    generateOre: function (id, data, chunkX, chunkZ, random, params) {
-        for (let i = 0; i < params.veinCounts; i++) {
-            let coords = this.randomCoords(random, chunkX, chunkZ, params.minY, params.maxY);
-            GenerationUtils.generateOre(coords.x, coords.y, coords.z, id, data, params.size, false, random.nextInt());
-        }
-    },
-    generateOreInDimension: function (id, data, chunkX, chunkZ, random, params) {
-        for (let i = 0; i < params.veinCounts; i++) {
-            let coords = this.randomCoords(random, chunkX, chunkZ, params.minY, params.maxY);
-            GenerationUtils.generateOreCustom(coords.x, coords.y, coords.z, id, data, params.size, params.mode, params.check);
-        }
+  randomCoords: function (random, chunkX, chunkZ, minHeight, maxHeight) {
+    minHeight = minHeight || 0;
+    maxHeight = maxHeight || 220;
+    return {
+      x: chunkX * 16 + random.nextInt(16),
+      y: random.nextInt(maxHeight - minHeight + 1) - minHeight,
+      z: chunkZ * 16 + random.nextInt(16),
+    };
+  },
+  generateOre: function (id, data, chunkX, chunkZ, random, params) {
+    for (let i = 0; i < params.veinCounts; i++) {
+      let coords = this.randomCoords(
+        random,
+        chunkX,
+        chunkZ,
+        params.minY,
+        params.maxY
+      );
+      GenerationUtils.generateOre(
+        coords.x,
+        coords.y,
+        coords.z,
+        id,
+        data,
+        params.size,
+        false,
+        random.nextInt()
+      );
     }
+  },
+  generateOreInDimension: function (id, data, chunkX, chunkZ, random, params) {
+    for (let i = 0; i < params.veinCounts; i++) {
+      let coords = this.randomCoords(
+        random,
+        chunkX,
+        chunkZ,
+        params.minY,
+        params.maxY
+      );
+      GenerationUtils.generateOreCustom(
+        coords.x,
+        coords.y,
+        coords.z,
+        id,
+        data,
+        params.size,
+        params.mode,
+        params.check
+      );
+    }
+  },
 };
