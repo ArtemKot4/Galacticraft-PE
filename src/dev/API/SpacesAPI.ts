@@ -94,9 +94,7 @@ let oxygenStorage = {
       //Item.addToCreative(id, 1, description.storage);
     });
     Item.registerNameOverrideFunction(id, function (item: any, name: any) {
-      return name + "\n§6" + Item.getMaxDamage(item.id);
-      -item.data + " / " + Item.getMaxDamage(item.id);
-      +"mB";
+      return name + "\n§6" + item.data + " / " + Item.getMaxDamage(item.id) +"mB";
     });
     OS.push({
       id: id,
@@ -138,20 +136,18 @@ let oxygenStorage = {
   },
 };
 
-var SpacesCraft = {
-  addGroup: function (id: string | number, word: string) {
+Translation.addTranslation("\n§7Electrolevel", {
+  ru: "\n§7Электроуровень: ",
+});
+
+var SpacesUtils = {
+  addDescription: function (id: string | number, word: string) {
     Item.registerNameOverrideFunction(id, function (id, name) {
-      return name + Translation.translate("\n§9") + word;
+      return name + "\n" + Translation.translate(word) 
     });
   },
-  addElectroLevel: function (id: string | number, word: string) {
-    Item.registerNameOverrideFunction(id, function (id, name: string) {
-      if (!Entity.getSneaking(Player.get())) {
-        return name + Translation.translate("\n§7Electrolevel: ") + word;
-      }
-    });
-  },
-  addSHIFTtext: function (id: string | number, word: string) {
+ 
+  addHint: function (id: string | number, word: string) {
     Item.registerNameOverrideFunction(id, function (item, name) {
       if (Entity.getSneaking(Player.get())) {
         return name + "\n§7" + Translation.translate(word);
@@ -165,32 +161,6 @@ var SpacesCraft = {
       }
     });
   },
-};
-Translation.addTranslation("\n§7Electrolevel", {
-  ru: "\n§7Электроуровень: ",
-});
-
-var SpacesUtils = {
-  // registerBlock: function (id: string,
-  //     name: string,
-  //     texture: string,
-  //     index: number,
-  //     type: string,
-  //     toolnumber: any) {
-  //     IDRegistry.genBlockID(id);
-  //     Block.createBlock(id,
-  //         [{
-  //             name: name,
-  //             texture: [[texture,
-  //                 index]],
-  //             inCreative: true
-  //         }],
-  //         type);
-  //     ToolAPI.registerBlockMaterial(id,
-  //         "stone",
-  //         toolnumber);
-
-  // },
 
   canisterRegistry: function (
     id: string,

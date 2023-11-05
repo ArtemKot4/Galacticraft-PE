@@ -169,11 +169,6 @@ Recipes.addShaped({id: BlockID.compressor_gj, count: 1, data: 0}, [
     "aea"
 ], ['a', ItemID.ingot_aluminum_sc, 0, 'b', VanillaBlockID.anvil, 0, 'c', ItemID.ingotCopper, 0, 'e', ItemID.wafer_basic, 0,'f',BlockID.mekanism_block_ports,0]);
 
-Recipes.addShaped({id: ItemID.gear_wheel_tin, count: 1, data: 0}, [
-    "bab",
-    "a a",
-    "bab"
-], ['a', ItemID.ingotTin, 0, 'b', ItemID.tin_shard, 0]);
 
 
 Recipes.addShaped({id: BlockID.coal_generator, count: 1, data: 0}, [
@@ -1517,7 +1512,7 @@ Recipes.addShaped({ id: ItemID.EUMeter, count: 1, data: 0 }, [
     
     ICTool.addRecipe({ id: ItemID.compressed_tin, count: 1, data:  0}, [{ id: ItemID.ingot_tin_sc, data: 0 }], ItemID.craftingHammer);
     
-    ICTool.addRecipe({ id: ItemID.compressed_steel, count: 1, data: 0 }, [{ id: ItemID.ingot_steel_spacescraft,data: 0 }], ItemID.craftingHammer);
+    ICTool.addRecipe({ id: ItemID.compressed_steel, count: 1, data: 0 }, [{ id: ItemID.ingot_steel,data: 0 }], ItemID.craftingHammer);
     
     ICTool.addRecipe({ id: ItemID.compressed_titanium, count: 1, data: 0 }, [{ id: ItemID.ingot_titanium,data: 0 }], ItemID.craftingHammer);
     
@@ -1538,7 +1533,7 @@ MachineRecipeRegistry.registerRecipesFor("metalFormer1", {
         "ItemID.ingot_aluminum_sc": { id: ItemID.compressed_aluminum, count: 1, data: 0 },
         "ItemID.ingot_desh": { id: ItemID.desh_plate, count: 1, data: 0 },
         "ItemID.ingot_titanium": { id: ItemID.compressed_titanium, count: 1, data: 0 },
-        "ItemID.ingot_steel_spacescraft": { id: ItemID.compressed_steel, count: 1, data: 0 },
+        "ItemID.ingot_steel": { id: ItemID.compressed_steel, count: 1, data: 0 },
         // Dense Plates
         "ItemID.compressed_iron": { id: ItemID.densePlateIron, count: 1, data: 0, sourceCount: 1 },
      //   "ItemID.plateGold": { id: ItemID.densePlateGold, count: 1, data: 0, sourceCount: 9 },
@@ -1555,7 +1550,7 @@ MachineRecipeRegistry.registerRecipesFor("metalFormer1", {
         //"ItemID.ingot_lead_sc": { id: BlockID.block_of_lead, count: 1, data: 0, sourceCount: 9 },
 
         "ItemID.iron_steel_ingot": { id: BlockID.iron_steel_block, count: 1, data: 0, sourceCount: 9 },
-        "ItemID.ingot_steel": { id: BlockID.steel_block_sc, count: 1, data: 0, sourceCount: 9 },
+      //  "ItemID.ingot_steel": { id: BlockID.steel_block_sc, count: 1, data: 0, sourceCount: 9 },
         "ItemID.ingot_bronze_sc": { id: BlockID.bronze_block_sc, count: 1, data: 0, sourceCount: 9 },
     },
     true);
@@ -1566,7 +1561,7 @@ MachineRecipeRegistry.registerRecipesFor("metalFormer1", {
         "ItemID.copper_ingot_sc": { id: ItemID.compressed_copper, count: 1 },
         "ItemID.ingot_tin_sc": { id: ItemID.compressed_tin, count: 1 },
         "ItemID.ingot_bronze_sc": { id: ItemID.compressed_bronze, count: 1 },
-        "ItemID.ingot_steel_spacescraft": { id: ItemID.compressed_steel, count: 1 },
+        "ItemID.ingot_steel": { id: ItemID.compressed_steel, count: 1 },
         "ItemID.ingot_lead_sc": { id: ItemID.compressed_lead, count: 1 },
         // plates
         "ItemID.compressed_iron": { id: ItemID.casingIron, count: 2 },

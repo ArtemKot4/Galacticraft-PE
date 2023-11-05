@@ -344,9 +344,17 @@ Translation.addTranslation(
 Translation.addTranslation(
   "For get list of commands write /gc:help",
   {
-    ru: "§6Для получения списка команд,напишите §f/gc:help",
+    ru: "Для получения списка команд,напишите §f/gc:help",
   }
 );
+
+Translation.addTranslation("It can receive weak sound waves and distant signals", {
+  ru: "Может принимать слабые звуковые волны и отдалённые сигналы",
+});
+
+Translation.addTranslation("The shield controller protects your armor from ALL types of damage - including atmospheric corrosion",{
+  ru: "Контроллер щита защищает вашу броню от ВСЕХ видов урона - в том числе от атмосферной коррозии"
+});
 
 Translation.addTranslation("§4Warning!Air is not", {
   ru: "§4Опасность!Нет кислорода",

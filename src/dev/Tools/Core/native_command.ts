@@ -7,6 +7,12 @@ function commandRegistry(
   cmd.push({ description: description, action: action, msg: msg });
 }
 
+
+commandRegistry("weather venus rain", () => {
+  timer_weather_start = 15;
+  Game.message(Translation.translate("Weather changed succesfully"));
+});
+
 commandRegistry("weather venus clear", () => {
   weather_rain = false;
   timer_weather = 0;
@@ -14,7 +20,7 @@ commandRegistry("weather venus clear", () => {
   Game.message(Translation.translate("Weather changed succesfully"));
 });
 
-commandRegistry("get values", () => {
+commandRegistry("get debug values", () => {
   Game.message(
     "Weather rules: \n§7● venus rain: " +
       weather_rule.rain +

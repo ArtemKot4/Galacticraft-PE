@@ -52,12 +52,6 @@ glasstainer.close();
 
 
 
-IDRegistry.genItemID("gear_wheel_tin"); 
-Item.createItem("gear_wheel_tin", "Standart gear wheel", {name: "gear_wheel_tin", meta: 0}, {stack: 64});
-Translation.addTranslation("Standart gear wheel", {
-ru: "Стандартная зубчатая шестерёнка"
-});
-
 
 // IDRegistry.genItemID("chip_industrialization"); 
 // Item.createItem("chip_industrialization", "Chip industrialization", {name: "chip", meta: 0}, {stack: 64});

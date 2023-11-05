@@ -54,12 +54,14 @@ var collecticle = Particles.registerParticleType({
 
 var rain_venus = Particles.registerParticleType({
     texture: "rain_venus",
-    render: 1,
+    render: 2,
     size: [8,8],
-    lifetime: [100, 100],
-  
+    lifetime: [50,50],
+   // collision: true,
     animators: {
-    //  alpha: { fadeIn: 0.4, fadeOut: 0.4 },
-     // size: { fadeOut: 0, fadeIn: 0, start: 1, end: 0 },
+        alpha: {
+           fadeIn: 0, fadeOut: 1
+        },
+   
     },
   });

@@ -14,17 +14,17 @@ battery.set(ItemID.battery, {storage: 500});
 
 if(__config__.getBool("Gameplay.ShiftHints")){
 
-SpacesCraft.addSHIFTtext(BlockID.coal_generator, "4 sJ/ s");
-SpacesCraft.addSHIFTtext(BlockID.basic_solar_panel, "4 sJ/ s");
-SpacesCraft.addSHIFTtext(BlockID.coal_generator, "10 sJ/ t");
+SpacesUtils.addDescription(BlockID.coal_generator, "4 sJ/ s");
+SpacesUtils.addDescription(BlockID.basic_solar_panel, "4 sJ/ s");
+SpacesUtils.addDescription(BlockID.coal_generator, "10 sJ/ t");
 
 
 
-SpacesCraft.addSHIFTtext(BlockID.rocket_padding, "Place blocks 3x3\nfor create rocket padding")
+SpacesUtils.addHint(BlockID.rocket_padding, "Place blocks 3x3\nfor create rocket padding")
 
 
 
-SpacesCraft.addSHIFTtext(BlockID.venus_spout, "Can be found on Venus, hot and scalding")
+SpacesUtils.addHint(BlockID.venus_spout, "Can be found on Venus, hot and scalding")
 
 
 }
@@ -55,8 +55,8 @@ SpacesMachine.addReceptForElectricCompressor({
 
 SpacesMachine.addReceptForElectricCompressor({
     
-    slot_1: ItemID.ingot_steel_spacescraft,
-    slot_2:ItemID.ingot_steel_spacescraft,slot_3:0,slot_4:0,slot_5:0,slot_6:0,slot_7:0,slot_8:0,slot_9:0
+    slot_1: ItemID.ingot_steel,
+    slot_2:ItemID.ingot_steel,slot_3:0,slot_4:0,slot_5:0,slot_6:0,slot_7:0,slot_8:0,slot_9:0
 },{result: ItemID.compressed_steel,})
 
 SpacesMachine.addReceptForElectricCompressor({
@@ -66,7 +66,7 @@ SpacesMachine.addReceptForElectricCompressor({
     
     SpacesMachine.addReceptForElectricCompressor({
         slot_1:ItemID.compressed_copper,
-        slot_2: ItemID.compressed_tin,slo_3:0,slot_4:0,slot_5:0,slot_6:0,slot_7:0,slot_8:0,slot_9:0},{
+        slot_2: ItemID.compressed_tin,slot_3:0,slot_4:0,slot_5:0,slot_6:0,slot_7:0,slot_8:0,slot_9:0},{
          result:   ItemID.compressed_bronze,
         }
     
@@ -555,7 +555,7 @@ Recipes.addShaped({id: ItemID.engine_tier1_booster, count: 1, data: 0}, [
 
 Recipes.addShaped({id: ItemID.steel_shards, count: 3, data: 0}, [
     "a",
-], ['a', ItemID.ingot_steel_spacescraft, 0]);
+], ['a', ItemID.ingot_steel, 0]);
 //Осколки стали
 
 Recipes.addShaped({id: ItemID.iron_steel_ingot, count: 1, data: 0}, [

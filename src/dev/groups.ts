@@ -484,16 +484,3 @@ ToolAPI.registerBlockMaterial(BlockID.venus_rock_0, "stone", 2);
 
 ToolAPI.registerBlockMaterial(BlockID.venus_spout, "stone", 2);
 
-/*ToolAPI.registerBlockMaterial(BlockID.vic_coal, "stone", 1);
-
-ToolAPI.registerBlockMaterial(BlockID.vic_iron, "stone", 2);
-
-ToolAPI.registerBlockMaterial(BlockID.vic_a1_sand, "stone", 2);
-
-ToolAPI.registerBlockMaterial(BlockID.vic_a1_stone, "stone", 2);
-
-ToolAPI.registerBlockMaterial(BlockID.vic, "stone", 2);*/
-
-
-
-  

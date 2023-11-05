@@ -103,8 +103,8 @@ IDRegistry.genItemID("iron_steel_ingot");
 Item.createItem("iron_steel_ingot", "Iron Steel Ingot", {name: "Iron Steel Ingot", meta: 0}, {stack: 64});
 
 
-IDRegistry.genItemID("ingot_steel_spacescraft"); 
-Item.createItem("ingot_steel_spacescraft", "Steel Ingot", {name: "Steel Don't Mekanism", meta: 0}, {stack: 64});
+IDRegistry.genItemID("ingot_steel"); 
+Item.createItem("ingot_steel", "Steel Ingot", {name: "Steel Don't Mekanism", meta: 0}, {stack: 64});
 
 
 IDRegistry.genItemID("meteoric_iron_ingot"); 

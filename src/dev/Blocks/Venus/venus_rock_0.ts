@@ -50,7 +50,7 @@ TileEntity.registerPrototype(BlockID.venus_spout,{
 	},
     tick: function(){
         
-        for(var i;i<5;i++){
+        for(var i = 0;i<7;i++){
             
       if(
     this.blockSource.getBlockId
@@ -58,13 +58,7 @@ TileEntity.registerPrototype(BlockID.venus_spout,{
         this.x,
         this.y-i,
         this.z)==
-        BlockID.sulphuric_acid_still || this.blockSource.getBlockId
-    (
-        this.x,
-        this.y-i,
-        this.z)==
-        VanillaBlockID.lava
-        ){
+        BlockID.sulphuric_acid_still ){
          this.data.spout=0}else{this.data.spout=1}
          
 
@@ -74,29 +68,27 @@ TileEntity.registerPrototype(BlockID.venus_spout,{
          if(__config__.getBool("Gameplay.Special_Effects")==true){
 Particles.addParticle(
       spouticle,
-      this.x + 0.4,
-      this.y + 1, 
-      this.z + 0.4,
-        Math.random()/20,
-        Math.random()/20,
-        Math.random()/20);}
+      this.x + 0.5,
+      this.y + 1.1, 
+      this.z + 0.5,
+        0,
+        0.3,
+        0);}
 
-let entitys = Entity.getAll();
-for(let i in entitys){
-  let entity = entitys[i];
-
+var player = Network.getConnectedPlayers()
+for(var p in player){
 if(
-     Entity.getPosition(entity).y==this.blockSource.getBlockId(this.x,this.y-1,this.z))
+     Entity.getPosition(Number(player[i])).y==this.blockSource.getBlockId(this.x,this.y+1,this.z))
 {
         Entity.setFire
         (
-            entity,40,true
+          Number(player[i]),40,true
             )
     }
-}
-	}}},
+}}
+	}},
 	click: function(item,id,count,data,coords){
-
+     
 	}
 	});
 

@@ -79,7 +79,7 @@ Callback.addCallback("LevelDisplayed", function () {
   Game.message(
     Translation.translate("§6Modification Galacticraft has been downloaded!") +
       "\n" +
-      Translation.translate("\nFor get list of commands write /gc:help")
+      Translation.translate("For get list of commands write /gc:help")
   );
 });
 

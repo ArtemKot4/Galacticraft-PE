@@ -262,7 +262,7 @@ Item.createItem("venus_stick", "Venus stick(§aCREATIVE)", {
     name: "venus_stick",
     meta: 0
 }, {
-    stack: 64
+    stack: 1
 });
 
 
