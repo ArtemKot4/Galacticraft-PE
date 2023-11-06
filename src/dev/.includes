@@ -409,8 +409,17 @@ recipes.ts
 
 Dimensions/Atmospherics/venus_weather.ts
 Dimensions/Atmospherics/mars_meteorite_fall.ts
+Dimensions/Atmospherics/planet_music.ts
+
+Dimensions/Atmospherics/Skyboxes/earth_skybox.ts
+Dimensions/Atmospherics/Skyboxes/moon_skybox.ts
+Dimensions/Atmospherics/Skyboxes/mars_skybox.ts
+Dimensions/Atmospherics/Skyboxes/asteroids_skybox.ts
+Dimensions/Atmospherics/Skyboxes/venus_skybox.ts
+Dimensions/Atmospherics/Skyboxes/spaces_station_skybox.ts
 
 Tools/Core/oxygen_working.ts
-Tools/Core/planet_music.ts
 Tools/Core/tick.ts
 Tools/Core/native_command.ts
+
+Tools/Tools/thermal_armor.ts

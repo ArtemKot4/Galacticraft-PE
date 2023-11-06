@@ -647,3 +647,21 @@ Translation.addTranslation("Game rule changed to true", {
 Translation.addTranslation("Game rule changed to false", {
   ru: "Игровое правило успешно изменено на false",
 });
+
+
+Translation.addTranslation("Thermal boots", {
+  ru: "Теплоизолирующие ботинки",
+});
+
+Translation.addTranslation("Thermal leggings", {
+  ru: "Теплоизолирующие поножи",
+});
+
+Translation.addTranslation("Thermal chestplate", {
+  ru: "Теплоизолирующая кираса",
+});
+
+Translation.addTranslation("Thermal helmet", {
+  ru: "Теплоизолирующий шлем",
+});
+

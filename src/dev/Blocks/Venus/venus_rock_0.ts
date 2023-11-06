@@ -59,7 +59,7 @@ TileEntity.registerPrototype(BlockID.venus_spout,{
         this.y-i,
         this.z)==
         BlockID.sulphuric_acid_still ){
-         this.data.spout=0}else{this.data.spout=1}
+         this.data.spout=0}else{this.data.spout=1}}
          
 
         if(
@@ -71,9 +71,9 @@ Particles.addParticle(
       this.x + 0.5,
       this.y + 1.1, 
       this.z + 0.5,
-        0,
+        0.1,
         0.3,
-        0);}
+        0.1);}
 
 var player = Network.getConnectedPlayers()
 for(var p in player){
@@ -85,12 +85,12 @@ if(
           Number(player[i]),40,true
             )
     }
-}}
+}
 	}},
 	click: function(item,id,count,data,coords){
-     
-	}
-	});
+  }    
+  
+  });
 
 
 

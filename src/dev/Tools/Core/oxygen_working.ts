@@ -91,7 +91,7 @@ var EquipMent = new UI.Window({
             size: 50,
             bitmap: "SPC.SPC_Legs"
         },
-        "Boots": {
+        "Foots": {
             type: "slot",
             x: 30,
             y: 180,

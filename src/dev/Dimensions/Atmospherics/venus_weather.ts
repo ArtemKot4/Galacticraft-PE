@@ -11,37 +11,60 @@ let weather_rule = {
   lightning_bolt: true,
   meteorite_fall: true,
 }
+//пакет для частиц
+
+Network.addClientPacket("gc.particle", function (packetData: any) {
+  Particles.addParticle(
+    packetData.type,
+    packetData.x,
+    packetData.y, 
+    packetData.z,
+    packetData.vx,
+    packetData.vy,
+    packetData.vz
+  );
+});
+
 
 //функция на частицы
 
-function particle (type,x,y,z,vx?,vz?){
-  if(vx!=undefined&&vz!=undefined){
-  Particles.addParticle(
-    type,
-    x,
-    y,
-    z,
-    vx || 0,
-    vz || 0,
-    0
-  );
-}}
+function particle (type,x,y,z,vx?,vy?,vz?){
+  vx = vx || 0;
+  vy = vy || 0;
+  vz = vz || 0;
+  var players = Network.getConnectedPlayers();
+  for (var i in players) {
+    var client = Network.getClientForPlayer(players[i]);
+    if (client) {
+      client.send("gc.particle", {
+        p: type,
+        x: x,
+        y: y,
+        z: z,
+        vx: vx,
+        vy: vy,
+        vz: vz,
+      });
+}else {
+  Debug.message("[Error] Failed spawn particle");
+}}}
 
 //функция на частицы дождя
 
 function startRain(coords): void {
-
-  for(var n = -32;n<=32;n++){
-  
+ 
+  for(var n = -16;n<=16;n++){
+    particle(spouticle,coords.x+randomInt(-5,5),coords.y-1.5,coords.z+randomInt(-5,5),+0,0.1);
    
    
-    particle(rain_venus,coords.x+n,coords.y+5,coords.z+randomInt(-32,32),0.05,-0.1);
-    particle(rain_venus,coords.x + randomInt(-32,32),coords.y+5,coords.z+n,0.05,-0.1);
+    particle(rain_venus,coords.x+n,coords.y+5,coords.z+randomInt(-16,16),0.05,-0.1);
+    particle(rain_venus,coords.x + randomInt(-16,16),coords.y+5,coords.z+n,0.05,-0.1);
     
-    particle(spouticle,coords.x+n,coords.y-1.8,coords.z+randomInt(-32,32),+0,0.1);
-    particle(spouticle,coords.x + randomInt(-32,32),coords.y-1.8,coords.z+n,+0,0.1);
+   
+ 
+    
     }
-
+   
       }
 
       

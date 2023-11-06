@@ -9,8 +9,11 @@ function commandRegistry(
 
 
 commandRegistry("weather venus rain", () => {
+  if(Player.getDimension()==Venus.id){
   timer_weather_start = 15;
-  Game.message(Translation.translate("Weather changed succesfully"));
+  Game.message(Translation.translate("Weather changed succesfully"));}else{
+    Game.message(Translation.translate("Sorry,but you must be in Venus,for changed weather to rain"))
+  }
 });
 
 commandRegistry("weather venus clear", () => {
@@ -37,23 +40,7 @@ commandRegistry("help", () => {
   }
 });
 
-commandRegistry("gamerule doWeatherCycle false", () => {
-  weather_rule.lightning_bolt = false;
-  weather_rule.meteorite_fall = false;
-  weather_rule.rain = false;
 
-  Game.message(Translation.translate("Game rule changed to false"));
-});
-
-commandRegistry("gamerule doWeatherCycle true", () => {
-  weather_rule.lightning_bolt = true;
-  weather_rule.meteorite_fall = true;
-  weather_rule.rain = true;
-
-  Game.message(Translation.translate("Game rule changed to true"));
-});
-
-//}
 Callback.addCallback("NativeCommand", (command) => {
   for (var i in cmd) {
     if (command == "/gc:" + cmd[i].description) {
