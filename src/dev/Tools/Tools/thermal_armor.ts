@@ -19,10 +19,10 @@ function ThermalArmor(id: string, name: string,texture: string, type: string, ) 
 
 //Присваивание текстур
 for(var i in armor_container){
-    boots.setTexture(armor_container[i].texture);
-    leggings.setTexture(armor_container[i].texture);
-    chestplate.setTexture(armor_container[i].texture);
-    helmet.setTexture(armor_container[i].texture);
+    boots.setTexture("armor/"+armor_container[i].texture+".png");
+    leggings.setTexture("armor/"+armor_container[i].texture+".png");
+    chestplate.setTexture("armor/"+armor_container[i].texture+".png");
+    helmet.setTexture("armor/"+armor_container[i].texture+".png");
 }
 
 //Регистрация брони
