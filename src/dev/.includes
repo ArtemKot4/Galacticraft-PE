@@ -1,24 +1,38 @@
-Tools/translations.ts
-Tools/Core/core.ts
-Tools/particles.ts
-Tools/block_types.ts
-Tools/Core/liquids.ts
-Blocks/Mekanisms/machine_api.ts
-
-Tools/classes/GCRecipe.ts
-Tools/classes/Machine.ts
-Tools/classes/InputMachine.ts
-Tools/classes/Generator.ts
-Tools/classes/MachineStorage.ts
-Tools/classes/Item.ts
-Tools/classes/ItemOre.ts
-Tools/classes/Tool.ts
-Tools/classes/Canister.ts
-Tools/classes/Ballone.ts
-Tools/classes/Gear.ts
-Tools/classes/ThermalArmor.ts
+Structure/translations.ts
+Structure/Core/core.ts
+Structure/particles.ts
+Structure/block_types.ts
+Block/liquids.ts
 
 
+Items/thermal_armor.ts
+Items/entity_loot.ts
+Items/machine_parts.ts
+Items/ores.ts
+Items/oxygen_gear.ts
+Items/oxygen_tanks.ts
+Items/parachutes.ts
+Items/radioisotope_core.ts
+Items/schematics.ts
+Items/Tools.ts
+Items/battery.ts
+Items/entity_loot.ts
+
+
+Structure/Classes/GCRecipe.ts
+Structure/Classes/Machine.ts
+Structure/Classes/InputMachine.ts
+Structure/Classes/Generator.ts
+Structure/Classes/MachineStorage.ts
+Structure/Classes/GCItem.ts
+Structure/Classes/ItemOre.ts
+Structure/Classes/Tool.ts
+Structure/Classes/Canister.ts
+Structure/Classes/Ballone.ts
+Structure/Classes/Gear.ts
+Structure/Classes/ThermalArmor.ts
+
+Structure/Interfaces/IPlanetModule.ts
 
 
 
@@ -26,7 +40,7 @@ API/DungeonCore.ts
 API/MachineAPI.ts
 API/SpacesAPI.ts
 
-battery.ts
+
 
 Ores/ores.ts
 Blocks/Ores/block_ores.ts
@@ -35,142 +49,39 @@ Blocks/Ores/moon_ores.ts
 Blocks/Ores/mars_ores.ts
 Blocks/Ores/asteroids_ores.ts
 Blocks/Ores/venus_ores.ts
+Blocks/Ores/block_ores.ts
 
-Blocks/Ores/block_aluminum.ts
-Blocks/Ores/block_tin.ts
-Blocks/Ores/block_copper.ts
-Blocks/Ores/ore_tin_moon.ts
-Blocks/Ores/ore_copper_moon.ts
-Blocks/Ores/moonore_sapphire.ts
-Blocks/Ores/ore_tin_venus.ts
-Blocks/Ores/ore_copper_venus.ts
-Blocks/Ores/ore_silicon_venus.ts
-Blocks/Ores/ore_galena.ts
-Blocks/Ores/ore_iron_asteroids.ts
-Blocks/Ores/ore_ilmenite.ts
-Blocks/Ores/ore_aluminum_asteroids.ts
-Blocks/Ores/moonore_cheese.ts
-Blocks/Ores/ore_silicon.ts
-Blocks/Ores/ore_copper.ts
-Blocks/Ores/ore_tin.ts
-Blocks/Ores/ore_aluminum.ts
-Blocks/Ores/ore_quartz_venus.ts
-Blocks/Ores/ore_aluminum_venus.ts
+Blocks/Machine/wires.ts
 
-Blocks/Mekanisms/rocket_padding.ts
+Blocks/Machine/rocket_padding.ts
 
 
 
-Blocks/Mekanisms/coal_generator.ts
-Blocks/Mekanisms/oxygen_compressor.ts
+Blocks/Machine/coal_generator.ts
+Blocks/Machine/oxygen_compressor.ts
 
-Blocks/Mekanisms/energy_storage.ts
+Blocks/Machine/energy_storage.ts
 
-Blocks/Mekanisms/electric_furnace.ts
+Blocks/Machine/electric_furnace.ts
 
 machine_parts.ts
 
-Caution/radioisotope_core.ts
-Blocks/Mekanisms/crushed_probe.ts
-
-API/RenderAPI.ts
-
-Ores/iron_steel_ingot.ts
-Ores/solar_dust.ts
-Ores/ingot_lead.ts
-
-Ores/shard_iron.ts
-
-Ores/compressed_titanium.ts
-
-Ores/shard_titanium.ts
-
-Ores/ingot_titanium.ts
-
-Ores/ingot_desh.ts
-
-Ores/dust_titanium.ts
-
-Ores/raw_desh.ts
+Blocks/Machine/crushed_probe.ts
 
 
 
 
-Ores/raw_silicon.ts
 
-Ores/ingot_copper.ts
 
-Ores/lunar_sapphire.ts
-
-Ores/ingot_aluminum.ts
-
-Ores/ingot_tin.ts
 oxygen_canister_infinite.ts
-Tools/oxygen_canister_infinite.ts
-
-rocket_fins.ts
-
-air_fan.ts
-
-Ores/meteoric_iron_ingot.ts
-Ores/meteoric_iron_raw.ts
-nose_cone.ts
-
-
-engine_tier1.ts
+Structure/oxygen_canister_infinite.ts
 
 
 
-Ores/compressed_iron.ts
-
-Ores/compressed_bronze.ts
-Ores/compressed_tin.ts
-
-compressed_steel.ts
-Ores/compressed_steel.ts
-compressed_copper.ts
-Ores/compressed_copper.ts
-compressed_meteoric_iron.ts
-Ores/compressed_meteoric_iron.ts
-
-wafer_advanced.ts
-wafer_advanced.ts
-wafer_basic.ts
-wafer_basic.ts
-engine_tier1_buster.ts
-
-
-schematic_rocket_2.ts
-
-schematic_rocket_t3.ts
-
-schematic_buggy.ts
-
-
-thermal_controller.ts
-
-solar_module_1.ts
-buggymat_sit.ts
-
-heavy_plating.ts
-
-
-Tools/oxygen_concentrator.ts
-proj.ts
-Tools/proj.ts
-buggymat_wheel.ts
-wafer_solar.ts
 
 
 
-Tools/oxygen_tanks.ts
 
-Tools/frequency_module.ts
-Tools/shield_controller.ts
-Tools/Tools/Tools.ts
-
-oxygen_gear.ts
-Tools/oxygen_gear.ts
 
 
 
@@ -196,63 +107,6 @@ Canisters/methane_canister.ts
 
 Canisters/empty_liquid_canister.ts
 
-GalacticTokens/galactic_token_1.ts
-GalacticTokens/galactic_token_2.ts
-GalacticTokens/galactic_token_3.ts
-
-
-
-Food/cheeseburger.ts
-
-Food/burger_bun.ts
-
-Food/beef_patty_raw.ts
-
-Food/cheese_slice.ts
-
-Food/grid_ground_beef.ts
-
-Food/canned_beef.ts
-
-Food/dehydrated_potato.ts
-
-Food/dehydrated_apple.ts
-
-Food/dehydrated_carrot.ts
-
-Food/dehydrated_mel.ts
-
-Food/beef_patty_cooked.ts
-canvas.ts
-
-
-cheese_curd.ts
-Food/cheese_curd.ts
-air_vent.ts
-air_vent.ts
-storage_of_canisters.ts
-Canisters/storage_of_canisters.ts
-
-
-
-alien_flesh.ts
-alien_flesh.ts
-fried_alien_flesh.ts
-Food/fried_alien_flesh.ts
-compressed_iron_steel.ts
-Ores/compressed_iron_steel.ts 
-buggymat_storage.ts
-buggymat_storage.ts
-
-
-
-
-
-
-
-
-parachutes.ts
-
 
 
 
@@ -261,28 +115,7 @@ Blocks/Decorative/decorations.ts
 
 
 
-
-Blocks/Decorative/brick.ts
-
-
-Blocks/Venus/venus_rock_0.ts
-
-Blocks/Moon/lunar_stone.ts
-decoration_desh.ts
 Blocks/Ores/decoration_desh.ts
-moon_lapiz.ts
-Blocks/Ores/moon_lapiz.ts
-deco_block_2.ts
-Blocks/Decorative/deco_block_2.ts
-ore_solar.ts
-Blocks/Ores/ore_solar.ts
-block_titanium.ts
-Blocks/Ores/block_titanium.ts
-cobblestone_mars.ts
-Blocks/Mars/cobblestone_mars.ts
-
-block_lead.ts
-
 
 
 
@@ -298,9 +131,9 @@ Blocks/Ores/ore_iron_mars.ts
 iron_steel_ingot.ts
 
 stick_from_knifes.ts
-Tools/Tools/stick_from_knifes.ts
+Structure/Structure/stick_from_knifes.ts
 knifes.ts
-Tools/Tools/knifes.ts
+Structure/Structure/knifes.ts
 
 S
 iron_steel_dust.ts
@@ -353,15 +186,16 @@ Blocks/Sun/SunLittle.ts
 
 
 
-Dimensions/Spaces Station.ts
-Dimensions/Moon.ts
-Dimensions/Mars.ts
-Dimensions/Asteroids.ts
-Dimensions/Venus.ts
+Dimensions/SpaceStation/SpaceStation.ts
+Dimensions/Moon/Moon.ts
+Dimensions/Mars/Mars.ts
+Dimensions/Asteroids/Asteroids.ts
+Dimensions/Venus/Venus.ts
 
-
-
-
+Dimensions/Moon/Blocks/moon_blocks.ts
+Dimensions/Mars/Blocks/mars_blocks.ts
+Dimensions/Venus/Blocks/venus_blocks.ts
+Dimensions/Asteroids/Blocks/asteroid_blocks.ts
 
 
 
@@ -376,62 +210,70 @@ integrations.ts
          
          
          
-Blocks/Mekanisms/magnetic_crafting_table.ts
-Blocks/Mekanisms/planet_teleporter.ts
-Blocks/Mekanisms/geothermal_generator.ts
-Blocks/Mekanisms/workbench_rocket.ts
-Blocks/Mekanisms/oxygen_collector.ts
-Blocks/Mekanisms/oxygen_storage.ts
-Blocks/Mekanisms/circuit_fabricator.ts
-Blocks/Mekanisms/electro_compressor.ts
-Blocks/Mekanisms/compressor.ts
-Blocks/Mekanisms/enclosed_blocks.ts
-Blocks/Mekanisms/basic_solar_panel.ts
-Blocks/Mekanisms/advanced_solar_panel.ts
-Blocks/Mekanisms/fuel_loader.ts
-Blocks/Mekanisms/refinery.ts
-Tools/Integrations/Recipe Viewer Integration.ts
+Blocks/Machine/magnetic_crafting_table.ts
+Blocks/Machine/planet_teleporter.ts
+Blocks/Machine/geothermal_generator.ts
+Blocks/Machine/workbench_rocket.ts
+Blocks/Machine/oxygen_collector.ts
+Blocks/Machine/oxygen_storage.ts
+Blocks/Machine/circuit_fabricator.ts
+Blocks/Machine/electro_compressor.ts
+Blocks/Machine/compressor.ts
+Blocks/Machine/enclosed_blocks.ts
+Blocks/Machine/basic_solar_panel.ts
+Blocks/Machine/advanced_solar_panel.ts
+Blocks/Machine/fuel_loader.ts
+Blocks/Machine/refinery.ts
+Blocks/Machine/block_machine.ts
+
+
+Structure/Integrations/Recipe Viewer Integration.ts
 
 
 
 
 
-Tools/Core/world_ore_generation.ts
+Structure/Core/world_ore_generation.ts
 
-Tools/Integrations/Industrial Craft 2 Experimental Integration.ts
+Structure/Integrations/Industrial Craft 2 Experimental Integration.ts
 
-Tools/Integrations/Classic UI Integration.ts
-Tools/Integrations/Futurepack Research Integration.ts
-Tools/Integrations/RuntimeSettings Integration.ts
-
-
+Structure/Integrations/Classic UI Integration.ts
+Structure/Integrations/Futurepack Research Integration.ts
+Structure/Integrations/RuntimeSettings Integration.ts
 
 
-Tools/Core/liquid_tank.ts
-Food/food.ts
+
+
+Blocks/liquid_tank.ts
+
 groups.ts
 
 
-Tools/prelaunch_checklist.ts
-Tools/Core/Rockets.ts
-Tools/Categories.ts
+Items/prelaunch_checklist.ts
+Structure/Categories.ts
 
+
+
+
+Dimensions/Venus/Events/venus_weather.ts
+Dimensions/Mars/Events/mars_meteorite_fall.ts
+
+
+Dimensions/Skyboxes/earth_skybox.ts
+Dimensions/Skyboxes/moon_skybox.ts
+Dimensions/Skyboxes/mars_skybox.ts
+Dimensions/Skyboxes/asteroids_skybox.ts
+Dimensions/Skyboxes/venus_skybox.ts
+Dimensions/Skyboxes/spaces_station_skybox.ts
+
+
+
+Structure/Core/oxygen_working.ts
+Structure/Core/tick.ts
+Structure/Core/native_command.ts
+
+Structure/Rocket/gui.ts
+Structure/Rocket/rocket_1.ts
+Structure/Rocket/callback.ts
 
 recipes.ts
-
-Dimensions/Atmospherics/venus_weather.ts
-Dimensions/Atmospherics/mars_meteorite_fall.ts
-Dimensions/Atmospherics/planet_music.ts
-
-Dimensions/Atmospherics/Skyboxes/earth_skybox.ts
-Dimensions/Atmospherics/Skyboxes/moon_skybox.ts
-Dimensions/Atmospherics/Skyboxes/mars_skybox.ts
-Dimensions/Atmospherics/Skyboxes/asteroids_skybox.ts
-Dimensions/Atmospherics/Skyboxes/venus_skybox.ts
-Dimensions/Atmospherics/Skyboxes/spaces_station_skybox.ts
-
-Tools/Core/oxygen_working.ts
-Tools/Core/tick.ts
-Tools/Core/native_command.ts
-
-Tools/Tools/thermal_armor.ts

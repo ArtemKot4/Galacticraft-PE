@@ -140,6 +140,8 @@ Translation.addTranslation("\n§7Electrolevel", {
   ru: "\n§7Электроуровень: ",
 });
 
+
+
 var SpacesUtils = {
   addDescription: function (id: string | number, word: string) {
     Item.registerNameOverrideFunction(id, function (id, name) {
@@ -299,6 +301,7 @@ var SpacesUtils = {
       }
     });
   },
+  
   balloneRegistry: function (
     id: string,
     name: string,
@@ -321,9 +324,13 @@ var SpacesUtils = {
   },
 };
 
+Network.addServerPacket("gc:planet_provider", (client,packetData: any) => {
+  var player = client.getPlayerUid()
+  Dimensions.transfer(Number(player), packetData.dimensionId); 
 
+})
 
-interface IPrototype {
+interface IPlanetModule {
   gravitation?: number[];
   biome_uid: string | CustomBiome;
   planet_uid: [string,number]
@@ -334,31 +341,22 @@ interface IPrototype {
   getGravitation(): void;
 }
 
-class IPlanet implements IPrototype {
+/**
+ * Класс, использующийся для регистрации планет
+*/
+
+class IPlanet implements IPlanetModule {
   public biome_uid: string | CustomBiome
   public planet_uid: [string,number]
   public gravitation?: number[];
   public generator: Dimensions.TerrainLayerParams[];
   public colors: [number, number, number];
 
-  constructor(
-    biome_uid: string,
-    planet_uid: [string,number],
   
-    generator: Dimensions.TerrainLayerParams[],
-    colors: [number, number, number],
-    gravitation?: number[],
-  ) {
-    this.biome_uid = biome_uid,
-    this.planet_uid = planet_uid,
-    this.gravitation = gravitation,
-    this.generator = generator,
-    this.colors = colors
-  }
-
   public createPlanet(): void {
-    this.biome_uid = new CustomBiome(String(this.biome_uid));
-    this.biome_uid.setSkyColor(
+    
+    var planet_biome = new CustomBiome(String(this.biome_uid));
+    planet_biome.setSkyColor(
       android.graphics.Color.rgb(this.colors[0], this.colors[1], this.colors[2])
     );
     var planet = new Dimensions.CustomDimension(
@@ -367,9 +365,8 @@ class IPlanet implements IPrototype {
     );
     planet.setGenerator(
       Dimensions.newGenerator({
-        biome: Number(this.biome_uid),
-        layers: 
-          this.generator
+        biome: Number(planet_biome),
+        layers: this.generator
         
       })
     );
@@ -380,8 +377,8 @@ class IPlanet implements IPrototype {
 
   }
 
-  startTransfer(): void {
-    Dimensions.transfer(Player.get(), Number(this.getPlanet())); 
+  public static transfer(planet): void {
+    Network.sendToServer("gc:planet_provider", planet)
   }
 
   public getPlanet(): [string,number] {
@@ -400,9 +397,30 @@ class IPlanet implements IPrototype {
   return this.generator
  }
 
+ public setSky(texture) {
+  return
+ }
+
  public getSkyColors(): number[] {
   return this.colors
  }
+
+ constructor(
+  biome_uid: string,
+  planet_uid: [string,number],
+
+  generator: Dimensions.TerrainLayerParams[],
+  colors?: [number, number, number],
+  gravitation?: number[], 
+) {
+  this.biome_uid = biome_uid,
+  this.planet_uid = planet_uid,
+  this.gravitation = gravitation,
+  this.generator = generator,
+  this.colors = colors || [0,0,0]
+  this.createPlanet()
+}
+
 
 }
 
@@ -443,7 +461,6 @@ ModAPI.registerAPI("SpacesAPI", {
   AirCable: AirCable,
   battery: battery,
   oxygenStorage: oxygenStorage,
-  RenderAPI: RenderAPI,
   SpacesMachine: SpacesMachine,
   SpacesUtils: SpacesUtils,
   requireGlobal: function (command) {

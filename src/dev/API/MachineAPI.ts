@@ -1,259 +1,427 @@
-let MachineAPI = {
-	all: {},
-	register(id, obj){
-		obj = obj || {};
-		obj.connectEnergy = obj.connectEnergy || [];
-		this.all[id] = obj;
-	},
-	getMeta: function(metaConnect, meta){
-		let metas = [
-			[0, 0, 0, 0, 0, 0],
-			[1, 1, 1, 1, 1, 1],
-			[0, 1, 3, 2, 5, 4],
-			[0, 1, 2, 3, 4, 5],
-			[0, 1, 4, 5, 3, 2],
-			[0, 1, 5, 4, 2, 3]
-		];
-    return metas[meta][metaConnect];
-  },
-	getPosByMeta(meta){
-		let pos = [
-			{x: 0, y: -1, z: 0},
-			{x: 0, y: 1, z: 0},
-    	{x: 0, y: 0, z: -1},
-      {x: 0, y: 0, z: 1},
-      {x: -1, y: 0, z: 0},
-      {x: 1, y: 0, z: 0}
+type universal = string | number;
+
+
+var cableAPI = {
+  renderSet: function (idblock, siz): void {
+    var group = ICRender.getGroup("sj-wire");
+    var id = idblock;
+    var width = siz;
+    group.add(id, -1);
+
+    var boxes = [
+      {
+        side: [1, 0, 0],
+        box: [
+          0.5 + width / 2,
+          0.5 - width / 2,
+          0.5 - width / 2,
+          1,
+          0.5 + width / 2,
+          0.5 + width / 2,
+        ],
+      },
+      {
+        side: [-1, 0, 0],
+        box: [
+          0,
+          0.5 - width / 2,
+          0.5 - width / 2,
+          0.5 - width / 2,
+          0.5 + width / 2,
+          0.5 + width / 2,
+        ],
+      },
+      {
+        side: [0, 1, 0],
+        box: [
+          0.5 - width / 2,
+          0.5 + width / 2,
+          0.5 - width / 2,
+          0.5 + width / 2,
+          1,
+          0.5 + width / 2,
+        ],
+      },
+      {
+        side: [0, -1, 0],
+        box: [
+          0.5 - width / 2,
+          0,
+          0.5 - width / 2,
+          0.5 + width / 2,
+          0.5 - width / 2,
+          0.5 + width / 2,
+        ],
+      },
+      {
+        side: [0, 0, 1],
+        box: [
+          0.5 - width / 2,
+          0.5 - width / 2,
+          0.5 + width / 2,
+          0.5 + width / 2,
+          0.5 + width / 2,
+          1,
+        ],
+      },
+      {
+        side: [0, 0, -1],
+        box: [
+          0.5 - width / 2,
+          0.5 - width / 2,
+          0,
+          0.5 + width / 2,
+          0.5 + width / 2,
+          0.5 - width / 2,
+        ],
+      },
     ];
-  	return pos[meta] || {x: 0, y: 0, z: 0};
-	},
-	getCoords(x, y, z, meta){
-		let pos = this.getPosByMeta(meta);
-		pos.x+=x;
-		pos.y+=y;
-		pos.z+=z;
-		return pos;
-	},
-	getSideByPos(x, y, z, xc, yc, zc, data){
-		let block = World.getBlock(x, y, z);
-		if(block.id == 0)
-			return;
-		let sides = this.all[block.id].connectEnergy;
-		for(let i in sides){
-			let tile = World.getTileEntity(x,y,z);
-			if(!tile)
-				return
-			let pos = this.getPosByMeta(this.getMeta(tile.data.meta+data, sides[i]));
-			if(x+pos.x==xc&&y+pos.y==yc&&z+pos.z==zc)
-				return sides[i];
-		}
-		return -1;
-	},
-	updateWireRender(x, y, z, id, rot){
-		let sides = this.all[id].connectEnergy;
-		for(let side in sides){
-			let pos = this.getCoords(x, y, z, this.getMeta(rot,sides[side]));
-			let block = World.getBlock(pos.x, pos.y, pos.z);
-			let wire = RenderAPI.wire[block.id];
-			if(wire){
-				let model = RenderAPI.getModel(block.id);
-				let p = [
-					{x: 0, y: -1, z: 0},
-					{x: 0, y: 1, z: 0},
-    			{x: 0, y: 0, z: -1},
-      		{x: 0, y: 0, z: 1},
-    		  {x: -1, y: 0, z: 0},
-      		{x: 1, y: 0, z: 0}
-   		 ];
-				for(let i in p){
-					let blockMachine = World.getBlock(pos.x+p[i].x,pos.y+p[i].y,pos.z+p[i].z);
-					if(this.all[blockMachine.id]){
-						let meta = this.getSideByPos(pos.x+p[i].x,pos.y+p[i].y,pos.z+p[i].z, pos.x, pos.y, pos.z, 2)
-						if(meta != -1){
-							let tile = World.getTileEntity(pos.x+p[i].x,pos.y+p[i].y,pos.z+p[i].z);
-							if(!tile)
-								return
-							let box = wire.boxes[this.getMeta(tile.data.meta+2, meta)].box; 
-							model.addEntry(new BlockRenderer.Model(box[0], box[1], box[2], box[3], box[4], box[5], block.id, 0)); 
-						}
-					}
-				}
-				BlockRenderer.mapAtCoords(pos.x, pos.y, pos.z, model);
-			}
-		}
-	},
-	destroyModel(x, y, z, id, rot){
-		let sides = this.all[id].connectEnergy;
-		for(let i in sides){
-			let pos = MachineAPI.getCoords(x, y, z, MachineAPI.getMeta(rot, sides[i]))
-			BlockRenderer.unmapAtCoords(pos.x, pos.y, pos.z, true);
-		}
-	},
-	registerRotation: function(id, meta, arr){
-		TileRenderer.setStandartModel(id, arr);
-		TileRenderer.registerRotationModel(id, meta, arr);
-	},
-	registerChangeSkin: function(id, meta, arr){
-		TileRenderer.registerRotationModel(id, meta, arr);
-		TileRenderer.setRotationPlaceFunction(id, false)
-	},
-	setSkin: function(x, y, z, id, meta){
-		TileRenderer.mapAtCoords(x, y, z, id, meta);
-	},
-};
-/*var MachineAPI = {
-    all: {},
-    register: function(id, data){
-        this.all[id] = {};
-        if(data.energyConnect || data.energyConnect == 0) this.all[id].energyConnect = data.energyConnect;
-        if(data.energyOutput || data.energyOutput == 0) this.all[id].energyOutput = data.energyOutput;
-    },
-    getConnectMeta: function(id, meta){
-        let metas = [
-            [1, 0, 3, 2],
-            [0, 1, 2, 3],
-            [3, 2, 0, 1],
-            [2, 3, 1, 0]
-        ];
-        return metas[meta][this.all[id].energyConnect];
-    },
-    getConnectCoords: function(id, meta){
-        return this.getCoordsForMeta(this.getConnectMeta(id, meta));
-    },
-    getConnectMetaOutput: function(id, meta){
-        let metas = [
-            [1, 0, 3, 2],
-            [0, 1, 2, 3],
-            [3, 2, 0, 1],
-            [2, 3, 1, 0]
-        ];
-        return metas[meta][this.all[id].energyOutput || this.all[id].energyConnect];
-    },
-    getConnectCoordsOutput: function(id, meta){
-        return this.getCoordsForMeta(this.getConnectMetaOutput(id, meta));
-    },
-    registerRotation: function(id, meta, arr){
-        TileRenderer.setStandartModel(id, arr);
-        TileRenderer.registerRotationModel(id, meta, arr);
-    },
-    registerChangeSkin: function(id, meta, arr){
-        TileRenderer.registerRotationModel(id, meta, arr);
-        TileRenderer.setRotationPlaceFunction(id, false)
-    },
-    setSkin: function(x, y, z, id, meta){
-        TileRenderer.mapAtCoords(x, y, z, id, meta);
-    },
-    getCoordsForMeta: function(meta){
-        let pos = [
-            {x: 0, y: 0, z: -1},
-            {x: 0, y: 0, z: 1},
-            {x: -1, y: 0, z: 0},
-            {x: 1, y: 0, z: 0}
-        ]
-        return pos[meta] || {x: 0, y: 0, z: 0};
-    },
-    metaForSide: function(meta){
-        let arr = [2, 3, 4, 5];
-        return arr[meta];
-    },
-    updateWireRender: function(region, x, y, z, id, meta){
-        let arr = [
-            4, 
-            5,
-            0,
-            1
-        ];
-        let pos = MachineAPI.getConnectCoords(id, meta);
-        let block = region.getBlock(x+pos.x, y+pos.y, z+pos.z);
-        if(RenderAPI.wire[block.id]){
-            var model = new ICRender.Model();
-            let boxes = RenderAPI.wire[block.id].boxes;
-            for(let i in arr){
-                let coord = this.getCoordsForMeta(i);
-                let bl = region.getBlock(x+pos.x+coord.x, y+pos.y+coord.y, z+pos.z+coord.z);
-                if(this.all[bl.id]){
-                    if(this.all[bl.id].energyConnect){
-                        let te = TileEntity.getTileEntity(x+pos.x+coord.x, y+pos.y+coord.y, z+pos.z+coord.z, region);
-                        if(te){
-                        let posTe = this.getConnectCoords(bl.id, te.data.meta);
-                        if((te.x+posTe.x) == (x+pos.x) && (te.y+posTe.y) == (y+pos.y) && (te.z+posTe.z) == (z+pos.z) && te.data.connect){
-                            let box = RenderAPI.wire[block.id].boxes[arr[this.getConnectMeta(bl.id, te.data.meta)]].box;
-                            model.addEntry(new BlockRenderer.Model(box[0], box[1], box[2], box[3], box[4], box[5], block.id, 0));
-                        }
-                        }
-                    }
-                     if(this.all[bl.id].energyOutput){
-                        let te = TileEntity.getTileEntity(x+pos.x+coord.x, y+pos.y+coord.y, z+pos.z+coord.z, region);
-                        if(te){
-                        let posTe = this.getConnectCoordsOutput(bl.id, te.data.meta);
-                        if((te.x+posTe.x) == (x+pos.x) && (te.y+posTe.y) == (y+pos.y) && (te.z+posTe.z) == (z+pos.z) && te.data.connect){
-                            let box = RenderAPI.wire[block.id].boxes[arr[this.getConnectMetaOutput(bl.id, te.data.meta)]].box;
-                            model.addEntry(new BlockRenderer.Model(box[0], box[1], box[2], box[3], box[4], box[5], block.id, 0));
-                        }
-                        }
-                    }
-                }
-            }
-            let width = RenderAPI.wire[block.id].width;
-            model.addEntry(new BlockRenderer.Model(0.5 - width / 2, 0.5 - width / 2, 0.5 - width / 2, 0.5 + width / 2, 0.5 + width / 2, 0.5 + width / 2, block.id, 0)); 
-            for(var i in boxes){ 
-                var box = boxes[i].box; 
-                var side = boxes[i].side; 
-                model.addEntry(new BlockRenderer.Model(box[0], box[1], box[2], box[3], box[4], box[5], block.id, 0)).setCondition(new ICRender.BLOCK(side[0], side[1], side[2], ICRender.getGroup("sc-wire"), false)); 
-            }
-            BlockRenderer.mapAtCoords(x+pos.x, y+pos.y, z+pos.z, model);
-        }
-        if(this.all[id]){
-            if(this.all[id].energyOutput) this.updateWireRender2(region, x, y, z, id, meta)
-        }
-    },
-    updateWireRender2: function(region, x, y, z, id, meta){
-        let arr = [
-            4, 
-            5,
-            0,
-            1
-        ];
-        let pos = MachineAPI.getConnectCoordsOutput(id, meta);
-        let block = region.getBlock(x+pos.x, y+pos.y, z+pos.z);
-        if(RenderAPI.wire[block.id]){
-            var model = new ICRender.Model();
-            let boxes = RenderAPI.wire[block.id].boxes;
-            for(let i in arr){
-                let coord = this.getCoordsForMeta(i);
-                let bl = region.getBlock(x+pos.x+coord.x, y+pos.y+coord.y, z+pos.z+coord.z);
-                if(this.all[bl.id]){
-                    if(this.all[bl.id].energyConnect){
-                        let te = TileEntity.getTileEntity(x+pos.x+coord.x, y+pos.y+coord.y, z+pos.z+coord.z, region);
-                        if(te){
-                        let posTe = this.getConnectCoords(bl.id, te.data.meta);
-                        if((te.x+posTe.x) == (x+pos.x) && (te.y+posTe.y) == (y+pos.y) && (te.z+posTe.z) == (z+pos.z) && te.data.connect){
-                            let box = RenderAPI.wire[block.id].boxes[arr[this.getConnectMeta(bl.id, te.data.meta)]].box;
-                            model.addEntry(new BlockRenderer.Model(box[0], box[1], box[2], box[3], box[4], box[5], block.id, 0));
-                        }
-                        }
-                    }
-                     if(this.all[bl.id].energyOutput){
-                        let te = TileEntity.getTileEntity(x+pos.x+coord.x, y+pos.y+coord.y, z+pos.z+coord.z, region);
-                        if(te){
-                        let posTe = this.getConnectCoordsOutput(bl.id, te.data.meta);
-                        if((te.x+posTe.x) == (x+pos.x) && (te.y+posTe.y) == (y+pos.y) && (te.z+posTe.z) == (z+pos.z) && te.data.connect){
-                            let box = RenderAPI.wire[block.id].boxes[arr[this.getConnectMetaOutput(bl.id, te.data.meta)]].box;
-                            model.addEntry(new BlockRenderer.Model(box[0], box[1], box[2], box[3], box[4], box[5], block.id, 0));
-                        }
-                        }
-                    }
-                }
-            }
-            let width = RenderAPI.wire[block.id].width;
-            model.addEntry(new BlockRenderer.Model(0.5 - width / 2, 0.5 - width / 2, 0.5 - width / 2, 0.5 + width / 2, 0.5 + width / 2, 0.5 + width / 2, block.id, 0)); 
-            for(var i in boxes){ 
-                var box = boxes[i].box; 
-                var side = boxes[i].side; 
-                model.addEntry(new BlockRenderer.Model(box[0], box[1], box[2], box[3], box[4], box[5], block.id, 0)).setCondition(new ICRender.BLOCK(side[0], side[1], side[2], ICRender.getGroup("sc-wire"), false)); 
-            }
-            BlockRenderer.mapAtCoords(x+pos.x, y+pos.y, z+pos.z, model);
-        }
-        
+
+    var model = new ICRender.Model();
+
+    model.addEntry(
+      new BlockRenderer.Model(
+        0.5 - width / 2,
+        0.5 - width / 2,
+        0.5 - width / 2,
+        0.5 + width / 2,
+        0.5 + width / 2,
+        0.5 + width / 2,
+        id,
+        0
+      )
+    );
+
+    for (var i in boxes) {
+      var box = boxes[i].box;
+      var side = boxes[i].side;
+
+      model
+        .addEntry(
+          new BlockRenderer.Model(
+            box[0],
+            box[1],
+            box[2],
+            box[3],
+            box[4],
+            box[5],
+            id,
+            0
+          )
+        )
+        .setCondition(ICRender.BLOCK(side[0], side[1], side[2], group, false));
     }
-};*/
+
+    BlockRenderer.setStaticICRender(id, -1, model);
+  },
+  addGroup: function (id) {
+    var group = ICRender.getGroup("sj-wire");
+    group.add(id, -1);
+  },
+ 
+};
+
+var AirCable = {
+  set: function (idblock, siz) {
+    var group2 = ICRender.getGroup("sc-wire");
+    var id = idblock;
+    var width = siz;
+    group2.add(id, -1);
+
+    var boxes = [
+      {
+        side: [1, 0, 0],
+        box: [
+          0.5 + width / 2,
+          0.5 - width / 2,
+          0.5 - width / 2,
+          1,
+          0.5 + width / 2,
+          0.5 + width / 2,
+        ],
+      },
+      {
+        side: [-1, 0, 0],
+        box: [
+          0,
+          0.5 - width / 2,
+          0.5 - width / 2,
+          0.5 - width / 2,
+          0.5 + width / 2,
+          0.5 + width / 2,
+        ],
+      },
+      {
+        side: [0, 1, 0],
+        box: [
+          0.5 - width / 2,
+          0.5 + width / 2,
+          0.5 - width / 2,
+          0.5 + width / 2,
+          1,
+          0.5 + width / 2,
+        ],
+      },
+      {
+        side: [0, -1, 0],
+        box: [
+          0.5 - width / 2,
+          0,
+          0.5 - width / 2,
+          0.5 + width / 2,
+          0.5 - width / 2,
+          0.5 + width / 2,
+        ],
+      },
+      {
+        side: [0, 0, 1],
+        box: [
+          0.5 - width / 2,
+          0.5 - width / 2,
+          0.5 + width / 2,
+          0.5 + width / 2,
+          0.5 + width / 2,
+          1,
+        ],
+      },
+      {
+        side: [0, 0, -1],
+        box: [
+          0.5 - width / 2,
+          0.5 - width / 2,
+          0,
+          0.5 + width / 2,
+          0.5 + width / 2,
+          0.5 - width / 2,
+        ],
+      },
+    ];
+
+    var model = new ICRender.Model();
+
+    model.addEntry(
+      new BlockRenderer.Model(
+        0.5 - width / 2,
+        0.5 - width / 2,
+        0.5 - width / 2,
+        0.5 + width / 2,
+        0.5 + width / 2,
+        0.5 + width / 2,
+        id,
+        0
+      )
+    );
+
+    for (var i in boxes) {
+      var box = boxes[i].box;
+      var side = boxes[i].side;
+
+      model
+        .addEntry(
+          new BlockRenderer.Model(
+            box[0],
+            box[1],
+            box[2],
+            box[3],
+            box[4],
+            box[5],
+            id,
+            0
+          )
+        )
+        .setCondition(ICRender.BLOCK(side[0], side[1], side[2], group2, false));
+    }
+
+    BlockRenderer.setStaticICRender(id, -1, model);
+  },
+  addGroup: function (id) {
+    var group2 = ICRender.getGroup("sc-wire");
+    group2.add(id, -1);
+  },
+};
+
+var leaves: any[] = [];
+var burnItems: any[] = [];
+
+var compressorRecipe: any[] = [];
+var circuit: any[] = [];
+var rock1: any[] = [];
+var liquids: any[] = [];
+
+var Working = {
+  createStatus: function (scale: string, text: string): void {
+    this.container.setText(scale, Translation.translate(text));
+  },
+  addBattery: function (block: any, slot: any, data: any): void {
+    this.data.energy -= ChargeItemRegistry.addEnergyToSlot(
+      block.getSlot(slot),
+      "gj",
+      data.energy,
+      block.getCapacity()
+    );
+    battery.addInfinite(block.container, block.data, slot);
+  },
+};
+
+
+
+var SpacesMachine = {
+  addCollectorLeaves: function (leaf): void {
+    leaf = leaf || {};
+    leaf.id = leaf.id || 0;
+    leaves.push({
+      id: leaf.id,
+    });
+  },
+  addCoal: function (id) {
+    burnItems.push({
+      id: id,
+    });
+  },
+
+  liquidRegistry: function (id: universal, data: number, voId: universal, voData: number, liquid: any) {
+    liquids.push({
+      id: id,
+      data: data,
+      voId: voId,
+      voData: voData,
+      liquid: liquid,
+    });
+  },
+  registerStandartMachine: function (id, Standart) {
+    // rfGroup.add(id, -1);
+    // euGroup.add(id, -1);
+    // cableAPI.addGroup(id)
+    // ICRender.getGroup("bt-wire").add(id, -1);
+    // ICRender.getGroup("fc-wire").add(id, -1);
+    ToolAPI.registerBlockMaterial(id, "stone");
+    Block.setDestroyTime(id, 3);
+    TileEntity.registerPrototype(id, Standart);
+    EnergyTileRegistry.addEnergyTypeForId(id, EU);
+    EnergyTileRegistry.addEnergyTypeForId(id, RF);
+    EnergyTileRegistry.addEnergyTypeForId(id, ft);
+    EnergyTileRegistry.addEnergyTypeForId(id, gj);
+  },
+  registerO2SJMachine: function (id, Standart) {
+    rfGroup.add(id, -1);
+    euGroup.add(id, -1);
+    ICRender.getGroup("bt-wire").add(id, -1);
+    ICRender.getGroup("fc-wire").add(id, -1);
+    cableAPI.addGroup(id);
+    AirCable.addGroup(id);
+    ToolAPI.registerBlockMaterial(id, "stone");
+    Block.setDestroyTime(id, 3);
+    TileEntity.registerPrototype(id, Standart);
+    EnergyTileRegistry.addEnergyTypeForId(id, EU);
+    EnergyTileRegistry.addEnergyTypeForId(id, RF);
+    EnergyTileRegistry.addEnergyTypeForId(id, ft);
+    EnergyTileRegistry.addEnergyTypeForId(id, gj);
+    EnergyTileRegistry.addEnergyTypeForId(id, ob);
+  },
+  addReceptForElectricCompressor: function (inp: any = {}, out: any = {}) {
+    compressorRecipe.push({
+      slot_2: inp.slot_2 || 0,
+      slot_3: inp.slot_3 || 0,
+      slot_4: inp.slot_4 || 0,
+      slot_5: inp.slot_5 || 0,
+      slot_6: inp.slot_6 || 0,
+      slot_7: inp.slot_7 || 0,
+      slot_8: inp.slot_8 || 0,
+      slot_9: inp.slot_9 || 0,
+      result: out.result || 0,
+    });
+  },
+ 
+  addCircuitRecept: function (inp: any = {}, out: any = {}) {
+    circuit.push({
+      slot_1: inp.slot_1 || 0,
+      slot_3: inp.fabricator_1 || 0,
+      slot_2: inp.fabricator_0 || 0,
+      slot_4: inp.slot_4 || 0,
+      slot_5: inp.slot_5 || 0,
+      result: out.result || 0,
+    });
+  },
+ 
+  addDefaultRocketRecipe: function (rock, out) {
+    rock = rock || {};
+    out = out || {};
+    rock.cone = rock.cone || 0;
+    rock.cover_1 = rock.cover_1 || 0;
+    rock.cover_2 = rock.cover_2 || 0;
+    rock.cover_3 = rock.cover_3 || 0;
+    rock.cover_4 = rock.cover_4 || 0;
+    rock.cover_5 = rock.cover_5 || 0;
+    rock.cover_6 = rock.cover_6 || 0;
+    rock.cover_7 = rock.cover_7 || 0;
+    rock.cover_8 = rock.cover_8 || 0;
+    rock.fin_1 = rock.fin_1 || 0;
+    rock.fin_2 = rock.fin_2 || 0;
+    rock.fin_3 = rock.fin_3 || 0;
+    rock.fin_4 = rock.fin_4 || 0;
+    rock.engine = rock.engine || 0;
+    rock.storage_1 = rock.storage_1 || 0;
+    rock.storage_2 = rock.storage_2 || 0;
+    rock.storage_3 = rock.storage_3 || 0;
+    out.rocket = out.rocket || 0;
+    rock1.push({
+      cone: rock.cone,
+      cover_1: rock.cover_1,
+      cover_2: rock.cover_2,
+      cover_3: rock.cover_3,
+      cover_4: rock.cover_4,
+      cover_5: rock.cover_5,
+      cover_6: rock.cover_6,
+      cover_7: rock.cover_7,
+      cover_8: rock.cover_8,
+      engine: rock.engine,
+      fin_1: rock.fin_1,
+      fin_2: rock.fin_2,
+      fin_3: rock.fin_3,
+      fin_4: rock.fin_4,
+      storage_1: rock.storage_1,
+      storage_2: rock.storage_2,
+      storage_3: rock.storage_3,
+      rocket: out.rocket,
+    });
+  }
+};
+
+SpacesMachine.addCoal(VanillaItemID.coal);
+SpacesMachine.addCoal(VanillaItemID.charcoal);
+
+SpacesMachine.addCoal(VanillaBlockID.coal_block);
+
+// IDRegistry.genBlockID("spaces_lent");
+// Block.createBlock(
+//   "spaces_lent",
+//   [
+//     {
+//       name: "Dangerous Lent",
+//       texture: [["Dangerous Lent", 0]],
+//       inCreative: true,
+//     },
+//   ],
+//   STONE
+// );
+// Translation.addTranslation("Dangerous Lent", {
+//   ru: "§6Аварийная лента",
+// });
+
+/*
+ $ - slot1
+ # - Scala
+ $
+ #######
+    */
+
+/*
+ $ - slot1
+ # - Scala
+ $
+ #######
+    */
+
+//SpacesMachine.addReceptForElectricCompressor(ItemID.ingot_steel_spacescraft, ItemID.compressed_steel)
+
+//SpacesMachine.addReceptForElectricCompressor(VanillaItemID.iron_ingot, ItemID.compressed_iron)

@@ -14917,6 +14917,10 @@ declare namespace Player {
      */
  function getLocal(): number;
     /**
+     * @серверный игрок
+     */
+ function getServer(): number;
+   /**
      * @deprecated No longer supported
      */
     function getNameForEnt(ent: number): string;

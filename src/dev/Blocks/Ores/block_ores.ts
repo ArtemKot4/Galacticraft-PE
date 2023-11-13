@@ -51,3 +51,4 @@ Block.createBlock("iron_steel_block",[{name: "Iron Steel Block", texture: [["Iro
 Translation.addTranslation("Iron Steel Block",{
 ru: "Железостальной блок"
 });
+
