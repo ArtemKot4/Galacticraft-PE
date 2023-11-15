@@ -9618,7 +9618,7 @@ declare namespace Dimensions {
         /**
          * Sets base biome for the current terrain, applicable only to "mono"
          */
-        biome?: number,
+        biome?: CustomBiome | number,
 
         /**
          * An array of terrain layers descriptions, each one representing its 

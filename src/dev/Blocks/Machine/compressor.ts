@@ -186,24 +186,24 @@ var CompressinG = new UI.StandartWindow({
   },
 });
 
-function status(container: ItemContainer, data?: TileEntityBase["data"]): void {
+function status(container: ItemContainer, data: TileEntityBase["data"]): void {
   if (data.progress && data.progress > 0)
     return container.setText(
       "Status",
       Translation.translate("Status: working")
     );
 
-   
- if (data.energy > 0) {
+  if (data.energy > 0) {
     return container.setText(
       "Status",
       Translation.translate("Status: have energy")
-    )}else{
-      return container.setText(
-        "Status",
-        Translation.translate("Status: don't have energy")
-      );
-    }
+    );
+  } else {
+    return container.setText(
+      "Status",
+      Translation.translate("Status: don't have energy")
+    );
+  }
 }
 
 class Compressor extends Machine {
@@ -217,7 +217,7 @@ class Compressor extends Machine {
   onTick(): void {
     this.container.sendChanges();
     this.container.validateAll();
-status(this.container);
+    status(this.container,this.data);
     let result = this.container.getSlot("slotResult");
     var coal = this.container.getSlot("CoalSlot");
     for (var i in burnItems) {
@@ -236,9 +236,33 @@ status(this.container);
       this.data.active = false;
       this.data.burning = 0;
     }
-  
+
     this.container.setScale("progressScale", this.data.progress / 500);
     this.container.setScale("BurningScale", this.data.energy / 500);
+
+    if (
+      this.data.energy >= 50 &&
+      RecipePool.getPool("compressor") ==
+        RecipePool.getSlots(this.container, 9) &&
+      this.data.progress < 500
+    ) {
+      this.data.progress++;
+    }
+    if (this.data.progress >= 500) {
+      this.data.progress = 0;
+      RecipePool.clearSlots(this.container, 9);
+      this.container.setSlot(
+        "slotResult",
+        RecipePool.getResult("compressor"),
+        result.count + 1,
+        0
+      );
+      this.data.energy -= 50;
+      alert("Крафт удался? ");
+    }
+    if (World.getThreadTime() % 100 == 0) {
+      Game.message(JSON.stringify(recipe));
+    }
   }
 }
 

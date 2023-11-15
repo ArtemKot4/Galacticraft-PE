@@ -5,6 +5,11 @@ Structure/block_types.ts
 Block/liquids.ts
 
 
+API/DungeonCore.ts
+API/MachineAPI.ts
+API/SpacesAPI.ts
+
+
 Items/thermal_armor.ts
 Items/entity_loot.ts
 Items/machine_parts.ts
@@ -19,7 +24,26 @@ Items/battery.ts
 Items/entity_loot.ts
 
 
-Structure/Classes/GCRecipe.ts
+Dimensions/Moon/Blocks/moon_blocks.ts
+Dimensions/Mars/Blocks/mars_blocks.ts
+Dimensions/Venus/Blocks/venus_blocks.ts
+Dimensions/Asteroids/Blocks/asteroid_blocks.ts
+
+
+Blocks/Ores/block_ores.ts
+Blocks/Ores/earth_ores.ts
+Blocks/Ores/moon_ores.ts
+Blocks/Ores/mars_ores.ts
+Blocks/Ores/asteroids_ores.ts
+Blocks/Ores/venus_ores.ts
+Blocks/Ores/block_ores.ts
+
+
+Structure/Interfaces/IPlanetModule.ts
+Structure/Interfaces/EnergyModule.ts
+
+
+Structure/Classes/RecipePool.ts
 Structure/Classes/Machine.ts
 Structure/Classes/InputMachine.ts
 Structure/Classes/Generator.ts
@@ -31,25 +55,23 @@ Structure/Classes/Canister.ts
 Structure/Classes/Ballone.ts
 Structure/Classes/Gear.ts
 Structure/Classes/ThermalArmor.ts
-
-Structure/Interfaces/IPlanetModule.ts
-
-
-
-API/DungeonCore.ts
-API/MachineAPI.ts
-API/SpacesAPI.ts
+Structure/Classes/IPlanet.ts
+Structure/Classes/IGravity.ts
+Structure/Classes/Skybox.ts
 
 
 
-Ores/ores.ts
-Blocks/Ores/block_ores.ts
-Blocks/Ores/earth_ores.ts
-Blocks/Ores/moon_ores.ts
-Blocks/Ores/mars_ores.ts
-Blocks/Ores/asteroids_ores.ts
-Blocks/Ores/venus_ores.ts
-Blocks/Ores/block_ores.ts
+
+
+
+
+Dimensions/SpaceStation/SpaceStation.ts
+Dimensions/Moon/Moon.ts
+Dimensions/Mars/Mars.ts
+Dimensions/Asteroids/Asteroids.ts
+Dimensions/Venus/Venus.ts
+
+
 
 Blocks/Machine/wires.ts
 
@@ -186,17 +208,6 @@ Blocks/Sun/SunLittle.ts
 
 
 
-Dimensions/SpaceStation/SpaceStation.ts
-Dimensions/Moon/Moon.ts
-Dimensions/Mars/Mars.ts
-Dimensions/Asteroids/Asteroids.ts
-Dimensions/Venus/Venus.ts
-
-Dimensions/Moon/Blocks/moon_blocks.ts
-Dimensions/Mars/Blocks/mars_blocks.ts
-Dimensions/Venus/Blocks/venus_blocks.ts
-Dimensions/Asteroids/Blocks/asteroid_blocks.ts
-
 
 
 integrations.ts
@@ -271,9 +282,9 @@ Dimensions/Skyboxes/spaces_station_skybox.ts
 Structure/Core/oxygen_working.ts
 Structure/Core/tick.ts
 Structure/Core/native_command.ts
-
+<!-- 
 Structure/Rocket/gui.ts
 Structure/Rocket/rocket_1.ts
-Structure/Rocket/callback.ts
+Structure/Rocket/callback.ts -->
 
 recipes.ts

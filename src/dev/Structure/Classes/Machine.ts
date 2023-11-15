@@ -1,13 +1,5 @@
-interface EnergyProperties {
-  getCapacity(): number;
-  canReceiveEnergy?(side, type): boolean;
-  canExtractEnergy?(side, type): boolean;
-  energyTick(type: string, src: EnergyTileNode): void;
-  energyReceive(type: string, amount: number, voltage: number): number;
-  setWrenchable(id): any;
-}
 
-abstract class Machine extends TileEntityBase implements EnergyProperties {
+abstract class Machine extends TileEntityBase implements EnergyModule {
   readonly window: UI.StandartWindow;
   constructor(window) {
     super();
