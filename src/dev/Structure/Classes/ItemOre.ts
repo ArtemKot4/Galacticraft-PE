@@ -7,7 +7,6 @@ class ItemOre extends GCItem {
   protected meta: int;
   protected isTech: boolean;
 
-
   constructor(id, stack?, meta?, isTech?) {
     super(id, stack, meta, isTech);
     this.id = id;

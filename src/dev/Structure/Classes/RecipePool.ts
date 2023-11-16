@@ -6,9 +6,9 @@ abstract class RecipePool {
   public static add(pool, input, output) {
     recipe.push({ [pool]: input, result: output });
   }
-  public static getPool(pool) {
+  public static getPool(pool,index) {
     for (var r in recipe) {
-      return recipe[r][pool];
+      return recipe[r][pool][index];
     }
   }
   public static getResult(pool){

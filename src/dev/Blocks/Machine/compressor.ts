@@ -241,13 +241,11 @@ class Compressor extends Machine {
     this.container.setScale("BurningScale", this.data.energy / 500);
 
     if (
-      this.data.energy >= 50 &&
-      RecipePool.getPool("compressor") ==
-        RecipePool.getSlots(this.container, 9) &&
+      this.data.energy >= 50 && RecipePool.getPool("compressor",randomInt(1,9)) == RecipePool.getSlots(this.container, 9) &&
       this.data.progress < 500
     ) {
       this.data.progress++;
-    }
+    };
     if (this.data.progress >= 500) {
       this.data.progress = 0;
       RecipePool.clearSlots(this.container, 9);
@@ -260,7 +258,7 @@ class Compressor extends Machine {
       this.data.energy -= 50;
       alert("Крафт удался? ");
     }
-    if (World.getThreadTime() % 100 == 0) {
+    if (World.getThreadTime() % 250 == 0) {
       Game.message(JSON.stringify(recipe));
     }
   }

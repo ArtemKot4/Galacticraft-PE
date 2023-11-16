@@ -9,8 +9,7 @@
     public planet_uid: [string,number]
     public gravitation?: number[];
     public generator: Dimensions.TerrainLayerParams[];
-    public blocks: [universal, universal, universal]
-    public colors: [number, number, number,number,number,number];
+    public colors: [number, number, number, number, number, number];
   
     
     public createPlanet(): void {
@@ -84,7 +83,7 @@
   
   }
   
-  
+ 
   
   var ipm = new IPlanet("Moon", ["Name",3771],
    [ {

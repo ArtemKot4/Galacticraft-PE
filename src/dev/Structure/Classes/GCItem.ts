@@ -9,11 +9,11 @@ class GCItem {
  protected texture: string;
  constructor(id,stack?,texture?,meta?,isTech?){
    
-    this.id = id || Debug.message("Don't can create prototype of class if you don't registery id!");
+    this.id = id;
     this.stack = stack || 64;
-    this.meta = meta || 0
+    this.meta = meta || 0;
     this.isTech = isTech || false;
-    this.texture = texture || this.id
+    this.texture = texture || this.id;
  }
  
  public create (): void {

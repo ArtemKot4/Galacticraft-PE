@@ -235,6 +235,7 @@ Blocks/Machine/basic_solar_panel.ts
 Blocks/Machine/advanced_solar_panel.ts
 Blocks/Machine/fuel_loader.ts
 Blocks/Machine/refinery.ts
+Blocks/Machine/methane_synthesizer.ts
 Blocks/Machine/block_machine.ts
 
 
