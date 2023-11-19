@@ -89,14 +89,14 @@ let ClearFuel = new UI.StandartWindow({
     },
   ],
   elements: {
-    canister1: {
+    canister_1: {
       type: "slot",
       x: 355,
       y: 120,
       size: 70,
       bitmap: "SPC.SPC_Canister",
     },
-    OilScall: {
+    oil_scale: {
       type: "scale",
       x: 268,
       y: 190,
@@ -110,7 +110,7 @@ let ClearFuel = new UI.StandartWindow({
       },
     },
 
-    FUELScall: {
+    fuel_scale: {
       type: "scale",
       x: 769,
       y: 190,
@@ -123,7 +123,7 @@ let ClearFuel = new UI.StandartWindow({
         },
       },
     },
-    canister2: {
+    canister_2: {
       type: "slot",
       x: 855,
       y: 120,
@@ -131,7 +131,7 @@ let ClearFuel = new UI.StandartWindow({
       bitmap: "SPC.SPC_Canister",
     },
 
-    ENERGYBar: {
+    energy_bar: {
       type: "scale",
       x: 500,
       y: 70,
@@ -139,7 +139,7 @@ let ClearFuel = new UI.StandartWindow({
       scale: 3,
       direction: 0,
     },
-    Energy: {
+    energy: {
       type: "scale",
       x: 640,
       y: 70,
@@ -176,75 +176,22 @@ class Refinery extends InputMachine {
     this.discharge("EnergySlot");
     this.container.sendChanges();
     this.container.validateAll();
-    var canister1 = this.container.getSlot("canister1");
-    var canister2 = this.container.getSlot("canister2");
 
-    this.container.setScale("Energy", this.data.energy / 500);
-    this.container.setScale("ENERGYBar", this.data.energy / 500);
-    this.container.setScale("OilScall", this.data.oil / 40);
-    this.container.setScale("FUELScall", this.data.fuel / 40);
+    this.container.setScale("energy", this.data.energy / 500);
+    this.container.setScale("energy_bar", this.data.energy / 500);
+    this.container.setScale("oil_scale", this.data.oil / 40);
+    this.container.setScale("fuel_scale", this.data.fuel / 40);
     this.container.setText(
       "ELECTRIC",
       "Gj :" + this.data.energy + " / " + this.data.energyMax
     );
     if (this.data.energy >= 50) {
-      if (canister1.id == ItemID.bucket_of_oil &&
-          this.data.fuel != 40 ||
-        canister1.id == ItemID.oil_canister &&
-          canister1.data == 6 &&
-          this.data.fuel != 40
-      ) {
-        if (canister1.id == ItemID.bucket_of_oil) {
-          this.container.setSlot("canister1", 325, 1, 0);
-        } else if (
-          canister1.id == ItemID.oil_canister &&
-          canister1.data == 6
-        ) {
-          this.container.setSlot(
-            "canister1",
-            ItemID.empty_liquid_canister,
-            1,
-            0
-          );
-        }
-
-        this.data.fuel += 5;
-        this.data.oil += 5;
-        this.data.energy -= 45;
-        Bucket.play();
-        if (this.data.fuel != 40) {
-          this.data.oil -= 5;
-        }
-
-        if (
-          this.data.fuel == 40 &&
-          this.container.getSlot("canister1").id == ItemID.bucket_of_oil
-        ) {
-          this.container.setSlot("canister1", 325, 1, 0);
-          this.data.oil += 0;
-        }
-      }
-
-      if (
-        canister2.id == ItemID.fuel_canister &&
-          canister2.data != 6 ||
-        canister2.id == ItemID.empty_liquid_canister
-      ) {
-        if (
-          World.getThreadTime() % 20 == 0 &&
-          this.data.fuel >= 1 &&
-          this.data.energy >= 15
-        ) {
-          this.container.setSlot(
-            "canister2",
-            ItemID.fuel_canister,
-            1,
-            canister2.data + 1
-          );
-          this.data.fuel -= 1;
-          this.data.energy -= 5;
-        }
-      }
+      Canister.input("canister_1","oil",this.data,this.container);
+      Canister.output("slot_2","fuel",this.container,this.data)
+      if(this.data.fuel < 40 && this.data.oil >= 5 ){
+        this.data.fuel +=5;
+        this.data.oil -=5;
+      };
     }
   }
 }
@@ -252,121 +199,5 @@ class Refinery extends InputMachine {
 SpacesMachine.registerStandartMachine(
   BlockID.refinery_sc,
   new Refinery(ClearFuel)
-  //      {
-  //     useNetworkItemContainer: true,
-  //     getScreenName() {
-  //         return "main";
-  //     },
-  //     getScreenByName() {
-  //         return ClearFuel
-  //     },
-  //     defaultValues: {
-  //         progress: 0,
-  //         progressMax: 0,
-  //         active: false,
-  //         energy: 0,
-  //         energyMax: 500,
-  //         fuel: 0,
-  //         oil: 0,
-  //     },
-  //     energyReceive: function(type, amount, voltage) {
-  //         amount = Math.min(amount, 450)
-  //         var add = Math.min(amount, this.getCapacity() - this.data.energy);
-  //         this.data.energy += add
-  //         return add
-  //     },
-  //     canReceiveEnergy: function(type, side) {
-  //         return true;
-  //     },
-  //     getCapacity: function() {
-  //         return 500
-  //     },
-  //     tick: function() {
-  //         this.container.sendChanges();
-  //         battery.add(this.container, this.data, "EnergySlot");
-  //         battery.addInfinite(this.container, this.data, "EnergySlot")
 
-  //         var canister2 = this.container.getSlot(
-  //             "canister2");
-
-  //         this.container.setScale("Energy", this.data.energy / 500);
-  //         this.container.setScale("ENERGYBar", this.data.energy / 500);
-  //         this.container.setScale("OilScall", this.data.oil / 40);
-  //         this.container.setScale("FUELScall", this.data.fuel / 40);
-  //         this.container.setText("ELECTRIC", "Gj :" + this.data.energy + " / " + this.data.energyMax);
-  //         if (this.data.energy >= 50) {
-
-  //             if (this.container.getSlot("canister1").id == ItemID.bucket_of_oil && this.data.fuel != 40 ||
-  //              this.container.getSlot("canister1").id == ItemID.oil_canister && this.container.getSlot("canister1").data == 6 && this.data.fuel != 40) {
-  //               if(this.container.getSlot("canister1").id == ItemID.bucket_of_oil){
-  //                 this.container.setSlot("canister1", 325, 1, 0);}else if(
-  //                     this.container.getSlot("canister1").id == ItemID.oil_canister &&
-  //                     this.container.getSlot("canister1").data == 6 && this.data.fuel != 40){
-  //                     this.container.setSlot("canister1", ItemID.empty_liquid_canister,1,0)
-  //                 }
-
-  //                 this.data.fuel += 5;
-  //                 this.data.oil += 5;
-  //                 this.data.energy -= 45;
-  //                 Bucket.play();
-  //                 if (this.data.fuel != 40) {
-  //                     this.data.oil -= 5;
-  //                 };
-
-  //                 if (this.data.fuel == 40 &&
-  //                     this.container.getSlot("canister1").id == ItemID.bucket_of_oil) {
-  //                     this.container.setSlot("canister1", 325, 1, 0); this.data.oil += 0
-  //                 }
-  //             }
-
-  //             if(
-  //             this.container.getSlot(
-  //                 "canister2").id ==
-  //             ItemID.fuel_canister &&
-  //             this.container.getSlot(
-  //                 "canister2").data != 6 || this.container.getSlot(
-  //                 "canister2").id ==
-  //             ItemID.empty_liquid_canister) {
-  //             if (
-  //                 World.getThreadTime()%20 == 0 &&
-  //                 this.data.fuel >=1 &&
-  //                 this.data.energy >= 15
-  //             ) {
-  //                 this.container.setSlot(
-  //                     "canister2",
-  //                     ItemID.fuel_canister,
-  //                     1,
-  //                     canister2.data+1);
-  //                 this.data.fuel -= 1;
-  //                 this.data.energy -= 3
-  //             }
-
-  //         }
-
-  //     }
-
-  // },
-  // energyTick: function(type, src) {
-
-  // let output = Math.min(450, this.data.energy)
-  // this.data.energy += src.add(output) - output;
-
-  // }, click: function(id, count, data, coords) {
-
-  // if (id == ItemID["Space wrench"]) {
-
-  // this.blockSource.setBlock(
-  // this.x,
-  // this.y,
-  // this.z,
-  // BlockID.refinery_sc, this.blockSource.getBlockData(
-  // this.x,
-  // this.y,
-  // this.z
-  // )+1);
-
-  // }
-
-  // }
-  // }
 );

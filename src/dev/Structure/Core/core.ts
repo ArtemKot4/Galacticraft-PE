@@ -4,7 +4,6 @@ IMPORT("StorageInterface");
 IMPORT("ItemAnimHelper");
 IMPORT("BlockEngine");
 IMPORT("SoundAPI");
-
 IMPORT("RenderUtil");
 
 /*
@@ -71,9 +70,11 @@ let ob = EnergyTypeRegistry.assureEnergyType("oxygenbar", 2);
 let EU = EnergyTypeRegistry.assureEnergyType("Eu", 1);
 
 let RF = EnergyTypeRegistry.assureEnergyType("RF", 0.25);
-let ft = EnergyTypeRegistry.assureEnergyType("FutureTock", 0.25);
-//Кислород
-var RV;
+let ft = EnergyTypeRegistry.assureEnergyType("FutureTock", 0.25)
+
+let RV;
+
+let canisters = []
 
 Callback.addCallback("LevelDisplayed", function () {
   Game.message(

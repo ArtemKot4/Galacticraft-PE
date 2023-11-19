@@ -1,8 +1,9 @@
 Structure/translations.ts
 Structure/Core/core.ts
+Structure/Core/machine_utils.ts
 Structure/particles.ts
 Structure/block_types.ts
-Block/liquids.ts
+Blocks/liquids.ts
 
 
 API/DungeonCore.ts
@@ -121,7 +122,7 @@ Canisters/fuel_canister.ts
 
 Canisters/canister_h2o.ts
 
-Canisters/canister_asot.ts
+Canisters/canisters.ts
 
 Canisters/oil_canister.ts
 

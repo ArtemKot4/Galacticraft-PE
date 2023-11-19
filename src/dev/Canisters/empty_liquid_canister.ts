@@ -7,12 +7,3 @@ Item.registerNameOverrideFunction("empty_liquid_canister", function(item, transl
     return Translation.translate("Empty Liquid Canister") + Translation.translate("\n§7Empty") 
 });
 Translation.addTranslation("\n§7Empty", {ru: "\n§7Пусто"});
-
-/*LiquidRegistry.registerItem("spacescraft_oil_still",empty: {data: 0, id: ItemID.empty_liquid_canister}, full: {data: 6, id: ItemID.oil_canister});
-
-LiquidRegistry.registerItem("spacescraft_rubber_still",empty: {data: 0, id: ItemID.empty_liquid_canister},full: {data: 6, id: ItemID.rubber_canister})
-
-LiquidRegistry.registerItem("spacescraft_fuel_still",empty: {data: 0, id: ItemID.empty_liquid_canister},full: {data: 6, id: ItemID.fuel_canister})
-
-LiquidRegistry.registerItem("spacescraft_cerosin_still",empty: {data: 0, id: ItemID.empty_liquid_canister},full: {data: 6, id: ItemID.cerosin_canister})
-*/
