@@ -185,14 +185,15 @@ class Refinery extends InputMachine {
       "ELECTRIC",
       "Gj :" + this.data.energy + " / " + this.data.energyMax
     );
+    
     if (this.data.energy >= 50) {
-      Canister.input("canister_1","oil",this.data,this.container);
-      Canister.output("slot_2","fuel",this.container,this.data)
+      Canister.input("canister_1","oil",this.container,this.data);
+      Canister.output("canister_2","fuel",this.container,this.data)
       if(this.data.fuel < 40 && this.data.oil >= 5 ){
         this.data.fuel +=5;
         this.data.oil -=5;
       };
-    }
+    };
   }
 }
 
