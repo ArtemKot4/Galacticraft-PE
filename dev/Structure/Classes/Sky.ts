@@ -16,7 +16,11 @@ class Sky {
     const players = Network.getConnectedPlayers();
     for (var i in players) {
       const skyMesh = new RenderMesh();
-      skyMesh.addVertex(16, 16, 16);
+      skyMesh.importFromFile(__dir__+"assets/models/sky","obj",{
+        scale: [10,10,10],
+        invertV: false,
+        noRebuild: false
+      })
       this.render.addPart("sky_" + this.dimension, "head", skyMesh);
       const skyBox = new AttachableRender(players[i])
         .setRenderer(this.render)

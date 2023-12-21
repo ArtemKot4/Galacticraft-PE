@@ -2,9 +2,9 @@
  * Класс, использующийся для регистрации планет
  */
 
-class IPlanet implements IPlanetModule {
+class IPlanet {
   public biome_uid: string;
-  public planet_uid: [string, number];
+  public planet_uid = [];
   public gravitation?: number[];
   public generator: Dimensions.TerrainLayerParams[];
   public stone: int;
