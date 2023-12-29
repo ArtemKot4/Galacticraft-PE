@@ -39,7 +39,7 @@
 		"Blocks/Ores/block_ores.ts",
 		"Structure/Interfaces/IPlanetModule.ts",
 		"Structure/Interfaces/EnergyModule.ts",
-		"Structure/Classes/RecipePool.ts",
+		"Structure/Classes/Factory.ts",
 		"Structure/Classes/Machine.ts",
 		"Structure/Classes/InputMachine.ts",
 		"Structure/Classes/Generator.ts",
@@ -54,6 +54,8 @@
 		"Structure/Classes/IGravity.ts",
 		"Structure/Classes/Sky.ts",
 		"Structure/Classes/IPlanet.ts",
+		"Structure/Classes/Gear.ts",
+		"Structure/Utils/OUI.ts",
 		"Dimensions/SpaceStation/SpaceStation.ts",
 		"Dimensions/Moon/Moon.ts",
 		"Dimensions/Mars/Mars.ts",
@@ -161,6 +163,7 @@
 		"Structure/Rocket/gui.ts",
 		"Structure/Rocket/rocket_1.ts",
 		"Structure/Rocket/callback.ts -->",
-		"recipes.ts"
+		"recipes.ts",
+		"Structure/Classes/Galacticraft.ts"
 	]
 }

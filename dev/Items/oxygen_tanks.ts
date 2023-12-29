@@ -9,6 +9,7 @@ oxygenStorage.set(ItemID.oxygen_canister_infinite, {storage: 500});
 
 Item.setGlint(ItemID.oxygen_canister_infinite, true);
 
-SpacesUtils.balloneRegistry("oxygentank_lightfull","Oxygen Tank Light Full","Oxygen Tank Light Full",900)
-SpacesUtils.balloneRegistry("oxygentank_heavyfull","Oxygen Tank Heavy Full","Oxygen Tank Heavy Full",2700)
-SpacesUtils.balloneRegistry("oxygentank_medfull","Oxygen Tank Med Full","Oxygen Tank Med Full",1800)
+
+// SpacesUtils.balloneRegistry("oxygentank_lightfull","Oxygen Tank Light Full","Oxygen Tank Light Full",900)
+// SpacesUtils.balloneRegistry("oxygentank_heavyfull","Oxygen Tank Heavy Full","Oxygen Tank Heavy Full",2700)
+// SpacesUtils.balloneRegistry("oxygentank_medfull","Oxygen Tank Med Full","Oxygen Tank Med Full",1800)

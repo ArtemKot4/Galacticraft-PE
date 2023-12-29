@@ -44,7 +44,7 @@ Structure/Interfaces/IPlanetModule.ts
 Structure/Interfaces/EnergyModule.ts
 
 
-Structure/Classes/RecipePool.ts
+Structure/Classes/Factory.ts
 Structure/Classes/Machine.ts
 Structure/Classes/InputMachine.ts
 Structure/Classes/Generator.ts
@@ -59,8 +59,8 @@ Structure/Classes/ThermalArmor.ts
 Structure/Classes/IGravity.ts
 Structure/Classes/Sky.ts
 Structure/Classes/IPlanet.ts
-
-
+Structure/Classes/Gear.ts
+Structure/Utils/OUI.ts
 
 
 
@@ -289,3 +289,4 @@ Structure/Rocket/rocket_1.ts
 Structure/Rocket/callback.ts -->
 
 recipes.ts
+Structure/Classes/Galacticraft.ts

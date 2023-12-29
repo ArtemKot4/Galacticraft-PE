@@ -21,6 +21,10 @@ class GCItem {
     Item.createItem(this.id, this.id[0].toUpperCase() + this.id.slice(1).replace(/_/g, " ").toString(), {name: this.texture, meta: this.meta}, {stack: this.stack,isTech: this.isTech});
     
  };
+ public description() {
+
+ };
+ 
  public get(id?): int {
    id = id || this.id
  return ItemID[id]
