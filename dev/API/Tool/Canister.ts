@@ -1,10 +1,17 @@
 class Canister {
   public id: string;
   public texture: string;
-  public static getTexture(canister): string {
-    return canister+"_canister_partial"
+
+  constructor(id) {
+
+    this.id = id + "_canister";
+    this.texture = id + "_canister_partial";
+   
+    this.createCanister();
   }
+
   public visual(): void {
+    Game.message("[DEBUG CANISTER] <-> visual function: output -> texture_name: " + this.texture + "\nid:" + this.id)
     Item.registerNameOverrideFunction(
       this.id,
       function (item, translation, name) {
@@ -56,7 +63,7 @@ class Canister {
   }
 
   public createCanister(): void {
-    new GCItem(this.id,1,this.texture,0,true).create();
+    new GItem(this.id,1,this.texture,0,true);
     Item.addToCreative(this.id, 1, 6);
     this.visual();
   }
@@ -77,17 +84,17 @@ class Canister {
       data[canister] != 40 &&
       Storage.get(container, slot, "data", 6)
     ) {
-      if (data.energy != undefined) data.energy -= 45;
+      if (data.energy) data.energy -= 45;
       return (
         Storage.set(slot, ItemID["empty_liquid_canister"], container, 1, 0),
         (data[canister] += 5)
       );
     } else if (
-      bucket == undefined &&
+      bucket &&
       data[canister] != 40 &&
       Storage.get(container, slot, "id", ItemID["bucket_of_" + canister])
     ) {
-      if (data.energy != undefined) data.energy -= 45;
+      if (data.energy) data.energy -= 45;
       return (
         Storage.set(slot, 325, container,1,0),
         (data[canister] += 5)
@@ -107,7 +114,7 @@ class Canister {
       (Storage.get(container, slot, "id", ItemID["empty_liquid_canister"]) ||
       Storage.get(container, slot, "id", Canister.get(canister)) 
       &&
-        container.getSlot(slot).data < 6 
+        container.getSlot(slot).data < 5
        )
     ) {
       return (
@@ -118,16 +125,10 @@ class Canister {
     }}
   }
 
-  constructor(id, stack?, texture?, meta?, isTech?) {
-
-    this.id = id + "_canister";
-    this.texture = texture + "_canister_partial";
-   
-    this.createCanister();
-  }
+  
 }
 
 new Canister("fuel");
 new Canister("oil");
 
-new GCItem("test_canister_blin",1,"oil_canister_partial",3)
+new GItem("test_item_blin",1,"oil_canister", "oil_canister_partial",3)

@@ -15,13 +15,13 @@ const damage = () => {
 }
 
 const OxygenTick = () => {
-  if (!O2UI.isOpened() && isOpen == false && component) {
+  if (!O2UI.isOpened() && isOpen == false && component()) {
     isOpen = true;
   }
   if (isOpen == true) {
     O2UI.openAs(OxygenTILE);
   }; 
-  if(!component && O2UI.isOpened()){
+  if(!component() && O2UI.isOpened()){
     O2UI.close(); 
     isOpen = false;
     return;

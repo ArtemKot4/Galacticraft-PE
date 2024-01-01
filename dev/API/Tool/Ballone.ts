@@ -1,7 +1,7 @@
 const bal_1 = Equi.getSlot("Ballone1");
 const bal_2 = Equi.getSlot("Ballone2");
 
-class Ballone extends GCItem {
+class Ballone extends GItem {
   public id: string;
   public storage: int;
   public static IDList: any[] = [];

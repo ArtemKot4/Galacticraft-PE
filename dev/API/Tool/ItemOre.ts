@@ -1,6 +1,6 @@
 type id = any
 //typeof BlockID[string] | number
-class ItemOre extends GCItem {
+class ItemOre extends GItem {
   item_list: [];
   public id: string;
   public stack: int;
@@ -14,13 +14,12 @@ class ItemOre extends GCItem {
   
   }
   public createOre(): any {
-   
-      new GCItem("ingot_" + this.id + "_sc").create();
-      new GCItem("compressed_" + this.id + "_sc").create();
+      new GItem("ingot_" + this.id + "_sc").create();
+      new GItem("compressed_" + this.id + "_sc").create();
       Recipes.addFurnace(
         BlockID["ore_" + this.id],
         0,
-        this.get("ingot_" + this.id + "_sc"),
+        ItemID["ingot_" + this.id + "_sc"],
         0
       );
    
