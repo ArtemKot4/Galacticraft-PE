@@ -22,6 +22,7 @@
 		"API/Tool/GBlock.ts",
 		"API/Tool/ItemOre.ts",
 		"API/Tool/Canister.ts",
+		"API/Atmosphere/oxygen_working.ts",
 		"API/Tool/Ballone.ts",
 		"API/Tool/Gear.ts",
 		"API/Tool/ThermalArmor.ts",
@@ -33,8 +34,9 @@
 		"API/Util/cable.ts",
 		"API/Util/functions.ts",
 		"API/Galacticraft.ts",
-		"API/Atmosphere/oxygen_working.ts",
+
 		"API/Tool/native_command.ts",
+		"Galacticraft/Items/food.ts",
 		"Galacticraft/Items/thermal_armor.ts",
 		"Galacticraft/Items/entity_loot.ts",
 		"Galacticraft/Items/machine_parts.ts",

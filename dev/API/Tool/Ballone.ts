@@ -1,5 +1,3 @@
-const bal_1 = Equi.getSlot("Ballone1");
-const bal_2 = Equi.getSlot("Ballone2");
 
 class Ballone extends GItem {
   public id: string;
@@ -16,12 +14,15 @@ class Ballone extends GItem {
     this.storage = storage;
     Ballone.IDList.push([ItemID[this.id], storage]);
   }
-  public static onTick() {
+  public static onTick(cont) {
+    const bal_1 = cont.getSlot("Ballone1");
+const bal_2 = cont.getSlot("Ballone2");
+
     if (!Equi.isOpened()) return;
     for (const i in Ballone.IDList) {
       const O = Ballone.IDList[i];
       if ((bal_1.id != O[0] || bal_2.id != O[0]) && checkDimension(20)) {
-        damage();
+        Oxygen.damage();
       }
       return (
         O2UI.setScale("O2TWO", Item.getMaxDamage(bal_1.id) / O[1]),

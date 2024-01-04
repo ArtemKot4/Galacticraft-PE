@@ -1,13 +1,11 @@
-class Galacticraft {
-  //public static readonly MODID = "galacticraft:";
-  public static onInitialize = () => {
-    Game.message(String(Ballone.IDList))
-  };
-  public static onTick = () => {
-    OxygenTick();
-  };
-
-}
+const Galacticraft = {
+  modid: "galacticraft",
+  onInitialize: () => {
+    Game.message(String(Ballone.IDList));
+    Updatable.addUpdatable(Oxygen);
+  },
+  onTick: () => {},
+};
 
 Callback.addCallback("LevelDisplayed", () => {
   Galacticraft.onInitialize();

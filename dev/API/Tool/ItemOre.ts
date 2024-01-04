@@ -14,8 +14,8 @@ class ItemOre extends GItem {
   
   }
   public createOre(): any {
-      new GItem("ingot_" + this.id + "_sc").create();
-      new GItem("compressed_" + this.id + "_sc").create();
+      new GItem("ingot_" + this.id + "_sc");
+      new GItem("compressed_" + this.id + "_sc");
       Recipes.addFurnace(
         BlockID["ore_" + this.id],
         0,

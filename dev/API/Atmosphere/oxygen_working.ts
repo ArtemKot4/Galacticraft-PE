@@ -1,43 +1,46 @@
-const slot = Equi.getSlot;
-let isOpen: boolean = false;
-
-const component = () => {
-  if (
-    slot("Glass").id == ItemID["oxygen_mask"] &&
-    slot("Module").id == ItemID["oxygen_gear"]
-  )
+const Oxygen = {
+  container: new UI.Container(),
+  component: () => {
+    const slot = Oxygen.container.getSlot;
+    if (
+      slot("Glass").id != ItemID["oxygen_mask"] &&
+      slot("Module").id != ItemID["oxygen_gear"]
+    ) {
+      return false;
+    }
     return true;
-};
-
-const damage = () => {
+  },
+  damage: () => {
     Entity.damageEntity(Player.get(), 2);
     Game.tipMessage(Translation.translate("§4Warning!Air is not"));
-}
-
-const OxygenTick = () => {
-  if (!O2UI.isOpened() && isOpen == false && component()) {
-    isOpen = true;
-  }
-  if (isOpen == true) {
-    O2UI.openAs(OxygenTILE);
-  }; 
-  if(!component() && O2UI.isOpened()){
-    O2UI.close(); 
-    isOpen = false;
-    return;
-  };
-  if(!O2UI.isOpened() && Game.getGameMode()==0) damage();
-  Ballone.onTick();
+  },
+  isOpen: false,
+  update: () => {
+    let op = Oxygen.isOpen;
+    if (!O2UI.isOpened() && op == false && Oxygen.component()) {
+      op = true;
+    }
+    if (op == true) {
+      O2UI.openAs(OxygenTILE);
+    }
+    if (!Oxygen.component() && O2UI.isOpened()) {
+      O2UI.close();
+      op = false;
+      return;
+    }
+    if (!O2UI.isOpened() && Game.getGameMode() == 0) Oxygen.damage();
+    Ballone.onTick(Oxygen.container);
+  },
 };
 
 Saver.addSavesScope(
   "Equi",
   function read(scope): void {
-    Equi = scope ? scope.SaveItems : UI.Container;
+    Oxygen.container = scope ? scope.SaveItems : UI.Container;
   },
   function save() {
     return {
-      SaveItems: Equi,
+      SaveItems: Oxygen.container,
     };
   }
 );

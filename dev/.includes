@@ -35,6 +35,7 @@ API/Atmosphere/oxygen_working.ts
 API/Tool/native_command.ts
 API/Galacticraft.ts
 
+Galacticraft/Items/food.ts
 Galacticraft/Items/thermal_armor.ts
 Galacticraft/Items/entity_loot.ts
 Galacticraft/Items/machine_parts.ts
