@@ -3,7 +3,7 @@ class Entity {
   constructor(id: string, biome: string) {
     this.id = "galacticraft:" + id;
   };
-  public onTickSpawn () {
-
+  public static onTickSpawn () {
+    
   }    
 }

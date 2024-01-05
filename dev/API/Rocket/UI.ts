@@ -4,42 +4,7 @@ var SPC_b3 = new UI.Container();
 var InterFace = new UI.Container();
 var rocket_storage = new UI.Container();
 
-let rocketFuel = new UI.StandartWindow({
-    standard: {
-      header: {
-        text: {
-          text: Translation.translate("Хранилище топлива"),
-        },
-      },
-      inventory: {
-        standard: true,
-      },
-      background: {
-        standard: true,
-      },
-    },
-    drawing: [
-      {
-        type: "bitmap",
-        x: 500,
-        y: 130,
-        bitmap: "RocketStorage1",
-        scale: 5.4,
-      },
-    ],
-    elements: {
-      fuelScale: {
-        type: "scale",
-        x: 500,
-        y: 130,
-        bitmap: "RocketStorage2",
-        scale: 5.4,
-        direction: 1,
-        
-      },
-    },
-  });
-  
+
   var rocketgui = new UI.Window({
     location: {
       x: 1000 / 2 - 80,
@@ -62,8 +27,8 @@ let rocketFuel = new UI.StandartWindow({
             SPC_b1.close();
             SPC_b2.close();
             SPC_b3.close();
-            let window = getWindow(BlockID.rocket_padding, rocketFuel);
-            rocket_storage.openAs(window);
+         //   let window = getWindow(BlockID.rocket_padding, rocketFuel);
+           // rocket_storage.openAs(window);
           },
         },
       },

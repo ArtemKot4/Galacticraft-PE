@@ -26,6 +26,8 @@ API/Tool/Entity.ts
 API/Atmosphere/IGravity.ts
 API/Atmosphere/Sky.ts
 API/Atmosphere/IPlanet.ts
+API/Rocket/Rocket.ts
+API/Rocket/UI.ts
 API/Util/OUI.ts
 
 API/Util/cable.ts

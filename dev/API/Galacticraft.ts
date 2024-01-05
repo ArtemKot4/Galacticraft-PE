@@ -4,7 +4,10 @@ const Galacticraft = {
     Game.message(String(Ballone.IDList));
     Updatable.addUpdatable(Oxygen);
   },
-  onTick: () => {},
+  onTick: () => {
+    Rocket.onTick();
+    Thermal.onTick();
+  },
 };
 
 Callback.addCallback("LevelDisplayed", () => {
@@ -13,4 +16,8 @@ Callback.addCallback("LevelDisplayed", () => {
 
 Callback.addCallback("LocalTick", () => {
   Galacticraft.onTick();
+});
+
+Callback.addCallback("EntityInteract", (entity) => {
+   Rocket.onInteract(entity);
 });

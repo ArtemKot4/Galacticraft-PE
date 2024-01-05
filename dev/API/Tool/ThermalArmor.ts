@@ -10,6 +10,9 @@ class Thermal {
   public static visual = () => {
     const mesh = new RenderMesh();
     const render = new ActorRenderer();
+  };
+  public static onTick() {
+    
   }
   public create = () => {
 
