@@ -34,7 +34,7 @@ ARMORGLASSES.setAsGameOverlay(true);  ARMORGLASSES.setTouchable(false);
 
 
 IDRegistry.genItemID("sensor_glasses");
-Item.createArmorItem("sensor_glasses", "Sensor glasses", {name: "Sensor glasses"}, {type: "helmet", armor: 2, durability: 150, texture: "armor/sensor_1.png"});
+Item.createArmorItem("sensor_glasses", "Sensor glasses", {name: "sensor_glasses"}, {type: "helmet", armor: 2, durability: 150, texture: "armor/sensor_1.png"});
 
 Translation.addTranslation("Sensor glasses", {
 ru: "§aСенсорные очки"

@@ -6,7 +6,7 @@ class GItem {
   protected meta: int;
   protected isTech: boolean;
   protected texture: string;
-  public name: string;
+  protected name: string;
   constructor(id, stack?, name?, texture?, meta?, isTech?) {
     this.id = id;
     this.stack = stack || 64;
@@ -21,7 +21,7 @@ class GItem {
     Item.setCategory(this.id, int)
    };
 
-  public create(): void {
+  private create(): void {
     IDRegistry.genItemID(this.id);
     Item.createItem(
       this.id,
@@ -31,14 +31,14 @@ class GItem {
     );
 
   }
-  protected description(text: string, translation: { any }): void {
-    Translation.addTranslation(text, translation);
+  public description(text: string, translation?: {  }): void {
+   translation && Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
       return name + Translation.translate(text);
     });
   }
 
-  protected info(text, translation): void {
+  public info(text, translation): void {
     Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
       if (Entity.getSneaking(Player.get())) {

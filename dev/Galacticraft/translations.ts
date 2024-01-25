@@ -2,6 +2,18 @@ Translation.addTranslation("\n§7Infinity⚡", {
   ru: "\n§7Бесконечность§6⚡",
 });
 
+Translation.addTranslation("Schematic Buggy", {
+  ru: "Чертёж багги",
+});
+
+Translation.addTranslation("Schematic Rocket 2 Lvl", {
+  ru: "Чертёж ракеты 2-го уровня",
+});
+
+Translation.addTranslation("Schematic Rocket 3lvl", {
+  ru: "Чертёж ракеты 3-го уровня",
+});
+
 Translation.addTranslation("Shield Controller", {
   ru: "Контроллер энергетического щита",
   zh: "能量屏蔽控制器",
@@ -333,28 +345,23 @@ Translation.addTranslation(
     ru: "\n§7Электроуровень 0 - не потребитель\nЭлектроуровень 1 - генератор(sJ)\nЭлектроуровень 2 - хранилище(sJ)\nЭлектроуровень 3 - потребитель(sJ)\nЭлектроуровень 4 - сборщик газа\nЭлектроуровень 5 - потребитель газа\nЭлектроуровень 6 - генератор(stJ)\nЭлектроуровень 7 - потребитель(stJ)",
   }
 );
-Translation.addTranslation(
-  "§6Modification Galacticraft has been downloaded!",
-  {
-    ru: "§6Мод Galacticraft был успешно загружен!",
-    zh: "§6Galacticraft mod已成功下载！",
-  }
-);
-
-Translation.addTranslation(
-  "For get list of commands write /gc:help",
-  {
-    ru: "Для получения списка команд,напишите §f/gc:help",
-  }
-);
-
-Translation.addTranslation("It can receive weak sound waves and distant signals", {
-  ru: "Может принимать слабые звуковые волны и отдалённые сигналы",
+Translation.addTranslation("§6Modification Galacticraft has been downloaded!", {
+  ru: "§6Мод Galacticraft был успешно загружен!",
+  zh: "§6Galacticraft mod已成功下载！",
 });
 
-Translation.addTranslation("The shield controller protects your armor from ALL types of damage - including atmospheric corrosion",{
-  ru: "Контроллер щита защищает вашу броню от ВСЕХ видов урона - в том числе от атмосферной коррозии"
+Translation.addTranslation("For get list of commands write /gc:help", {
+  ru: "Для получения списка команд,напишите §f/gc:help",
 });
+
+// Translation.addTranslation("It can receive weak sound waves and distant signals", {
+//   ru: "Может принимать слабые звуковые волны и отдалённые сигналы",
+// });
+
+// Translation.addTranslation("The shield controller protects your armor from ALL types of damage
+//- including atmospheric corrosion",{
+//   ru: "Контроллер щита защищает вашу броню от ВСЕХ видов урона - в том числе от атмосферной коррозии"
+// });
 
 Translation.addTranslation("§4Warning!Air is not", {
   ru: "§4Опасность!Нет кислорода",
@@ -624,21 +631,20 @@ Translation.addTranslation("Ore Tin Venus", {
   ru: "Венерианская оловянная руда",
 });
 
-
-
-
 Translation.addTranslation("Weather changed succesfully", {
   ru: "Погода успешно изменена",
 });
 
-Translation.addTranslation("Sorry,but you must be in Venus,for changed weather to rain", {
-  ru: "Извините,но вы должны находиться на Венере для изменения погоды",
-});
+Translation.addTranslation(
+  "Sorry,but you must be in Venus,for changed weather to rain",
+  {
+    ru: "Извините,но вы должны находиться на Венере для изменения погоды",
+  }
+);
 
 Translation.addTranslation("Sorry,but you can't use this command in the rain", {
   ru: "Извините,но вы не можете использовать эту команду во время дождя",
 });
-
 
 Translation.addTranslation("Game rule changed to true", {
   ru: "Игровое правило успешно изменено на true",
@@ -647,7 +653,6 @@ Translation.addTranslation("Game rule changed to true", {
 Translation.addTranslation("Game rule changed to false", {
   ru: "Игровое правило успешно изменено на false",
 });
-
 
 Translation.addTranslation("Thermal boots", {
   ru: "Теплоизолирующие ботинки",
@@ -664,4 +669,3 @@ Translation.addTranslation("Thermal chestplate", {
 Translation.addTranslation("Thermal helmet", {
   ru: "Теплоизолирующий шлем",
 });
-

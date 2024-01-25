@@ -1,63 +1,52 @@
 /**
- * Класс для регистрации рецептов;
- * new Factory({input: int, output: string | int})
+ * Класс для регистрации рецептов;  
+ * new Factory([result id], [input ids])
  */
 class Factory {
-  private recipe = [];
+  public recipe = [];
   public slots: { input: int; output: string };
   constructor(slots) {
     this.slots = slots;
   }
-  public setRecipe(obj: {}): void {
-    this.recipe.push(obj); //{result, slot_...}
+  public setRecipe(result, input): void {
+    this.recipe.push([result, input]);
   }
 
   public input(container: ItemContainer): boolean {
+    // [[[result], [input]]]
     for (var i in this.recipe) {
-      let recipe = this.recipe[i];
       for (var s = 1; s < this.slots.input; s++) {
-        if (recipe["slot_" + s] != container.getSlot("slot_" + i).id) {
-          return false;
+        if (this.recipe[i][1][s] != container.getSlot("slot_" + s).id) {
+          return;
         }
       }
     }
-    return true;
+    this.minus(container);
+    this.result(container);
   }
-  public output(container: ItemContainer, count: int) {
-    for (var i in this.recipe) {
-      let recipe = this.recipe[i];
-      for (let c = 1; c <= count; c++) {
-        if (recipe["result"] != container.getSlot("slot_" + c).id) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-  public minus(container: ItemContainer) {
-    for (var i in this.recipe) {
-      const recipe = this.recipe[i];
-      for (var s; s < this.slots.input; s++) {
-        const slot = container.getSlot("slot_" + s);
-        slot.count--;
-        container.setSlot(
-          "slot_" + s,
-          slot.id,
-          slot.count--,
-          slot.data,
-          slot.extra
-        );
-      }
+
+  private minus(container: ItemContainer) {
+    for (var s; s < this.slots.input; s++) {
+      const slot = container.getSlot("slot_" + s);
+      slot.count--;
+      container.setSlot(
+        "slot_" + s,
+        slot.id,
+        slot.count--,
+        slot.data,
+        slot.extra
+      );
+      slot.count--;
     }
   }
-  public result(container: ItemContainer) {
+  private result(container: ItemContainer) {
     for (var i in this.recipe) {
       const recipe = this.recipe[i];
       let result = container.getSlot(this.slots.output);
       if (result.count < 64) {
         container.setSlot(
           this.slots.output,
-          recipe.result,
+          recipe[0][0],
           result.count++,
           result.data,
           result.extra
@@ -67,16 +56,18 @@ class Factory {
   }
 }
 
-const compressor = new Factory({ input: 9, output: "result_slot" });
-compressor.setRecipe({
-  result: VanillaItemID.coal,
-  slot_1: VanillaItemID.arrow,
-  slot_2: VanillaItemID.arrow,
-  slot_3: VanillaItemID.arrow,
-  slot_4: VanillaItemID.arrow,
-  slot_5: VanillaItemID.arrow,
-  slot_6: VanillaItemID.arrow,
-  slot_7: VanillaItemID.arrow,
-  slot_8: VanillaItemID.arrow,
-  slot_9: VanillaItemID.arrow,
-});
+const compressorsj = new Factory({ input: 9, output: "result_slot" });
+compressorsj.setRecipe(
+  [VanillaItemID.coal], //result
+  [
+    VanillaItemID.arrow,
+    VanillaItemID.arrow,
+    VanillaItemID.arrow,
+    VanillaItemID.arrow,
+    VanillaItemID.arrow,
+    VanillaItemID.arrow,
+    VanillaItemID.arrow,
+    VanillaItemID.arrow,
+    VanillaItemID.arrow,
+  ]
+);
