@@ -1,13 +1,5 @@
-﻿var Solarmesh = new RenderMesh();
-Solarmesh.setBlockTexture("solar panel", 0);
-Solarmesh.importFromFile(__dir__ + "/resources/models/solar_panel.obj", "obj", {
-  translate: [0.5, 0, 0.5],
-  scale: [1.6, 1.6, 1.6],
-  invertV: false,
-  noRebuild: false,
-});
-IDRegistry.genBlockID("solar_panel_sc");
-Block.createBlockWithRotation("solar_panel_sc", [
+﻿
+new GBlock("solar_panel_sc", [
   {
     name: "Solar Panel",
     texture: [
@@ -20,67 +12,60 @@ Block.createBlockWithRotation("solar_panel_sc", [
     ],
     inCreative: false,
   },
-]);
-var Solarender = new ICRender.Model();
-Solarender.addEntry(new BlockRenderer.Model(Solarmesh));
-BlockRenderer.setStaticICRender(BlockID.solar_panel_sc, 0, Solarender);
+]).setupObjModel("solar panel", "solar_panel", [1.6, 1.6, 1.6]);
 
-IDRegistry.genBlockID("basic_solar_panel");
-Block.createBlockWithRotation(
-  "basic_solar_panel",
-  [
-    {
-      name: "Basic Solar Panel",
-      texture: [
-        ["machine", 0],
-        ["solar_basic", 0],
-        ["solar_basic", 1],
-        ["solar_basic", 1],
-        ["Machine Output", 0],
-        ["Machine Output", 0],
-      ],
-      inCreative: true,
-    },
-    {
-      name: "Solar Panel",
-      texture: [
-        ["machine", 0],
-        ["solar_basic", 0],
-        ["solar_basic", 1],
-        ["solar_basic", 1],
-        ["Machine Output", 0],
-        ["Machine Output", 0],
-      ],
-      inCreative: false,
-    },
-    {
-      name: "Solar Panel",
-      texture: [
-        ["machine", 0],
-        ["solar_basic", 0],
-        ["solar_basic", 1],
-        ["solar_basic", 1],
-        ["Machine Output", 0],
-        ["Machine Output", 0],
-      ],
-      inCreative: false,
-    },
-  ],
-  STONE
-);
+new GBlock("basic_solar_panel", [
+  {
+    name: "Basic Solar Panel",
+    texture: [
+      ["machine", 0],
+      ["solar_basic", 0],
+      ["solar_basic", 1],
+      ["solar_basic", 1],
+      ["Machine Output", 0],
+      ["Machine Output", 0],
+    ],
+    inCreative: true,
+  },
+  {
+    name: "Solar Panel",
+    texture: [
+      ["machine", 0],
+      ["solar_basic", 0],
+      ["solar_basic", 1],
+      ["solar_basic", 1],
+      ["Machine Output", 0],
+      ["Machine Output", 0],
+    ],
+    inCreative: false,
+  },
+  {
+    name: "Solar Panel",
+    texture: [
+      ["machine", 0],
+      ["solar_basic", 0],
+      ["solar_basic", 1],
+      ["solar_basic", 1],
+      ["Machine Output", 0],
+      ["Machine Output", 0],
+    ],
+    inCreative: false,
+  },
+],
+STONE).info("4 sJ/ s");
 
 Block.registerPlaceFunction(
   "basic_solar_panel",
   function (coords, item, block, player) {
-    var region = BlockSource.getDefaultForActor(player);
-    var spaces = coords.relative;
+    const region = BlockSource.getDefaultForActor(player);
+    const spaces = coords.relative;
 
-    region.setBlock(spaces.x, spaces.y, spaces.z, item.id, item.data);
+    region.setBlock(spaces.x, spaces.y, spaces.z, block.id, block.data);
     region.setBlock(
       spaces.x,
       spaces.y + 1,
       spaces.z,
-      BlockID.solar_panel_sc,
+      BlockID["solar_panel_sc"],
       0
     );
   }

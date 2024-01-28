@@ -63,14 +63,14 @@ const rfGroup = ICRender.getGroup("rf-wire");
 
 const euGroup = ICRender.getGroup("ic-wire");
 
-let gj = EnergyTypeRegistry.assureEnergyType("GalacticraftJoule", 2);
+const gj = EnergyTypeRegistry.assureEnergyType("GalacticraftJoule", 2);
 //Космическая энергия
-let ob = EnergyTypeRegistry.assureEnergyType("oxygenbar", 2);
+const ob = EnergyTypeRegistry.assureEnergyType("oxygenbar", 2);
 
-let EU = EnergyTypeRegistry.assureEnergyType("Eu", 1);
+const EU = EnergyTypeRegistry.assureEnergyType("Eu", 1);
 
-let RF = EnergyTypeRegistry.assureEnergyType("RF", 0.25);
-let ft = EnergyTypeRegistry.assureEnergyType("FutureTock", 0.25)
+const RF = EnergyTypeRegistry.assureEnergyType("RF", 0.25);
+const ft = EnergyTypeRegistry.assureEnergyType("FutureTock", 0.25)
 
 let RV;
 
@@ -84,7 +84,7 @@ Callback.addCallback("LevelDisplayed", function () {
   );
 });
 
-var ConfigManager = {
+const ConfigManager = {
   Equipment: {
     coords: __config__.getFloat("Equipment.coords"),
     twocoords: __config__.getFloat("Equipment.twocoords"),

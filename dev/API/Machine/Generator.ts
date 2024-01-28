@@ -1,13 +1,13 @@
 abstract class Generator extends Machine {
-  defaultValues = {
+  public override defaultValues = {
     energy: 0,
     energyMax: 0,
   };
-  canReceiveEnergy(): boolean {
+  public canReceiveEnergy(): boolean {
     return false;
   }
 
-  canExtractEnergy(): boolean {
+  public canExtractEnergy(): boolean {
     return true;
   }
 }

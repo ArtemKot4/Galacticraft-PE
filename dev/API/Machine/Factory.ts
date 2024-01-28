@@ -1,73 +1,62 @@
 /**
- * Класс для регистрации рецептов;  
- * new Factory([result id], [input ids])
+ * Класс для регистрации рецептов;
  */
+type count = int;
+
 class Factory {
-  public recipe = [];
-  public slots: { input: int; output: string };
-  constructor(slots) {
-    this.slots = slots;
+  /** 
+   * {...Factory: {recipes: {...slot_ -> index: values}}} 
+   */
+  public static factoriesList: {} = {}; 
+   /**
+    * {recipes: {result: int | {...result_ -> index : int},...slot_ -> index: values}}
+    */
+  public list: any = {}; 
+  protected readonly name: string;
+  public build(
+    description: {
+      machine: (typeof BlockID)[string];
+      slots: { input: count; output: count; recipes?: [] };
+    },
+    pushToAll?: boolean
+  ) {
+    const assign = ObjectAssign(this.list, description, { recipes: [] });
+    //  if(pushToAll) Factory.factoriesList[this.name] = assign;
   }
-  public setRecipe(result, input): void {
-    this.recipe.push([result, input]);
+  constructor(name = "unknown factory") {
+    this.name = name;
   }
-
-  public input(container: ItemContainer): boolean {
-    // [[[result], [input]]]
-    for (var i in this.recipe) {
-      for (var s = 1; s < this.slots.input; s++) {
-        if (this.recipe[i][1][s] != container.getSlot("slot_" + s).id) {
-          return;
-        }
-      }
-    }
-    this.minus(container);
-    this.result(container);
-  }
-
-  private minus(container: ItemContainer) {
-    for (var s; s < this.slots.input; s++) {
-      const slot = container.getSlot("slot_" + s);
-      slot.count--;
-      container.setSlot(
-        "slot_" + s,
-        slot.id,
-        slot.count--,
-        slot.data,
-        slot.extra
+  public set(...ids) {
+    const list = this.list;
+    if (ids.length > list.slots.input)
+      throw new Error(
+        "Invalid count of ids! Ids must include only slots count"
       );
-      slot.count--;
+
+    list.recipes[ids[0]] = {};
+    for (const i in ids) {
+      let slots = Number(i) == 0 ? "slots_" + 1 : "slots_" + i;
+      ObjectAssign(list.recipes[ids[0]], { result: ids[0], [slots]: ids[i] }); // result = number || Object -> includes {...result_ -> (index starts from 0): int}
     }
   }
-  private result(container: ItemContainer) {
-    for (var i in this.recipe) {
-      const recipe = this.recipe[i];
-      let result = container.getSlot(this.slots.output);
-      if (result.count < 64) {
-        container.setSlot(
-          this.slots.output,
-          recipe[0][0],
-          result.count++,
-          result.data,
-          result.extra
-        );
-      }
+  public getInput() {
+    // TODO: дописать реализацию
+  }
+  public getOutput(index?) {
+    //index need if result is object
+    const list = this.list.recipes;
+    let result;
+    for (const i in list) {
+      result =
+        (list instanceof Object) && (Object.keys(list).length > 1) ?
+         list[i]["result"]["result_" + index] :
+           list[i]["result"];
     }
+    return result;
   }
 }
+const CompressorFactory = new Factory("compressor").build({
+  machine: BlockID["compressor"],
+  slots: { input: 9, output: 1 },
+});
 
-const compressorsj = new Factory({ input: 9, output: "result_slot" });
-compressorsj.setRecipe(
-  [VanillaItemID.coal], //result
-  [
-    VanillaItemID.arrow,
-    VanillaItemID.arrow,
-    VanillaItemID.arrow,
-    VanillaItemID.arrow,
-    VanillaItemID.arrow,
-    VanillaItemID.arrow,
-    VanillaItemID.arrow,
-    VanillaItemID.arrow,
-    VanillaItemID.arrow,
-  ]
-);

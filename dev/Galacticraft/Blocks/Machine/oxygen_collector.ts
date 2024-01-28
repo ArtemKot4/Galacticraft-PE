@@ -63,16 +63,15 @@ Translation.addTranslation("Damaged Leave", {
 });
 
 Recipes.addFurnaceFuel(ItemID.damaged_leave, 0, 20)
-
-SpacesMachine.registerO2SJMachine(BlockID.collector_sc, {
-    useNetworkItemContainer: true,
+class Collector extends InputMachine {
+    useNetworkItemContainer: true;
     getScreenName() {
         return "main";
-    },
+    };
     getScreenByName() {
-        return Collector
-    },
-    defaultValues: {
+        return CollectorUI
+    };
+    defaultValues = {
         progress: 0,
         progressMax: 0,
         active: false,
@@ -82,19 +81,17 @@ SpacesMachine.registerO2SJMachine(BlockID.collector_sc, {
         energyMax: 1500,
         leaveS: 0,
         leavesMax: 1000,
-    },
-    isEnergySource: function () {
+    };
+    isEnergySource (): boolean {
         return true
-    },
-    canReceiveEnergy: function () {
-        return true
-    },
-    getCapacity: function () {
+    };
+    getCapacity () {
         return 1500
-    },
-    tick: function () {
+    };
+    onTick () {
+        //TODO: переписать
         this.container.sendChanges();
-        battery.add(this.container, this.data, "slot1");
+        //battery.add(this.container, this.data, "slot1");
         battery.addInfinite(this.container, this.data, "slot1")
         //ChargeItemRegistry.getEnergyFrom("slot1", "sj", 1500, 900, 1, false)
 
@@ -192,18 +189,18 @@ SpacesMachine.registerO2SJMachine(BlockID.collector_sc, {
                 }
             }
         }
-    },
-    canExtractEnergy: function () {
+    };
+    public override canExtractEnergy () {
         return true
-    },
-    energyReceive: function (type, amount, voltage) {
+    };
+    public energyReceive (type, amount, voltage) {
 
         amount = Math.min(amount, 1550)
         var add = Math.min(amount, this.getCapacity() - this.data.energy);
         this.data.energy += add
         return add
-    },
-    energyTick: function (type, src) {
+    };
+    energyTick (type, src) {
         if (this.dimension == 0) {
 
             src.addAll(1);
@@ -213,14 +210,15 @@ SpacesMachine.registerO2SJMachine(BlockID.collector_sc, {
         let output = Math.min(1500, this.data.energy)
         this.data.energy += src.add(output) - output;
 
-    }, 
-
+    }; 
     
-});
+}
+
+SpacesMachine.registerO2SJMachine(BlockID.collector_sc, new Collector("CollectorUI"));
 
 
 
-let Collector = new UI.StandartWindow({
+let CollectorUI = new UI.StandartWindow({
     standard: {
         header: {
             text: {

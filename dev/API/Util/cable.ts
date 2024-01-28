@@ -1,119 +1,8 @@
 type universal = string | number;
 
 
-var cableAPI = {
-  renderSet: function (idblock, siz): void {
-    var group = ICRender.getGroup("sj-wire");
-    var id = idblock;
-    var width = siz;
-    group.add(id, -1);
+const CableAPI = {
 
-    var boxes = [
-      {
-        side: [1, 0, 0],
-        box: [
-          0.5 + width / 2,
-          0.5 - width / 2,
-          0.5 - width / 2,
-          1,
-          0.5 + width / 2,
-          0.5 + width / 2,
-        ],
-      },
-      {
-        side: [-1, 0, 0],
-        box: [
-          0,
-          0.5 - width / 2,
-          0.5 - width / 2,
-          0.5 - width / 2,
-          0.5 + width / 2,
-          0.5 + width / 2,
-        ],
-      },
-      {
-        side: [0, 1, 0],
-        box: [
-          0.5 - width / 2,
-          0.5 + width / 2,
-          0.5 - width / 2,
-          0.5 + width / 2,
-          1,
-          0.5 + width / 2,
-        ],
-      },
-      {
-        side: [0, -1, 0],
-        box: [
-          0.5 - width / 2,
-          0,
-          0.5 - width / 2,
-          0.5 + width / 2,
-          0.5 - width / 2,
-          0.5 + width / 2,
-        ],
-      },
-      {
-        side: [0, 0, 1],
-        box: [
-          0.5 - width / 2,
-          0.5 - width / 2,
-          0.5 + width / 2,
-          0.5 + width / 2,
-          0.5 + width / 2,
-          1,
-        ],
-      },
-      {
-        side: [0, 0, -1],
-        box: [
-          0.5 - width / 2,
-          0.5 - width / 2,
-          0,
-          0.5 + width / 2,
-          0.5 + width / 2,
-          0.5 - width / 2,
-        ],
-      },
-    ];
-
-    var model = new ICRender.Model();
-
-    model.addEntry(
-      new BlockRenderer.Model(
-        0.5 - width / 2,
-        0.5 - width / 2,
-        0.5 - width / 2,
-        0.5 + width / 2,
-        0.5 + width / 2,
-        0.5 + width / 2,
-        id,
-        0
-      )
-    );
-
-    for (var i in boxes) {
-      var box = boxes[i].box;
-      var side = boxes[i].side;
-
-      model
-        .addEntry(
-          new BlockRenderer.Model(
-            box[0],
-            box[1],
-            box[2],
-            box[3],
-            box[4],
-            box[5],
-            id,
-            0
-          )
-        )
-        .setCondition(ICRender.BLOCK(side[0], side[1], side[2], group, false));
-    }
-
-    BlockRenderer.setStaticICRender(id, -1, model);
-  },
   addGroup: function (id) {
     var group = ICRender.getGroup("sj-wire");
     group.add(id, -1);
@@ -121,134 +10,22 @@ var cableAPI = {
  
 };
 
-var AirCable = {
-  set: function (idblock, siz) {
-    var group2 = ICRender.getGroup("sc-wire");
-    var id = idblock;
-    var width = siz;
-    group2.add(id, -1);
-
-    var boxes = [
-      {
-        side: [1, 0, 0],
-        box: [
-          0.5 + width / 2,
-          0.5 - width / 2,
-          0.5 - width / 2,
-          1,
-          0.5 + width / 2,
-          0.5 + width / 2,
-        ],
-      },
-      {
-        side: [-1, 0, 0],
-        box: [
-          0,
-          0.5 - width / 2,
-          0.5 - width / 2,
-          0.5 - width / 2,
-          0.5 + width / 2,
-          0.5 + width / 2,
-        ],
-      },
-      {
-        side: [0, 1, 0],
-        box: [
-          0.5 - width / 2,
-          0.5 + width / 2,
-          0.5 - width / 2,
-          0.5 + width / 2,
-          1,
-          0.5 + width / 2,
-        ],
-      },
-      {
-        side: [0, -1, 0],
-        box: [
-          0.5 - width / 2,
-          0,
-          0.5 - width / 2,
-          0.5 + width / 2,
-          0.5 - width / 2,
-          0.5 + width / 2,
-        ],
-      },
-      {
-        side: [0, 0, 1],
-        box: [
-          0.5 - width / 2,
-          0.5 - width / 2,
-          0.5 + width / 2,
-          0.5 + width / 2,
-          0.5 + width / 2,
-          1,
-        ],
-      },
-      {
-        side: [0, 0, -1],
-        box: [
-          0.5 - width / 2,
-          0.5 - width / 2,
-          0,
-          0.5 + width / 2,
-          0.5 + width / 2,
-          0.5 - width / 2,
-        ],
-      },
-    ];
-
-    var model = new ICRender.Model();
-
-    model.addEntry(
-      new BlockRenderer.Model(
-        0.5 - width / 2,
-        0.5 - width / 2,
-        0.5 - width / 2,
-        0.5 + width / 2,
-        0.5 + width / 2,
-        0.5 + width / 2,
-        id,
-        0
-      )
-    );
-
-    for (var i in boxes) {
-      var box = boxes[i].box;
-      var side = boxes[i].side;
-
-      model
-        .addEntry(
-          new BlockRenderer.Model(
-            box[0],
-            box[1],
-            box[2],
-            box[3],
-            box[4],
-            box[5],
-            id,
-            0
-          )
-        )
-        .setCondition(ICRender.BLOCK(side[0], side[1], side[2], group2, false));
-    }
-
-    BlockRenderer.setStaticICRender(id, -1, model);
-  },
+const AirCable = {
   addGroup: function (id) {
     var group2 = ICRender.getGroup("sc-wire");
     group2.add(id, -1);
   },
 };
 
-var leaves: any[] = [];
-var burnItems: any[] = [];
+const leaves: any[] = [];
+const burnItems: any[] = [];
 
-var compressorRecipe: any[] = [];
-var circuit: any[] = [];
-var rock1: any[] = [];
-var liquids: any[] = [];
+const compressorRecipe: any[] = [];
+const circuit: any[] = [];
+const rock1: any[] = [];
+const liquids: any[] = [];
 
-var Working = {
+const Working = {
   createStatus: function (scale: string, text: string): void {
     this.container.setText(scale, Translation.translate(text));
   },
@@ -291,7 +68,7 @@ var SpacesMachine = {
   registerStandartMachine: function (id, Standart) {
     // rfGroup.add(id, -1);
     // euGroup.add(id, -1);
-    // cableAPI.addGroup(id)
+    // CableAPI.addGroup(id)
     // ICRender.getGroup("bt-wire").add(id, -1);
     // ICRender.getGroup("fc-wire").add(id, -1);
     ToolAPI.registerBlockMaterial(id, "stone");
@@ -307,7 +84,7 @@ var SpacesMachine = {
     euGroup.add(id, -1);
     ICRender.getGroup("bt-wire").add(id, -1);
     ICRender.getGroup("fc-wire").add(id, -1);
-    cableAPI.addGroup(id);
+    CableAPI.addGroup(id);
     AirCable.addGroup(id);
     ToolAPI.registerBlockMaterial(id, "stone");
     Block.setDestroyTime(id, 3);

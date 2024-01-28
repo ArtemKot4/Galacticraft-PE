@@ -236,7 +236,7 @@ class Compressor extends Machine {
       this.data.burning = 0;
     };
     if(this.data.active) {
-      compressorsj.input(this.container);
+      //compressorsj.input(this.container);
     }
 
     this.container.setScale("progressScale", this.data.progress / 500);

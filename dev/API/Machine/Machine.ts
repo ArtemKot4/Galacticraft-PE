@@ -9,10 +9,10 @@ abstract class Machine extends TileEntityBase implements EnergyModule {
   public getScreenByName(): UI.StandartWindow {
     return this.window;
   }
-  defaultValues = {
+  public override defaultValues = {
     energy: 0,
   };
-  public useNetworkItemContainer: true;
+  public override useNetworkItemContainer: true;
   public getCapacity(): number {
     return this.data.energyMax;
   }

@@ -58,11 +58,11 @@ Saver.addSavesScope("Station",
 );
 
 */
-
-IDRegistry.genBlockID("spaces_station_block");
-Block.createBlock("spaces_station_block",[{name: "Spaces Station", texture: [["space_station_side", 0],["space_station_top",0],["space_station_side",0]], inCreative: true} ],STONE);
-
-SpacesUtils.addHint(BlockID.spaces_station_block,Translation.translate("Central block of space station"));
+new GBlock("spaces_station_block",[{name: "Spaces Station", texture: 
+[["space_station_side", 0],
+["space_station_top",0],
+["space_station_side",0]], inCreative: true} ]
+,STONE ).info("Central block of space station")
 
 Callback.addCallback('ItemUse', function (coords, item, block, is, player) {
     if (block.id == BlockID.spaces_station_block) {

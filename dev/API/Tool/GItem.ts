@@ -1,5 +1,5 @@
 type int = number;
-
+type information = Function | string;
 class GItem {
   protected id: string;
   protected stack: int;
@@ -13,7 +13,9 @@ class GItem {
     this.meta = meta || 0;
     this.isTech = isTech || false;
     this.texture = texture || id;
-    this.name = name || this.id[0].toUpperCase() + this.id.slice(1).replace(/_/g, " ").toString();
+    this.name = name || (this.id[0].toUpperCase() + 
+    this.id.slice(1).replace(/_/g,
+     " ").toString());
     this.create();
   }
   
@@ -31,26 +33,29 @@ class GItem {
     );
 
   }
-  public description(text: string, translation?: {  }): void {
-   translation && Translation.addTranslation(text, translation);
+  public description(text: information, translation?: {}): void {
+   if(translation && typeof text == "string") Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
-      return name + Translation.translate(text);
+      const validate = (typeof text !== "function") ? 
+      name + Translation.translate(text) : text(item, name); 
+      return validate;
     });
   }
 
-  public info(text, translation): void {
-    Translation.addTranslation(text, translation);
+  public info(text: information, translation?: {}): void {
+    if(translation && typeof text == "string") Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
-      if (Entity.getSneaking(Player.get())) {
-        return name + "\n§7" + Translation.translate(text);
-      }
-      if (!Entity.getSneaking(Player.getLocal())) {
+      const validate = (typeof text !== "function") ? 
+      name + Translation.translate(text) : text(item, name); 
+      if (Entity.getSneaking(Player.get())) 
+        return validate;
+      else
         return (
           name +
           "\n§7" +
           Translation.translate("Press SHIFT for view information")
         );
-      }
+      
     });
   }
 

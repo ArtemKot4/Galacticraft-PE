@@ -669,3 +669,22 @@ Translation.addTranslation("Thermal chestplate", {
 Translation.addTranslation("Thermal helmet", {
   ru: "Теплоизолирующий шлем",
 });
+
+Translation.addTranslation("battery", {
+  en: "Battery",
+ru: "Батарейка"
+});
+
+Translation.addTranslation("Infinite battery", {
+  en: "§6Infinite battery",
+ru: "§6Бесконечная батарейка"
+});
+
+Translation.addTranslation("Atomic battery", {
+  en: "§6Atomic battery",
+ru: "§6Атомная батарейка"
+});
+
+Translation.addTranslation("Infinity§6⚡\n§7Smaller energy generating", {
+  ru: "Бесконечность§6⚡\n§7Небольшая скорость подзарядки"
+});

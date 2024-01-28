@@ -33,9 +33,14 @@ ru: "Пемза"
 
 
 
+new GBlock("venus_spout", 
+[{name: "Venus Spout", 
+texture:
+   [["Venus Rock 0", 0],
+   ["spout",0],
+   ["Venus Rock 0",0]],
+ inCreative: true} ],STONE).info("Can be found on Venus, hot and scalding")
 
-IDRegistry.genBlockID("venus_spout");
-Block.createBlock("venus_spout",[{name: "Venus Spout", texture: [["Venus Rock 0", 0],["spout",0],["Venus Rock 0",0]], inCreative: true} ],STONE);
 Translation.addTranslation("Venus Spout",{
 ru: "§aВенерианский гейзер",
 en: "§aVenus Spout"

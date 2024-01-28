@@ -1,26 +1,26 @@
 abstract class InputMachine extends Machine {
-    canReceiveEnergy(type: number, side: string): boolean {
+   public canReceiveEnergy(type: number, side: string): boolean {
       return true;
     }
-    canExtractEnergy(): boolean {
+   public canExtractEnergy(): boolean {
       return false;
     }
-    getTier(): number {
+   public getTier(): number {
       return 1;
     }
-    click(id): any {
+   public click(id): any {
       this.setWrenchable(id);
     }
   
-    // charge (slot: string) {
-    //     this.data.energy -= ChargeItemRegistry.addEnergyToSlot(this.container.getSlot(slot), "spacejoule",
-    //     this.data.energy, this.getTier());
-    // };
-    discharge(slot: string) {
+    charge (slot: string) {
+        this.data.energy -= ChargeItemRegistry.addEnergyToSlot(this.container.getSlot(slot), "GalacticraftJoule",
+        this.data.energy, this.getTier());
+    };
+    public discharge(slot: string) {
       let amount = this.getCapacity() - this.data.energy;
       this.data.energy += ChargeItemRegistry.getEnergyFromSlot(
         this.container.getSlot(slot),
-        "spacejoule",
+        "GalacticraftJoule",
         amount,
         this.getTier()
       );

@@ -125,7 +125,7 @@ class EnergyStorage extends MachineStorage {
         //     }else{ this.data.energyMax = 2500000;
                 
         //     }};
-                    battery.add(this.container, this.data, "EnergySlot");
+                 //   battery.add(this.container, this.data, "EnergySlot");
                     battery.addInfinite(this.container, this.data, "EnergySlot")
                 
                 }

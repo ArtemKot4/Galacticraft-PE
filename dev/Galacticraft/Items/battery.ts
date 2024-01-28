@@ -1,33 +1,18 @@
 ﻿IMPORT("ChargeItem");
-﻿IDRegistry.genItemID("battery"); 
-Item.createItem("battery", "Battery", {name: "Battery", meta: 0}, {stack: 1, isTech:false});
-Translation.addTranslation("Battery", {
-ru: "Батарейка"
-});
-ChargeItemRegistry.registerItem(ItemID.battery, "sj", 500, 20, 1, true);
-ChargeItemRegistry.registerItem(ItemID.battery, "ft", 500, 20, 1, true);
 
-IDRegistry.genItemID("battery_infinity"); 
-Item.createItem("battery_infinity", "Battery Infinity", {name: "Oxygen Canistre Infinite", meta: 0}, {stack: 1, isTech:false});
-Translation.addTranslation("Battery Infinity", {
-ru: "§6Бесконечная батарейка"
-});
+const Battery = function(id: string, count: int | "infinite", strength?: int, 
+custom?: string): void {
+  const item = new GItem(id, 1).info(
+    (typeof count === "number") ? (item, name) => 
+     name + "\n" + "gJ: " + item.data + " / " + count : 
+     (item, name) => name + "\n§7" + (("Infinity" + "§6⚡") ?? custom),
+﻿);
+    (count == "infinite") ? battery.setInfinite(ItemID[id], strength || 0) : 
+ ChargeItemRegistry.registerItem(ItemID[id], "GalacticraftJoule",
+  count, 20, 1, true);
+      return item;
+ };
 
-IDRegistry.genItemID("atomic_battery"); 
-Item.createItem("atomic_battery", "Atomic battery", {name: "atomic_battery", meta: 0}, {stack: 1, isTech:false});
-Translation.addTranslation("Atomic battery", {
-ru: "§6Атомная батарейка"
-});
-
-battery.setInfinite(ItemID.battery_infinity,0)
-
-battery.setInfinite(ItemID.atomic_battery,25)
-
-Item.setGlint(ItemID.battery_infinity, true);
-
-Item.registerNameOverrideFunction(ItemID.atomic_battery, function(item, name){
-    return name + Translation.translate("\n§7Infinity§6⚡\n§7Smaller energy generating")
-});
-Translation.addTranslation("\n§7Infinity§6⚡\n§7Smaller energy generating", {
-    ru: "\n§7Бесконечность§6⚡\n§7Небольшая скорость подзарядки"
-});
+ Battery("battery", 500)
+ Battery("infinite_battery", "infinite");
+ Battery("atomic_battery", "infinite", 25, "Infinity§6⚡\n§7Smaller energy generating")

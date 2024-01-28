@@ -40,44 +40,44 @@ ru: "Герметичный lv кабель §6(IC2)"
 EU.registerWire(BlockID.enclosed_lv_cable, 2048);
 
 
-cableAPI.addGroup(BlockID.semifluidGenerator);
-cableAPI.addGroup(BlockID.solarPanel);
-cableAPI.addGroup(BlockID.primalGenerator);
-cableAPI.addGroup(BlockID.electricHeatGenerator);
+CableAPI.addGroup(BlockID.semifluidGenerator);
+CableAPI.addGroup(BlockID.solarPanel);
+CableAPI.addGroup(BlockID.primalGenerator);
+CableAPI.addGroup(BlockID.electricHeatGenerator);
 
-cableAPI.addGroup(BlockID.fluidHeatGenerator);
-cableAPI.addGroup(BlockID.enclosed_aluminum_wire);
-cableAPI.addGroup(BlockID.rtHeatGenerator);
-cableAPI.addGroup(BlockID.solidHeatGenerator -1);
+CableAPI.addGroup(BlockID.fluidHeatGenerator);
+CableAPI.addGroup(BlockID.enclosed_aluminum_wire);
+CableAPI.addGroup(BlockID.rtHeatGenerator);
+CableAPI.addGroup(BlockID.solidHeatGenerator -1);
 
-cableAPI.addGroup(BlockID.recycler);
-cableAPI.addGroup(BlockID.metalFormer);
-cableAPI.addGroup(BlockID.oreWasher);
-cableAPI.addGroup(BlockID.thermalCentrifuge);
-cableAPI.addGroup(BlockID.blastFurnace);
-cableAPI.addGroup(BlockID.icFermenter);
-cableAPI.addGroup(BlockID.massFabricator);
-cableAPI.addGroup(BlockID.stirlingGenerator);
+CableAPI.addGroup(BlockID.recycler);
+CableAPI.addGroup(BlockID.metalFormer);
+CableAPI.addGroup(BlockID.oreWasher);
+CableAPI.addGroup(BlockID.thermalCentrifuge);
+CableAPI.addGroup(BlockID.blastFurnace);
+CableAPI.addGroup(BlockID.icFermenter);
+CableAPI.addGroup(BlockID.massFabricator);
+CableAPI.addGroup(BlockID.stirlingGenerator);
 
-cableAPI.addGroup(BlockID.ironFurnace);
-cableAPI.addGroup(BlockID.nuclearReactor);
-cableAPI.addGroup(BlockID.reactorChamber);
-cableAPI.addGroup(BlockID.storageBatBox);
+CableAPI.addGroup(BlockID.ironFurnace);
+CableAPI.addGroup(BlockID.nuclearReactor);
+CableAPI.addGroup(BlockID.reactorChamber);
+CableAPI.addGroup(BlockID.storageBatBox);
 
-cableAPI.addGroup(BlockID.storageCESU);
-cableAPI.addGroup(BlockID.storageMFE);
-cableAPI.addGroup(BlockID.storageMFSU);
-cableAPI.addGroup(BlockID.transformerLV);
-cableAPI.addGroup(BlockID.transformerHV);
-cableAPI.addGroup(BlockID.transformerEV);
+CableAPI.addGroup(BlockID.storageCESU);
+CableAPI.addGroup(BlockID.storageMFE);
+CableAPI.addGroup(BlockID.storageMFSU);
+CableAPI.addGroup(BlockID.transformerLV);
+CableAPI.addGroup(BlockID.transformerHV);
+CableAPI.addGroup(BlockID.transformerEV);
 
-cableAPI.addGroup(BlockID.electricFurnace);
-cableAPI.addGroup(BlockID.inductionFurnace);
-cableAPI.addGroup(BlockID.macerator);
-cableAPI.addGroup(BlockID.compressor);
-cableAPI.addGroup(BlockID.extractor);
-cableAPI.addGroup(BlockID.solidCanner);
-cableAPI.addGroup(BlockID.canner);
+CableAPI.addGroup(BlockID.electricFurnace);
+CableAPI.addGroup(BlockID.inductionFurnace);
+CableAPI.addGroup(BlockID.macerator);
+CableAPI.addGroup(BlockID.compressor);
+CableAPI.addGroup(BlockID.extractor);
+CableAPI.addGroup(BlockID.solidCanner);
+CableAPI.addGroup(BlockID.canner);
 
     EnergyTileRegistry.addEnergyTypeForId(BlockID.semifluidGenerator, gj);
         EnergyTileRegistry.addEnergyTypeForId(BlockID.solarPanel, gj);
@@ -110,7 +110,7 @@ cableAPI.addGroup(BlockID.canner);
             EnergyTileRegistry.addEnergyTypeForId(BlockID.canner, gj);
             EnergyTileRegistry.addEnergyTypeForId(BlockID.solidCanner, gj);
         
-   cableAPI.addGroup(BlockID.pump);
+   CableAPI.addGroup(BlockID.pump);
 ;
   
 Callback.addCallback("LevelCreated", function() {

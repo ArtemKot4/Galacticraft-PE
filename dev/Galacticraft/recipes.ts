@@ -1,33 +1,10 @@
-cableAPI.addGroup(BlockID.enclosed_aluminum_wire);
-cableAPI.addGroup(BlockID.enclosed_heavy_aluminum_wire);
+CableAPI.addGroup(BlockID.enclosed_aluminum_wire);
+CableAPI.addGroup(BlockID.enclosed_heavy_aluminum_wire);
 AirCable.addGroup(BlockID.enclosed_fluid_pipe);
 
 SpacesMachine.addCollectorLeaves({leaf: VanillaBlockID.leaves});
 SpacesMachine.addCollectorLeaves({leaf: VanillaBlockID.leaves2});
 //SpacesMachine.addCollectorLeaves({leaf: VanillaBlockID.vic_a2_tantros_leaves});
-
-
-
-
-
-battery.set(ItemID.battery, {storage: 500});
-
-if(__config__.getBool("Gameplay.ShiftHints")){
-
-SpacesUtils.addDescription(BlockID.coal_generator, "4 sJ/ s");
-SpacesUtils.addDescription(BlockID.basic_solar_panel, "4 sJ/ s");
-SpacesUtils.addDescription(BlockID.coal_generator, "10 sJ/ t");
-
-
-
-SpacesUtils.addHint(BlockID.rocket_padding, "Place blocks 3x3\nfor create rocket padding")
-
-
-
-SpacesUtils.addHint(BlockID.venus_spout, "Can be found on Venus, hot and scalding")
-
-
-}
 
 
 Callback.addCallback("LevelCreated", function() {

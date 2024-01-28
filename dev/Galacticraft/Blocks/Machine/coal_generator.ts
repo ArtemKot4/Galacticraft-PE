@@ -1,11 +1,10 @@
-IDRegistry.genBlockID("coal_generator");
-Block.createBlockWithRotation("coal_generator", [{
+new GBlock("coal_generator", [{
     name: "Coal Generator", texture: [["Machine", 0], ["Machine", 0], ["Machine", 0], ["Coal Generator", 0], ["Machine Output", 0], ["Machine Output", 0]], inCreative: true
 }, {
     name: "Coal Generator", texture: [["Machine", 0], ["Machine", 0], ["Machine", 0], ["Coal Generator", 0], ["Machine Output", 0], ["Machine Output", 0]], inCreative: false
 }, {
     name: "Coal Generator", texture: [["Machine", 0], ["Machine", 0], ["Machine", 0], ["Coal Generator", 0], ["Machine Output", 0], ["Machine Output", 0]], inCreative: false
-}], STONE);
+}], STONE).info("4 sJ/ s");
 
 
 // if(__config__.getBool("Difficulty.Machine.Heating")==true){

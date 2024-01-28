@@ -12,10 +12,10 @@ class IPlanet {
   public description: { sky: Sky; gravity: IGravity };
 
   public createPlanet(): void {
-    var planet_biome = new CustomBiome(this.biome_uid).setSkyColor(
+    const planet_biome = new CustomBiome(this.biome_uid).setSkyColor(
       android.graphics.Color.rgb(this.colors[0], this.colors[1], this.colors[2])
     );
-    var planet = new Dimensions.CustomDimension(
+    const planet = new Dimensions.CustomDimension(
       this.planet_uid[0],
       this.planet_uid[1]
     ).setFogColor(this.colors[3], this.colors[4], this.colors[5]);
@@ -53,8 +53,8 @@ class IPlanet {
     ore: int,
     obj: { height: [int, int]; veinCounts: int; count: [int, int],stone?: int }
   ): void {
-   if(!obj.stone && this.stone) obj.stone = this.stone, Game.message("[DebugGC]: obj.stone = " + obj.stone)
-   Game.message("obj.stone: " + obj.stone + "\n"+ "this.stone: " + this.stone)
+   if(obj){
+   obj.stone = obj.stone || this.stone;
     Callback.addCallback(
       "GenerateCustomDimensionChunk",
       function (chunkX, chunkZ, random, dimensionId) {
@@ -77,6 +77,7 @@ class IPlanet {
       }
     );
   }
+}
   public getSkyColors(): number[] {
     return this.colors;
   }

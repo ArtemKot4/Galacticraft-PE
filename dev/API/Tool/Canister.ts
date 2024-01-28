@@ -7,7 +7,8 @@ class Canister {
     this.id = id + "_canister";
     this.texture = id + "_canister_partial";
    
-    this.createCanister();
+    this.create();
+    this.visual();
   }
 
   public visual(): void {
@@ -22,48 +23,14 @@ class Canister {
     );
 
     Item.registerIconOverrideFunction(this.id, function (item, data) {
-      switch (item.data) {
-        case 6:
-          return {
-            name: this.texture,
-            meta: 6,
-          };
-        case 5:
-          return {
-            name: this.texture,
-            meta: 5,
-          };
-        case 4:
-          return {
-            name: this.texture,
-            meta: 4,
-          };
-        case 3:
-          return {
-            name: this.texture,
-            meta: 3,
-          };
-        case 2:
-          return {
-            name: this.texture,
-            meta: 2,
-          };
-        case 1:
-          return {
-            name: this.texture,
-            meta: 1,
-          };
-        case 0:
-          return {
-            name: "empty_liquid_canister",
-            meta: 0,
-          };
-      }
-    });
-  }
-
-  public createCanister(): void {
-    new GItem(this.id,1,this.texture,0,true);
+       return {
+         name: this.data == 0 ? "empty_liquid_canister" : this.texture,
+         meta: this.data == 0 ? 0 : this.data
+       };
+  });
+};
+  public create(): void {
+    new GItem(this.id,1,this.texture,0,0);
     Item.addToCreative(this.id, 1, 6);
     this.visual();
   }
