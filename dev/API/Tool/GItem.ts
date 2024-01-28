@@ -37,7 +37,7 @@ class GItem {
    if(translation && typeof text == "string") Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
       const validate = (typeof text !== "function") ? 
-      name + Translation.translate(text) : text(item, name); 
+      name + "\n§7" + Translation.translate(text) : text(item, name); 
       return validate;
     });
   }
@@ -46,7 +46,7 @@ class GItem {
     if(translation && typeof text == "string") Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
       const validate = (typeof text !== "function") ? 
-      name + Translation.translate(text) : text(item, name); 
+      name + "\n§7" + Translation.translate(text) : text(item, name); 
       if (Entity.getSneaking(Player.get())) 
         return validate;
       else

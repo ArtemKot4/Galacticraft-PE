@@ -114,4 +114,4 @@ class Rocket {
 }
 }
 
-new Rocket("rocket_1", "rocket_padding", 500);
+//new Rocket("rocket_1", "rocket_padding", 500);

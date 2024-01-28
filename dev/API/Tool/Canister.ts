@@ -12,22 +12,25 @@ class Canister {
   }
 
   public visual(): void {
-    Game.message("[DEBUG CANISTER] <-> visual function: output -> texture_name: " + this.texture + "\nid:" + this.id)
+    Game.message("[DEBUG CANISTER] <-> visual function: output -> texture_name: " + 
+     this.texture + "\nid:" + this.id) //TODO: Debug
+     const texture = this.texture;
+    Item.registerIconOverrideFunction(this.id, function (item, data) {
+      return {
+        name: item.data == 0 ? "empty_liquid_canister" : texture,
+        meta: item.data
+      }
+    }),
+
+
     Item.registerNameOverrideFunction(
       this.id,
       function (item, translation, name) {
         return (
-          Translation.translate(name) + "\n§7" + item.data + "0 mB / " + "60 mB"
+          Translation.translate(name) + "\n§7" + (item.data == 0 ? item.data : item.data + "0") + " mB / " + "60 mB"
         );
       }
     );
-
-    Item.registerIconOverrideFunction(this.id, function (item, data) {
-       return {
-         name: this.data == 0 ? "empty_liquid_canister" : this.texture,
-         meta: this.data == 0 ? 0 : this.data
-       };
-  });
 };
   public create(): void {
     new GItem(this.id,1,this.texture,0,0);

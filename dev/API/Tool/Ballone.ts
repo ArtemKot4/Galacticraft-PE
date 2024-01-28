@@ -9,8 +9,8 @@ class Ballone extends GItem {
 
     storage: int
   ) {
-    const strid = "oxygentank_" + id + "_full";
-    super(strid, 1, strid, 0, false);
+    const strid = "oxygentank_" + id + "full";
+    super(strid, 1, strid, strid,0, false);
     this.storage = storage;
     Ballone.IDList.push([ItemID[this.id], storage]);
   }
