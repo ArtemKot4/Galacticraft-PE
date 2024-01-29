@@ -48,35 +48,44 @@ class IPlanet {
   public getGenerator() {
     return this.generator;
   }
-
-  public setOre(
-    ore: int,
-    obj: { height: [int, int]; veinCounts: int; count: [int, int],stone?: int }
-  ): void {
-   if(obj){
-   obj.stone = obj.stone || this.stone;
-    Callback.addCallback(
+  public static oreParams = [];
+      
+  public static oreGeneration(): void {
+       if (this.planet_uid[1] && (dimensionId != this.planet_uid[1])) return;
+      Callback.addCallback(
       "GenerateCustomDimensionChunk",
       function (chunkX, chunkZ, random, dimensionId) {
-        if (this.planet_uid[1] && (dimensionId != this.planet_uid[1])) return
+      for(const i in IPlanet.oreParams){
+       const params = IPlanet.oreParams[i];
+       const obj = params.obj;
         UniqueGen.generateOreInDimension(
-          ore,
+          params.ore,
           0,
           chunkX,
           chunkZ,
           random,
           {
-            veinCounts: obj.veinCounts, 
+            veinCounts: params.obj.veinCounts, 
             minY: obj.height[0],
             maxY: obj.height[1],
             size: randomInt(obj.count[0], obj.count[1]),
             mode: true,
-            check: [this.stone],
-          }
-        );
+            check: [obj?.stone || this.stone,
+          })
+             }
       }
     );
-  }
+  };
+  
+  public setOre(
+    ore: int,
+    obj: { height: [int, int]; veinCounts: int; count: [int, int],stone?: int }
+  ): void {
+   if(!obj) return;
+   obj.stone = obj.stone || this.stone;
+    
+       
+        IPlanet.oreParams.push({ore: ore, obj: obj});
 }
   public getSkyColors(): number[] {
     return this.colors;
