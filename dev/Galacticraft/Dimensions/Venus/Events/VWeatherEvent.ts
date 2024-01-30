@@ -1,16 +1,3 @@
-//набор переменных для дождя
-
-let weather_rain:boolean = false;   //значение работы дождя
-let timer_weather:number = 0;       //секундный таймер дождя
-let timer_weather_start:number = 0; //минутный таймер дождя
-
-//набор погодных правил
-
-let weather_rule = {
-  rain: true,
-  lightning_bolt: true,
-  meteorite_fall: true,
-}
 //пакет для частиц
 
 Network.addClientPacket("gc:particle", function (packetData: any) {
@@ -60,9 +47,6 @@ function startRain(coords): void {
     particle(rain_venus,coords.x+n,coords.y+5,coords.z+randomInt(-16,16),0.05,-0.1);
     particle(rain_venus,coords.x + randomInt(-16,16),coords.y+5,coords.z+n,0.05,-0.1);
     
-   
- 
-    
     }
    
       }
@@ -70,67 +54,46 @@ function startRain(coords): void {
       
   
   
-//работа дождя в локальном тике
-
-  Callback.addCallback("LocalTick", (container) => {
-    var pos = Player.getPosition();
-    if (Player.getDimension() == 2008) {
-      if (
-        World.getThreadTime() % 8 == 0 &&
-        weather_rain == true &&
-        timer_weather <= 60
-      ) { //спаун частиц
-         Game.message("Particles must be start falling")
-        startRain(pos);
-      }
-      if (World.getThreadTime() % 20 == 0) {
-        if (timer_weather <= 60 && weather_rain == true) {
-        
-          timer_weather++;
-        }
-        if (timer_weather >= 60) { 
-          weather_rain = false;
-          timer_weather_start = 0;
-          timer_weather = 0;
-          
-        }
-        if (timer_weather_start >= 15 && weather_rain == false) {
-          weather_rain = true;
-          timer_weather_start = 0;
-         
-        }
-      }
-  
-      if (World.getThreadTime() % 1200 == 0) {
-        if (weather_rain == false&&weather_rule.rain==true) { 
-          timer_weather_start++;
-          Game.message("" + timer_weather_start + " / 15 до дождя");
-        }
-        Entity.spawn(pos.x + randomInt(-20, -5), pos.y, pos.z, 93); 
-        Entity.spawn(pos.x, pos.y, pos.z + randomInt(20, 5), 93);
-      }
-    }
-  });
-  
 class VWeatherEvent extends DimensionEvent {
     public override dimension = 2008;
-    public override params = {
-        active: false,
-        minute_timer: 0,
-        timer_max: 20
-    }
-  public override onTick(player, dimension): void {
-        this.onTick.super(player, dimension);
-        
-        if(World.getThreadTime()%8==0) {
-            if(!player) return;
-           const pos = Entity.getPosition(player);
-           const params = this.params;
-           const MINUTE = 60
+    public active = false; 
+    public timer = 0;
+    public times = [20, 8, 14, 10, 17]; 
+    public rain (): void {
+        const random = this.times[Math.floor(Math.random() * this.times.length)];
+        let randomCopy = 0;
+           let timer = this.timer;        
+      if (this.secondTimer(60)) {
+          timer == randomCopy && !!this.active ? this.active = true : this.active = false;
+           timer == randomCopy ? timer = 0 : timer += 1;
            
+           Game.message("До дождя: " + this.time + "/" + randomCopy)
+             };
+           if(!!this.active && timer == 0) {
+              if(timer == 0) randomCopy = random;
+              startRain(Entity.getPosition(this.player));
+              Game.message("Дождь идёт!")
+           };
+          
         }
+    
+    
+   public lightningBolt(): void {
+       const blockSource = BlockSource.getDefaultForActor(this.player);
+       const pos = Entity.getPosition(this.player);
+       if(blockSource.getLightLevel(pos.x, pos.y, pos.z) <=5) return;
+       if(this.secondTimer(60*3)) {
+       Entity.spawn(pos.x + randomInt(-20, -5), pos.y, pos.z, 93); 
+        Entity.spawn(pos.x, pos.y, pos.z + randomInt(20, 5), 93);
+   }
+ };
+  public override onTick(): void {
+       if(Player.getDimension() !== this.dimension) return;
         
-    }
+        if(this.secondTimer(0.5)) {
+            this.rain()
+        this.lightningBolt();
+    };
+};
 }
-
 const WeatherEvent = new VWeatherEvent();
