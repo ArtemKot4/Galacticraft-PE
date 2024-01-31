@@ -1,5 +1,46 @@
 
-var spouticle = Particles.registerParticleType({
+//пакет для частиц
+
+Network.addClientPacket("gc:particle", function (packetData: any) {
+  Particles.addParticle(
+    packetData.type,
+    packetData.x,
+    packetData.y, 
+    packetData.z,
+    packetData.vx,
+    packetData.vy,
+    packetData.vz
+  );
+});
+
+
+//функция на частицы
+
+function particle (type,x,y,z,vx?,vy?,vz?){
+  vx = vx || 0;
+  vy = vy || 0;
+  vz = vz || 0;
+  const players = Network.getConnectedPlayers();
+  for (const i in players) {
+    const client = Network.getClientForPlayer(players[i]);
+    if (client) {
+      client.send("gc:particle", {
+        p: type,
+        x: x,
+        y: y,
+        z: z,
+        vx: vx,
+        vy: vy,
+        vz: vz,
+      });
+}else {
+  Debug.message("[Error] Failed spawn particle");
+}}}
+      
+
+
+
+const spouticle = Particles.registerParticleType({
     texture: "sulphuric_particle",
     render: 2,
     size: [1, .5],
@@ -17,7 +58,7 @@ var spouticle = Particles.registerParticleType({
 });
 
 
-var rocket_particle = Particles.registerParticleType({
+const rocket_particle = Particles.registerParticleType({
     texture: "sulphuric_particle",
     render: 0,
     size: [1, .5],
@@ -34,7 +75,7 @@ var rocket_particle = Particles.registerParticleType({
     }
 });
 
-var collecticle = Particles.registerParticleType({
+const collecticle = Particles.registerParticleType({
     texture: "collector_particle_2",
     render: 2,
     size: [0.1, 0.1],
@@ -52,7 +93,7 @@ var collecticle = Particles.registerParticleType({
 });
 
 
-var rain_venus = Particles.registerParticleType({
+const rain_venus = Particles.registerParticleType({
     texture: "rain_venus",
     render: 2,
     size: [8,8],

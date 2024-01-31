@@ -1,7 +1,6 @@
-
-var Mars = new IPlanet(
+const Mars = new IPlanet(
   "mars_plains",
-  ["mars",2001],
+  ["mars",5],
   [
     {
       minY: 0,

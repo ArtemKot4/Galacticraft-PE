@@ -1,6 +1,6 @@
-var Venus = new IPlanet(
+const Venus = new IPlanet(
   "venus_mountains",
-  ["venus", 2008],
+  ["venus", 6],
   [{
     minY: 0, maxY: 128,
     yConversion: [[1, -0.79], [0.8, -.99], [.9, -0.99], [0.5, -.4], [0, 0.8]],
