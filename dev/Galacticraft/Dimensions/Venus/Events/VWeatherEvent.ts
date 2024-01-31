@@ -23,12 +23,12 @@ particle(rain_venus,coords.x+n,coords.y+5,coords.z+randomInt(-16,16),0.05,-0.1);
         
            let timer = VWeatherEvent.timer;        
       if (that.secondTimer(60)) {
-          timer == that.randomCopy && !!that.active ? that.active = true : that.active = false;
+          timer == that.randomCopy && !that.active ? that.active = true : that.active = false;
            timer == that.randomCopy ? timer = 0 : timer += 1;
            
            Game.message("До дождя: " + this.time + "/" + randomCopy)
              };
-           if(!!that.active && timer == 0) {
+           if(!!that.active) {
               if(timer == 0) that.randomCopy = random;
               that.particle(Entity.getPosition(that.player));
               Game.message("Дождь идёт!")
