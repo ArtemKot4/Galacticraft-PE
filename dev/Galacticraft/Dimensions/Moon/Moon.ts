@@ -1,6 +1,6 @@
 var Moon = new IPlanet(
   "moon_plains",
-  ["moon", 4],
+  ["moon", 28],
   [
     {
       minY: 0,

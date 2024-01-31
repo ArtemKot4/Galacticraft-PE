@@ -3,6 +3,7 @@ class VWeatherEvent extends DimensionEvent {
     public static active = false; 
     public static timer = 0;
     public static times = [20, 8, 14, 10, 17];
+     public rain_timer;
     public static randomCopy = 0;
     public static particle (coords): void {
         for(let n = -16;n<=16;n++) {
@@ -23,14 +24,19 @@ particle(rain_venus,coords.x+n,coords.y+5,coords.z+randomInt(-16,16),0.05,-0.1);
         
            let timer = VWeatherEvent.timer;        
       if (that.secondTimer(60)) {
-          timer == that.randomCopy && !that.active ? that.active = true : that.active = false;
-           timer == that.randomCopy ? timer = 0 : timer += 1;
+          if(timer == that.randomCopy && !that.active) that.active = true;
+           timer == that.randomCopy ? 
+           timer = 0 : timer += 1;
            
            Game.message("До дождя: " + this.time + "/" + randomCopy)
              };
            if(!!that.active) {
               if(timer == 0) that.randomCopy = random;
               that.particle(Entity.getPosition(that.player));
+        if(that.rain_timer == ~~(that.randomCopy / 3)){
+            that.active = false; that.rain_timer = 0;
+            
+            }
               Game.message("Дождь идёт!")
            };
           
@@ -50,7 +56,7 @@ particle(rain_venus,coords.x+n,coords.y+5,coords.z+randomInt(-16,16),0.05,-0.1);
   public static override onTick(): void {
        if(Player.getDimension() !== VWeatherEvent.dimension) return;
         
-        if(VWeatherEvent.secondTimer(0.5)) {
+     if(VWeatherEvent.secondTimer(0.5)) {
             VWeatherEvent.rain()
         VWeatherEvent.lightningBolt();
     };

@@ -1,6 +1,6 @@
 const Mars = new IPlanet(
   "mars_plains",
-  ["mars",5],
+  ["mars", 29],
   [
     {
       minY: 0,

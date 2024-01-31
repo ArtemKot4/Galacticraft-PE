@@ -9,7 +9,7 @@ const AIR_SPACES = Block.createSpecialType({
 IDRegistry.genBlockID("space_air");
 Block.createBlock("space_air",[{name: "Space Air", texture: [["Black", 0]], inCreative: false} ],AIR_SPACES);
 
-var SpacesStation = new IPlanet("spaces",["space_station",2010],[
+var SpacesStation = new IPlanet("spaces",["space_station",27],[
 
     { minY: 0,
       	maxY: 1,

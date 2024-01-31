@@ -10,8 +10,9 @@ abstract class DimensionEvent {
 
 enum PLANETS = {
     EARTH: 0 = 0,
-    MOON: 4 = 4,
-    MARS: 5 = 5,
-    VENUS: 6 = 6,
-    ASTEROIDS: 7 = 7
+    SPACE_STATION: 27,
+    MOON: 28 = 28,
+    MARS: 29 = 29,
+    VENUS: 31 = 31,
+    ASTEROIDS: 7 = 7,
 }

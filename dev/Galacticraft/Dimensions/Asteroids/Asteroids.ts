@@ -6,7 +6,7 @@ Translation.addTranslation("Stick of Asteroids", {
 ru: "Трость §6Астероидов"
 });
 
-const Asteroids = new IPlanet("asteroids",["asteroids",7],[
+const Asteroids = new IPlanet("asteroids",["asteroids",30],[
     {
         minY: 2,
         maxY: 100,
