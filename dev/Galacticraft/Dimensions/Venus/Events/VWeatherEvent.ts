@@ -21,26 +21,29 @@ particle(rain_venus,coords.x+n,coords.y+5,coords.z+randomInt(-16,16),0.05,-0.1);
     public static rain (): void {
         const that = VWeatherEvent;
         const random = this.times[Math.floor(Math.random() * this.times.length)];
+        let timer = VWeatherEvent.timer;
         
-           let timer = VWeatherEvent.timer;        
+        Game.message("До дождя: " + timer + "/" + randomCopy)
+        
+                   
       if (that.secondTimer(60)) {
-          if(timer == that.randomCopy && !that.active) that.active = true;
-           timer == that.randomCopy ? 
-           timer = 0 : timer += 1;
-           
-           Game.message("До дождя: " + this.time + "/" + randomCopy)
+  Game.message("До дождя: " + timer + "/" + randomCopy);
+          if(timer == that.randomCopy){
+           timer++;
+           if(!that.active) that.active = true;
              };
+             }
            if(!!that.active) {
-              if(timer == 0) that.randomCopy = random;
+  if(timer == 0) that.randomCopy = random;
               that.particle(Entity.getPosition(that.player));
         if(that.rain_timer == ~~(that.randomCopy / 3)){
             that.active = false; that.rain_timer = 0;
-            
+            Game.message("Дождь идёт!")
             }
-              Game.message("Дождь идёт!")
+              
            };
           
-        }
+        };
     
     
    public static lightningBolt(): void {
