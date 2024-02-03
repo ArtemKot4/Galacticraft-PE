@@ -27,7 +27,9 @@ API/Tool/ThermalArmor.ts
 API/Tool/Entity.ts
 API/Atmosphere/IGravity.ts
 API/Atmosphere/Sky.ts
+
 API/Atmosphere/IPlanet.ts
+
 API/Rocket/Rocket.ts
 API/Rocket/UI.ts
 API/Util/OUI.ts
@@ -189,7 +191,7 @@ Galacticraft/categories.ts
 Galacticraft/Dimensions/Venus/Events/VWeatherEvent.ts
 Galacticraft/Dimensions/Mars/Events/mars_meteorite_fall.ts
 
-Galacticraft/Dimensions/DimensionEvent.ts
+
 Galacticraft/Dimensions/Skyboxes/earth_skybox.ts
 Galacticraft/Dimensions/Skyboxes/moon_skybox.ts
 Galacticraft/Dimensions/Skyboxes/mars_skybox.ts

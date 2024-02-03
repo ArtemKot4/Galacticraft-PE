@@ -1,6 +1,7 @@
 /**
  * Класс, использующийся для регистрации планет
  */
+type colors = [sr: int, sg: int, sb: int, fr: int, fg: int, fb: int]
 
 class IPlanet {
   public biome_uid: string;
@@ -8,9 +9,8 @@ class IPlanet {
   public gravitation?: number[];
   public generator: Dimensions.TerrainLayerParams[];
   public stone: int;
-  public colors: [number, number, number, number, number, number];
+  public colors: colors;
   public description: { sky: Sky; gravity: IGravity };
-
   public createPlanet(): void {
     const planet_biome = new CustomBiome(this.biome_uid).setSkyColor(
       android.graphics.Color.rgb(this.colors[0], this.colors[1], this.colors[2])
@@ -98,9 +98,10 @@ class IPlanet {
     generator: Dimensions.TerrainLayerParams[],
     stone?: int,
 
-    colors?: [number, number, number, number, number, number],
+    colors?: colors,
     description?: { sky: Sky; gravity: IGravity }
   ) {
+      (PLANETS[planet_uid[0].toUpperCase()] = planet_uid[1]);
     (this.biome_uid = biome_uid),
       (this.planet_uid = planet_uid),
       (this.description = description),
