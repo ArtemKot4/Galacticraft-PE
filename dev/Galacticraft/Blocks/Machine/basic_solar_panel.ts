@@ -71,7 +71,7 @@ Block.registerPlaceFunction(
   }
 );
 
-let SolarGeneratorUI = new UI.StandartWindow({
+const SolarGeneratorUI = new UI.StandartWindow({
   standard: {
     header: {
       text: {

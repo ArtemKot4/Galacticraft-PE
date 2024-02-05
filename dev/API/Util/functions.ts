@@ -161,3 +161,7 @@ const ObjectValues = function(obj) {
 //     }
 //   });
 // },
+
+const PLANETS: Record<string, number> = {
+  EARTH: 0
+}

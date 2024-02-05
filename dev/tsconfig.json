@@ -25,10 +25,12 @@
 		"API/Tool/Canister.ts",
 		"API/Tool/Ballone.ts",
 		"API/Tool/Gear.ts",
+		"API/Tool/Battery.ts",
 		"API/Tool/ThermalArmor.ts",
 		"API/Tool/Entity.ts",
 		"API/Atmosphere/IGravity.ts",
 		"API/Atmosphere/Sky.ts",
+		"API/Atmosphere/DimensionEvent.ts",
 		"API/Atmosphere/IPlanet.ts",
 		"API/Rocket/Rocket.ts",
 		"API/Rocket/UI.ts",
@@ -108,7 +110,7 @@
 		"Galacticraft/groups.ts",
 		"Galacticraft/Items/prelaunch_checklist.ts",
 		"Galacticraft/categories.ts",
-		"Galacticraft/Dimensions/Venus/Events/venus_weather.ts",
+		"Galacticraft/Dimensions/Venus/Events/VWeatherEvent.ts",
 		"Galacticraft/Dimensions/Mars/Events/mars_meteorite_fall.ts",
 		"Galacticraft/Dimensions/Skyboxes/earth_skybox.ts",
 		"Galacticraft/Dimensions/Skyboxes/moon_skybox.ts",
@@ -121,6 +123,7 @@
 		"Rocket/gui.ts",
 		"Rocket/rocket_1.ts",
 		"Rocket/callback.ts -->",
-		"Galacticraft/recipes.ts"
+		"Galacticraft/recipes.ts",
+		"Galacticraft/last.ts"
 	]
 }

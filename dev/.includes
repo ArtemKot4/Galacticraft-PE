@@ -27,7 +27,7 @@ API/Tool/ThermalArmor.ts
 API/Tool/Entity.ts
 API/Atmosphere/IGravity.ts
 API/Atmosphere/Sky.ts
-
+API/Atmosphere/DimensionEvent.ts
 API/Atmosphere/IPlanet.ts
 
 API/Rocket/Rocket.ts

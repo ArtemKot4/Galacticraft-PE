@@ -44,12 +44,13 @@ class IPlanet {
   public static oreParams = [];
       
   public static oreGeneration(): void {
-       if (this.planet_uid[1] && (dimensionId != this.planet_uid[1])) return;
+       
       Callback.addCallback(
       "GenerateCustomDimensionChunk",
       function (chunkX, chunkZ, random, dimensionId) {
       for(const i in IPlanet.oreParams){
-       const params = IPlanet.oreParams[i];
+        const params = IPlanet.oreParams[i];
+        if (params.planet != dimensionId) return;
        const obj = params.obj;
         UniqueGen.generateOreInDimension(
           params.ore,
@@ -63,7 +64,7 @@ class IPlanet {
             maxY: obj.height[1],
             size: randomInt(obj.count[0], obj.count[1]),
             mode: true,
-            check: [obj?.stone || this.stone,
+            check: [obj?.stone || this.stone],
           })
              }
       }
@@ -78,7 +79,7 @@ class IPlanet {
    obj.stone = obj.stone || this.stone;
     
        
-        IPlanet.oreParams.push({ore: ore, obj: obj});
+        IPlanet.oreParams.push({ore: ore, obj: obj, planet: this.planet_uid[1]});
 }
   public getSkyColors(): number[] {
     return this.colors;
@@ -91,7 +92,7 @@ class IPlanet {
     generator: Dimensions.TerrainLayerParams[],
     stone?: int,
 
-    colors?: colors }
+    colors?: colors 
   ) {
     (this.biome_uid = biome_uid),
       (this.planet_uid = planet_uid),

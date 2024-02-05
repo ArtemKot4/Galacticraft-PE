@@ -6,7 +6,7 @@ IPlanet.oreGeneration();
 
 Callback.addCallback("LocalTick", () => {
   //Galacticraft.onTick();
-  VWeatherEvent.onTick()
+  Atmosphere.VWeatherEvent.onTick()
 });
 
 //Callback.addCallback("EntityInteract", (entity) => {
@@ -16,7 +16,7 @@ Callback.addCallback("LocalTick", () => {
 
 ModAPI.registerAPI("GalacticraftAPI", {
   IPlanet: IPlanet,
-  DimensionEvent: DimensionEvent,
+  DimensionEvent: Atmosphere.DimensionEvent,
   GItem: GItem,
   GBlock: GBlock,
   Storage: Storage,

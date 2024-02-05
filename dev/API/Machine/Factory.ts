@@ -4,14 +4,10 @@
 type count = int;
 
 class Factory {
-  /** 
-   * {...Factory: {recipes: {...slot_ -> index: values}}} 
+  /**
+   * {recipes: {result: int | {...result_ -> index : int},...slot_ -> index: values}}
    */
-  public static factoriesList: {} = {}; 
-   /**
-    * {recipes: {result: int | {...result_ -> index : int},...slot_ -> index: values}}
-    */
-  public list: any = {}; 
+  public list: any = {};
   protected readonly name: string;
   public build(
     description: {
@@ -20,7 +16,7 @@ class Factory {
     },
     pushToAll?: boolean
   ) {
-    const assign = ObjectAssign(this.list, description, { recipes: [] });
+     ObjectAssign(this.list, description, { recipes: [] });
     //  if(pushToAll) Factory.factoriesList[this.name] = assign;
   }
   constructor(name = "unknown factory") {
@@ -39,8 +35,17 @@ class Factory {
       ObjectAssign(list.recipes[ids[0]], { result: ids[0], [slots]: ids[i] }); // result = number || Object -> includes {...result_ -> (index starts from 0): int}
     }
   }
-  public getInput() {
-    // TODO: дописать реализацию
+  public getInput(container): boolean {
+    const list = this.list;
+    
+    for(let i = 1; i <= list.slots.input; i++){
+     const slots = ("slot_" + i);
+      for(const k in list.recipes) {
+        const recipes = list.recipes[k][slots];
+        return container.getSlot(slots).id === recipes
+      }
+  
+    };
   }
   public getOutput(index?) {
     //index need if result is object
@@ -48,15 +53,10 @@ class Factory {
     let result;
     for (const i in list) {
       result =
-        (list instanceof Object) && (Object.keys(list).length > 1) ?
-         list[i]["result"]["result_" + index] :
-           list[i]["result"];
+        list instanceof Object && Object.keys(list).length > 1
+          ? list[i]["result"]["result_" + index]
+          : list[i]["result"];
     }
     return result;
   }
 }
-const CompressorFactory = new Factory("compressor").build({
-  machine: BlockID["compressor"],
-  slots: { input: 9, output: 1 },
-});
-
