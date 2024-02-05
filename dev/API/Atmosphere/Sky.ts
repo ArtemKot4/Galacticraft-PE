@@ -1,14 +1,15 @@
 type name = string;
-class Sky {
-  public description: { texture: string };
+namespace Atmosphere {
+export class Sky {
+  public description: { texture: string } ;
   public dimension: int;
   public objectMove: name;
   public render: ActorRenderer;
-  constructor(
+  constructor( 
     dimension: int,
     description: { texture: string },
     objectMove: name
-  ) {
+  ) {  
     dimension = this.dimension;
     description = this.description;
     objectMove = this.objectMove;
@@ -27,4 +28,5 @@ class Sky {
         .setTexture(this.description.texture);
     }
   }
+}
 }

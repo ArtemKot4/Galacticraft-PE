@@ -7,7 +7,7 @@ const Galacticraft = {
   onTick: () => {
     Rocket.onTick();
     Thermal.onTick();
-    WeatherEvent.onTick();
+    Atmosphere.WeatherEvent.onTick();
   },
 };
 

@@ -1,5 +1,6 @@
-class VWeatherEvent extends DimensionEvent {
-    public static override dimension = PLANETS.VENUS;
+namespace Atmosphere {
+export class VWeatherEvent extends DimensionEvent {
+    public static override dimension = Venus.getPlanet();
     public static active = false; 
     public static timer = 0;
     public static times = [20, 8, 14, 10, 17];
@@ -64,4 +65,5 @@ particle(rain_venus,coords.x+n,coords.y+5,coords.z+randomInt(-16,16),0.05,-0.1);
         VWeatherEvent.lightningBolt();
     };
 };
+}
 }

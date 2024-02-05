@@ -6,11 +6,9 @@ type colors = [sr: int, sg: int, sb: int, fr: int, fg: int, fb: int]
 class IPlanet {
   public biome_uid: string;
   public planet_uid = [];
-  public gravitation?: number[];
   public generator: Dimensions.TerrainLayerParams[];
   public stone: int;
   public colors: colors;
-  public description: { sky: Sky; gravity: IGravity };
   public createPlanet(): void {
     const planet_biome = new CustomBiome(this.biome_uid).setSkyColor(
       android.graphics.Color.rgb(this.colors[0], this.colors[1], this.colors[2])
@@ -27,10 +25,9 @@ class IPlanet {
     );
   }
 
-  public setGravitation(): void {}
 
   public static transfer(planet): void {
-    Network.sendToServer("gc:planet_provider", planet.id);
+    Network.sendToServer("gc:planet_provider", planet.id); //!
   }
 
   public getPlanet(): int {
@@ -39,10 +36,6 @@ class IPlanet {
 
   public getBiome(): string | CustomBiome {
     return this.biome_uid;
-  }
-
-  public getGravitation(): number[] {
-    return this.gravitation;
   }
 
   public getGenerator() {
@@ -98,13 +91,10 @@ class IPlanet {
     generator: Dimensions.TerrainLayerParams[],
     stone?: int,
 
-    colors?: colors,
-    description?: { sky: Sky; gravity: IGravity }
+    colors?: colors }
   ) {
-      (PLANETS[planet_uid[0].toUpperCase()] = planet_uid[1]);
     (this.biome_uid = biome_uid),
       (this.planet_uid = planet_uid),
-      (this.description = description),
       (this.generator = generator),
       (this.stone = stone),
       (this.colors = colors || [0, 0, 0, 0, 0, 0]);

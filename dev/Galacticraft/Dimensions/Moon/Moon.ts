@@ -1,4 +1,4 @@
-var Moon = new IPlanet(
+const Moon = new IPlanet(
   "moon_plains",
   ["moon", 28],
   [
