@@ -42,7 +42,7 @@ Block.createBlockWithRotation(
   STONE
 );
 
-var CompressinG = new UI.StandartWindow({
+const CompressinG = new UI.StandartWindow({
   standard: {
     header: {
       text: {
@@ -95,7 +95,7 @@ var CompressinG = new UI.StandartWindow({
       scale: 4.1,
     },
 
-    CoalSlot: {
+    coal_slot: {
       type: "slot",
       x: 530,
       y: 300,
@@ -227,22 +227,7 @@ class Compressor extends Machine {
     this.container.validateAll();
     status(this.container, this.data);
     const result = this.container.getSlot("slotResult");
-    const coal = this.container.getSlot("CoalSlot");
-    for (const i in burnItems) {
-      if (coal.id == burnItems[i].id && this.data.burning != 500) {
-        this.data.burning += 500;
-        coal.count--;
-
-        this.data.active = true;
-      }
-    }
-    if (this.data.burning == 500 && this.data.active == true) {
-      this.data.energy++;
-    }
-    if (this.data.energy == 500) {
-      this.data.active = false;
-      this.data.burning = 0;
-    }
+    CoalGenerator.isCoal("coal_slot", this.container, this.data)
     if (this.data.energy>=100) {
       if(CompressorFactory.getInput(this.container)){
         alert("compressor is work")

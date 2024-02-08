@@ -43,7 +43,7 @@ let CoalGeneratorUI = new UI.StandartWindow(
 
             }],
         elements: {
-            CoalSlot: {
+            coal_slot: {
                 type: "slot",
                 x: 400,
                 y: 110,
@@ -94,14 +94,32 @@ let CoalGeneratorUI = new UI.StandartWindow(
     });
 
 class CoalGenerator extends Generator {
-    defaultValues = {
+    public defaultValues = {
         energy: 0,
         energyMax: 3000,
+        burningMax: 3000,
         burning: 0,
         active: false,
         fire: 0
     };
-    onTick(): void {
+   public static isCoal(slot, container, data): void {
+        const slot = container.getSlot([slot]);
+        for (let i in burnItems) {
+            if (slot.id == burnItems[i].id && data.burning != burningMax) {
+                data.burning += burningMax;
+            
+                slot.count--
+
+                data.active = true;
+            }
+        }
+        if (data.burning == burningMax && data.active == true && data.energy <= data.energyMax) { 
+            data.energy += 1 }
+        if (data.energy == data.energyMax) { data.active = false; data.burning = 0 }
+
+    }
+    
+    public onTick(): void {
         this.container.sendChanges();
         this.container.validateAll();
         if(__config__.getBool("Gameplay.Special_Effects") == true &&
@@ -130,21 +148,8 @@ class CoalGenerator extends Generator {
         };
 
 
-        var CoalSlot = this.container.getSlot("CoalSlot");
-
-        for (let i in burnItems) {
-            if (CoalSlot.id == burnItems[i].id && this.data.burning != 3000) {
-                this.data.burning += 3000;
-            
-                CoalSlot.count--
-
-                this.data.active = true;
-            }
-        }
-        if (this.data.burning == 3000 && this.data.active == true && this.data.energy <= this.data.energyMax) { 
-            this.data.energy += 1 }
-        if (this.data.energy == this.data.energyMax) { this.data.active = false; this.data.burning = 0 }
-
+        CoalGenerator.isCoal("coal_slot", this.container, this.data)
+        
 
         this.container.setScale("progress_scale", this.data.energy / this.data.energyMax);
 
