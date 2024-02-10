@@ -22,7 +22,7 @@ abstract class Machine extends TileEntityBase implements EnergyModule {
   }
   public energyReceive(type: string, amount: number, voltage: number): number {
     amount = Math.min(amount, this.data.energyMax / 2);
-    var add = Math.min(amount, this.getCapacity() - this.data.energy);
+    const add = Math.min(amount, this.getCapacity() - this.data.energy);
     this.data.energy += add;
     return add;
   }

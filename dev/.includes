@@ -11,6 +11,7 @@ API/Prototype/EnergyModule.ts
 
 API/Util/functions.ts
 
+API/Machine/MachineUI.ts
 API/Machine/Factory.ts
 API/Machine/Machine.ts
 API/Machine/InputMachine.ts

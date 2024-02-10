@@ -168,7 +168,7 @@ const CompressinG = new UI.StandartWindow({
       size: 60,
     },
 
-    "result": {
+    result: {
       type: "slot",
       x: 830,
       y: 190,
@@ -206,32 +206,32 @@ function status(container: ItemContainer, data: TileEntityBase["data"]): void {
   }
 }
 
-let CompressorFactory = new Factory("compressor")
-CompressorFactory.build({
-  machine: BlockID["compressor"],
-  slots: { input: 9, output: 1 },
-});
-
-
 class Compressor extends Machine {
-  defaultValues = {
+  public defaultValues = {
     energy: 0,
     progress: 0,
     burning: 0,
     burningMax: 1000,
     active: false,
   };
-
+  public factory: Factory = new Factory("compressor");
   public onTick(): void {
     this.container.sendChanges();
     this.container.validateAll();
+
+    this.factory.build({
+      machine: BlockID["compressor"],
+      slots: { input: 9, output: 1 },
+    });
+
     status(this.container, this.data);
     const result = this.container.getSlot("slotResult");
-    CoalGenerator.isCoal("coal_slot", this.container, this.data)
-    if (this.data.energy>=100) {
-      if(CompressorFactory.getInput(this.container)){
-        alert("compressor is work")
-       }
+    CoalGenerator.isCoal("coal_slot", this.container,
+     this.data);
+    if (this.data.energy >= 100) {
+      if (this.factory.getInput(this.container)) {
+        alert("compressor is work");
+      }
     }
 
     this.container.setScale("progressScale", this.data.progress / 500);

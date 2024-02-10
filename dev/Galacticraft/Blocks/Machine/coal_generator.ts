@@ -103,17 +103,17 @@ class CoalGenerator extends Generator {
         fire: 0
     };
    public static isCoal(slot, container, data): void {
-        const slot = container.getSlot([slot]);
+        const slot_ = container.getSlot([slot]);
         for (let i in burnItems) {
-            if (slot.id == burnItems[i].id && data.burning != burningMax) {
-                data.burning += burningMax;
+            if (slot.id == burnItems[i].id && data.burning != data.burningMax) {
+                data.burning += data.burningMax;
             
                 slot.count--
 
                 data.active = true;
             }
         }
-        if (data.burning == burningMax && data.active == true && data.energy <= data.energyMax) { 
+        if (data.burning == data.burningMax && data.active == true && data.energy <= data.energyMax) { 
             data.energy += 1 }
         if (data.energy == data.energyMax) { data.active = false; data.burning = 0 }
 
