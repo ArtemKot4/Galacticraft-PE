@@ -23,7 +23,7 @@ class GItem {
     Item.setCategory(this.id, int)
    };
 
-  private create(): void {
+  protected create(): void {
     IDRegistry.genItemID(this.id);
     Item.createItem(
       this.id,

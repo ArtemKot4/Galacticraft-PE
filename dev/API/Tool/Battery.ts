@@ -12,7 +12,8 @@ function Battery (
   custom?: string
 ): void {
 
-  new GItem(id, 1).info(
+ const item = new GItem(id, 1);
+ item.info(
     typeof count === "number"
       ? (item, name) =>
           Translation.translate(name) +

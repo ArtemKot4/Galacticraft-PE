@@ -42,6 +42,11 @@ API/Atmosphere/oxygen_working.ts
 API/Tool/native_command.ts
 API/Galacticraft.ts
 
+Galacticraft/Dimensions/Moon/Blocks/moon_blocks.ts
+Galacticraft/Dimensions/Mars/Blocks/mars_blocks.ts
+Galacticraft/Dimensions/Venus/Blocks/venus_blocks.ts
+Galacticraft/Dimensions/Asteroids/Blocks/asteroid_blocks.ts
+
 Galacticraft/Items/food.ts
 Galacticraft/Items/thermal_armor.ts
 Galacticraft/Items/entity_loot.ts
@@ -56,11 +61,6 @@ Galacticraft/Items/Tools.ts
 Galacticraft/Items/battery.ts
 Galacticraft/Items/entity_loot.ts
 
-
-Galacticraft/Dimensions/Moon/Blocks/moon_blocks.ts
-Galacticraft/Dimensions/Mars/Blocks/mars_blocks.ts
-Galacticraft/Dimensions/Venus/Blocks/venus_blocks.ts
-Galacticraft/Dimensions/Asteroids/Blocks/asteroid_blocks.ts
 
 
 Galacticraft/Blocks/Ores/block_ores.ts

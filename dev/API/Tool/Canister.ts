@@ -1,48 +1,28 @@
-class Canister {
+class Canister extends GItem {
   public id: string;
   public texture: string;
 
   constructor(id) {
-
-    this.id = id + "_canister";
-    this.texture = id + "_canister_partial";
-   
-    this.create();
+ super(id + "_canister", 1, null, id + "_canister_partial", 0, false);   
     this.visual();
+    this.description((item, translation, name) => 
+    Translation.translate(name) + 
+    "\n§7" + (item.data == 0 ? item.data : item.data + "0") + " mB / " + "60 mB"
+    )
   }
 
   public visual(): void {
-    Game.message("[DEBUG CANISTER] <-> visual function: output -> texture_name: " + 
-     this.texture + "\nid:" + this.id) //TODO: Debug
      const texture = this.texture;
     Item.registerIconOverrideFunction(this.id, function (item, data) {
       return {
         name: item.data == 0 ? "empty_liquid_canister" : texture,
         meta: item.data
       }
-    }),
-
-
-    Item.registerNameOverrideFunction(
-      this.id,
-      function (item, translation, name) {
-        return (
-          Translation.translate(name) + "\n§7" + (item.data == 0 ? item.data : item.data + "0") + " mB / " + "60 mB"
-        );
-      }
-    );
+    })
 };
-  public create(): void {
-    new GItem(this.id,1, this.id, this.texture,
-      0, true);
-    Item.addToCreative(this.id, 1, 6);
-    this.visual();
-  }
-
   public static get(type: string): int {
     return ItemID[type + "_canister"];
   }
-
   public static input(
     slot: string,
     canister: string,

@@ -672,19 +672,299 @@ Translation.addTranslation("Thermal helmet", {
 
 Translation.addTranslation("battery", {
   en: "Battery",
-ru: "Батарейка"
+  ru: "Батарейка",
 });
 
 Translation.addTranslation("Infinite battery", {
   en: "§6Infinite battery",
-ru: "§6Бесконечная батарейка"
+  ru: "§6Бесконечная батарейка",
 });
 
 Translation.addTranslation("Atomic battery", {
   en: "§6Atomic battery",
-ru: "§6Атомная батарейка"
+  ru: "§6Атомная батарейка",
 });
 
-Translation.addTranslation("Infinity§6⚡\n§7Smaller energy generating", {
-  ru: "Бесконечность§6⚡\n§7Небольшая скорость подзарядки"
+Translation.addTranslation("Iron Steel Canister", {
+  ru: "Железостальная канистра",
 });
+
+Translation.addTranslation("Canister Tin", {
+  ru: "Оловяная канистра",
+});
+
+Translation.addTranslation("Canister Copper", {
+  ru: "Медная канистра",
+});
+
+Translation.addTranslation("Wafer Advanced", {
+  ru: "Усовершенствованная пластина",
+});
+
+Translation.addTranslation("Flag cane", {
+  ru: "Трость от флага",
+});
+
+Translation.addTranslation("Wafer Solar", {
+  ru: "Солнечная пластина",
+});
+
+Translation.addTranslation("Wafer Basic", {
+  ru: "Базовая пластина",
+});
+
+Translation.addTranslation("Solar Module 0", {
+  ru: "Панель солнечного модуля",
+});
+
+Translation.addTranslation("Solar Module 1", {
+  ru: "Солнечный модуль",
+});
+
+Translation.addTranslation("Canvas", {
+  ru: "Холст",
+});
+
+Translation.addTranslation("Thermal Controller", {
+  ru: "Терморегулятор",
+});
+
+Translation.addTranslation("Air Vent", {
+  ru: "Решетка для воздуха",
+});
+
+Translation.addTranslation("Air Fan", {
+  ru: "Вентилятор",
+});
+
+Translation.addTranslation("Buggymat Wheel", {
+  ru: "Колесо багги",
+});
+
+Translation.addTranslation("Heavy Plating", {
+  ru: "Сверхпрочная пластина",
+});
+
+Translation.addTranslation("Engine Tier1", {
+  ru: "Двигатель ракеты",
+});
+
+Translation.addTranslation("Engine Tier1 Booster", {
+  ru: "Ускоритель двигателя",
+});
+
+Translation.addTranslation("Buggymat Storage", {
+  ru: "Хранилище багги",
+});
+Translation.addTranslation("Rocket Fins 2 lvl", {
+  ru: "Ступень ракеты 2-го уровня",
+});
+
+Translation.addTranslation("Nose Cone", {
+  ru: "Ракетный обтекатель",
+});
+
+Translation.addTranslation("Rocket Fins", {
+  ru: "Ступень ракеты",
+});
+
+Translation.addTranslation("Buggymat Sit", {
+  ru: "Сиденье багги",
+});
+
+
+
+Translation.addTranslation("Carbon Fragments", {
+  ru: "Фрагментированный углерод"
+  });
+  
+  Translation.addTranslation("Solar Dust", {
+  ru: "Пыль из солнечной руды"
+  });
+  
+  Translation.addTranslation("Shard Titanium", {
+  ru: "Осколок титана"
+  });
+  
+  Translation.addTranslation("Shard Iron", {
+  ru: "Осколок железа"
+  });
+  
+  Translation.addTranslation("Reinforced Plate 3 lvl", {
+  ru: "Усовершенствованная пластина 3-го уровня"
+  });
+  
+  Translation.addTranslation("Reinforced Plate 2 lvl", {
+  ru: "Усовершенствованная пластина 2-го уровня"
+  });
+  
+  Translation.addTranslation("Raw Silicon", {
+  ru: "Неочищенный кремний"
+  });
+  
+  Translation.addTranslation("Raw Desh", {
+  ru: "Необработанный деш"
+  });
+  
+  Translation.addTranslation("Old Plate", {
+  ru: "Старая пластина"
+  });
+  
+  Translation.addTranslation("Meteoric Iron Raw", {
+  ru: "Метеоритное железо"
+  });
+  
+  Translation.addTranslation("Lunar Sapphire", {
+  ru: "Лунный сапфир"
+  });
+  
+  Translation.addTranslation("Steel Shards", {
+  ru: "Осколки стали"
+  });
+  
+  Translation.addTranslation("Meteoric Iron Ingot", {
+  ru: "Метеоритно-железный слиток"
+  });
+  
+  Translation.addTranslation("Steel Ingot", {
+  ru: "Слиток стали"
+  });
+  
+  Translation.addTranslation("Iron Steel Ingot", {
+  ru: "Железостальной слиток"
+  });
+  
+  Translation.addTranslation("Iron Steel Dust", {
+  ru: "Пыль из раскрошенной железостали"
+  });
+  
+  Translation.addTranslation("Arkanite shard", {
+  ru: "Кусочек арканита"
+  });
+  
+  Translation.addTranslation("Coiper shard", {
+  ru: "Кусочек койпера"
+  });
+  
+  Translation.addTranslation("Coldgravetite shard", {
+  ru: "Кусочек замёрзшего граветита"
+  });
+  
+  Translation.addTranslation("Gravetite shard", {
+  ru: "Кусочек граветита"
+  });
+  
+  Translation.addTranslation("Titanium shard", {
+  ru: "Кусочек ильменита"
+  });
+  
+  Translation.addTranslation("Meteoric iron shard", {
+  ru: "Кусочек метеоритного железа"
+  });
+  
+  Translation.addTranslation("Iron steel shard", {
+  ru: "Кусочек железостали"
+  });
+  
+  Translation.addTranslation("Aluminum shard", {
+  ru: "Кусочек алюминия"
+  });
+  
+  Translation.addTranslation("Copper shard", {
+  ru: "Кусочек меди"
+  });
+  
+  Translation.addTranslation("Tin shard", {
+  ru: "Кусочек олова"
+  });
+  
+  Translation.addTranslation("Ingot Titanium", {
+  ru: "Ильменитовый слиток"
+  });
+  
+  Translation.addTranslation("Ingot Tin", {
+  ru: "Оловяный слиток"
+  });
+  
+  Translation.addTranslation("Ingot Lead", {
+  ru: "Свинцовый слиток"
+  });
+  
+  Translation.addTranslation("Ingot Desh", {
+  ru: "Слиток деша"
+  });
+  
+  Translation.addTranslation("Ingot Copper", {
+  ru: "Медный слиток"
+  });
+  
+  Translation.addTranslation("Ingot Aluminum", {
+  ru: "Алюминиевый слиток"
+  });
+  
+  Translation.addTranslation("Dust Titanium", {
+  ru: "Титановая пыль"
+  });
+  
+  Translation.addTranslation("Desh Stick", {
+  ru: "Палка из деша"
+  });
+  
+  Translation.addTranslation("Desh Plate", {
+  ru: "Пластина из деша"
+  });
+  
+  Translation.addTranslation("Compressed Tin", {
+  ru: "Сжатое олово"
+  });
+  
+  Translation.addTranslation("Compressed Titanium", {
+  ru: "Сжатый титан"
+  });
+  
+  Translation.addTranslation("Compressed Steel", {
+  ru: "Сжатая сталь"
+  });
+  
+  Translation.addTranslation("Compressed Meteoric Iron", {
+  ru: "Сжатое метеоритное железо"
+  });
+  
+  Translation.addTranslation("Compressed Iron Steel", {
+  ru: "Сжатая железо-сталь"
+  });
+  
+  Translation.addTranslation("Compressed Iron", {
+  ru: "Сжатое железо"
+  });
+  
+  Translation.addTranslation("Compressed Copper", {
+  ru: "Сжатая медь"
+  });
+  
+  Translation.addTranslation("Compressed Bronze", {
+  ru: "Сжатая бронза"
+  });
+  
+  Translation.addTranslation("Emerald shard", {
+  ru: "Изумрудик"
+  });
+  
+  Translation.addTranslation("Compressed Aluminum", {
+  ru: "Сжатый Алюминий"
+  });
+  
+  Translation.addTranslation("Compressed Lead", {
+  ru: "Сжатый свинец"
+  });
+  
+  Translation.addTranslation("Ingot Bronze", {
+  ru: "Бронзовый слиток"
+  });
+  
+  
+
+Translation.addTranslation("Infinity§6⚡\n§7Smaller energy generating", {
+  ru: "Бесконечность§6⚡\n§7Небольшая скорость подзарядки",
+});
+
