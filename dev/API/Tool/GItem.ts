@@ -7,7 +7,7 @@ class GItem {
   protected isTech: boolean;
   protected texture: string;
   protected name: string;
-  constructor(id, stack?, name?, texture?, meta?, isTech?) {
+  constructor(id: string, stack?: int, name?: string, texture?: string, meta?: int, isTech?: boolean) {
     this.id = id;
     this.stack = stack || 64;
     this.meta = meta || 0;
@@ -37,7 +37,7 @@ class GItem {
    if(translation && typeof text == "string") Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
       const validate = (typeof text !== "function") ? 
-      name + "\n§7" + Translation.translate(text) : text(item, name); 
+      Translation.translate(name) + "\n§7" + Translation.translate(text) : text(item, name); 
       return validate;
     });
   }
@@ -46,12 +46,12 @@ class GItem {
     if(translation && typeof text == "string") Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
       const validate = (typeof text !== "function") ? 
-      name + "\n§7" + Translation.translate(text) : text(item, name); 
+      Translation.translate(name) + "\n§7" + Translation.translate(text) : text(item, name); 
       if (Entity.getSneaking(Player.get())) 
         return validate;
       else
         return (
-          name +
+          Translation.translate(name) +
           "\n§7" +
           Translation.translate("Press SHIFT for view information")
         );

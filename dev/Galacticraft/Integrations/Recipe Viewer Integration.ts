@@ -260,7 +260,7 @@ RV.registerRecipeType("Collector", {
    getAllList: function(id, data, count) {
       let list = []
      for (let e in leaves) {
-             for(var i in batt){
+          //   for(var i in batt){
             list.push({
       
                input: [{
@@ -287,14 +287,15 @@ RV.registerRecipeType("Collector", {
                         id: leaves[e].id,
                         count: 1,
                         data: 0
-                     },{
-                        id: batt[i].id,
-                        count: 1,
-                        data: 0
-                     }],
+                     }]
+                      //{
+                     //    id: batt[i].id,
+                     //    count: 1,
+                     //    data: 0
+                     // }],
             })
          
-      }
+     // }
         
              
       return list

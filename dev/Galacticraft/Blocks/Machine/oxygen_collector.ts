@@ -92,7 +92,7 @@ class Collector extends InputMachine {
         //TODO: переписать
         this.container.sendChanges();
         //battery.add(this.container, this.data, "slot1");
-        battery.addInfinite(this.container, this.data, "slot1")
+        Battery.addInfinite(this.container, this.data, "slot1")
         //ChargeItemRegistry.getEnergyFrom("slot1", "sj", 1500, 900, 1, false)
 
         if (this.dimension == 0 && this.data.energy >= 5) {

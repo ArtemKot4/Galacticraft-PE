@@ -25,24 +25,8 @@ const circuit: any[] = [];
 const rock1: any[] = [];
 const liquids: any[] = [];
 
-const Working = {
-  createStatus: function (scale: string, text: string): void {
-    this.container.setText(scale, Translation.translate(text));
-  },
-  addBattery: function (block: any, slot: any, data: any): void {
-    this.data.energy -= ChargeItemRegistry.addEnergyToSlot(
-      block.getSlot(slot),
-      "gj",
-      data.energy,
-      block.getCapacity()
-    );
-    battery.addInfinite(block.container, block.data, slot);
-  },
-};
 
-
-
-var SpacesMachine = {
+const SpacesMachine = {
   addCollectorLeaves: function (leaf): void {
     leaf = leaf || {};
     leaf.id = leaf.id || 0;

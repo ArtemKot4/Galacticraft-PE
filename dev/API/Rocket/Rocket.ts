@@ -68,7 +68,7 @@ class Rocket {
     new GItem(
       this.rocket,
       1,
-      Number(this.rocket.slice(this.rocket.length - 1))
+      "rocket_" + Number(this.rocket.slice(this.rocket.length - 1))
     );
   }
 

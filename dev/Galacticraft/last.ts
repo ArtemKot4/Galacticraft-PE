@@ -22,8 +22,7 @@ ModAPI.registerAPI("GalacticraftAPI", {
   Storage: Storage,
   CableAPI: CableAPI,
   AirCable: AirCable,
-  battery: battery,
-  oxygenStorage: oxygenStorage,
+  battery: Battery,
   SpacesMachine: SpacesMachine,
   PLANETS: PLANETS,
   requireGlobal: function (command) {

@@ -39,18 +39,6 @@ abstract class Machine extends TileEntityBase implements EnergyModule {
       );
     }
   }
-  public hasRecipe(number: number, array): boolean {
-    for (var s; s < number; s++) {
-      var slot = this.container.getSlot("slot" + s);
-      for (var i in array) {
-        var recipe = array[i];
-      }
-      var result = recipe["slot_" + s];
-      if (slot == result) {
-        return true;
-      }
-    }
-  };
 //   onTick(): void {
 //       if(this.getSlot(8,compressorRecipe)){
 //         alert("work?")

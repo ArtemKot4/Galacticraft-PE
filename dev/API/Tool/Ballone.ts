@@ -13,6 +13,7 @@ class Ballone extends GItem {
     super(strid, 1, strid, strid,0, false);
     this.storage = storage;
     Ballone.IDList.push([ItemID[this.id], storage]);
+    this.description(String(Item.getMaxDamage(ItemID[id]) + storage))
   }
   public static onTick(cont) {
     const bal_1 = cont.getSlot("Ballone1");

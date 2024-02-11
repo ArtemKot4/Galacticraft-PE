@@ -206,6 +206,12 @@ function status(container: ItemContainer, data: TileEntityBase["data"]): void {
   }
 }
 
+const CompressorFactory = new Factory("compressor");
+CompressorFactory.build({
+  machine: BlockID["compressor"],
+  slots: { input: 9, output: 1 },
+});
+
 class Compressor extends Machine {
   public defaultValues = {
     energy: 0,
@@ -214,15 +220,10 @@ class Compressor extends Machine {
     burningMax: 1000,
     active: false,
   };
-  public factory: Factory = new Factory("compressor");
+  public factory: Factory = CompressorFactory;
   public onTick(): void {
     this.container.sendChanges();
     this.container.validateAll();
-
-    this.factory.build({
-      machine: BlockID["compressor"],
-      slots: { input: 9, output: 1 },
-    });
 
     status(this.container, this.data);
     const result = this.container.getSlot("slotResult");

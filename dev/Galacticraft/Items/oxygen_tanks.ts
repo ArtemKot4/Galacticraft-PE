@@ -4,7 +4,6 @@ IMPORT("ChargeItem");
 new GItem("oxygen_canistre_infinite", 1)
 
 ChargeItemRegistry.registerItem(ItemID.oxygen_canister_infinite, "ob", 500, 5, 0, true);
-oxygenStorage.set(ItemID.oxygen_canister_infinite, {storage: 500});
 
 Item.setGlint(ItemID.oxygen_canister_infinite, true);
 

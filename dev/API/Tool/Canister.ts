@@ -33,7 +33,8 @@ class Canister {
     );
 };
   public create(): void {
-    new GItem(this.id,1,this.texture,0,0);
+    new GItem(this.id,1, this.id, this.texture,
+      0, true);
     Item.addToCreative(this.id, 1, 6);
     this.visual();
   }
