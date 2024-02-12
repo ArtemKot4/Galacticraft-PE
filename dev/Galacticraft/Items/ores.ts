@@ -8,6 +8,17 @@ new GItem("desh_stick")
 
 new GItem("dust_titanium");
 
+new GItem("lunar_sapphire");
+
+new GItem("meteoric_iron_raw");
+
+new GItem("raw_desh");
+
+new GItem("raw_silicon");
+
+new GItem("iron_steel_dust");
+
+
 new ItemOre("compressed", "aluminum");
 
 new ItemOre("compressed", "lead");
@@ -30,7 +41,8 @@ new ItemOre("compressed", "tin");
 
 new ItemOre("compressed", "titanium");
 
-new ItemOre("ingot", "aluminum");
+new ItemOre("ingot", "aluminum", 
+["earth", "venus", "asteroids", "moon"]);
 
 new ItemOre("ingot", "copper");
 
@@ -46,77 +58,74 @@ new ItemOre("shard", "tin");
 
 new ItemOre("shard", "copper");
 
+new ItemOre("shard", "aluminum");
 
-IDRegistry.genItemID("aluminum_shard"); 
-Item.createItem("aluminum_shard", "Aluminum shard", {name: "aluminum_shard", meta: 0}, {stack: 64});
+new ItemOre("shard", "iron_steel");
 
-IDRegistry.genItemID("iron_steel_shard"); 
-Item.createItem("iron_steel_shard", "Iron steel shard", {name: "iron_steel_shard", meta: 0}, {stack: 64});
+new ItemOre("shard", "meteoric_iron");
 
-IDRegistry.genItemID("meteoric_iron_shard"); 
-Item.createItem("meteoric_iron_shard", "Meteoric iron shard", {name: "meteoric_iron_shard", meta: 0}, {stack: 64});
+new ItemOre("shard", "titanium")
 
-IDRegistry.genItemID("shard_titanium"); 
-Item.createItem("shard_titanium", "Titanium shard", {name: "titanium_shard", meta: 0}, {stack: 64});
+new ItemOre("ingot", "iron_steel");
 
+new ItemOre("ingot","steel")
 
-IDRegistry.genItemID("iron_steel_dust"); 
-Item.createItem("iron_steel_dust", "Iron Steel Dust", {name: "Iron Steel Dust", meta: 0}, {stack: 64});
+new ItemOre("ingot", "meteoric_iron");
 
-IDRegistry.genItemID("iron_steel_ingot"); 
-Item.createItem("iron_steel_ingot", "Iron Steel Ingot", {name: "Iron Steel Ingot", meta: 0}, {stack: 64});
+new ItemOre("shard", "steel");
 
+new ItemOre("shard", "iron");
 
-IDRegistry.genItemID("ingot_steel"); 
-Item.createItem("ingot_steel", "Steel Ingot", {name: "Steel Don't Mekanism", meta: 0}, {stack: 64});
+new ItemOre("shard", "titanium");
 
-
-IDRegistry.genItemID("meteoric_iron_ingot"); 
-Item.createItem("meteoric_iron_ingot", "Meteoric Iron Ingot", {name: "Meteoric Iron Ingot", meta: 0}, {stack: 64});
-
-
-IDRegistry.genItemID("steel_shards");
-Item.createItem("steel_shards", "Steel Shards", {name: "Steel Shards", meta: 0}, {stack: 64});
-
-
-IDRegistry.genItemID("lunar_sapphire"); 
-Item.createItem("lunar_sapphire", "Lunar Sapphire", {name: "Lunar Sapphire", meta: 0}, {stack: 64});
-
-
-﻿IDRegistry.genItemID("meteoric_iron_raw"); 
-Item.createItem("meteoric_iron_raw", "Meteoric Iron Raw", {name: "Meteoric Iron Raw", meta: 0}, {stack: 64});
-
-
-﻿IDRegistry.genItemID("raw_desh"); 
-Item.createItem("raw_desh", "Raw Desh", {name: "Raw Desh", meta: 0}, {stack: 64});
-
-
-IDRegistry.genItemID("raw_silicon"); 
-Item.createItem("raw_silicon", "Raw Silicon", {name: "Raw Silicon", meta: 0}, {stack: 64});
-
-IDRegistry.genItemID("reinforced_plate_t2"); 
-Item.createItem("reinforced_plate_t2", "Reinforced Plate 2 lvl", {name: "Reinforced Plate T2", meta: 0}, {stack: 64});
-
-
-﻿IDRegistry.genItemID("reinforced_plate_t3"); 
-Item.createItem("reinforced_plate_t3", "Reinforced Plate 3 lvl", {name: "Reinforced Plate T3", meta: 0}, {stack: 64});
-
-
-IDRegistry.genItemID("shard_iron"); 
-Item.createItem("shard_iron", "Shard Iron", {name: "Shard Iron", meta: 0}, {stack: 64});
-
-
-IDRegistry.genItemID("shard_titanium"); 
-Item.createItem("shard_titanium", "Shard Titanium", {name: "Shard Titanium", meta: 0}, {stack: 64});
-
-
-IDRegistry.genItemID("solar_dust_sc"); 
-Item.createItem("solar_dust_sc", "Solar Dust", {name: "Solar Dust", meta: 0}, {stack: 64});
-
+new GItem("solar_dust")
 
 
 Recipes.addFurnace(ItemID.raw_desh, 0, ItemID.ingot_desh, 0);
 
-Recipes.addFurnace(ItemID.shard_iron, 0, VanillaItemID.iron_ingot, 0);
-
 Recipes.addFurnace(ItemID.meteoric_iron_raw, 0, ItemID.meteoric_iron_ingot, 0);
+
+Block.registerDropFunction("ore_solar_asteroids", function(coords, blockID){
+    return [[ItemID.solar_dust_gc, 1, 0]] 
+});
+
+
+Block.registerDropFunction("ore_iron_asteroids", function(coords, blockID){
+    return [[ItemID.shard_iron, 1, 0]] 
+});
+
+
+Block.registerDropFunction("desh", function(coords, blockID){
+    return [[ItemID.raw_desh, 1, 0]] 
+});
+
+
+Block.registerDropFunction("ore_iron_mars", function(coords, blockID){
+    return [[ItemID.shard_iron, 1, 0]] 
+});
+
+
+Block.registerDropFunction("ore_silicon_venus", function(coords, blockID){
+    return [[ItemID.raw_silicon, 1, 0]] 
+});
+
+
+Block.registerDropFunction("venus_quartz", function(coords, blockID){
+    return [[VanillaItemID.quartz, 1, 0]] 
+});
+
+
+
+Block.registerDropFunction("ore_silicon_earth", function(coords, blockID){
+    return [[ItemID.raw_silicon, 1, 0]] 
+});
+
+
+
+Block.registerDropFunction("moonore_sapphire", function(coords, blockID){
+    return [[ItemID.lunar_sapphire, 1, 0]] 
+});
+
+Block.registerDropFunction("moonore_cheese", function(coords, blockID){
+    return [[ItemID.cheese_curd, randomInt(1,3), 0]] 
+});

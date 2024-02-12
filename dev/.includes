@@ -19,6 +19,7 @@ API/Machine/Generator.ts
 API/Machine/MachineStorage.ts
 API/Tool/GItem.ts
 API/Tool/GBlock.ts
+API/Tool/IronBlock.ts
 API/Tool/ItemOre.ts
 API/Tool/Canister.ts
 API/Tool/Ballone.ts
@@ -51,7 +52,7 @@ Galacticraft/Items/food.ts
 Galacticraft/Items/thermal_armor.ts
 Galacticraft/Items/entity_loot.ts
 Galacticraft/Items/machine_parts.ts
-Galacticraft/Items/ores.ts
+
 Galacticraft/Items/oxygen_gear.ts
 Galacticraft/Items/oxygen_tanks.ts
 Galacticraft/Items/parachutes.ts
@@ -62,7 +63,7 @@ Galacticraft/Items/battery.ts
 Galacticraft/Items/entity_loot.ts
 
 
-
+Galacticraft/Blocks/Ores/ores.ts
 Galacticraft/Blocks/Ores/block_ores.ts
 Galacticraft/Blocks/Ores/earth_ores.ts
 Galacticraft/Blocks/Ores/moon_ores.ts
@@ -71,7 +72,7 @@ Galacticraft/Blocks/Ores/asteroids_ores.ts
 Galacticraft/Blocks/Ores/venus_ores.ts
 Galacticraft/Blocks/Ores/block_ores.ts
 
-
+Galacticraft/Items/ores.ts
 
 
 
