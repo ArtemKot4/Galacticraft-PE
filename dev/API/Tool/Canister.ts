@@ -13,7 +13,7 @@ class Canister extends GItem {
 
   public visual(): void {
      const texture = this.texture;
-    Item.registerIconOverrideFunction(this.id, function (item, data) {
+ Item.registerIconOverrideFunction(this.id, function (item, data) {
       return {
         name: item.data == 0 ? "empty_liquid_canister" : texture,
         meta: item.data
@@ -30,10 +30,16 @@ class Canister extends GItem {
     data: any,
     bucket?: true
   ): any {
-    if (
-      Storage.get(container, slot, "id", Canister.get(canister)) &&
+      
+      getInput = (id, value) => { return (Storage.get(container, slot, "id", Canister.get(canister)) &&
       data[canister] != 40 &&
-      Storage.get(container, slot, "data", 6)
+      Storage.get(container, slot, id,
+      value);
+      )
+      };
+      
+    if (
+    getInput("id", Canister.get(canister)) && Storage.get(container, slot, "data", 6)
     ) {
       if (data.energy) data.energy -= 45;
       return (
@@ -42,8 +48,8 @@ class Canister extends GItem {
       );
     } else if (
       bucket &&
-      data[canister] != 40 &&
-      Storage.get(container, slot, "id", ItemID["bucket_of_" + canister])
+      getInput("id", ItemID["bucket_of_"+canister])
+     
     ) {
       if (data.energy) data.energy -= 45;
       return (
