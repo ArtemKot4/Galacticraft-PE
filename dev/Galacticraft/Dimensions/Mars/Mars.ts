@@ -41,19 +41,19 @@ Mars.setOre(BlockID["desh"], {
   count: [1, 6],
 });
 
-Mars.setOre(BlockID["ore_copper_mars"], {
+Mars.setOre("copper", {
   height: [2,65],
   veinCounts: __config__.getFloat("Fossils.Mars.copper_m"),
   count: [1,12]
 })
 
-Mars.setOre(BlockID["ore_iron_mars"], {
+Mars.setOre("iron", {
     height: [2,65],
     veinCounts: __config__.getFloat("Fossils.Mars.iron_m"),
     count: [1,12]
   })
   
-  Mars.setOre(BlockID["ore_tin_mars"], {
+  Mars.setOre("tin", {
     height: [2,65],
     veinCounts: __config__.getFloat("Fossils.Mars.iron_m"),
     count: [1,12]

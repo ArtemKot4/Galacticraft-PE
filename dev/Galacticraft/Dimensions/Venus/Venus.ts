@@ -30,13 +30,13 @@ const Venus = new IPlanet(
   BlockID["venus_rock_2"], [894, 345, 0,894, 345, 0]
 );
 
-Venus.setOre(BlockID["ore_silicon_venus"], {
+Venus.setOre("silicon", {
   height: [1, 70],
   veinCounts: __config__.getFloat("Fossils.Venus.silicon_v"),
   count: [1, 7],
 });
 
-Venus.setOre(BlockID["ore_quartz_venus"], {
+Venus.setOre("quartz", {
   height: [2, 128],
   veinCounts: __config__.getFloat("Fossils.Venus.quartz_v"),
   count: [1, 7],
@@ -48,19 +48,19 @@ Venus.setOre(BlockID["sulphuric_acid_still"], {
   count: [6, 14],
 });
 
-Venus.setOre(BlockID["ore_copper_venus"], {
+Venus.setOre("copper", {
   height: [2, 128],
   veinCounts: __config__.getFloat("Fossils.Venus.copper_v"),
   count: [1, 12],
 });
 
-Venus.setOre(BlockID["ore_tin_venus"], {
+Venus.setOre("tin", {
   height: [2, 80],
   veinCounts: __config__.getFloat("Fossils.Venus.tin_v"),
   count: [1, 12],
 });
 
-Venus.setOre(BlockID["ore_galena"], {
+Venus.setOre("galena", {
   height: [2, 80],
   veinCounts: __config__.getFloat("Fossils.Venus.galena"),
   count: [1, 7],

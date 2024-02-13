@@ -34,7 +34,7 @@ const Moon = new IPlanet(
   BlockID.lunar_stone
 );
 
-Moon.setOre(BlockID["ore_copper_moon"], {
+Moon.setOre("copper", {
   height: [2, 65],
   veinCounts: __config__.getFloat("Fossils.Moon.copper"),
   count: [3, 10],
@@ -52,7 +52,7 @@ Moon.setOre(BlockID["moonore_cheese"], {
   count: [4, 9],
 });
 
-Moon.setOre(BlockID["ore_tin_moon"], {
+Moon.setOre("tin", {
     height: [2,65], veinCounts: __config__.getFloat("Fossils.Moon.tin"), count: [4,12]
 })
 

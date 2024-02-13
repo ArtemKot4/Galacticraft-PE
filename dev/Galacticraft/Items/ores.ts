@@ -41,8 +41,7 @@ new ItemOre("compressed", "tin");
 
 new ItemOre("compressed", "titanium");
 
-new ItemOre("ingot", "aluminum", 
-["earth", "venus", "asteroids", "moon"]);
+new ItemOre("ingot", "aluminum");
 
 new ItemOre("ingot", "copper");
 

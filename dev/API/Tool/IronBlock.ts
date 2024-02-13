@@ -1,4 +1,5 @@
 const IronBlock = (id: string, planets: string[] | string) => {
+    IronBlock.planetList[id] = planets;
     let keyword = "ore_" + id + "_" + planets;
     if(Array.isArray(planets)) {
         for(const i in planets) {
@@ -27,4 +28,6 @@ const IronBlock = (id: string, planets: string[] | string) => {
     ],
     STONE
   );
- }
+ };
+ 
+ IronBlock.planetList = {};
