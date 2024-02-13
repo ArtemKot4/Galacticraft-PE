@@ -72,14 +72,13 @@ class IPlanet {
   };
   
   public setOre(
-    ore: int | string,
+    ore: string | int,
     obj: { height: [int, int]; veinCounts: int; count: [int, int],stone?: int }
   ): void {
    if(!obj) return;
    obj.stone = obj.stone || this.stone;
-    
        
-        IPlanet.oreParams.push({ore: typeof ore === "number" ? ore : BlockID["ore_" + ore + "_" + this.planet_uid[0] ], obj: obj, planet: this.planet_uid[1]});
+        IPlanet.oreParams.push({ore: typeof ore === "string" ? BlockID["ore_" + ore + "_" + this.planet_uid[0] : ore , obj: obj, planet: this.planet_uid[1]});
 }
   public getSkyColors(): number[] {
     return this.colors;
