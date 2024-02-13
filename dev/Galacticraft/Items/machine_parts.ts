@@ -41,3 +41,7 @@ new GItem("canister_copper", 16);
 new GItem("canister_tin", 16);
 
 new GItem("iron_steel_canister", 16);
+
+new GItem("reinforced_plate_t2")
+
+new GItem("reinforced_plate_t3")

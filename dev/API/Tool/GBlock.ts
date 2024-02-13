@@ -11,6 +11,7 @@ class GBlock {
     this.id = id;
     this.data = data;
     this.type = type || null;
+    this.create();
   }
   public create(): void {
     IDRegistry.genBlockID(this.id);

@@ -1,21 +1,18 @@
 type id = any;
 //typeof BlockID[string] | number
-
+type ores = int | string | Array<string | number>;
 /**
  * Класс для регистрации предметов руды
  * @type тип создаваемой руды
  * @type_2 ключевой идентификатор руды
  */
 class ItemOre extends GItem {
-  // private item_list: [];
-
-  constructor(type: "compressed", type_2: string);
-  constructor(type: "ingot", type_2: string, ore?: int | string);
-  constructor(type: "shard", type_2: string | ItemInstance);
+  constructor(type: "ingot", type_2: string, ore?: ores);
+  constructor(type: "shard" | "compressed", type_2: string);
   constructor(
     type: "ingot" | "compressed" | "shard",
     type_2: string,
-    ore?: int | string
+    ore?: ores
   ) {
     const type_ = type + "_" + type_2;
 
@@ -24,15 +21,31 @@ class ItemOre extends GItem {
     this.recipe(type, type_2, type_, ore || null);
   }
 
-  private recipe(type, type_2, type_, ore): void {
-    if (ore && type == "ingot") {
+  private recipe(type, type_2, type_, planet_ore): void {
+    //it's convert key word to planet ore uid
+    const valid = (ore_param, ore) => typeof ore === "number" ? planet_ore : BlockID[ore]
+    if(type == "ingot" && planet_ore) {
+    if (Array.isArray(planet_ore)) {
+      for(const i in planet_ore) {
+        const ore = "ore_" + type_2 + "_" + planet_ore[i]; 
+        Recipes.addFurnace(
+          valid(planet_ore, ore[i]),
+          0,
+          ItemID["ingot_" + this.id],
+          0
+        );
+      }
+    }
+    else {
       Recipes.addFurnace(
-        typeof ore === "number" ? ore : BlockID[ore],
+        valid(planet_ore, planet_ore),
         0,
         ItemID["ingot_" + this.id],
         0
       );
-    } else if (type == "shard") {
+      
+    } }
+    else if (type == "shard") {
       const ingot = ItemID["ingot_" + type_2 + "_gc"];
       Recipes.addShapeless({ id: ItemID[type_], count: 9, data: 0 }, [
         {
@@ -47,5 +60,5 @@ class ItemOre extends GItem {
         ["a", ingot, 0]
       );
     }
-  }
+  };
 }
