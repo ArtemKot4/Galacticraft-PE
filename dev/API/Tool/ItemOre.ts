@@ -15,7 +15,7 @@ class ItemOre extends GItem {
   ) {
     const type_ = type + "_" + type_2;
     const planetList = IronBlock.planetList[type_2];
-    if(!planetList) throw new Error("Error! You need register list of planets key to your ore");
+    if(!planetList) throw new Error("Error! You need register list of planets key in Iron Block to register your item ore");
     super(type == "ingot" ? type_ + "_gc" : type_, 64);
 
     this.recipe(type, type_2, type_, planetList);
@@ -23,7 +23,7 @@ class ItemOre extends GItem {
 
   private recipe(type, type_2, type_, planetList): void {
     //it's convert key word to planet ore uid
-    const valid = (ore) => typeof ore === "number" ? ore : BlockID[ore]
+    const valid = (ore) => typeof ore === "number" ? ore : BlockID[ore];
     if(type == "ingot" && planetList) {
     if (Array.isArray(planetList)) {
       for(const i in planetList) {

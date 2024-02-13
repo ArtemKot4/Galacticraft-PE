@@ -56,7 +56,7 @@ Moon.setOre("tin", {
     height: [2,65], veinCounts: __config__.getFloat("Fossils.Moon.tin"), count: [4,12]
 })
 
-Callback.addCallback("ItemUse", function (coords, item, block, is, player) {
+Callback.addCallback("ItemUse", function (coords, item, block, id, player) {
   if (Entity.getCarriedItem(player).id == 0 && block.id == BlockID.computer_c) {
     Dimensions.transfer(player, Moon.getPlanet());
   }
