@@ -33,8 +33,8 @@ function Battery (
     });
   };
 
-  if(count == "infinite")
-     this.setInfinite(ItemID[id], strength || 0)
+  if(count == "infinite"){
+     this.setInfinite(ItemID[id], strength || 0) }
     else ChargeItemRegistry.registerItem(
         ItemID[id],
         "GalacticraftJoule",
