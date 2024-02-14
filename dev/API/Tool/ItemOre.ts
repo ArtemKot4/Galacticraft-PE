@@ -48,7 +48,7 @@ class ItemOre extends GItem {
     } }
     else if (type == "shard") {
       const ingot = ItemID[type_ + "_gc"];
-      Recipes.addShapeless({ id: ingot], count: 9, data: 0 }, [
+      Recipes.addShapeless({ id: ingot, count: 9, data: 0 }, [
         {
           id: ingot,
           data: 0,

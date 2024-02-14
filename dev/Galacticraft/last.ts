@@ -15,8 +15,7 @@ Callback.addCallback("LocalTick", () => {
 
 
 ModAPI.registerAPI("GalacticraftAPI", {
-  IPlanet: IPlanet,
-  DimensionEvent: Atmosphere.DimensionEvent,
+  Atmosphere: Atmosphere,
   GItem: GItem,
   GBlock: GBlock,
   Storage: Storage,

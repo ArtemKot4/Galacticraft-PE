@@ -31,10 +31,10 @@ class Canister extends GItem {
     bucket?: true
   ): any {
       
-      getInput = (id, value) => { return (Storage.get(container, slot, "id", Canister.get(canister)) &&
+      const getInput = (id, value) => { return (Storage.get(container, slot, "id", Canister.get(canister)) &&
       data[canister] != 40 &&
       Storage.get(container, slot, id,
-      value);
+      value)
       )
       };
       

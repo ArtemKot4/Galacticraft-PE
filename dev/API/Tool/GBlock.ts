@@ -13,7 +13,7 @@ class GBlock {
     this.type = type || null;
     this.create();
   }
-  public create(): void {
+  private create(): void {
     IDRegistry.genBlockID(this.id);
     Block.createBlockWithRotation(this.id, this.data, this.type);
   }
