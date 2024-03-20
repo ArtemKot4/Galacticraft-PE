@@ -42,13 +42,10 @@ class GItem {
     });
   }
 
-  public info(text: information, translation?: {}): void {
+  public info(text: string, translation?: {}): void {
     if(translation && typeof text == "string") Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
-      const validate = (typeof text !== "function") ? 
-      Translation.translate(name) + "\n§7" + Translation.translate(text) : text(item, name); 
-      if (Entity.getSneaking(Player.get())) 
-        return validate;
+      if(Entity.getSneaking(Player.getLocal())) return Translation.translate(name) + text
       else
         return (
           Translation.translate(name) +

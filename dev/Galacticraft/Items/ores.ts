@@ -80,10 +80,6 @@ new ItemOre("shard", "titanium");
 new GItem("solar_dust")
 
 
-Recipes.addFurnace(ItemID.raw_desh, 0, ItemID.ingot_desh, 0);
-
-Recipes.addFurnace(ItemID.meteoric_iron_raw, 0, ItemID.meteoric_iron_ingot, 0);
-
 Block.registerDropFunction("ore_solar_asteroids", function(coords, blockID){
     return [[ItemID.solar_dust_gc, 1, 0]] 
 });

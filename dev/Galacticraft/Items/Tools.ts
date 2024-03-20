@@ -14,8 +14,8 @@ Item.createItem(toolspace[i], toolspace[i], {name: toolspace[i], meta: 0}, {stac
 
 
 
-var glasstainer = new UI.Container()
-var ARMORGLASSES = new UI.Window({
+const glasstainer = new UI.Container()
+const ARMORGLASSES = new UI.Window({
 	location: {
     	x: 0,
         y: 0,

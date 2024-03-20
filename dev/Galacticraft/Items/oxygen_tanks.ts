@@ -1,7 +1,7 @@
 
 IMPORT("ChargeItem");
 
-new GItem("oxygen_canistre_infinite", 1)
+new GItem("oxygen_canister_infinite", 1, "Infinite canister", "oxygen_canistre_infinite")
 
 ChargeItemRegistry.registerItem(ItemID.oxygen_canister_infinite, "ob", 500, 5, 0, true);
 

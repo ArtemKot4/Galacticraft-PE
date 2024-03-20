@@ -126,7 +126,7 @@ class EnergyStorage extends MachineStorage {
                 
         //     }};
                  //   battery.add(this.container, this.data, "EnergySlot");
-                    Battery.addInfinite(this.container, this.data, "EnergySlot")
+                    InfiniteBattery.addInfinite(this.container, this.data, "EnergySlot")
                 
                 }
     

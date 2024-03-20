@@ -924,4 +924,11 @@ Recipes.addShaped({id: ItemID.oxygen_mask, count: 1, data: 0}, [
     "aaa"
 ], ['a', VanillaBlockID.glass_pane, 0,'b',VanillaItemID.iron_helmet,0]);
 
+
+Recipes.addFurnace(ItemID.raw_desh, 0, ItemID.ingot_desh, 0);
+
+Recipes.addFurnace(ItemID.meteoric_iron_raw, 0, ItemID.meteoric_iron_ingot, 0);
+
+Recipes.addFurnace(BlockID["ore_iron_mars"], 0, VanillaItemID.iron_ingot, 0)
+
 });

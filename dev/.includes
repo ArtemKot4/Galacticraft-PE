@@ -48,6 +48,8 @@ Galacticraft/Dimensions/Mars/Blocks/mars_blocks.ts
 Galacticraft/Dimensions/Venus/Blocks/venus_blocks.ts
 Galacticraft/Dimensions/Asteroids/Blocks/asteroid_blocks.ts
 
+Galacticraft/Blocks/Decorative/footprint.ts
+
 Galacticraft/Items/food.ts
 Galacticraft/Items/thermal_armor.ts
 Galacticraft/Items/entity_loot.ts
@@ -136,7 +138,6 @@ Galacticraft/Blocks/Ores/ore_tin_mars.ts
 Galacticraft/Blocks/Ores/ore_copper_mars.ts
 
 Galacticraft/Blocks/Ores/ore_iron_mars.ts
-
 
 
 
