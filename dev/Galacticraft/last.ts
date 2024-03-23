@@ -4,11 +4,6 @@ IPlanet.oreGeneration();
 //  Galacticraft.onInitialize();
 //});
 
-Callback.addCallback("LocalTick", () => {
-  //Galacticraft.onTick();
-  Atmosphere.VWeatherEvent.onTick()
-});
-
 //Callback.addCallback("EntityInteract", (entity) => {
  //  Rocket.onInteract(entity);
 //});

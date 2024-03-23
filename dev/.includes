@@ -11,6 +11,18 @@ API/Prototype/EnergyModule.ts
 
 API/Util/functions.ts
 
+API/Tool/GBlock.ts
+//GBlock на место Потом
+
+API/Atmosphere/IGravity.ts
+API/Atmosphere/Sky.ts
+API/Atmosphere/DimensionEvent.ts
+API/Atmosphere/IPlanet.ts
+
+Galacticraft/Dimensions/SpaceStation/Structures/station.ts
+Galacticraft/Dimensions/SpaceStation/SpaceStation.ts 
+//Потом верни на место
+
 API/Machine/MachineUI.ts
 API/Machine/Factory.ts
 API/Machine/Machine.ts
@@ -18,7 +30,7 @@ API/Machine/InputMachine.ts
 API/Machine/Generator.ts
 API/Machine/MachineStorage.ts
 API/Tool/GItem.ts
-API/Tool/GBlock.ts
+
 API/Tool/IronBlock.ts
 API/Tool/ItemOre.ts
 API/Tool/Canister.ts
@@ -27,10 +39,6 @@ API/Tool/Gear.ts
 API/Tool/Battery.ts
 API/Tool/ThermalArmor.ts
 API/Tool/Entity.ts
-API/Atmosphere/IGravity.ts
-API/Atmosphere/Sky.ts
-API/Atmosphere/DimensionEvent.ts
-API/Atmosphere/IPlanet.ts
 
 API/Rocket/Rocket.ts
 API/Rocket/UI.ts
@@ -79,7 +87,7 @@ Galacticraft/Items/ores.ts
 
 
 
-Galacticraft/Dimensions/SpaceStation/SpaceStation.ts
+
 Galacticraft/Dimensions/Moon/Moon.ts
 Galacticraft/Dimensions/Mars/Mars.ts
 Galacticraft/Dimensions/Asteroids/Asteroids.ts

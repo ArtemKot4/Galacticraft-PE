@@ -10,13 +10,15 @@ class IPlanet {
   public stone: int;
   public colors: colors;
   public createPlanet(): void {
-    const planet_biome = new CustomBiome(this.biome_uid).setSkyColor(
-      android.graphics.Color.rgb(this.colors[0], this.colors[1], this.colors[2])
-    );
+    const planet_biome = new CustomBiome(this.biome_uid);
     const planet = new Dimensions.CustomDimension(
       this.planet_uid[0],
       this.planet_uid[1]
-    ).setFogColor(this.colors[3], this.colors[4], this.colors[5]);
+    );
+    planet.setSkyColor(this.colors[0], this.colors[1], this.colors[2]);
+
+    planet.setFogColor(this.colors[3], this.colors[4], this.colors[5]);
+    
     planet.setGenerator(
       Dimensions.newGenerator({
         biome: planet_biome.id,
@@ -28,6 +30,11 @@ class IPlanet {
   public static transfer(planet): void {
     Network.sendToServer("gc:planet_provider", planet.id); //!
   }
+
+/**
+ * 
+ * @возвращает числовой идентификатор планеты
+ */
 
   public getPlanet(): int {
     return this.planet_uid[1];

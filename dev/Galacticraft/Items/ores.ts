@@ -19,63 +19,63 @@ new GItem("raw_silicon");
 new GItem("iron_steel_dust");
 
 
-new ItemOre("compressed", "aluminum");
+// new ItemOre("compressed", "aluminum");
 
-new ItemOre("compressed", "lead");
+// new ItemOre("compressed", "lead");
 
-new ItemOre("ingot", "bronze");
+// new ItemOre("ingot", "bronze");
 
-new ItemOre("compressed", "bronze")
+// new ItemOre("compressed", "bronze")
 
-new ItemOre("compressed", "copper")
+// new ItemOre("compressed", "copper")
 
-new ItemOre("compressed", "iron")
+// new ItemOre("compressed", "iron")
 
-new ItemOre("compressed", "iron_steel");
+// new ItemOre("compressed", "iron_steel");
 
-new ItemOre("compressed", "metheoric_item");
+// new ItemOre("compressed", "metheoric_item");
 
-new ItemOre("compressed", "steel");
+// new ItemOre("compressed", "steel");
 
-new ItemOre("compressed", "tin");
+// new ItemOre("compressed", "tin");
 
-new ItemOre("compressed", "titanium");
+// new ItemOre("compressed", "titanium");
 
-new ItemOre("ingot", "aluminum");
+// new ItemOre("ingot", "aluminum");
 
-new ItemOre("ingot", "copper");
+// new ItemOre("ingot", "copper");
 
-new ItemOre("ingot", "desh");
+// new ItemOre("ingot", "desh");
 
-new ItemOre("ingot", "lead");
+// new ItemOre("ingot", "lead");
 
-new ItemOre("ingot", "tin")
+// new ItemOre("ingot", "tin")
 
-new ItemOre("ingot", "titanium")
+// new ItemOre("ingot", "titanium")
 
-new ItemOre("shard", "tin");
+// new ItemOre("shard", "tin");
 
-new ItemOre("shard", "copper");
+// new ItemOre("shard", "copper");
 
-new ItemOre("shard", "aluminum");
+// new ItemOre("shard", "aluminum");
 
-new ItemOre("shard", "iron_steel");
+// new ItemOre("shard", "iron_steel");
 
-new ItemOre("shard", "meteoric_iron");
+// new ItemOre("shard", "meteoric_iron");
 
-new ItemOre("shard", "titanium")
+// new ItemOre("shard", "titanium")
 
-new ItemOre("ingot", "iron_steel");
+// new ItemOre("ingot", "iron_steel");
 
-new ItemOre("ingot","steel")
+// new ItemOre("ingot","steel")
 
-new ItemOre("ingot", "meteoric_iron");
+// new ItemOre("ingot", "meteoric_iron");
 
-new ItemOre("shard", "steel");
+// new ItemOre("shard", "steel");
 
-new ItemOre("shard", "iron");
+// new ItemOre("shard", "iron");
 
-new ItemOre("shard", "titanium");
+// new ItemOre("shard", "titanium");
 
 new GItem("solar_dust")
 

@@ -33,17 +33,16 @@ class GItem {
     );
 
   }
-  public description(text: information, translation?: {}): void {
+  public description(text: string, translation?: {}): void {
    if(translation && typeof text == "string") Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
-      const validate = (typeof text !== "function") ? 
-      Translation.translate(name) + "\n§7" + Translation.translate(text) : text(item, name); 
-      return validate;
+     
+      Translation.translate(name) + "\n§7" + Translation.translate(text)
     });
   }
 
   public info(text: string, translation?: {}): void {
-    if(translation && typeof text == "string") Translation.addTranslation(text, translation);
+    if(translation) Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
       if(Entity.getSneaking(Player.getLocal())) return Translation.translate(name) + text
       else

@@ -7,15 +7,6 @@ function commandRegistry(
   cmd.push({ description: description, action: action, msg: msg });
 }
 
-
-commandRegistry("weather venus rain", () => {
-  if(Player.getDimension()==2008){
-  Atmosphere.VWeatherEvent.timer = false;
-  Game.message(Translation.translate("Weather changed succesfully"));}else{
-    Game.message(Translation.translate("Sorry,but you must be in Venus,for changed weather to rain"))
-  }
-});
-
 // commandRegistry("weather venus clear", () => {
 //   weather_rain = false;
 //   timer_weather = 0;

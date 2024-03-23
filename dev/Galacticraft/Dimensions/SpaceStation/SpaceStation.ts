@@ -9,7 +9,7 @@ const AIR_SPACES = Block.createSpecialType({
 IDRegistry.genBlockID("space_air");
 Block.createBlock("space_air",[{name: "Space Air", texture: [["Black", 0]], inCreative: false} ],AIR_SPACES);
 
-var SpacesStation = new IPlanet("spaces",["space_station",27],[
+const SpacesStation = new IPlanet("spaces",["space_station",27],[
 
     { minY: 0,
       	maxY: 1,
@@ -18,32 +18,17 @@ var SpacesStation = new IPlanet("spaces",["space_station",27],[
                 data: 0,
                 width: 1
             },
-            cover: BlockID.space_air}}])
+            cover: BlockID.space_air}}], null, [0, 0, 0, 0, 0, 0])
 
-/*
-   Callback.addCallback('LevelDisplayed', function (dimension,ent) {
-if(Entity.getDimension(ent).id==Spaces.id&& standStation == true){
-	var spacePosition = Entity.getPosition(ent);
-	var region = BlockSource.getDefaultForActor(ent);
-    
-    region.setBlock(spacePosition.x, spacePosition.y-1, spacePosition.z, BlockID.deco_block);  
-    region.setBlock(spacePosition.x-1, spacePosition.y-1, spacePosition.z, BlockID.deco_block);  
-    region.setBlock(spacePosition.x, spacePosition.y-1, spacePosition.z-1, BlockID.deco_block);  
-    region.setBlock(spacePosition.x-1, spacePosition.y-1, spacePosition.z-1, BlockID.deco_block);  
-    region.setBlock(spacePosition.x+1, spacePosition.y-1, spacePosition.z, BlockID.deco_block);  
-    region.setBlock(spacePosition.x, spacePosition.y-1, spacePosition.z+1, BlockID.deco_block);  
-    region.setBlock(spacePosition.x+1, spacePosition.y-1, spacePosition.z+1, BlockID.deco_block);  
-    region.setBlock(spacePosition.x+1, spacePosition.y-1, spacePosition.z-1, BlockID.deco_block);  
-    region.setBlock(spacePosition.x-1, spacePosition.y-1, spacePosition.z+1, BlockID.deco_block);  
-     region.setBlock(spacePosition.x, spacePosition.y-1, spacePosition.z-2, BlockID.deco_block);  
-     region.setBlock(spacePosition.x-2, spacePosition.y-1, spacePosition.z, BlockID.deco_block);  
-     region.setBlock(spacePosition.x+2, spacePosition.y-1, spacePosition.z, BlockID.deco_block);  
-     region.setBlock(spacePosition.x, spacePosition.y-1, spacePosition.z+2, BlockID.deco_block);  
-     region.setBlock(spacePosition.x-2, spacePosition.y-1, spacePosition.z-2, BlockID.deco_block);  
-     region.setBlock(spacePosition.x+2, spacePosition.y-1, spacePosition.z+2, BlockID.deco_block);  
-     Player.setPosition(coords.x, coords.y-1, coords.z);
+
+   Callback.addCallback('LevelDisplayed', function () {
+    const ent = Player.getLocal();
+if(Entity.getDimension(ent) === SpacesStation.getPlanet()){
+
+	const pos = Entity.getPosition(ent);
+	const region = BlockSource.getDefaultForActor(ent);
 }
-});*/
+});
 
 /*
 Saver.addSavesScope("Station",

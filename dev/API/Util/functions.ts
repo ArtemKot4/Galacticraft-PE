@@ -1,5 +1,5 @@
 
-
+const sec = (time) => (World.getThreadTime() % time) * 20 === 0;
 
 //excludes functions of js
 

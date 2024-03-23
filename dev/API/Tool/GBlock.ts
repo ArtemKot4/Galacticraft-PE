@@ -18,11 +18,24 @@ class GBlock {
     Block.createBlockWithRotation(this.id, this.data, this.type);
   }
 
-  public info(text: information, translation?: {}): void {
-    GItem.prototype.info.apply(this, arguments);
+  public info(text: string, translation?: {}): void {
+    if (translation) Translation.addTranslation(text, translation);
+    Item.registerNameOverrideFunction(this.id, function (item, name) {
+      if (Entity.getSneaking(Player.getLocal()))
+        return Translation.translate(name) + text;
+      else
+        return (
+          Translation.translate(name) +
+          "\n§7" +
+          Translation.translate("Press SHIFT for view information")
+        );
+    });
   }
-  public description(text: information, translation?: {}): void {
-    GItem.prototype.description.apply(this, arguments);
+  public description(text: string, translation?: {}): void {
+    if (translation) Translation.addTranslation(text, translation);
+    Item.registerNameOverrideFunction(this.id, function (item, name) {
+      Translation.translate(name) + "\n§7" + Translation.translate(text);
+    });
   }
   public placeableByItem(itemId: any): void {
     Item.registerUseFunction(itemId, function (coords, item, block, player) {
@@ -40,19 +53,21 @@ class GBlock {
       }
     });
   }
-    public setupObjModel(texture, model, scale?: [int, int, int]) {
-      const mesh = new RenderMesh();
-      mesh.setBlockTexture(texture, 0);
-      mesh.importFromFile(__dir__ + "/resources/models/" + (model || texture) 
-      + ".obj", "obj", {
+  public setupObjModel(texture, model, scale?: [int, int, int]) {
+    const mesh = new RenderMesh();
+    mesh.setBlockTexture(texture, 0);
+    mesh.importFromFile(
+      __dir__ + "/resources/models/" + (model || texture) + ".obj",
+      "obj",
+      {
         translate: [0.5, 0, 0.5],
         scale: scale,
         invertV: false,
         noRebuild: false,
-      });
-      const render = new ICRender.Model();
-      render.addEntry(new BlockRenderer.Model(mesh));
-         BlockRenderer.setStaticICRender(BlockID[this.id], 0, render);
-    
-  };
+      }
+    );
+    const render = new ICRender.Model();
+    render.addEntry(new BlockRenderer.Model(mesh));
+    BlockRenderer.setStaticICRender(BlockID[this.id], 0, render);
+  }
 }

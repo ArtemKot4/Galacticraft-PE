@@ -5,7 +5,7 @@ const infinitybatt = [];
 function Battery(id: string, count: int): void {
   const item = new GItem(id, 1);
   Item.registerNameOverrideFunction(id, function (item, name) {
-    return "\n" + "gJ: " + item.data + " / " + count;
+    return Translation.translate(name) + "\n" + "gJ: " + item.data + " / " + count;
   });
 
   ChargeItemRegistry.registerItem(
