@@ -254,7 +254,7 @@ class CircuitFabricator extends InputMachine {
             this.container.getSlot("slot_" + n).count -= 1;
 
             this.container.setSlot(
-              slots,
+              "slot_" + n,
               slots.id,
               slots.count,
               slots.data

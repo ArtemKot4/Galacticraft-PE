@@ -93,59 +93,51 @@ let CoalGeneratorUI = new UI.StandartWindow(
         }
     });
 
+const CoalFactory = new RecipeFactory();
+CoalFactory.set({"coal_slot": {
+    id: VanillaItemID.coal, count: 1, data: 0, extra: null
+}})
+
 class CoalGenerator extends Generator {
+
     public defaultValues = {
         energy: 0,
         energyMax: 3000,
         burningMax: 3000,
         burning: 0,
-        active: false,
-        fire: 0
+        active: false
     };
-   public static isCoal(slot, container, data): void {
-        const slot_ = container.getSlot([slot]);
-        for (let i in burnItems) {
-            if (slot.id == burnItems[i].id && data.burning != data.burningMax) {
+   public static isCoal(slot: name, container: ItemContainer, data: TileEntity['data']): void {
+
+        const _slot = container.getSlot(slot);
+        for (const i in CoalFactory.storage) {
+            const recipe = RecipeFactory.get(container, CoalFactory.storage[i]); 
+          //  if (_slot.id === burnItems[i].id && data.burning != data.burningMax) {
+            if (recipe("coal_slot", "id") && data.burning !== data.burningMax) {
                 data.burning += data.burningMax;
             
-                slot.count--
+                _slot.count--
 
                 data.active = true;
             }
         }
-        if (data.burning == data.burningMax && data.active == true && data.energy <= data.energyMax) { 
+        if (data.burning === data.burningMax && data.active === true && data.energy <= data.energyMax) { 
             data.energy += 1 }
-        if (data.energy == data.energyMax) { data.active = false; data.burning = 0 }
+        if (data.energy === data.energyMax) { data.active = false; data.burning = 0 }
 
     }
     
     public onTick(): void {
         this.container.sendChanges();
         this.container.validateAll();
-        if(__config__.getBool("Gameplay.Special_Effects") == true &&
-            __config__.getBool("Difficulty.Machine.Heating") == false&&this.data.energy>0){
-                Particles.addParticle(
-                    7, this.x + 0.1,
-                    this.y + 0.6,
-                    this.z + 0.1,
-                    Math.random() / 20,
-                    Math.random() / 20,
-                    Math.random() / 20);
-                   
-            }
-    
-        if (
-            this.data.fire >= 1 &&
-            __config__.getBool("Gameplay.Special_Effects") == true &&
-            __config__.getBool("Difficulty.Machine.Heating") == true) {
-            Particles.addParticle(
-                7, this.x + 0.1,
-                this.y + 0.6,
-                this.z + 0.1,
-                Math.random() / 20,
-                Math.random() / 20,
-                Math.random() / 20);
-        };
+
+        Particles.addParticle(
+            7, this.x + 0.5,
+            this.y + 0.5,
+            this.z + 0.5,
+            Math.random() / 20,
+            Math.random() / 20,
+            Math.random() / 20);
 
 
         CoalGenerator.isCoal("coal_slot", this.container, this.data)
@@ -167,24 +159,11 @@ class CoalGenerator extends Generator {
 
         if (this.data.energy >= this.data.energyMax) {
             this.container.setText("Status", Translation.translate("Status: storage full"));
-            if (__config__.getBool("Difficulty.Machine.Heating") == true) {
-                // this.container.setScale("firescale", this.data.fire / 100);
-                // this.container.setText("FiringStatus", Translation.translate("Heating : ") + this.data.fire + "%");
-
-                if (this.data.fire >= 100) {
-                    this.blockSource.explode(this.x, this.y, this.z, 1, true)
-                }
-                if (World.getThreadTime() % 200 == 0 && __config__.getBool("Difficulty.Machine.Heating") == true &&
-                    this.data.energy >= 3000) {
-                    this.data.fire += 1
-                } else if (this.data.fire > 0) { this.data.fire-- }
-
-            }
+           
         }
     };
 
 }
-
 
 
 SpacesMachine.registerStandartMachine(BlockID.coal_generator, new CoalGenerator(CoalGeneratorUI))

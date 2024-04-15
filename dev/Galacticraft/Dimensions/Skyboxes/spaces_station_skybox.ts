@@ -3,10 +3,6 @@ namespace Atmosphere {
     public static EARTH = Sky.createBox(100, Math.PI / 2, "earth");
   }
 
-  function position(coord) {
-    return coord > 0 ? 0.05 : -0.05;
-};
-
   function StationUpdatable() {
     return {
       update: function () {
@@ -21,9 +17,9 @@ namespace Atmosphere {
         const pos = Entity.getPosition(Player.getLocal());
        if(Player.getFlying() === false) Entity.setVelocity(
           Player.get(),
-          position(pos.x),
-          position(pos.y),
-          position(pos.z)
+          Player.getVelocity().x * 2.005,
+          Player.getVelocity().y * 2.005,
+          Player.getVelocity().z * 2.005
         );
         
         return Sky.setupPosition(

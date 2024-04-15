@@ -1,62 +1,42 @@
-/**
- * Класс для регистрации рецептов;
- */
 type count = int;
+type slot =
+  | "slot_1"
+  | "slot_2"
+  | "slot_3"
+  | "slot_4"
+  | "slot_5"
+  | "slot_6"
+  | "slot_7"
+  | "slot_9";
 
-class Factory {
-  /**
-   * {recipes: {result: int | {...result_ -> index : int},...slot_ -> index: values}}
-   */
-  public list: any = {};
-  protected readonly name: string;
-  public build(
-    description: {
-      machine: (typeof BlockID)[string];
-      slots: { input: count; output: count; recipes?: [] };
-    },
-    pushToAll?: boolean
-  ) {
-     ObjectAssign(this.list, description, { recipes: [] });
-    //  if(pushToAll) Factory.factoriesList[this.name] = assign;
-  }
-  constructor(name = "unknown factory") {
-    this.name = name;
-  }
-  public set(...ids) {
-    const list = this.list;
-    if (ids.length > list.slots.input)
-      throw new Error(
-        "Invalid count of ids! Ids must include only slots count"
-      );
+type slot_value = "id" | "data" | "count" | "extra";
 
-    list.recipes[ids[0]] = {};
-    for (const i in ids) {
-      let slots = Number(i) == 0 ? "slots_" + 1 : "slots_" + i;
-      ObjectAssign(list.recipes[ids[0]], { result: ids[0], [slots]: ids[i] }); // result = number || Object -> includes {...result_ -> (index starts from 0): int}
-    }
-  }
-  public getInput(container): boolean {
-    const list = this.list;
-    
-    for(let i = 1; i <= list.slots.input; i++){
-     const slots = ("slot_" + i);
-      for(const k in list.recipes) {
-        const recipes = list.recipes[k][slots];
-        return container.getSlot(slots).id === recipes
-      }
-  
+class RecipeFactory {
+  public storage = [];
+  constructor() {}
+  public set(obj: Record<string, ItemInstance>) {
+    this.storage.push(obj);
+    return this;
+  };
+  public static get(container: ItemContainer, storage: object[]) {
+    return function (slot, value: slot_value) {
+        return container.getSlot(slot)[value] === storage[slot][value];
     };
-  }
-  public getOutput(index?) {
-    //index need if result is object
-    const list = this.list.recipes;
-    let result;
-    for (const i in list) {
-      result =
-        list instanceof Object && Object.keys(list).length > 1
-          ? list[i]["result"]["result_" + index]
-          : list[i]["result"];
+  };
+  public static getForMore(container: ItemContainer, storage: object[], count: int) {
+      const recipe = RecipeFactory.get(container, storage);
+      for(let i = 1; i <= count; i++) {
+        if(!recipe("slot_" + i, 'id')) return false;
+      };
+      return true
+  };
+  public static decreaseSlots(container: ItemContainer, count) {
+    for(let i = 1; i <= count; i++) {
+      const slot = container.getSlot("slot");
+      container.setSlot("slot_" + i, slot.id, slot.count--, slot.data, slot.extra)
     }
-    return result;
+};
+  public static setupResult(container: ItemContainer, slot: name, storage: ItemInstance) {
+   return container.setSlot(slot, storage.id, storage.count, storage.data);
   }
 }
