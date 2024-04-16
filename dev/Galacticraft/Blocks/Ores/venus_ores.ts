@@ -5,4 +5,4 @@ Block.createBlock(
   STONE
 );
 
-new IronBlock("galena", "venus");
+new IronBlock("galena", "venus").create();

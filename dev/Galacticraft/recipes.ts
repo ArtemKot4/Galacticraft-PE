@@ -7,7 +7,19 @@ SpacesMachine.addCollectorLeaves({leaf: VanillaBlockID.leaves2});
 //SpacesMachine.addCollectorLeaves({leaf: VanillaBlockID.vic_a2_tantros_leaves});
 
 
-Callback.addCallback("LevelCreated", function() {
+Callback.addCallback("LevelDisplayed", function() {
+const DIRS = FileTools.GetListOfFiles(__dir__ + "resources/assets/recipes/compressor/", "") 
+for(const i in DIRS) { 
+const _JSON = FileTools.ReadText(DIRS[i]. getAbsolutePath())
+Game.message("JSON: " + (_JSON) + "\n\n" + "json parse: " + JSON.parse(_JSON) + "\njson stringify: " + JSON.stringify(JSON.parse(_JSON)))
+
+Game.message("\n\nRECIPES IN COMPRESSOR: " + CompressorFactory.storage);
+CompressorFactory.set(JSON.parse(_JSON))
+}
+});
+
+
+Callback.addCallback("LevelDisplayed", function() {
 
     SpacesMachine.addReceptForElectricCompressor({
        slot_1: VanillaItemID.iron_ingot,

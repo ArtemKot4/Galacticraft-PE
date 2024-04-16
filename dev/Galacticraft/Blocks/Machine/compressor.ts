@@ -217,16 +217,16 @@ function setupCompressorRecipe(obj) {
 }
 
 CompressorFactory.set({
-  slot_1: { id: VanillaItemID.gold_ingot, count: 1, data: 0 },
-  slot_2: { id: VanillaItemID.gold_ingot, count: 1, data: 0 },
-  slot_3: { id: VanillaItemID.gold_ingot, count: 1, data: 0 },
-  slot_4: { id: VanillaItemID.gold_ingot, count: 1, data: 0 },
-  slot_5: { id: VanillaItemID.gold_ingot, count: 1, data: 0 },
-  slot_6: { id: VanillaItemID.gold_ingot, count: 1, data: 0 },
-  slot_7: { id: VanillaItemID.gold_ingot, count: 1, data: 0 },
-  slot_8: { id: VanillaItemID.gold_ingot, count: 1, data: 0 },
-  slot_9: { id: VanillaItemID.gold_ingot, count: 1, data: 0 },
-  result: { id: VanillaItemID.lapis_lazuli, count: 1, data: 0 },
+  "slot_1": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
+  "slot_2": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
+  "slot_3": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
+  "slot_4": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
+  "slot_5": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
+  "slot_6": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
+  "slot_7": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
+  "slot_8": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
+  "slot_9": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
+  "result": { "id": VanillaItemID.lapis_lazuli, "count": 1, "data": 0 }
 });
 
 class Compressor extends Machine {

@@ -32,8 +32,8 @@ class RecipeFactory {
   };
   public static decreaseSlots(container: ItemContainer, count) {
     for(let i = 1; i <= count; i++) {
-      const slot = container.getSlot("slot");
-      container.setSlot("slot_" + i, slot.id, slot.count--, slot.data, slot.extra)
+      const slot = container.getSlot("slot_" + i);
+      container.setSlot("slot_" + i, slot.id, slot.count - 1, slot.data, slot.extra)
     }
 };
   public static setupResult(container: ItemContainer, slot: name, storage: ItemInstance) {

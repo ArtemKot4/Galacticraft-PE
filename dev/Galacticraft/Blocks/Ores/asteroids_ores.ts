@@ -1,6 +1,6 @@
 
-new IronBlock("solar", "asteroids")
+new IronBlock("solar", "asteroids").create();
 
-new IronBlock("iron", "asteroids")
+new IronBlock("iron", "asteroids").create();
 
-new IronBlock("ilmenite", "asteroids")
+new IronBlock("ilmenite", "asteroids").create();
