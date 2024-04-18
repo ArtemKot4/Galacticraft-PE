@@ -7,7 +7,7 @@ namespace Atmosphere {
   }
 
   export abstract class Sky {
-    protected static createBox(scale, rotation, texture): Animation.Base {
+    public static createBox(scale, rotation, texture): Animation.Base {
       const pos = Player.getPosition();
       const mesh = new RenderMesh();
       const size = scale;

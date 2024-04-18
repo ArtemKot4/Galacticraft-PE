@@ -14,7 +14,7 @@ IMPORT("RenderUtil");
               | |___ | | |_| | | |___ | |_| | | |___    | |   | | | |___ | |\ \  | |_| | | |       | |  
               \______| |_| |_| |_____||_| |_| \_____|   |_|   |_| \_____||_| \_\ |_| |_| |_|       |_|  
                                                     Space Race!
-                            Galacticraft developing group of mans,his team named SpacesTEAM.
+                               Galacticraft developing by one developer - Artem
                                             Artem - mod developer;
                                        group of mod - @horizonspacescraft
                                last version - Galacticraft 4 Pre release 1.0.0;
@@ -500,3 +500,8 @@ OxygenTILE.setAsGameOverlay(true); OxygenTILE.setTouchable(false);
 
 
 EquipMent.setInventoryNeeded(true);
+
+
+let Flags = {
+    station: false
+  };

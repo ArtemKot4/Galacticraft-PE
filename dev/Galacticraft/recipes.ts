@@ -10,10 +10,21 @@ SpacesMachine.addCollectorLeaves({leaf: VanillaBlockID.leaves2});
 Callback.addCallback("LevelDisplayed", function() {
 const DIRS = FileTools.GetListOfFiles(__dir__ + "resources/assets/recipes/compressor/", "") 
 for(const i in DIRS) { 
-const _JSON = FileTools.ReadText(DIRS[i]. getAbsolutePath())
-Game.message("JSON: " + (_JSON) + "\n\n" + "json parse: " + JSON.parse(_JSON) + "\njson stringify: " + JSON.stringify(JSON.parse(_JSON)))
+const _JSON = JSON.parse(FileTools.ReadText(DIRS[i]. getAbsolutePath()))
 
-Game.message("\n\nRECIPES IN COMPRESSOR: " + CompressorFactory.storage);
+for(const i in _JSON) {
+    const id = _JSON[i].id;
+    const result_id = ItemID[id] ?? BlockID[id] ?? VanillaItemID[id] ?? VanillaBlockID[id]
+
+    _JSON[i].id = result_id;
+    Game.message("IDS: " + result_id)
+;
+};
+
+Game.message("JSON CHANGED: " + _JSON)
+Game.message("JSON: " + (JSON.stringify(_JSON)) + "\n\n" + "json parse: " + JSON.parse(_JSON) + "\njson stringify: " + JSON.stringify(JSON.parse(_JSON)))
+
+
 CompressorFactory.set(JSON.parse(_JSON))
 }
 });
