@@ -34,23 +34,24 @@ namespace Atmosphere {
 
 Callback.addCallback("LevelDisplayed", () => {
   if(Entity.getDimension(Player.getLocal()) === SpacesStation.getPlanet()) {
+    Updatable.addLocalUpdatable(StationUpdatable());
     if(Flags.station === false) {
-    const pos = Player.getPosition();
+
     Player.setPosition(0, 100, 0);
 
-      World.setBlock(pos.x, pos.y - 1, pos.z, BlockID["spaces_station_block"], 0);
-      World.setBlock(pos.x, pos.y - 2, pos.z, BlockID["tin_decoration_block"], 0);
-      World.setBlock(pos.x + 1, pos.y - 2, pos.z, BlockID["tin_decoration_block"], 0);
-      World.setBlock(pos.x - 1, pos.y - 2, pos.z, BlockID["tin_decoration_block"], 0);
+      World.setBlock(0, 99, 0, BlockID["spaces_station_block"], 0);
+      World.setBlock(0, 98, 0, BlockID["tin_decoration_block"], 0);
+      World.setBlock(1, 98, 0, BlockID["tin_decoration_block"], 0);
+      World.setBlock(-1, 98, 0, BlockID["tin_decoration_block"], 0);
 
-      World.setBlock(pos.x + 1, pos.y - 2, pos.z  + 1, BlockID["tin_decoration_block"], 0);
-      World.setBlock(pos.x - 1, pos.y - 2, pos.z - 1, BlockID["tin_decoration_block"], 0);
+      World.setBlock(1, 98, 1 ,BlockID["tin_decoration_block"], 0);
+      World.setBlock(-1, 98, -1, BlockID["tin_decoration_block"], 0);
 
-      World.setBlock(pos.x + 1, pos.y - 2, pos.z - 1, BlockID["tin_decoration_block"], 0);
-      World.setBlock(pos.x - 1, pos.y - 2, pos.z + 1, BlockID["tin_decoration_block"], 0);
+      World.setBlock(1, 98, -1, BlockID["tin_decoration_block"], 0);
+      World.setBlock(-1, 98, 1, BlockID["tin_decoration_block"], 0);
 
-      World.setBlock(pos.x, pos.y - 2, pos.z - 1, BlockID["tin_decoration_block"], 0);
-      World.setBlock(pos.x, pos.y - 2, pos.z + 1, BlockID["tin_decoration_block"], 0);
+      World.setBlock(0, 98, -1, BlockID["tin_decoration_block"], 0);
+      World.setBlock(0, 98, 1, BlockID["tin_decoration_block"], 0);
 
       Flags.station = true;
   }

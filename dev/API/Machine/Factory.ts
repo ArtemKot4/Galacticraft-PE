@@ -38,5 +38,29 @@ class RecipeFactory {
 };
   public static setupResult(container: ItemContainer, slot: name, storage: ItemInstance) {
    return container.setSlot(slot, storage.id, storage.count, storage.data);
-  }
+  };
+
+  public registerFromJSON(machine: string) {
+
+    const DIRS = FileTools.GetListOfFiles(__dir__ + "resources/recipes/" + machine + "/", "");
+    for(const i in DIRS) {
+        const _JSON = JSON.parse(FileTools.ReadText(
+    DIRS[i].getAbsolutePath()));
+    for(const k in _JSON) {
+        const id = _JSON[k].id;
+        const result_id = (typeof id === "number") ? id : (BlockID[id] ??
+         VanillaBlockID[id] ?? ItemID[id] ?? VanillaItemID[id]);
+         
+    
+    _JSON[k].id = Number(result_id);
+    
+    }
+
+  this.set(_JSON);
+
+    
+     
+    }
+    };
+
 }

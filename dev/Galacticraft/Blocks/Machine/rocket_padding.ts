@@ -19,7 +19,7 @@ Block.createBlock("buggy_padding_completed", [
 
 TileEntity.registerPrototype(BlockID.rocket_padding, {
 	useNetworkItemContainer: true,
-	tick: function () {
+	init: function () {
 
 
 

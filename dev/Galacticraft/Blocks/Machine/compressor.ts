@@ -216,19 +216,6 @@ function setupCompressorRecipe(obj) {
  CompressorFactory.set(obj)
 }
 
-CompressorFactory.set({
-  "slot_1": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
-  "slot_2": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
-  "slot_3": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
-  "slot_4": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
-  "slot_5": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
-  "slot_6": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
-  "slot_7": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
-  "slot_8": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
-  "slot_9": { "id": VanillaItemID.gold_ingot, "count": 1, "data": 0 },
-  "result": { "id": VanillaItemID.lapis_lazuli, "count": 1, "data": 0 }
-});
-
 class Compressor extends Machine {
   public defaultValues = {
     energy: 0,
@@ -242,10 +229,12 @@ class Compressor extends Machine {
   public setupRecipeLogic() {
     for (const i in CompressorFactory.storage) {
       const storage = CompressorFactory.storage;
-      if (RecipeFactory.getForMore(this.container, storage[i], 9) && 
+      // if(this.data.progress > 0 && !RecipeFactory.getForMore(this.container, storage[i], 9)) {
+      //   this.data.progress = 0;
+      // };
+      if (this.data.energy >= (this.data.energyMax / 2) && RecipeFactory.getForMore(this.container, storage[i], 9) && 
       this.data.progress < this.data.progressMax) {
         this.data.progress++;
-        // alert("Совпало!");
       };
       if(this.data.progress >= this.data.progressMax) {
         RecipeFactory.decreaseSlots(this.container, 9);
@@ -253,7 +242,7 @@ class Compressor extends Machine {
         this.data.progress = 0;
         this.data.energy -= this.data.energyMax / 2
       };
-      if(World.getThreadTime() % 50 === 0 && this.data.energy > 0) this.data.energy--;
+      if(World.getThreadTime() % 10 === 0 && this.data.energy > 0) this.data.energy--;
     }
   };
   public onTick(): void {
@@ -265,155 +254,10 @@ class Compressor extends Machine {
     CoalGenerator.isCoal("coal_slot", this.container, this.data);
    this.setupRecipeLogic();
   }
-  //public factory: Factory = CompressorFactory;
-  //   public onTick(): void {
-  //     this.container.sendChanges();
-  //     this.container.validateAll();
-
-  //     status(this.container, this.data);
-  //     const result = this.container.getSlot("slotResult");
-  //     CoalGenerator.isCoal("coal_slot", this.container,
-  //      this.data);
-  //     if (this.data.energy >= 100) {
-  //       if (this.factory.getInput(this.container)) {
-  //         alert("compressor is work");
-  //       }
-  //     }
-
-  //     this.container.setScale("progressScale", this.data.progress / 500);
-  //     this.container.setScale("BurningScale", this.data.energy / 500);
-  //   }
+ 
 }
 
 TileEntity.registerPrototype(
   BlockID.compressor_gj,
   new Compressor(CompressinG)
 );
-// {   useNetworkItemContainer: true,
-//   getScreenName() {
-//     return "main";
-//   },
-//   getScreenByName() {
-//     return CompressinG;
-//   },
-//   defaultValues: {
-//     progress: 0,
-//     progressMax: 0,
-//     burning: 0,
-//     burningMax: 1000,
-//     energy: 0,
-//     active: false,
-//   },
-//   getRecipe: function () {
-//     // for (var n = 0; n <= 9; n++) {
-//     //   for (var i in compressorRecipe) {
-//     //   }
-//     // }
-//   },
-//   tick: function () {
-//     this.container.sendChanges();
-//     this.container.validateAll();
-
-//     if (this.data.energy != 0) {
-//       this.container.setText(
-//         "Status",
-//         Translation.translate("Status: have energy")
-//       );
-//     } else if (this.data.energy == 0) {
-//       this.container.setText(
-//         "Status",
-//         Translation.translate("Status: don't have energy")
-//       );
-//     }
-//     if (this.data.progress != 0) {
-//       this.container.setText(
-//         "Status",
-//         Translation.translate("Status: working")
-//       );
-//     }
-//     let slotResult = this.container.getSlot("slotResult");
-//     var CoalSlot = this.container.getSlot("CoalSlot");
-//     for (var i in burnItems) {
-//       if (CoalSlot.id == burnItems[i].id && this.data.burning != 500) {
-//         this.data.burning += 500;
-//         this.container.getSlot("CoalSlot").count -= 1;
-//         CoalSlot.count--;
-
-//         this.data.active = true;
-//       }
-//     }
-//     if (this.data.burning == 500 && this.data.active == true) {
-//       this.data.energy++;
-//     }
-//     if (this.data.energy == 500) {
-//       this.data.active = false;
-//       this.data.burning = 0;
-//     }
-//     //let slots = ["slot_1","slot_2","slot_3","slot_4","slot_5","slot_6","slot_7","slot_8","slot_9"];
-//     for (var i in compressorRecipe) {
-//       let recipe = compressorRecipe[i];
-//       for (var n = 0; n <= 9; n++) {
-//         if (
-//           this.container.getSlot("slot_" + n).id == recipe["slot_" + n] &&
-//           this.data.energy >= 100 &&
-//           this.data.progress < 500
-//         ) {
-//           this.data.progress++;
-//         }
-//         if (
-//           slotResult.id == 0 ||
-//           (slotResult.id == compressorRecipe[i].result &&
-//             this.data.progress >= 500)
-//         ) {
-//           this.data.energy -= 100;
-//           this.data.progress = 0;
-//           this.container.getSlot("slot_" + n).count -= 1;
-//           this.container.setSlot(
-//             this.container.getSlot("slot_" + n),
-//             this.container.getSlot("slot_" + n).id,
-//             this.container.getSlot("slot_" + n).count,
-//             this.container.getSlot("slot_" + n).data
-//           );
-
-//           this.container.setSlot(
-//             "slotResult",
-//             recipe.result,
-//             (slotResult.count += 1),
-//             0
-//           );
-//         }
-//       }
-//     }
-
-//     this.container.setScale("progressScale", this.data.progress / 500);
-//     this.container.setScale("BurningScale", this.data.energy / 500);
-//   },
-
-/*
-let canisterFuel = this.container.getSlot("canisterFuel");
-
-this.container.setScale("FuelScale", this.data.liquid / 40);
-this.container.setText("ELECTRIC", "Sj :" + this.data.energy + " / " + this.data.energyMax);
-
-});
- */
-
-// StorageInterface.createInterface(BlockID.compressor_gj, {
-//     slots: {
-//         "slot^1-9": {
-//             input: true,
-//             side: "down",
-//             isValid: function(item, side){
-//                 return SpacesMachine.getCompressorRecipe();
-//             }
-//         },
-//         "CoalSlot": {
-//             input: true,
-//             side: "horizontal",
-//             isValid: function(item, side){
-//                 return SpacesMachine.getCoal();
-//             }
-//         },
-//         "slotResult": {output: true}
-//     }
-// });

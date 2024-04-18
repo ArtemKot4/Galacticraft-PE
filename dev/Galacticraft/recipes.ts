@@ -8,25 +8,21 @@ SpacesMachine.addCollectorLeaves({leaf: VanillaBlockID.leaves2});
 
 
 Callback.addCallback("LevelDisplayed", function() {
-const DIRS = FileTools.GetListOfFiles(__dir__ + "resources/assets/recipes/compressor/", "") 
-for(const i in DIRS) { 
-const _JSON = JSON.parse(FileTools.ReadText(DIRS[i]. getAbsolutePath()))
+// const DIRS = FileTools.GetListOfFiles(__dir__ + "resources/assets/recipes/compressor/", "") 
+// for(const i in DIRS) { 
+// const _JSON = JSON.parse(FileTools.ReadText(DIRS[i]. getAbsolutePath()))
 
-for(const i in _JSON) {
-    const id = _JSON[i].id;
-    const result_id = ItemID[id] ?? BlockID[id] ?? VanillaItemID[id] ?? VanillaBlockID[id]
+// for(const i in _JSON) {
+//     const id = _JSON[i].id;
+//     const result_id = ItemID[id] ?? BlockID[id] ?? VanillaItemID[id] ?? VanillaBlockID[id]
 
-    _JSON[i].id = result_id;
-    Game.message("IDS: " + result_id)
-;
-};
-
-Game.message("JSON CHANGED: " + _JSON)
-Game.message("JSON: " + (JSON.stringify(_JSON)) + "\n\n" + "json parse: " + JSON.parse(_JSON) + "\njson stringify: " + JSON.stringify(JSON.parse(_JSON)))
+//     _JSON[i].id = result_id;
+//     Game.message("IDS: " + result_id)
+// ;
+// };
 
 
-CompressorFactory.set(JSON.parse(_JSON))
-}
+return CompressorFactory.registerFromJSON("compressor");
 });
 
 

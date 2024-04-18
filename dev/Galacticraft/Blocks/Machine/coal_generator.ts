@@ -131,14 +131,7 @@ class CoalGenerator extends Generator {
         this.container.sendChanges();
         this.container.validateAll();
 
-        Particles.addParticle(
-            7, this.x + 0.5,
-            this.y + 0.5,
-            this.z + 0.5,
-            Math.random() / 20,
-            Math.random() / 20,
-            Math.random() / 20);
-
+      
 
         CoalGenerator.isCoal("coal_slot", this.container, this.data)
         
@@ -150,6 +143,15 @@ class CoalGenerator extends Generator {
 
 
         if (this.data.energy > 0) {
+            if(World.getThreadTime() % 15 === 0) {
+                Particles.addParticle(
+                    EParticleType.FLAME, this.x + 0.5,
+                    this.y + 0.5,
+                    this.z + 0.5,
+                    Math.random() / 20,
+                    Math.random() / 20,
+                    Math.random() / 20);
+            }
             this.container.setText("Status", Translation.translate("Status: working"));
         }
         else {
