@@ -8,21 +8,8 @@ SpacesMachine.addCollectorLeaves({leaf: VanillaBlockID.leaves2});
 
 
 Callback.addCallback("LevelDisplayed", function() {
-// const DIRS = FileTools.GetListOfFiles(__dir__ + "resources/assets/recipes/compressor/", "") 
-// for(const i in DIRS) { 
-// const _JSON = JSON.parse(FileTools.ReadText(DIRS[i]. getAbsolutePath()))
-
-// for(const i in _JSON) {
-//     const id = _JSON[i].id;
-//     const result_id = ItemID[id] ?? BlockID[id] ?? VanillaItemID[id] ?? VanillaBlockID[id]
-
-//     _JSON[i].id = result_id;
-//     Game.message("IDS: " + result_id)
-// ;
-// };
-
-
-return CompressorFactory.registerFromJSON("compressor");
+return CompressorFactory.registerFromJSON("compressor"),
+CircuitFabricatorFactory.registerFromJSON("circuit")
 });
 
 
@@ -165,16 +152,6 @@ SpacesMachine.addReceptForElectricCompressor({slot_1:ItemID.ingot_titanium,
 
 
 
-
-SpacesMachine.addCircuitRecept({diamond:VanillaItemID.diamond,
-    fabricator_1:ItemID.raw_silicon,fabricator_0:ItemID.raw_silicon,dust:VanillaItemID.redstone,
-    slot:VanillaItemID.repeater},{resultat:ItemID.wafer_advanced});
-
-SpacesMachine.addCircuitRecept({diamond:VanillaItemID.diamond,fabricator_1:ItemID.raw_silicon,fabricator_0:ItemID.raw_silicon,dust:VanillaItemID.redstone,
-    slot:76},{resultat:ItemID.wafer_basic})
-
-SpacesMachine.addCircuitRecept({diamond:VanillaItemID.diamond,fabricator_1:ItemID.raw_silicon,fabricator_0:ItemID.raw_silicon,dust:VanillaItemID.redstone,
-    slot:VanillaItemID.lapis_lazuli},{resultat:ItemID.wafer_solar})
 
 
 /*  slots:

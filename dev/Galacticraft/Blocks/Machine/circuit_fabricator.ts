@@ -116,7 +116,7 @@ let CircuitFabricatorUI = new UI.StandartWindow({
       size: 60,
       bitmap: "Others.en_slot",
     },
-    //FabrSlot0
+    //fabricator 1
     slot_2: {
       type: "slot",
       x: 515,
@@ -124,7 +124,7 @@ let CircuitFabricatorUI = new UI.StandartWindow({
       size: 60,
       bitmap: "Others.fabricator_slot",
     },
-    //FabrSlot1:
+    //fabricator 2
     slot_3: {
       type: "slot",
       x: 515,
@@ -132,7 +132,7 @@ let CircuitFabricatorUI = new UI.StandartWindow({
       size: 60,
       bitmap: "Others.fabricator_slot",
     },
-    //DutsSlot
+    //dust 
     slot_4: {
       type: "slot",
       x: 682,
@@ -140,15 +140,14 @@ let CircuitFabricatorUI = new UI.StandartWindow({
       size: 60,
       bitmap: "Others.dust_slot",
     },
-    //Slot1
+    //slot up
     slot_5: {
       type: "slot",
       x: 745,
       y: 50,
       size: 60,
     },
-    //ResultatSlot
-    result_slot: {
+    result: {
       type: "slot",
       x: 769,
       y: 278,
@@ -191,15 +190,6 @@ let CircuitFabricatorUI = new UI.StandartWindow({
         },
       },
     },
-
-    ENERGYBar: {
-      type: "scale",
-      x: 436,
-      y: 295,
-      bitmap: "slace_en_1",
-      scale: 3.2,
-      direction: 0,
-    },
     Energy: {
       type: "scale",
       x: 425,
@@ -208,6 +198,15 @@ let CircuitFabricatorUI = new UI.StandartWindow({
       scale: 3.2,
       direction: 1,
     },
+    ENERGYBar: {
+      type: "scale",
+      x: 436,
+      y: 295,
+      bitmap: "slace_en_1",
+      scale: 3.2,
+      direction: 0,
+    },
+   
     ELECTRIC: {
       type: "text",
       x: 563,
@@ -219,6 +218,8 @@ let CircuitFabricatorUI = new UI.StandartWindow({
   },
 });
 
+const CircuitFabricatorFactory = new RecipeFactory();
+
 class CircuitFabricator extends InputMachine {
   defaultValues = {
     progress: 0,
@@ -227,74 +228,37 @@ class CircuitFabricator extends InputMachine {
     energy: 0,
     energyMax: 1000,
   };
+
+ public setupRecipeLogic() {
+  for (const i in CircuitFabricatorFactory.storage) {
+    const storage = CircuitFabricatorFactory.storage;
+    if (this.data.energy >= (this.data.energyMax / 2) &&
+     RecipeFactory.getForMore(this.container, storage[i], 5) && 
+    this.data.progress < this.data.progressMax) {
+      this.data.progress++;
+    };
+
+    if(this.data.progress >= this.data.progressMax) {
+      RecipeFactory.decreaseSlots(this.container, 5);
+      RecipeFactory.setupResult(this.container, "result", storage[i].result);
+      this.data.progress = 0;
+      this.data.energy -= this.data.energyMax / 2
+    };
+  }
+ }
+
   onTick(): void {
-    for (var i in circuit[i]) {
-      var fabricator = circuit[i];
-      for (var n; n <= 5; n++) {
-        var slots = this.container.getSlot("slot_" + n);
-        this.container.sendChanges();
-        this.container.validateAll();
-
-    
-          if (
-            slots.id == fabricator["slot_" + n] &&
-            this.data.energy >= 500 &&
-            this.data.progress <= 700
-          ) {
-            this.data.progress++;
-          }
-          if (
-            (this.data.progress >= 700 &&
-              this.container.getSlot("result_slot").id == 0) ||
-            (this.data.progress >= 700 &&
-              this.container.getSlot("result_slot").id == circuit[i].result)
-          ) {
-            this.data.progress = 0;
-            this.data.energy -= 500;
-            this.container.getSlot("slot_" + n).count -= 1;
-
-            this.container.setSlot(
-              "slot_" + n,
-              slots.id,
-              slots.count,
-              slots.data
-            );
-
-            this.container.setSlot(
-              "result_slot",
-              circuit[i].result,
-              this.container.getSlot("result_slot").count + 1,
-              0
-            );
-          
-        }
-      }
-    }
-
-    if (this.data.energy >= 0) {
-      this.container.setText(
-        "ELECTRIC",
-        Translation.translate("Status: have energy")
-      );
-    } else if (this.data.energy <= 0) {
-      this.container.setText(
-        "ELECTRIC",
-        Translation.translate("Status: don't have energy")
-      );
-    }
-    if (this.data.progress > 0) {
-      this.container.setText(
-        "ELECTRIC",
-        Translation.translate("Status: working")
-      );
-    }
+ this.container.validateAll();
+ this.container.sendChanges();
+   this.setupRecipeLogic();
+    status(this.container, this.data)
     this.container.setScale("Energy", this.data.energy / 1000);
-    this.container.setScale("Burning", this.data.progress / 700);
-    this.container.setScale("Line3", this.data.progress / 500);
-    this.container.setScale("Line1", this.data.progress / 300);
-    this.container.setScale("Line2", this.data.progress / 200);
+    this.container.setScale("Burning", this.data.progress / 250);
+    this.container.setScale("Line3", this.data.progress / 230);
+    this.container.setScale("Line1", this.data.progress / 130);
+    this.container.setScale("Line2", this.data.progress / 30);
 
-    this.container.setScale("ENERGYBar", this.data.energy / 1000);
+    this.container.setScale("ENERGYBar", this.data.energy / this.data.energyMax);
   }
 }
 

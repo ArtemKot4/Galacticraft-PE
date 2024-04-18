@@ -190,14 +190,14 @@ var CompressinGElectric = new UI.StandartWindow({
       scale: 3,
       direction: 1,
     },
-    slotResult1: {
+    result_1: {
       type: "slot",
       x: 830,
       y: 221,
       bitmap: "slot",
       size: 60,
     },
-    slotResult2: {
+    result_2: {
       type: "slot",
       x: 830,
       y: 161,
@@ -218,17 +218,36 @@ var CompressinGElectric = new UI.StandartWindow({
 class ElectricCompressor extends InputMachine {
   defaultValues = {
     progress: 0,
-
+    progressMax: 250,
     energy: 0,
     energyMax: 1000,
   };
+
+  public setupRecipeLogic() {
+    for (const i in CompressorFactory.storage) {
+      const storage = CompressorFactory.storage;
+      if (this.data.energy >= (this.data.energyMax / 2) && RecipeFactory.getForMore(this.container, storage[i], 9) && 
+      this.data.progress < this.data.progressMax) {
+        this.data.progress++;
+      };
+      if(this.data.progress >= this.data.progressMax) {
+        RecipeFactory.decreaseSlots(this.container, 9);
+        RecipeFactory.setupResult(this.container, "result_1", storage[i].result);
+        RecipeFactory.setupResult(this.container, "result_2", storage[i].result_2 ?? storage[i].result);
+        this.data.progress = 0;
+        this.data.energy -= this.data.energyMax / 2
+      };
+      if(World.getThreadTime() % 10 === 0 && this.data.energy > 0) this.data.energy--;
+    }
+  };
+
   onTick(): void {
     this.container.sendChanges();
     this.container.validateAll();
-
+this.setupRecipeLogic()
     // battery.add(this.container, this.data, "EnergySlot");
     // battery.addInfinite(this.container, this.data, "EnergySlot");
-    this.container.setScale("progressScale", this.data.progress / 500);
+    this.container.setScale("progressScale", this.data.progress / this.data.progressMax);
     this.container.setScale("ENERGYBar", this.data.energy / 1000);
     this.container.setScale("Energy", this.data.energy / 100);
     if (this.data.energy != 0) {
@@ -249,10 +268,6 @@ class ElectricCompressor extends InputMachine {
         Translation.translate("Status: working")
       );
     }
-
-    var slotResult = this.container.getSlot("slotResult2");
-    var slotResult1 = this.container.getSlot("slotResult1");
-
   }
 }
 

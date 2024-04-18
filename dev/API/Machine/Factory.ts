@@ -40,6 +40,10 @@ class RecipeFactory {
    return container.setSlot(slot, storage.id, storage.count, storage.data);
   };
 
+  public static getResult(container: ItemContainer, slot: name, storage: ItemInstance) {
+    return !!(container.getSlot(slot).id === (storage.id || 0))
+  }
+
   public registerFromJSON(machine: string) {
 
     const DIRS = FileTools.GetListOfFiles(__dir__ + "resources/recipes/" + machine + "/", "");
@@ -55,7 +59,7 @@ class RecipeFactory {
     _JSON[k].id = Number(result_id);
     
     }
-
+Game.message("\nJSON: " + JSON.stringify(_JSON))
   this.set(_JSON);
 
     

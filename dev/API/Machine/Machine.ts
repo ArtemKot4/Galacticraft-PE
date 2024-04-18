@@ -4,7 +4,23 @@ abstract class Machine extends TileEntityBase implements EnergyModule {
   constructor(window) {
     super();
     this.window = window;
-  }
+  };
+//   public static setupStandartRecipeLogic(container, data, factory: RecipeFactory, slots: int) {
+//     for (const i in factory.storage) {
+//       const storage = factory.storage;
+//       if (data.energy >= (data.energyMax / 2) &&
+//        RecipeFactory.getForMore(container, storage[i], slots) && 
+//       data.progress < data.progressMax) {
+//         data.progress++;
+//       };
+//       if(data.progress >= data.progressMax && RecipeFactory.getResult(container, "result", storage[i].result)) {
+//         RecipeFactory.decreaseSlots(container, slots);
+//         RecipeFactory.setupResult(container, "result", storage[i].result);
+//         data.progress = 0;
+//         data.energy -= data.energyMax / 2
+//       };
+//   };
+// };
   public connectingWire(): any {}
   public getScreenByName(): UI.StandartWindow {
     return this.window;

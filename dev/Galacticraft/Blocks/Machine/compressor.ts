@@ -232,7 +232,8 @@ class Compressor extends Machine {
       // if(this.data.progress > 0 && !RecipeFactory.getForMore(this.container, storage[i], 9)) {
       //   this.data.progress = 0;
       // };
-      if (this.data.energy >= (this.data.energyMax / 2) && RecipeFactory.getForMore(this.container, storage[i], 9) && 
+      if (this.data.energy >= (this.data.energyMax / 2) &&
+       RecipeFactory.getForMore(this.container, storage[i], 9) && 
       this.data.progress < this.data.progressMax) {
         this.data.progress++;
       };
