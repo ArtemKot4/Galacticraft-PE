@@ -11,13 +11,17 @@ class GBlock {
     this.id = id;
     this.data = data;
     this.type = type || null;
-    this.create();
   }
-  private create(): void {
+  public create(): this {
     IDRegistry.genBlockID(this.id);
+    Block.createBlock(this.id, this.data, this.type);
+    return this;
+  };
+ public createWithRotation(): this {
+  IDRegistry.genBlockID(this.id);
     Block.createBlockWithRotation(this.id, this.data, this.type);
-  }
-
+    return this;
+ }
   public info(text: string, translation?: {}): void {
     if (translation) Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {

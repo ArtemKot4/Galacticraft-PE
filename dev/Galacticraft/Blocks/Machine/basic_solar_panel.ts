@@ -12,7 +12,7 @@ new GBlock("solar_panel_sc", [
     ],
     inCreative: false,
   },
-]).setupObjModel("solar panel", "solar_panel", [1.6, 1.6, 1.6]);
+]).create().setupObjModel("solar panel", "solar_panel", [1.6, 1.6, 1.6]);
 
 new GBlock("basic_solar_panel", [
   {
@@ -52,7 +52,7 @@ new GBlock("basic_solar_panel", [
     inCreative: false,
   },
 ],
-STONE).info("4 sJ/ s");
+STONE).createWithRotation().info("4 sJ/ s");
 
 Block.registerPlaceFunction(
   "basic_solar_panel",
@@ -60,7 +60,7 @@ Block.registerPlaceFunction(
     const region = BlockSource.getDefaultForActor(player);
     const spaces = coords.relative;
 
-    region.setBlock(spaces.x, spaces.y, spaces.z, block.id, block.data);
+    region.setBlock(spaces.x, spaces.y, spaces.z, BlockID["basic_solar_panel"], block.data);
     region.setBlock(
       spaces.x,
       spaces.y + 1,
@@ -230,6 +230,10 @@ class SolarPanel extends Generator {
       );
       this.container.setText("LightLevel", Translation.translate("Light: few"));
     }
+  };
+  destroy(): boolean {
+    this.blockSource.setBlock(this.x, this.y + 1, this.z, 0, 0);
+    return false;
   }
 }
 

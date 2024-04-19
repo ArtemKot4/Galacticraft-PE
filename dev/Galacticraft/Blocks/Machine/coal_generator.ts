@@ -4,7 +4,7 @@ new GBlock("coal_generator", [{
     name: "Coal Generator", texture: [["Machine", 0], ["Machine", 0], ["Machine", 0], ["Coal Generator", 0], ["Machine Output", 0], ["Machine Output", 0]], inCreative: false
 }, {
     name: "Coal Generator", texture: [["Machine", 0], ["Machine", 0], ["Machine", 0], ["Coal Generator", 0], ["Machine Output", 0], ["Machine Output", 0]], inCreative: false
-}], STONE).info("4 sJ/ s");
+}], STONE).createWithRotation().info("4 gJ/ s");
 
 
 // if(__config__.getBool("Difficulty.Machine.Heating")==true){

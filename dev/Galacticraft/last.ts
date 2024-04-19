@@ -14,8 +14,6 @@ ModAPI.registerAPI("GalacticraftAPI", {
   GItem: GItem,
   GBlock: GBlock,
   Storage: Storage,
-  CableAPI: CableAPI,
-  AirCable: AirCable,
   battery: Battery,
   SpacesMachine: SpacesMachine,
   PLANETS: PLANETS,

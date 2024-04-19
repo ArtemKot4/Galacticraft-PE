@@ -343,4 +343,4 @@ class OxygenStorage extends MachineStorage {
 
 TileEntity.registerPrototype(BlockID.oxygen_storage_module,new OxygenStorage(OxygenStorageUI));
 ﻿
-﻿EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_storage_module, ob);
+﻿EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_storage_module, OB);

@@ -50,21 +50,6 @@ glasstainer.close();
 });
 
 
-
-
-
-// IDRegistry.genItemID("chip_industrialization"); 
-// Item.createItem("chip_industrialization", "Chip industrialization", {name: "chip", meta: 0}, {stack: 64});
-// Translation.addTranslation("Chip industrialization", {
-// ru: "§6Программный чип"
-// });
-
-// IDRegistry.genItemID("motherboard_sc"); 
-// Item.createItem("motherboard_sc", "Motherboard", {name: "motherboard", meta: 0}, {stack: 64});
-// Translation.addTranslation("Motherboard", {
-// ru: "§6Материнская плата"
-// });
-
 ToolAPI.addToolMaterial("IronSteelPickaxe", {durability: 300, level: 3, efficiency: 3, damage: 2, //enchantability6
 });
 

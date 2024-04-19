@@ -243,6 +243,7 @@ class Compressor extends Machine {
         this.data.progress = 0;
         this.data.energy -= this.data.energyMax / 2
       };
+    
       if(World.getThreadTime() % 10 === 0 && this.data.energy > 0) this.data.energy--;
     }
   };

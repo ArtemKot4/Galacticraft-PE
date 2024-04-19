@@ -1,21 +1,6 @@
 type universal = string | number;
 
 
-const CableAPI = {
-
-  addGroup: function (id) {
-    var group = ICRender.getGroup("sj-wire");
-    group.add(id, -1);
-  },
- 
-};
-
-const AirCable = {
-  addGroup: function (id) {
-    var group2 = ICRender.getGroup("sc-wire");
-    group2.add(id, -1);
-  },
-};
 
 const leaves: any[] = [];
 const burnItems: any[] = [];
@@ -60,24 +45,24 @@ const SpacesMachine = {
     TileEntity.registerPrototype(id, Standart);
     EnergyTileRegistry.addEnergyTypeForId(id, EU);
     EnergyTileRegistry.addEnergyTypeForId(id, RF);
-    EnergyTileRegistry.addEnergyTypeForId(id, ft);
-    EnergyTileRegistry.addEnergyTypeForId(id, gj);
+    // EnergyTileRegistry.addEnergyTypeForId(id, ft);
+    EnergyTileRegistry.addEnergyTypeForId(id, GJ);
   },
   registerO2SJMachine: function (id, Standart) {
     rfGroup.add(id, -1);
     euGroup.add(id, -1);
     ICRender.getGroup("bt-wire").add(id, -1);
     ICRender.getGroup("fc-wire").add(id, -1);
-    CableAPI.addGroup(id);
-    AirCable.addGroup(id);
+    ICRender.getGroup("gc-wire").add(id, -1);
+    ICRender.getGroup("gc-improved-wire").add(id, -1);
     ToolAPI.registerBlockMaterial(id, "stone");
     Block.setDestroyTime(id, 3);
     TileEntity.registerPrototype(id, Standart);
     EnergyTileRegistry.addEnergyTypeForId(id, EU);
     EnergyTileRegistry.addEnergyTypeForId(id, RF);
-    EnergyTileRegistry.addEnergyTypeForId(id, ft);
-    EnergyTileRegistry.addEnergyTypeForId(id, gj);
-    EnergyTileRegistry.addEnergyTypeForId(id, ob);
+    // EnergyTileRegistry.addEnergyTypeForId(id, ft);
+    EnergyTileRegistry.addEnergyTypeForId(id, GJ);
+    EnergyTileRegistry.addEnergyTypeForId(id, OB);
   },
   addReceptForElectricCompressor: function (inp: any = {}, out: any = {}) {
     compressorRecipe.push({
@@ -147,11 +132,6 @@ const SpacesMachine = {
     });
   }
 };
-
-SpacesMachine.addCoal(VanillaItemID.coal);
-SpacesMachine.addCoal(VanillaItemID.charcoal);
-
-SpacesMachine.addCoal(VanillaBlockID.coal_block);
 
 // IDRegistry.genBlockID("spaces_lent");
 // Block.createBlock(

@@ -8,7 +8,9 @@ Block.createBlock("enclosed_aluminum_wire", [{
 Translation.addTranslation("Enclosed Aluminum Wire", {
     ru: "Герметичная алюминиевая труба"
 });
-gj.registerWire(BlockID.enclosed_aluminum_wire, 200);
+GJ.registerWire(BlockID.enclosed_aluminum_wire, 200);
+ICRender.getGroup("gc-wire").add(BlockID["enclosed_aluminum_wire"], -1);
+
 
 IDRegistry.genBlockID("enclosed_fluid_pipe");
 Block.createBlock("enclosed_fluid_pipe", [{
@@ -20,7 +22,9 @@ Block.createBlock("enclosed_fluid_pipe", [{
 Translation.addTranslation("Enclosed Oxygen Pipe", {
     ru: "Герметичная кислородная труба"
 });
-ob.registerWire(BlockID.enclosed_fluid_pipe, 400);
+GJ.registerWire(BlockID.enclosed_fluid_pipe, 400);
+ICRender.getGroup("gc-oxygen-pipe").add(BlockID["enclosed_fluid_pipe"], -1);
+
 
 IDRegistry.genBlockID("enclosed_heavy_aluminum_wire");
 Block.createBlock("enclosed_heavy_aluminum_wire", [{
@@ -32,4 +36,5 @@ Block.createBlock("enclosed_heavy_aluminum_wire", [{
 Translation.addTranslation("Enclosed Heavy Aluminum Wire", {
     ru: "Герметичная улучшенная алюминиевая труба"
 });
-gj.registerWire(BlockID.enclosed_heavy_aluminum_wire, 400);
+GJ.registerWire(BlockID.enclosed_heavy_aluminum_wire, 400);
+ICRender.getGroup("gc-improved-wire").add(BlockID["enclosed_heavy_aluminum_wire"], -1);

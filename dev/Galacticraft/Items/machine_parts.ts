@@ -4,13 +4,13 @@ new GItem("rocket_fins", 4);
 
 new GItem("nose_cone", 4);
 
-new GItem("rocket_fins_2", 4);
+new GItem("rocket_fins_2", 4, null, "rocket_fins", 2);
 
 new GItem("buggymat_storage", 1);
 
 new GItem("engine_tier_1_booster");
 
-new GItem("engine_tier_1");
+new GItem("engine_tier_1", 4, null, "engine_tier", 1);
 
 new GItem("heavy_plating");
 
@@ -24,9 +24,9 @@ new GItem("thermal_controller", 1);
 
 new GItem("canvas");
 
-new GItem("solar_module_1", 16);
+new GItem("solar_module_1", 16, null, "solar_module", 1);
 
-new GItem("solar_module_0", 16);
+new GItem("solar_module_0", 16, null, "solar_module", 0);
 
 new GItem("wafer_basic")
 

@@ -19,12 +19,12 @@ class IronBlock {
           [
             {
               name: str,
-              texture: [[str, 0]],
+              texture: [[str, 0],[str, 0],[str, 0],[str, 0],[str, 0],[str, 0],],
               inCreative: true,
             },
           ],
           STONE
-        );
+        ).create();
    };
     /**
     * Используйте, если при регистрации указали массив со списком планет
@@ -37,7 +37,7 @@ class IronBlock {
             [
               {
                 name: str,
-                texture: [[str, 0]],
+                texture: [[str, 0],[str, 0],[str, 0],[str, 0],[str, 0],[str, 0],],
                 inCreative: true,
               },
             ],

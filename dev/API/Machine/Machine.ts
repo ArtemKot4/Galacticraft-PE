@@ -21,7 +21,18 @@ abstract class Machine extends TileEntityBase implements EnergyModule {
 //       };
 //   };
 // };
-  public connectingWire(): any {}
+  private setupWireICRendersByID(id: string, data: EBlockSide) {
+    return rfGroup.add(BlockID[id], data),
+    euGroup.add(BlockID[id], -1),
+    ICRender.getGroup("gc-wire").add(BlockID[id], data),
+    ICRender.getGroup("gc-improved-wire").add(BlockID[id], data),
+    ICRender.getGroup("bt-wire").add(BlockID[id], -1),
+    ICRender.getGroup("fc-wire").add(BlockID[id], -1);
+
+  };
+  public connectingWire(): any {
+    
+  }
   public getScreenByName(): UI.StandartWindow {
     return this.window;
   }
@@ -43,8 +54,8 @@ abstract class Machine extends TileEntityBase implements EnergyModule {
     return add;
   }
 
-  public setWrenchable(id): any {
-    if (id == ItemID.machine_wrench) {
+  public setWrenchable(id, entity: int): any {
+    if (id == ItemID.machine_wrench && Entity.getSneaking(entity) === true) {
       alert("DEGUG WORK OF WRENCHABLE");
       this.blockSource.setBlock(
         this.x,
@@ -53,11 +64,15 @@ abstract class Machine extends TileEntityBase implements EnergyModule {
         this.blockID,
         this.blockSource.getBlockData(this.x, this.y, this.z) + 1
       );
-    }
+    };
+  
   }
 //   onTick(): void {
 //       if(this.getSlot(8,compressorRecipe)){
 //         alert("work?")
 //       }
 //   }
+  public onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, player: number): any {
+    return this.setWrenchable(this.blockID, player);
+  }
 }

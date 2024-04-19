@@ -38,8 +38,8 @@ new GBlock("venus_spout",
 texture:
    [["Venus Rock 0", 0],
    ["spout",0],
-   ["Venus Rock 0",0]],
- inCreative: true} ],STONE).info("Can be found on Venus, hot and scalding")
+   ["Venus Rock 0",0],["Venus Rock 0",0],["Venus Rock 0",0],["Venus Rock 0",0],],
+ inCreative: true} ],STONE).createWithRotation().info("Can be found on Venus, hot and scalding")
 
 Translation.addTranslation("Venus Spout",{
 ru: "§aВенерианский гейзер",
@@ -81,7 +81,7 @@ Particles.addParticle(
         0.1);}
 
 var player = Network.getConnectedPlayers()
-for(var p in player){
+for(const p in player){
 if(
      Entity.getPosition(Number(player[i])).y==this.blockSource.getBlockId(this.x,this.y+1,this.z))
 {
@@ -101,20 +101,6 @@ if(
 
 
 
-
-var Venusmesh = new RenderMesh(); 
-Venusmesh.setBlockTexture("VenusT",0); 
-Venusmesh.importFromFile(__dir__+"/resources/models/Venus.obj","obj",null); 
-IDRegistry.genBlockID("charged_venus"); 
-Block.createBlock("charged_venus", [ 
- {name: "A little Venus", texture: [["VenusT", 0],["VenusT", 1],["VenusT", 2],["VenusT", 3],["VenusT", 4],["VenusT", 5]], inCreative: true} 
-]); 
-Translation.addTranslation("A little Venus",{
-ru: "< Венера >"
-});
-var Venusrender = new ICRender.Model(); 
-Venusrender.addEntry(new BlockRenderer.Model(Venusmesh)); 
-BlockRenderer.setStaticICRender(BlockID.charged_venus,0,Venusrender);
 
 
 Block.registerDropFunction("venus_spout", function(coords, blockID){

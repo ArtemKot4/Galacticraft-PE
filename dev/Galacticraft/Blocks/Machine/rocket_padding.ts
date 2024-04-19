@@ -1,6 +1,6 @@
 
 new GBlock("rocket_padding", [
-	{ name: "Padding Rocket", texture: [["landing_pad", 0]], inCreative: true}]).info("Place blocks 3x3\nfor create rocket padding")
+	{ name: "Padding Rocket", texture: [["landing_pad", 0]], inCreative: true}]).create().info("Place blocks 3x3\nfor create rocket padding")
 IDRegistry.genBlockID("rocket_padding_completed");
 Block.createBlock("rocket_padding_completed", [
 	{ name: "Padding of Rocket", texture: [["landing_pad", 0]], inCreative: false }]);

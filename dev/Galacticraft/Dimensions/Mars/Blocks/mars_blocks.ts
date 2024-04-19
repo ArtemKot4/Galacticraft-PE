@@ -15,20 +15,6 @@ Translation.addTranslation("Dense Ice",{
 ru: "Плотный лёд"
 })
 
-var marsmesh = new RenderMesh(); 
-marsmesh.setBlockTexture("Mars",0); 
-marsmesh.importFromFile(__dir__+"/resources/models/mars.obj","obj",null); 
-IDRegistry.genBlockID("charged_mars"); 
-Block.createBlock("charged_mars", [ 
- {name: "A little Mars", texture: [["Mars", 0],["Mars", 1],["Mars", 2],["Mars", 3],["Mars", 4],["Mars", 5]], inCreative: true} 
-]); 
-Translation.addTranslation("A little Mars",{
-ru: "< Марс >"
-});
-var marsrender = new ICRender.Model(); 
-marsrender.addEntry(new BlockRenderer.Model(marsmesh)); 
-BlockRenderer.setStaticICRender(BlockID.charged_mars,0,marsrender);
-
 IDRegistry.genBlockID("mars_bottom_stone");
 Block.createBlock("mars_bottom_stone",[{name: "The Martian Bottom Stone", texture: [["Bottom Mars", 0]], inCreative: true} ],STONE);
 Translation.addTranslation("The Martian Bottom Stone",{

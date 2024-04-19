@@ -1,7 +1,3 @@
-CableAPI.addGroup(BlockID.enclosed_aluminum_wire);
-CableAPI.addGroup(BlockID.enclosed_heavy_aluminum_wire);
-AirCable.addGroup(BlockID.enclosed_fluid_pipe);
-
 SpacesMachine.addCollectorLeaves({leaf: VanillaBlockID.leaves});
 SpacesMachine.addCollectorLeaves({leaf: VanillaBlockID.leaves2});
 //SpacesMachine.addCollectorLeaves({leaf: VanillaBlockID.vic_a2_tantros_leaves});

@@ -1,12 +1,12 @@
 ModAPI.addAPICallback("ICore", function(api: any){
-    var ELECTRIC_ITEM_MAX_DAMAGE = 27;
+    const ELECTRIC_ITEM_MAX_DAMAGE = 27;
 //Тут собраны соединения проводов,совместимость энергий и рецепты с блоками для интеграции
-var ICTool = api.Tool;
-var IC2Config = api.Config
-var MachineRecipeRegistry = api.Recipe
+const ICTool = api.Tool;
+const IC2Config = api.Config
+const MachineRecipeRegistry = api.Recipe
 
 function isToolboxEmpty(slot) {
-    var container = BackpackRegistry.containers["d" + slot.data];
+    const container = BackpackRegistry.containers["d" + slot.data];
     if (container) {
         for (var i = 1; i <= 10; i++) {
             if (container.getSlot("slot" + i).id != 0) {
@@ -32,7 +32,8 @@ ru: "Герметичный золотой кабель §6(IC2)"
 EU.registerWire(BlockID.enclosed_gold_cable, 512);
 
 IDRegistry.genBlockID("enclosed_lv_cable");
-Block.createBlockWithRotation("enclosed_lv_cable",[{name: "Enclosed LV Cable", texture: [["Oxygentile 3", 0],["Oxygentile 3", 0],["Enclosed LV Cable", 0],["Enclosed LV Cable", 0],["Enclosed LV Cable", 0],["Enclosed LV Cable", 0]], inCreative: true} ]);
+Block.createBlockWithRotation("enclosed_lv_cable",
+[{name: "Enclosed LV Cable", texture: [["Oxygentile 3", 0],["Oxygentile 3", 0],["Enclosed LV Cable", 0],["Enclosed LV Cable", 0],["Enclosed LV Cable", 0],["Enclosed LV Cable", 0]], inCreative: true} ]);
 Translation.addTranslation("Enclosed LV Cable",{
 ru: "Герметичный lv кабель §6(IC2)"
 });
@@ -40,77 +41,77 @@ ru: "Герметичный lv кабель §6(IC2)"
 EU.registerWire(BlockID.enclosed_lv_cable, 2048);
 
 
-CableAPI.addGroup(BlockID.semifluidGenerator);
-CableAPI.addGroup(BlockID.solarPanel);
-CableAPI.addGroup(BlockID.primalGenerator);
-CableAPI.addGroup(BlockID.electricHeatGenerator);
+ICRender.getGroup("gc-improved-wire").add(BlockID.semifluidGenerator, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.solarPanel, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.primalGenerator, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.electricHeatGenerator, -1);
 
-CableAPI.addGroup(BlockID.fluidHeatGenerator);
-CableAPI.addGroup(BlockID.enclosed_aluminum_wire);
-CableAPI.addGroup(BlockID.rtHeatGenerator);
-CableAPI.addGroup(BlockID.solidHeatGenerator -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.fluidHeatGenerator, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.enclosed_aluminum_wire, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.rtHeatGenerator, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.solidHeatGenerator, -1);
 
-CableAPI.addGroup(BlockID.recycler);
-CableAPI.addGroup(BlockID.metalFormer);
-CableAPI.addGroup(BlockID.oreWasher);
-CableAPI.addGroup(BlockID.thermalCentrifuge);
-CableAPI.addGroup(BlockID.blastFurnace);
-CableAPI.addGroup(BlockID.icFermenter);
-CableAPI.addGroup(BlockID.massFabricator);
-CableAPI.addGroup(BlockID.stirlingGenerator);
+ICRender.getGroup("gc-improved-wire").add(BlockID.recycler, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.metalFormer, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.oreWasher, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.thermalCentrifuge, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.blastFurnace, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.icFermenter, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.massFabricator, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.stirlingGenerator, -1);
 
-CableAPI.addGroup(BlockID.ironFurnace);
-CableAPI.addGroup(BlockID.nuclearReactor);
-CableAPI.addGroup(BlockID.reactorChamber);
-CableAPI.addGroup(BlockID.storageBatBox);
+ICRender.getGroup("gc-improved-wire").add(BlockID.ironFurnace, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.nuclearReactor, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.reactorChamber, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.storageBatBox, -1);
 
-CableAPI.addGroup(BlockID.storageCESU);
-CableAPI.addGroup(BlockID.storageMFE);
-CableAPI.addGroup(BlockID.storageMFSU);
-CableAPI.addGroup(BlockID.transformerLV);
-CableAPI.addGroup(BlockID.transformerHV);
-CableAPI.addGroup(BlockID.transformerEV);
+ICRender.getGroup("gc-improved-wire").add(BlockID.storageCESU, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.storageMFE, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.storageMFSU, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.transformerLV, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.transformerHV, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.transformerEV, -1);
 
-CableAPI.addGroup(BlockID.electricFurnace);
-CableAPI.addGroup(BlockID.inductionFurnace);
-CableAPI.addGroup(BlockID.macerator);
-CableAPI.addGroup(BlockID.compressor);
-CableAPI.addGroup(BlockID.extractor);
-CableAPI.addGroup(BlockID.solidCanner);
-CableAPI.addGroup(BlockID.canner);
+ICRender.getGroup("gc-improved-wire").add(BlockID.electricFurnace, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.inductionFurnace, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.macerator, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.compressor, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.extractor, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.solidCanner, -1);
+ICRender.getGroup("gc-improved-wire").add(BlockID.canner, -1);
 
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.semifluidGenerator, gj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.solarPanel, gj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.primalGenerator, gj);
-                EnergyTileRegistry.addEnergyTypeForId(BlockID.electricHeatGenerator, gj);
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.rtGenerator, gj);
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.solidHeatGenerator, gj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.recycler, gj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.metalFormer, gj);
-                EnergyTileRegistry.addEnergyTypeForId(BlockID.oreWasher, gj);
-                    EnergyTileRegistry.addEnergyTypeForId(BlockID.thermalCentrifuge, gj);
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.blastFurnace, gj);
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.icFermenter, gj);
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.massFabricator, gj);
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.stirlingGenerator, gj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.ironFurnace, gj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.nuclearReactor, gj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageBatBox, gj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageCESU, gj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageMFE, gj);
-        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageMFSU, gj);
-    EnergyTileRegistry.addEnergyTypeForId(BlockID.transformerHV, gj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.transformerLV, gj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.transformerEV, gj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.electricFurnace, gj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.inductionFurnace, gj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.macerator, gj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.compressor, gj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.extractor, gj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.canner, gj);
-            EnergyTileRegistry.addEnergyTypeForId(BlockID.solidCanner, gj);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.semifluidGenerator, GJ);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.solarPanel, GJ);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.primalGenerator, GJ);
+                EnergyTileRegistry.addEnergyTypeForId(BlockID.electricHeatGenerator, GJ);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.rtGenerator, GJ);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.solidHeatGenerator, GJ);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.recycler, GJ);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.metalFormer, GJ);
+                EnergyTileRegistry.addEnergyTypeForId(BlockID.oreWasher, GJ);
+                    EnergyTileRegistry.addEnergyTypeForId(BlockID.thermalCentrifuge, GJ);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.blastFurnace, GJ);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.icFermenter, GJ);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.massFabricator, GJ);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.stirlingGenerator, GJ);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.ironFurnace, GJ);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.nuclearReactor, GJ);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageBatBox, GJ);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageCESU, GJ);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageMFE, GJ);
+        EnergyTileRegistry.addEnergyTypeForId(BlockID.storageMFSU, GJ);
+    EnergyTileRegistry.addEnergyTypeForId(BlockID.transformerHV, GJ);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.transformerLV, GJ);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.transformerEV, GJ);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.electricFurnace, GJ);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.inductionFurnace, GJ);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.macerator, GJ);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.compressor, GJ);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.extractor, GJ);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.canner, GJ);
+            EnergyTileRegistry.addEnergyTypeForId(BlockID.solidCanner, GJ);
         
-   CableAPI.addGroup(BlockID.pump);
+   ICRender.getGroup("gc-improved-wire").add(BlockID.pump, -1);
 ;
   
 Callback.addCallback("LevelCreated", function() {
@@ -163,7 +164,7 @@ Recipes.addShaped({id: ItemID.canister_copper, count: 1, data: 0}, [
     "aaa"
 ], ['a', ItemID.plateCopper, 0]);
 
-Recipes.addShaped({id: BlockID.compressor_gj, count: 1, data: 0}, [
+Recipes.addShaped({id: BlockID.compressor_GJ, count: 1, data: 0}, [
     "baf",
     "aca",
     "aea"
@@ -177,7 +178,7 @@ Recipes.addShaped({id: BlockID.coal_generator, count: 1, data: 0}, [
     "aea"
 ], ['a', ItemID.ingotCopper, 0, 'b', VanillaItemID.iron_ingot, 0, 'c', VanillaBlockID.furnace, 0, 'e', BlockID.AluminumWire, 0]);
 
-Recipes.addShaped({id: BlockID.compressor_gj, count: 1, data: 0}, [
+Recipes.addShaped({id: BlockID.compressor_GJ, count: 1, data: 0}, [
     "baf",
     "aca",
     "aea"

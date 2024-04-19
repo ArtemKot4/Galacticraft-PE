@@ -100,7 +100,7 @@ Item.createItem("vine_web_1", "Spaces Web", {name: "web_torch", meta: 0}, {stack
 
 new GItem("galactic_web_item", 64, "Galactic Web", "galactic_web");
 new GBlock("galactic_web", [{name: "Spaces Web", texture: [["web_torch", 0]], 
-inCreative: false} ], WEB).placeableByItem("galactic_web")
+inCreative: false} ], WEB).create().placeableByItem("galactic_web")
 
 Item.registerUseFunction("vine_web_1", function(coords, item, block, player){
 	var region = BlockSource.getDefaultForActor(player);

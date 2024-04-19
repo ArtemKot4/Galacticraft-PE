@@ -8,9 +8,6 @@ abstract class InputMachine extends Machine {
    public getTier(): number {
       return 1;
     }
-   public click(id): any {
-      this.setWrenchable(id);
-    }
   
     charge (slot: string) {
         this.data.energy -= ChargeItemRegistry.addEnergyToSlot(this.container.getSlot(slot), "GalacticraftJoule",
@@ -20,7 +17,7 @@ abstract class InputMachine extends Machine {
       let amount = this.getCapacity() - this.data.energy;
       this.data.energy += ChargeItemRegistry.getEnergyFromSlot(
         this.container.getSlot(slot),
-        "GalacticraftJoule",
+        "galacticraft_joule",
         amount,
         this.getTier()
       );

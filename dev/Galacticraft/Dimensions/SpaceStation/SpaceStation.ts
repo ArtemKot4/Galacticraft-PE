@@ -72,7 +72,7 @@ new GBlock(
     },
   ],
   STONE
-).info("Central block of space station");
+).createWithRotation().info("Central block of space station");
 
 Callback.addCallback("ItemUse", function (coords, item, block, is, player) {
   if (block.id == BlockID.spaces_station_block) {
