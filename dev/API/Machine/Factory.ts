@@ -52,9 +52,9 @@ class RecipeFactory {
     DIRS[i].getAbsolutePath()));
     for(const k in _JSON) {
         const id = _JSON[k].id;
-        const result_id = (typeof id === "number") ? id : !!BlockID[id] ? BlockID[id] : !!VanillaBlockID[id] 
+        const result_id = (typeof id === "number") ? id : !!Block.getNumericId(id) ? BlockID[id] : !!Item.getNumericId(id) ? ItemID[id] : !!VanillaBlockID[id] 
         ? VanillaBlockID[id] : !!VanillaItemID[id] ?
-         VanillaItemID[id] : !!ItemID[id] ? ItemID[id] : 0
+         VanillaItemID[id] : 0
         //(BlockID[id] ?? ItemID[id]) ??
          //(VanillaBlockID[id] ??  VanillaItemID[id]);
          

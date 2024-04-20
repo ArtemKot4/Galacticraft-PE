@@ -13,9 +13,7 @@ class GItem {
     this.meta = meta || 0;
     this.isTech = isTech || false;
     this.texture = texture || id;
-    this.name = name || (this.id[0].toUpperCase() + 
-    this.id.slice(1).replace(/_/g,
-     " ").toString());
+    this.name = name || "item.galacticraft." + id;
     this.create();
   }
   

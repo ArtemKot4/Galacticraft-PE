@@ -1,35 +1,13 @@
-IDRegistry.genBlockID("venus_rock_0");
-Block.createBlock("venus_rock_0",[{name: "Venus Rock 0", texture: [["Venus Rock 0", 0]], inCreative: true} ],STONE);
-Translation.addTranslation("Venus Rock 0",{
-ru: "Горячий венерианский камень"
-})
 
 
 
+new GBlock("venus_rock_0", [{ name: "Venus Rock 0", texture: [["Venus Rock 0", 0]], inCreative: true }], STONE).create();
 
+new GBlock("venus_rock_1", [{ name: "Venus Rock venus_rock_1", texture: [["Venus Rock 1", 0]], inCreative: true }], STONE).create();
 
+new GBlock("venus_rock_2", [{ name: "Venus Rock 2", texture: [["Venus Rock 2", 0]], inCreative: true }], STONE).create();
 
-
-
-
-IDRegistry.genBlockID("venus_rock_1");
-Block.createBlock("venus_rock_1",[{name: "Venus Rock venus_rock_1", texture: [["Venus Rock 1", 0]], inCreative: true} ],STONE);
-Translation.addTranslation("Venus Rock 1",{
-ru: "Твёрдый венерианский камень"
-})
-
-IDRegistry.genBlockID("venus_rock_2");
-Block.createBlock("venus_rock_2",[{name: "Venus Rock 2", texture: [["Venus Rock 2", 0]], inCreative: true} ],STONE);
-Translation.addTranslation("Venus Rock 2",{
-ru: "Вулканический венерианский камень"
-})
-
-
-IDRegistry.genBlockID("venus_rock_3");
-Block.createBlock("venus_rock_3",[{name: "Venus Rock 3", texture: [["venus_rock", 3]], inCreative: true} ],STONE);
-Translation.addTranslation("Venus Rock 3",{
-ru: "Пемза"
-})
+new GBlock("venus_rock_3", [{ name: "Venus Rock 3", texture: [["venus_rock", 3]], inCreative: true }], STONE).create();
 
 
 

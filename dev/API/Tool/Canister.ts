@@ -80,5 +80,3 @@ class Canister extends GItem {
 
 new Canister("fuel");
 new Canister("oil");
-
-new GItem("test_item_blin", 1, "oil_canister", "oil_canister_partial", 3);

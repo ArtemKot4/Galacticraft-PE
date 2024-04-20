@@ -971,3 +971,48 @@ Translation.addTranslation("Ore Iron Mars", {
 Translation.addTranslation("Infinity§6⚡\n§7Smaller energy generating", {
   ru: "Бесконечность§6⚡\n§7Небольшая скорость подзарядки",
 });
+
+Translation.addTranslation("Pipe Hydrogen", {
+  ru: "§6Газовая труба",
+});
+
+
+Translation.addTranslation("Venus Rock 0",{
+  ru: "Горячий венерианский камень"
+  })
+
+  
+
+
+Translation.addTranslation("Venus Rock 1",{
+  ru: "Твёрдый венерианский камень"
+  })
+  
+  Translation.addTranslation("Venus Rock 2",{
+  ru: "Вулканический венерианский камень"
+  })
+  
+  Translation.addTranslation("Venus Rock 3",{
+  ru: "Пемза"
+  })
+  
+  Translation.addTranslation("Enclosed Heavy Aluminum Wire", {
+    ru: "Герметичная улучшенная алюминиевая труба"
+});
+
+Translation.addTranslation("Enclosed Oxygen Pipe", {
+  ru: "Герметичная кислородная труба"
+});
+
+Translation.addTranslation("Enclosed Aluminum Wire", {
+  ru: "Герметичная алюминиевая труба"
+});
+
+Translation.addTranslation("Oxygen Storage Module", {
+  ru: "Кислородное хранилище"
+});
+
+Translation.addTranslation("gc.message.cable.painting_warning", {
+  ru: "Извините, но для данного цвета нет нужной текстуры. Если вы хотите её нарисовать, обратитесь пожалуйста в Telegram: @artemon4xl",
+  en: "Sorry, but for this color need texture. If you want to paint it, please write me in Telegram: @artemon4x"
+})

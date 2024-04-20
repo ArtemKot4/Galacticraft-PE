@@ -10,7 +10,144 @@ const PIPE = Block.createSpecialType({
   sound: "glass",
 });
 
-const WIRE_COLORS = [
+const STANDART_CABLE_WIDTH = 2 / 8;
+
+class Cable {
+  public id: string;
+
+  public static colors_to_paint = [
+    "blue",
+    "black",
+    "white",
+    "gray",
+    "green",
+    "lime",
+    "blue",
+    "orange",
+    "magenta",
+    "pink",
+    "red",
+    "yellow",
+  ] as const;
+
+  constructor(public color: string) {}
+
+  public createByPrototype(
+    id: string,
+    group: string,
+    energy_type: EnergyType,
+    energy_provide: int,
+    block_type: string | Block.SpecialType,
+    cable_width: int = STANDART_CABLE_WIDTH
+  ) {
+    this.id = id;
+    return (
+      new GBlock(
+        id,
+        [
+          {
+            name: id,
+            texture: [[id, 0]],
+            inCreative: false,
+          },
+        ],
+        block_type
+      ).create(),
+      TileRenderer.setupWireModel(BlockID[id], 0, cable_width, group),
+      energy_type.registerWire(BlockID[id], energy_provide),
+      this.setColorByDye()
+    );
+  }
+
+  public setColorByDye() {
+    const splited_id = this.id.split("_");
+    return Block.registerClickFunctionForID(
+      BlockID[this.id],
+      (coords, item, block, player) => {
+        for (const i in Cable.colors_to_paint) {
+          const color = Cable.colors_to_paint[i];
+          const result_id = splited_id
+            .slice(0, splited_id.length - 1)
+            .concat(color)
+            .join("_");
+     
+            if (item.id === VanillaItemID[color + "_dye"]) {
+
+              try {
+              Particles.addParticle(
+                EParticleType.CLOUD,
+                coords.x + 0.5,
+                coords.y + 0.5,
+                coords.z + 0.5,
+                0,
+                0.01,
+                0
+              );
+
+              BlockSource.getDefaultForActor(player).setBlock(
+                coords.x,
+                coords.y,
+                coords.z,
+                BlockID[result_id],
+                0
+              );
+              Entity.setCarriedItem(
+                player,
+                item.id,
+                item.count - 1,
+                item.data,
+                item.extra
+              );
+            }
+           catch {
+            Game.message(
+              Native.Color.GREEN +
+                Translation.translate("gc.message.cable.painting_warning")
+            );
+          }
+        }
+      }
+      }
+    );
+  }
+
+  public createWire() {
+    return this.createByPrototype(
+      "aluminum_wire_" + this.color,
+      "gc-wire",
+      GJ,
+      200,
+      WIRE,
+      2 / 10
+    );
+  }
+
+  public createImprovedWire() {
+    return this.createByPrototype(
+      "improved_aluminum_wire_" + this.color,
+      "gc-improved-wire",
+      GJ,
+      400,
+      WIRE,
+      2 / 8
+    );
+  }
+
+  public createPipe() {
+    return this.createByPrototype(
+      "pipe_oxygen_" + this.color,
+      "gc-oxygen-pipe",
+      OB,
+      400,
+      PIPE
+    );
+  }
+  public getBlockID() {
+    return BlockID[this.id];
+  }
+}
+
+const cableColors = [
   "black",
   "blue",
   "dark_blue",
@@ -26,147 +163,47 @@ const WIRE_COLORS = [
   "pink",
   "red",
   "yellow",
-  "orange"
-]
+  "orange",
+];
 
+const pipeColors = [
+  "black",
+  "blue",
+  "brown",
+  "cyan",
+  "gray",
+  "green",
+  "light_blue",
+  "lime",
+  "magenta",
+  "orange",
+  "pink",
+  "purple",
+  "red",
+  "silver",
+  "yellow",
+];
 
-
-
-class Cable {
- public id: string;
-  constructor(public color: string) {
-
-  };
-    public setColorByDye(color: string) {
- 
-        const splited_id = this.id.split("_");
-        
-        const result_id = BlockID[splited_id.slice(0, splited_id.length - 1).concat(color).join("_")];
-        Game.message("Wire id: " + this.id + "\nSplited id: " + splited_id + "\nResult replaced id: " + result_id)
-      Block.registerClickFunctionForID(BlockID[this.id], (coords, item, block, player) => {
-        if(item.id === VanillaItemID[color + "_dye"]) {
-          BlockSource.getDefaultForActor(player).setBlock(coords.x, coords.y, 
-            coords.z,
-             !!result_id ? result_id : BlockID[this.id], 0);
-             !!result_id ? Entity.setCarriedItem(player, item.id, item.count - 1, item.data, item.extra) : null;
-        }
-      })
-    };
-
-private setupColors() {
-  VanillaItemID.dye
-       return this.setColorByDye("blue"),
-       this.setColorByDye("black"),
-       this.setColorByDye("white"),
-       this.setColorByDye("gray"),
-       this.setColorByDye("green"),
-       this.setColorByDye("lime"),
-       this.setColorByDye("blue"),
-       this.setColorByDye("orange"),
-       this.setColorByDye("blue"),
-       this.setColorByDye("magenta"),
-       this.setColorByDye("pink"),
-       this.setColorByDye("red"), 
-       this.setColorByDye("yellow")
+for (const color of cableColors) {
+  const cable = new Cable(color);
+  cable.createImprovedWire();
 }
 
-  public createWire() {
-    this.id = "aluminum_wire_" + this.color;
-    new GBlock(
-      "aluminum_wire_" + this.color,
-      [
-        {
-          name: "aluminum_wire_" + this.color,
-          texture: [["aluminum_wire_" + this.color, 0]],
-          inCreative: true,
-        },
-      ],
-      WIRE
-    ).create();
-    TileRenderer.setupWireModel(
-      BlockID["aluminum_wire_" + this.color],
-      0,
-      2 / 10,
-      "gc-wire"
-    )
-    GJ.registerWire(BlockID["aluminum_wire_" + this.color], 400);
-    this.setupColors();
-  }
-  public createImprovedWire() {
-    this.id = "improved_aluminum_wire_" + this.color;
-    new GBlock(
-      "improved_aluminum_wire_" + this.color,
-      [
-        {
-          name: "improved_aluminum_wire_" + this.color,
-          texture: [["improved_aluminum_wire_" + this.color, 0]],
-          inCreative: true,
-        },
-      ],
-      WIRE
-    ).create();
-    TileRenderer.setupWireModel(
-      BlockID["improved_aluminum_wire_" + this.color],
-      0,
-      2 / 8,
-      "gc-improved-wire"
-    );
-    GJ.registerWire(BlockID["improved_aluminum_wire_" + this.color], 200);
-    this.setupColors();
-  };
-
-  createPipe() {
-    this.id = "pipe_oxygen_" + this.color;
-    new GBlock(
-      "pipe_oxygen_" + this.color,
-      [
-        {
-          name: "pipe_oxygen_" + this.color,
-          texture: [["pipe_oxygen_" + this.color, 0]],
-          inCreative: true,
-        },
-      ],
-      PIPE
-    ).create();
-    TileRenderer.setupWireModel(
-      BlockID["pipe_oxygen_" + this.color],
-      0,
-      2 / 8,
-      "gc-oxygen-pipe"
-    );
-    OB.registerWire(BlockID["pipe_oxygen_" + this.color], 200);
-    this.setupColors();
-  }
+for (const color of pipeColors) {
+  const cable = new Cable(color);
+  cable.createPipe();
 }
 
-for(const i in WIRE_COLORS) {
-  new Cable(WIRE_COLORS[i]).createImprovedWire();
-}
+new Cable(null).createByPrototype(
+  "pipe_hydrogen",
+  "gc-hydrogen-pipe",
+  OB,
+  400,
+  PIPE
+);
 
-new Cable("black").createPipe();
-new Cable("blue").createPipe();
-new Cable("brown").createPipe();
-new Cable("cyan").createPipe();
-new Cable("gray").createPipe();
-new Cable("green").createPipe();
-new Cable("light_blue").createPipe();
-new Cable("lime").createPipe();
-new Cable("magenta").createPipe();
-new Cable("orange").createPipe();
-new Cable("pink").createPipe();
-new Cable("purple").createPipe();
-new Cable("red").createPipe();
-new Cable("silver").createPipe();
-new Cable("yellow").createPipe();
+Item.addToCreative(BlockID["improved_aluminum_wire_gray"], 1, 0);
 
+Item.addToCreative(BlockID["pipe_hydrogen"], 1, 0);
 
-
-new GBlock("hydrogen_pipe", [
-  { name: "Pipe Hydrogen", texture: [["pipe_hydrogen", 0]], inCreative: true },
-], PIPE).create();
-
-TileRenderer.setupWireModel(BlockID.hydrogen_pipe, 0, 2 / 8, "gc-hydrogen-pipe");
-OB.registerWire(BlockID.hydrogen_pipe, 200);
-Translation.addTranslation("Pipe Hydrogen", {
-  ru: "§6Газовая труба",
-});
+Item.addToCreative(BlockID["pipe_oxygen_gray"], 1, 0);
