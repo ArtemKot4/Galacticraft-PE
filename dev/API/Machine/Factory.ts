@@ -53,9 +53,6 @@ class RecipeFactory {
     for(const k in _JSON) {
         const id = _JSON[k].id;
         const result_id = (typeof id === "number") ? id : 
-        // !!Block.getNumericId(id) ? BlockID[id] : !!Item.getNumericId(id) ? ItemID[id] : !!VanillaBlockID[id] 
-        // ? VanillaBlockID[id] : !!VanillaItemID[id] ?
-        //  VanillaItemID[id] : 0
         (BlockID[id] ?? ItemID[id]) ??
          (VanillaBlockID[id] ??  VanillaItemID[id]);
          
@@ -72,3 +69,24 @@ Game.message("\nJSON: " + JSON.stringify(_JSON))
     };
 
 }
+
+/*
+public registerFromJSON(machine: string) {
+  const DIRS = FileTools.GetListOfFiles(
+    __dir__ + "resources/recipes/" + machine + "/",
+    ""
+  );
+  for (const i in DIRS) {
+    const _JSON = JSON.parse(FileTools.ReadText(DIRS[i].getAbsolutePath()));
+    for (const k in _JSON) {
+      const id = _JSON[k].id as string;
+      const split = id.split(":");
+      const validation_id =
+       split[0] !== "minecraft"
+          ? ItemID[split[1]] ?? BlockID[split[1]]
+          : VanillaItemID[split[1]] ?? VanillaBlockID[split[1]];
+      _JSON[k].id = Number(typeof id === "number" ? id : validation_id);
+    }
+    this.set(_JSON);
+  }
+}*/

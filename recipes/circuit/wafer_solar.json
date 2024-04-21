@@ -1,8 +1,8 @@
 {
-    "slot_1": "diamond",
-    "slot_2": "raw_silicon",
-    "slot_3": "raw_silicon",
-    "slot_4": "redstone",
-    "slot_5": "lapis_lazuli",
-    "result": "wafer_solar"
-  } 
+  "slot_1": { "id": "diamond", "count": 1, "data": 0 },
+  "slot_2": { "id": "raw_silicon", "count": 1, "data": 0 },
+  "slot_3": { "id": "raw_silicon", "count": 1, "data": 0 },
+  "slot_4": { "id": "redstone", "count": 1, "data": 0 },
+  "slot_5": { "id": "lapis_lazuli", "count": 1, "data": 0 },
+  "result": { "id": "wafer_solar", "count": 1, "data": 0 }
+}
