@@ -1,5 +1,5 @@
 class OxygenStorage extends MachineStorage {
-    defaultValues = { energy: 0, energyMax: 2500000 };
+    defaultValues = { energy: 0, energy_max: 2500000 };
     onTick(): void {
         let slot1 = this.container.getSlot("slot1");
 

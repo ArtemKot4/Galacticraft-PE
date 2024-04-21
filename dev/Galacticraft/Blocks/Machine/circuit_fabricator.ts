@@ -9,13 +9,13 @@ class CircuitFabricator extends InputMachine {
     progressMax: 500,
 
     energy: 0,
-    energyMax: 1000,
+    energy_max: 1000,
   };
 
  public setupRecipeLogic() {
   for (const i in CircuitFabricatorFactory.storage) {
     const storage = CircuitFabricatorFactory.storage;
-    if (this.data.energy >= (this.data.energyMax / 2) &&
+    if (this.data.energy >= (this.data.energy_max / 2) &&
      RecipeFactory.getForMore(this.container, storage[i], 5) && 
     this.data.progress < this.data.progressMax) {
       this.data.progress++;
@@ -25,7 +25,7 @@ class CircuitFabricator extends InputMachine {
       RecipeFactory.decreaseSlots(this.container, 5);
       RecipeFactory.setupResult(this.container, "result", storage[i].result);
       this.data.progress = 0;
-      this.data.energy -= this.data.energyMax / 2
+      this.data.energy -= this.data.energy_max / 2
     };
   }
  }
@@ -41,7 +41,7 @@ class CircuitFabricator extends InputMachine {
     this.container.setScale("Line1", this.data.progress / 130);
     this.container.setScale("Line2", this.data.progress / 30);
 
-    this.container.setScale("ENERGYBar", this.data.energy / this.data.energyMax);
+    this.container.setScale("ENERGYBar", this.data.energy / this.data.energy_max);
   }
 }
 
@@ -61,7 +61,7 @@ SpacesMachine.registerStandartMachine(
 //         progressMax: 500,
 //         active: false,
 //         energy: 0,
-//         energyMax: 1000,
+//         energy_max: 1000,
 //     },
 //     getCapacity: function() {
 //         return 1000

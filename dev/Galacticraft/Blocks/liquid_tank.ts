@@ -1,5 +1,5 @@
-IDRegistry.genBlockID("liquid_tank_sc");
-Block.createBlock("liquid_tank_sc",[{name: "Liquid tank", texture: [["tank", 0]], inCreative: false} ], BLOCK_TYPE_GLASS);
+IDRegistry.genBlockID("liquid_tank_gc");
+Block.createBlock("liquid_tank_gc",[{name: "Liquid tank", texture: [["tank", 0]], inCreative: false} ], BLOCK_TYPE_GLASS);
 Translation.addTranslation("Liquid tank",{
 ru: "Жидкостный резервуар"
 })
@@ -18,35 +18,3 @@ let modell = (function(obj, texture_default, data_default){
 
 modell({}, BlockID.liquid_tank_sc,0).setBlockModel(BlockID.liquid_tank_sc)
 
-
-   SpacesMachine.liquidRegistry(ItemID.bucket_of_oil,0,VanillaItemID.bucket,0,"oil")
-SpacesMachine.liquidRegistry(ItemID.bucket_of_fuel,0,VanillaItemID.bucket,0,"fuel")
-  
-for(var i in liquids){
-   Item.registerUseFunction(liquids[i].id, function(coords, item, block, player){
-	function updaterStorage(liquidsture,level){
-		if(level>0){
-	//modell.addBoxByBlock("firstfluid",  0.125, 0, 0.125, 0.875, 1/16, 0.875, liquidsture, 0);
-	modell({}, BlockID.liquid_tank_sc,0).setBlockModel(BlockID.liquid_tank_sc)
-	}
-	
-	   
-	   
-
-	if(block.id==BlockID.liquid_tank_sc && item.data==liquids[i].data && liquids[i] == liquids[i].liquid && 
- level!=17&&level!=-1){
-		if(liquids[i]=="oil"){updaterStorage("oil_gl_still",+1);
-		var actor = new PlayerActor(player);
-		Entity.setCarriedItem(player,item.id,item.count-1,0);
-		actor.addItemToInventory(liquids[i].voId,item.count,liquids[i].voData,item.extra,false)
-		}
-		if(liquids[i]=="fuel"){updaterStorage("fuel_gl_still",+1);
-		var actor = new PlayerActor(player);
-		Entity.setCarriedItem(player,item.id,item.count-1,0);
-		actor.addItemToInventory(liquids[i].voId,item.count,liquids[i].voData,item.extra,false)
-		}
-	}}
-   });
-}
-
-//model.addBoxByBlock("firstfluid",  0.125, 0, 0.125, 0.875, 1/16=level, 0.875, liquidsture, 0);

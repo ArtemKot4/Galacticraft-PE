@@ -2,28 +2,40 @@
 class Refinery extends InputMachine {
   defaultValues = {
     energy: 0,
-    energyMax: 500,
+    energy_max: 500,
     fuel: 0,
     oil: 0,
+    liquid_max: 60
   };
   onTick(): void {
     this.discharge("EnergySlot");
     this.container.sendChanges();
     this.container.validateAll();
 
-    this.container.setScale("energy", this.data.energy / 500);
-    this.container.setScale("energy_bar", this.data.energy / 500);
-    this.container.setScale("oil_scale", this.data.oil / 40);
-    this.container.setScale("fuel_scale", this.data.fuel / 40);
+    this.container.setScale("energy", this.data.energy / this.data.energy_max);
+    this.container.setScale("energy_bar", this.data.energy / this.data.energy_max);
+    this.container.setScale("oil_scale", this.data.oil / this.data.liquid_max);
+    this.container.setScale("fuel_scale", this.data.fuel / this.data.liquid_max);
     this.container.setText(
       "ELECTRIC",
-      "Gj :" + this.data.energy + " / " + this.data.energyMax
+      "gJ :" + this.data.energy + " / " + this.data.energy_max
     );
     
     if (this.data.energy >= 50) {
-      Canister.input("canister_1","oil",this.container,this.data);
-      Canister.output("canister_2","fuel",this.container,this.data)
-      if(this.data.fuel < 40 && this.data.oil >= 5 ){
+      Canister.input({
+        slot: "slot_1",
+        input: Canister.get("oil"),
+        output: ItemID.empty_liquid_canister,
+        liquid: "oil"
+      },this.container,this.data);
+      Canister.output({
+        slot: "slot_2",
+        input: ItemID.empty_liquid_canister,
+        output: Canister.get("fuel"),
+        liquid: "fuel"
+      },this.container,this.data);
+
+      if(this.data.fuel < this.data.liquid_max && this.data.oil >= 5 ){
         this.data.fuel +=5;
         this.data.oil -=5;
       };

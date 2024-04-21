@@ -19,8 +19,8 @@ class CoalGenerator extends Generator {
 
     public defaultValues = {
         energy: 0,
-        energyMax: 3000,
-        burningMax: 3000,
+        energy_max: 3000,
+        burning_max: 3000,
         burning: 0,
         active: false
     };
@@ -30,17 +30,17 @@ class CoalGenerator extends Generator {
         for (const i in CoalFactory.storage) {
             const recipe = RecipeFactory.get(container, CoalFactory.storage[i]); 
           //  if (_slot.id === burnItems[i].id && data.burning != data.burningMax) {
-            if (recipe("coal_slot", "id") && data.burning !== data.burningMax) {
-                data.burning += data.burningMax;
+            if (recipe("coal_slot", "id") && data.burning !== data.burning_max) {
+                data.burning += data.burning_max;
             
                 _slot.count--
 
                 data.active = true;
             }
         }
-        if (data.burning === data.burningMax && data.active === true && data.energy <= data.energyMax) { 
+        if (data.burning === data.burning_max && data.active === true && data.energy <= data.energy_max) { 
             data.energy += 1 }
-        if (data.energy === data.energyMax) { data.active = false; data.burning = 0 }
+        if (data.energy === data.energy_max) { data.active = false; data.burning = 0 }
 
     }
     
@@ -53,10 +53,10 @@ class CoalGenerator extends Generator {
         CoalGenerator.isCoal("coal_slot", this.container, this.data)
         
 
-        this.container.setScale("progress_scale", this.data.energy / this.data.energyMax);
+        this.container.setScale("progress_scale", this.data.energy / this.data.energy_max);
 
 
-        this.container.setText("EnergyText", "Gj :" + this.data.energy + " / " + this.getCapacity());
+        this.container.setText("EnergyText", "gJ :" + this.data.energy + " / " + this.getCapacity());
 
 
         if (this.data.energy > 0) {
@@ -76,7 +76,7 @@ class CoalGenerator extends Generator {
 
         };
 
-        if (this.data.energy >= this.data.energyMax) {
+        if (this.data.energy >= this.data.energy_max) {
             this.container.setText("Status", Translation.translate("Status: storage full"));
            
         }

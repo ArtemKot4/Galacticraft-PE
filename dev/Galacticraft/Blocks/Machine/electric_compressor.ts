@@ -4,13 +4,13 @@ class ElectricCompressor extends InputMachine {
     progress: 0,
     progressMax: 250,
     energy: 0,
-    energyMax: 1000,
+    energy_max: 1000,
   };
 
   public setupRecipeLogic() {
     for (const i in CompressorFactory.storage) {
       const storage = CompressorFactory.storage;
-      if (this.data.energy >= (this.data.energyMax / 2) && RecipeFactory.getForMore(this.container, storage[i], 9) && 
+      if (this.data.energy >= (this.data.energy_max / 2) && RecipeFactory.getForMore(this.container, storage[i], 9) && 
       this.data.progress < this.data.progressMax) {
         this.data.progress++;
       };
@@ -19,7 +19,7 @@ class ElectricCompressor extends InputMachine {
         RecipeFactory.setupResult(this.container, "result_1", storage[i].result);
         RecipeFactory.setupResult(this.container, "result_2", storage[i].result_2 ?? storage[i].result);
         this.data.progress = 0;
-        this.data.energy -= this.data.energyMax / 2
+        this.data.energy -= this.data.energy_max / 2
       };
       if(World.getThreadTime() % 10 === 0 && this.data.energy > 0) this.data.energy--;
     }

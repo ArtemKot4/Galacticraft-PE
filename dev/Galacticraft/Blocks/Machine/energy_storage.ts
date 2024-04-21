@@ -18,15 +18,15 @@ Block.createBlockWithRotation("energy_storage_module", [{
 
 
 class EnergyStorage extends MachineStorage {
-    defaultValues = { energy: 0, energyMax: 2500000 };
+   public override defaultValues = { energy: 0, energy_max: 2500000 };
     onTick(): void {
-        this.container.setScale("EnergyScale",this.data.energy / this.data.energyMax)
+        this.container.setScale("EnergyScale",this.data.energy / this.data.energy_max)
             this.container.setText("MaxEnergy",Translation.translate("out: ")+ this.data.energy)
         // for(var i in batt){
         //     if(this.container.getSlot("EnergySlot").id==batt[i].id){
-        //         this.data.energyMax = 27500000;
+        //         this.data.energy_max = 27500000;
                   
-        //     }else{ this.data.energyMax = 2500000;
+        //     }else{ this.data.energy_max = 2500000;
                 
         //     }};
                  //   battery.add(this.container, this.data, "EnergySlot");

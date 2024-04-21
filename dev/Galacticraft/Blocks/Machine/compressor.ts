@@ -32,11 +32,11 @@ function setupCompressorRecipe(obj) {
 class Compressor extends Machine {
   public defaultValues = {
     energy: 0,
-    energyMax: 500,
+    energy_max: 500,
     progress: 0,
     progressMax: 500,
     burning: 0,
-    burningMax: 1000,
+    burning_max: 1000,
     active: false,
   };
   public setupRecipeLogic() {
@@ -45,7 +45,7 @@ class Compressor extends Machine {
       // if(this.data.progress > 0 && !RecipeFactory.getForMore(this.container, storage[i], 9)) {
       //   this.data.progress = 0;
       // };
-      if (this.data.energy >= (this.data.energyMax / 2) &&
+      if (this.data.energy >= (this.data.energy_max / 2) &&
        RecipeFactory.getForMore(this.container, storage[i], 9) && 
       this.data.progress < this.data.progressMax) {
         this.data.progress++;
@@ -54,7 +54,7 @@ class Compressor extends Machine {
         RecipeFactory.decreaseSlots(this.container, 9);
         RecipeFactory.setupResult(this.container, "result", storage[i].result);
         this.data.progress = 0;
-        this.data.energy -= this.data.energyMax / 2
+        this.data.energy -= this.data.energy_max / 2
       };
     
       if(World.getThreadTime() % 10 === 0 && this.data.energy > 0) this.data.energy--;
@@ -64,7 +64,7 @@ class Compressor extends Machine {
     this.container.sendChanges();
     this.container.validateAll();
     this.container.setScale("progressScale", this.data.progress / this.data.progressMax);
-    this.container.setScale("BurningScale", this.data.energy / this.data.energyMax);
+    this.container.setScale("BurningScale", this.data.energy / this.data.energy_max);
     status(this.container, this.data)
     CoalGenerator.isCoal("coal_slot", this.container, this.data);
    this.setupRecipeLogic();

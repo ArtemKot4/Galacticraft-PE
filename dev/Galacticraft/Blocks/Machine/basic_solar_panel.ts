@@ -21,7 +21,7 @@ Block.registerPlaceFunction(
 class SolarPanel extends Generator {
   defaultValues = {
     energy: 0,
-    energyMax: 5000,
+    energy_max: 5000,
   };
   
   onTick(): void {
@@ -32,7 +32,7 @@ class SolarPanel extends Generator {
     this.container.setScale("sunscale", this.data.energy / 10);
     this.container.setScale(
       "ENERGYBar",
-      this.data.energy / this.data.energyMax
+      this.data.energy / this.data.energy_max
     );
     this.container.setScale("Energy", this.data.energy / 100);
     if (this.data.energy >= 5000) {
@@ -49,7 +49,7 @@ class SolarPanel extends Generator {
     if (
       World.getThreadTime() % 1 == 0 &&
       light == 15 &&
-      this.data.energy != this.data.energyMax
+      this.data.energy != this.data.energy_max
     ) {
       this.data.energy += 1;
     }

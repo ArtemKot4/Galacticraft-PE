@@ -1,4 +1,4 @@
-type id = any;
+type id = int;
 //typeof BlockID[string] | number
 type ores = int | string | Array<string | number>;
 /**

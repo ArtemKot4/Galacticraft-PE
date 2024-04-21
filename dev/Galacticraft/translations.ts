@@ -1013,6 +1013,6 @@ Translation.addTranslation("Oxygen Storage Module", {
 });
 
 Translation.addTranslation("gc.message.cable.painting_warning", {
-  ru: "Извините, но для данного цвета нет нужной текстуры. Если вы хотите её нарисовать, обратитесь пожалуйста в Telegram: @artemon4xl",
-  en: "Sorry, but for this color need texture. If you want to paint it, please write me in Telegram: @artemon4x"
+  ru: "It color is not valid",
+  en: "Этого цвета нет"
 })

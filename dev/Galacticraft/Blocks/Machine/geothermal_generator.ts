@@ -3,7 +3,7 @@
 class GeothermalGenerator extends Generator {
   defaultValues = {
     energy: 0,
-    energyMax: 3000,
+    energy_max: 3000,
     spouts: 1,
   };
   destroy(): any {
@@ -14,11 +14,11 @@ class GeothermalGenerator extends Generator {
   onTick(): void {
     this.container.sendChanges();
     this.container.validateAll();
-    this.container.setScale("geoscale", this.data.energy / this.data.energyMax);
+    this.container.setScale("geoscale", this.data.energy / this.data.energy_max);
 
     this.container.setText(
       "EnergiA",
-      "Gj :" + this.data.energy + " / " + this.data.energyMax
+      "Gj :" + this.data.energy + " / " + this.data.energy_max
     );
 
     var tile = TileEntity.getTileEntity(
@@ -32,7 +32,7 @@ class GeothermalGenerator extends Generator {
       this.blockSource.getBlockId(this.x, this.y - 1, this.z) ==
         BlockID.venus_spout &&
       World.getThreadTime() % 1 == 0 &&
-      this.data.energy != this.data.energyMax
+      this.data.energy != this.data.energy_max
     ) {
       if (tile.data.spout == 0) {
         this.data.energy++;

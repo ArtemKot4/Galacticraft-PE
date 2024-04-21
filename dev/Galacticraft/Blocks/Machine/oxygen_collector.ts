@@ -19,7 +19,7 @@ class Collector extends InputMachine {
         oxygen: 0,
         oxygenMax: 1000,
         energy: 0,
-        energyMax: 1500,
+        energy_max: 1500,
         leaveS: 0,
         leavesMax: 1000,
     };
@@ -87,12 +87,12 @@ class Collector extends InputMachine {
         //                     this.data.oxygen += 1;
         //                     this.data.energy -= 5;
         //                     this.data.leaveS++
-        //                     /*  if(this.data.leaveS < 969){this.blockSource.setGrassColorRGB(this.x,this.z+1,192);
-        //     this.blockSource.setGrassColorRGB(this.x,this.z-1,192)
-        //     this.blockSource.setGrassColorRGB(this.x-1,this.z,192)
-        //     this.blockSource.setGrassColorRGB(this.x+1,this.z+1,192);
-        //     this.blockSource.setGrassColorRGB(this.x,this.z,192);
-        //     }*/
+                             /*  if(this.data.leaveS < 969){this.blockSource.setGrassColorRGB(this.x,this.z+1,192);
+            this.blockSource.setGrassColorRGB(this.x,this.z-1,192)
+            this.blockSource.setGrassColorRGB(this.x-1,this.z,192)
+            this.blockSource.setGrassColorRGB(this.x+1,this.z+1,192);
+            this.blockSource.setGrassColorRGB(this.x,this.z,192);
+             }*/
         //                     if (this.data.leaveS == 999) {
         //                         this.data.leaveS = 0;
         //                         if (

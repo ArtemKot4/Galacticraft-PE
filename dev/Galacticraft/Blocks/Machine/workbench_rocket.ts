@@ -20,8 +20,7 @@ SpacesMachine.registerStandartMachine(BlockID.workbench_rocket, {
         return WorkbencheableUI
     },
     defaultValues: {
-        energy: 0,
-        energyMax: 1000
+        ui: 0
     },
     getCapacity: function() {
         return 1050

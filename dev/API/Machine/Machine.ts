@@ -41,14 +41,14 @@ abstract class Machine extends TileEntityBase implements EnergyModule {
   };
   public override useNetworkItemContainer: true;
   public getCapacity(): number {
-    return this.data.energyMax;
+    return this.data.energy_max;
   }
   public energyTick(type: string, src: EnergyTileNode): void {
     let output = Math.min(1, this.data.energy);
     this.data.energy += src.add(output) - output;
   }
   public energyReceive(type: string, amount: number, voltage: number): number {
-    amount = Math.min(amount, this.data.energyMax / 2);
+    amount = Math.min(amount, this.data.energy_max / 2);
     const add = Math.min(amount, this.getCapacity() - this.data.energy);
     this.data.energy += add;
     return add;

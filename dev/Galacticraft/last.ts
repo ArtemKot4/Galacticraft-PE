@@ -13,7 +13,6 @@ ModAPI.registerAPI("GalacticraftAPI", {
   Atmosphere: Atmosphere,
   GItem: GItem,
   GBlock: GBlock,
-  Storage: Storage,
   battery: Battery,
   SpacesMachine: SpacesMachine,
   requireGlobal: function (command) {

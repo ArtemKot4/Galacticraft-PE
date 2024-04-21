@@ -21,7 +21,7 @@ IMPORT("RenderUtil");
              If you have question and want ask,you can write to Artem's email adress artemon4xxl@gmail.com;
 */
 
-function checkDimension(thread, player?, dimensionId?) {
+function checkDimension(thread, player?) {
   if (World.getThreadTime() % thread == 0) {
     if (
       Player.getDimension() == Moon.getPlanet() ||
@@ -90,33 +90,6 @@ const ConfigManager = {
     twocoords: __config__.getFloat("Equipment.twocoords"),
     threecoords: __config__.getFloat("Equipment.threecoords"),
   },
-  /* Игра: {
-         ShiftHints: __config__.getBool('.ShiftHints'),
-         ElectricInformation: __config__.getBool('Игра.ElectricInformation'),
-         Special_Effects: __config__.getBool('Игра.Special_Effects'),
-     },
-     Ископаемые: {
-         copper: __config__.getBool('Ископаемые.Земля.copper'),
-         tin: __config__.getBool('Ископаемые.Земля.tin'),
-         aluminum: __config__.getBool('Ископаемые.Земля.aluminum'),
-         oil: __config__.getBool('Ископаемые.Земля.oil'),
-         
-         silicon: __config__.getBool('Ископаемые.Земля.silicon'),
-         desh: __config__.getBool('Ископаемые.Марс.desh'),
-         iron_m: __config__.getBool('Ископаемые.Марс.iron'),
-         copper_m: __config__.getBool('Ископаемые.Марс.copper'),
-         tin_m: __config__.getBool('Ископаемые.Марс.tin'),
-         
-         silicon_v: __config__.getBool('Ископаемые.Венера.silicon'),
-         quartz_v: __config__.getBool('Ископаемые.Венера.quartz'),
-         copper_v: __config__.getBool('Ископаемые.Венера.copper'),
-         tin_v: __config__.getBool('Ископаемые.Венера.tin'),
-         galena: __config__.getBool('Ископаемые.Венера.galena'),
-         pumice_stone_underground: __config__.getBool('Ископаемые.Венера.pumice_stone_underground'),
-         pumice_stone_ground: __config__.getBool('Ископаемые.Венера.pumice_stone_ground'),
-         sulphuric_acid: __config__.getBool('Ископаемые.Венера.sulphuric_acid'),
-         venus_spouts: __config__.getBool('Ископаемые.Венера.venus_spouts'),
-     }*/
 };
 
 function randomInt(min, max) {

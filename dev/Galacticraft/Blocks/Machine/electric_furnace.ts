@@ -30,7 +30,7 @@ Block.createBlockWithRotation("electric_furnace", [{
 //         progressMax: 0,
 //         active: false,
 //         energy: 0,
-//         energyMax: 1000,
+//         energy_max: 1000,
 //     },
 //     getCapacity: function() {
 //         return 1000

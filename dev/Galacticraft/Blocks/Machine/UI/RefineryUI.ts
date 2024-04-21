@@ -46,7 +46,7 @@ const RefineryUI = new UI.StandartWindow({
       },
     ],
     elements: {
-      canister_1: {
+      slot_1: {
         type: "slot",
         x: 355,
         y: 120,
@@ -80,7 +80,7 @@ const RefineryUI = new UI.StandartWindow({
           },
         },
       },
-      canister_2: {
+      slot_2: {
         type: "slot",
         x: 855,
         y: 120,

@@ -2,7 +2,7 @@
 class FuelLoader extends InputMachine {
   defaultValues = {
     energy: 0,
-    energyMax: 1000,
+    energy_max: 1000,
     liquid: 0,
   };
  
@@ -18,7 +18,7 @@ class FuelLoader extends InputMachine {
 
     this.container.setText(
       "ELECTRIC",
-      "Gj :" + this.data.energy + " / " + this.data.energyMax
+      "Gj :" + this.data.energy + " / " + this.data.energy_max
     );
     if (
       (canisterFuel.id == ItemID.bucket_of_fuel &&

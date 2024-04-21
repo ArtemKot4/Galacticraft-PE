@@ -28,6 +28,13 @@ class Cable {
     "pink",
     "red",
     "yellow",
+
+    "purple",
+    "cyan",
+    "brown",
+    "light_blue",
+    "light_gray",
+
   ] as const;
 
   constructor(public color: string) {}
@@ -100,10 +107,8 @@ class Cable {
               );
             }
            catch {
-            Game.message(
-              Native.Color.GREEN +
-                Translation.translate("gc.message.cable.painting_warning")
-            );
+          Particles.addParticle(EParticleType.CRIT, coords.x, coords.y, coords.z, 0, 0.01, 0)
+          Game.tipMessage(MathHelper.randomValue(Native.Color.GREEN, Native.Color.RED) + Translation.translate("gc.message.cable.painting_warning"))
           }
         }
       }
@@ -152,10 +157,12 @@ const cableColors = [
   "blue",
   "dark_blue",
   "white",
+
   "dark_gray",
   "dark_green",
-  "dark_lime",
   "dark_orange",
+  "dark_lime",
+
   "gray",
   "green",
   "light_blue",
@@ -164,6 +171,10 @@ const cableColors = [
   "red",
   "yellow",
   "orange",
+  "purple",
+  "cyan",
+  "brown",
+  "light_gray",
 ];
 
 const pipeColors = [
@@ -180,8 +191,9 @@ const pipeColors = [
   "pink",
   "purple",
   "red",
-  "silver",
+  "light_gray",
   "yellow",
+  "white"
 ];
 
 for (const color of cableColors) {
