@@ -146,14 +146,7 @@ const CircuitFabricatorUI = new UI.StandartWindow({
           },
         },
       },
-      Energy: {
-        type: "scale",
-        x: 425,
-        y: 295,
-        bitmap: "en_yes",
-        scale: 3.2,
-        direction: 1,
-      },
+      
       ENERGYBar: {
         type: "scale",
         x: 436,
@@ -163,6 +156,15 @@ const CircuitFabricatorUI = new UI.StandartWindow({
         direction: 0,
       },
      
+      Energy: {
+        type: "scale",
+        x: 425,
+        y: 295,
+        bitmap: "en_yes",
+        scale: 3.2,
+        direction: 1,
+      },
+      
       ELECTRIC: {
         type: "text",
         x: 563,

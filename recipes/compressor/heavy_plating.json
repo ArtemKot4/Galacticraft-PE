@@ -1,0 +1,12 @@
+{
+  "slot_1": { "id": 0, "count": 1, "data": 0 },
+  "slot_2": { "id": 0, "count": 1, "data": 0 },
+  "slot_3": { "id": 0, "count": 1, "data": 0 },
+  "slot_4": { "id": "compressed_steel", "count": 1, "data": 0 },
+  "slot_5": { "id": "compressed_aluminum", "count": 1, "data": 0 },
+  "slot_6": { "id": "compressed_bronze", "count": 1, "data": 0 },
+  "slot_7": { "id": "compressed_steel", "count": 1, "data": 0 },
+  "slot_8": { "id": "compressed_aluminum", "count": 1, "data": 0 },
+  "slot_9": { "id": "compressed_bronze", "count": 1, "data": 0 },
+  "result": { "id": "heavy_plating", "count": 1, "data": 0 }
+}
