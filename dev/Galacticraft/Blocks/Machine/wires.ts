@@ -77,10 +77,11 @@ class Cable {
             .slice(0, splited_id.length - 1)
             .concat(color)
             .join("_");
-     
+
             if (item.id === VanillaItemID[color + "_dye"]) {
 
               try {
+                const actor = new PlayerActor(player);
               Particles.addParticle(
                 EParticleType.CLOUD,
                 coords.x + 0.5,
@@ -98,7 +99,7 @@ class Cable {
                 BlockID[result_id],
                 0
               );
-              Entity.setCarriedItem(
+             if(actor.getGameMode() !== EGameMode.CREATIVE) Entity.setCarriedItem(
                 player,
                 item.id,
                 item.count - 1,
@@ -157,12 +158,10 @@ const cableColors = [
   "blue",
   "dark_blue",
   "white",
-
   "dark_gray",
   "dark_green",
   "dark_orange",
   "dark_lime",
-
   "gray",
   "green",
   "light_blue",

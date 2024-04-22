@@ -105,8 +105,7 @@ Translation.addTranslation("Torch glowtite", {
   ru: "Светокаменный факел",
 });
 
-IDRegistry.genBlockID("torch_on_lit");
-Block.createBlock(
+new GBlock(
   "torch_on_lit",
   [
     {
@@ -116,13 +115,12 @@ Block.createBlock(
     },
   ],
   TORCH_SPACETYPE
-);
+).create();
 Translation.addTranslation("Torch Stone On", {
   ru: "Зажжённый каменный факел",
 });
 
-IDRegistry.genBlockID("torch_off_lit");
-Block.createBlock(
+new GBlock(
   "torch_off_lit",
   [
     {
@@ -132,7 +130,7 @@ Block.createBlock(
     },
   ],
   TORCH_OFFSPACETYPE
-);
+).create();
 Translation.addTranslation("Torch stone off", {
   ru: "Потухший каменный факел",
 });
@@ -189,7 +187,7 @@ Block.registerDropFunction("vine_web", function (coords, blockID) {
 
 TileEntity.registerPrototype(BlockID.torch_on_lit, {
   useNetworkItemContainer: true,
-  tick: function () {
+  init: function () {
     if (checkDimension(20)) {
       this.blockSource.setBlock(
         this.x,
@@ -938,20 +936,20 @@ Translation.addTranslation("The Martian Cobblestone Slab", {
   ru: "Плита из Марсианского булыжника",
 });
 
-BlockRegistry.createSlabs("cobblestone_mars_slab","cobblestone_mars", [
-    {
-      name: "The Martian Cobblestone Slab",
-      texture: [
-        ["Cobblestone Mars", 0],
-        ["Cobblestone Mars", 0],
-        ["Cobblestone Mars", 0],
-        ["Cobblestone Mars", 0],
-        ["Cobblestone Mars", 0],
-        ["Cobblestone Mars", 0],
-      ],
-      inCreative: true,
-    },
-  ],);
+// BlockRegistry.createSlabs("cobblestone_mars_slab","cobblestone_mars", [
+//     {
+//       name: "The Martian Cobblestone Slab",
+//       texture: [
+//         ["Cobblestone Mars", 0],
+//         ["Cobblestone Mars", 0],
+//         ["Cobblestone Mars", 0],
+//         ["Cobblestone Mars", 0],
+//         ["Cobblestone Mars", 0],
+//         ["Cobblestone Mars", 0],
+//       ],
+//       inCreative: true,
+//     },
+//   ],);
 
 new GBlock(
   "mars_middle_stone_slab",

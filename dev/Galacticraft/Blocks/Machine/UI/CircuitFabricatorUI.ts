@@ -57,6 +57,30 @@ const CircuitFabricatorUI = new UI.StandartWindow({
       },
     ],
     elements: {
+      Line1: {
+        type: "scale",
+        x: 355,
+        y: 65,
+        bitmap: "Others.line1_1",
+        scale: 3.8,
+        direction: 1,
+      },
+      Line2: {
+        type: "scale",
+        x: 568,
+        y: 150,
+        bitmap: "Others.line2_1",
+        scale: 3.8,
+        direction: 0,
+      },
+      Line3: {
+        type: "scale",
+        x: 720,
+        y: 95,
+        bitmap: "Others.line3_1",
+        scale: 3.8,
+        direction: 0,
+      },
       //diamond
       slot_1: {
         type: "slot",
@@ -108,30 +132,6 @@ const CircuitFabricatorUI = new UI.StandartWindow({
         x: 769,
         y: 278,
         size: 60,
-      },
-      Line1: {
-        type: "scale",
-        x: 355,
-        y: 65,
-        bitmap: "Others.line1_1",
-        scale: 3.8,
-        direction: 1,
-      },
-      Line2: {
-        type: "scale",
-        x: 568,
-        y: 150,
-        bitmap: "Others.line2_1",
-        scale: 3.8,
-        direction: 0,
-      },
-      Line3: {
-        type: "scale",
-        x: 720,
-        y: 95,
-        bitmap: "Others.line3_1",
-        scale: 3.8,
-        direction: 0,
       },
       Burning: {
         type: "scale",
