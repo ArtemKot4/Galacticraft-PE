@@ -16,5 +16,5 @@ let modell = (function(obj, texture_default, data_default){
 	return model;
 });//boxes - 5 
 
-modell({}, BlockID.liquid_tank_sc,0).setBlockModel(BlockID.liquid_tank_sc)
+modell({}, BlockID.liquid_tank_gc,0).setBlockModel(BlockID.liquid_tank_gc)
 

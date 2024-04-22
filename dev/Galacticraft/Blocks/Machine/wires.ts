@@ -108,7 +108,7 @@ class Cable {
               );
             }
            catch {
-          Particles.addParticle(EParticleType.CRIT, coords.x, coords.y, coords.z, 0, 0.01, 0)
+          Particles.addParticle(EParticleType.FLAME, coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, 0, 0.01, 0)
           Game.tipMessage(MathHelper.randomValue(Native.Color.GREEN, Native.Color.RED) + Translation.translate("gc.message.cable.painting_warning"))
           }
         }
