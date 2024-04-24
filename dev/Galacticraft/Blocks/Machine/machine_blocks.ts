@@ -126,7 +126,7 @@ new GBlock(
 
 
 new GBlock(
-    "refinery_sc",
+    "refinery_gc",
     [
       {
         name: "Refinery",

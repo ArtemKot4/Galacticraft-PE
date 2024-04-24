@@ -420,43 +420,16 @@ Translation.addTranslation(
   }
 );
 
-Translation.addTranslation("Kerosene Canister", {
-  ru: "Канистра с жидким керосином",
-  zh: "液体煤油罐",
+
+Translation.addTranslation("item.galacticraft.fuel_canister", {
+  en: "Fuel canister",
+  ru: "Канистра с ракетным топливом",
 });
 
-Translation.addTranslation("Asot Canister", {
-  ru: "Канистра с жидким азотом",
-  zh: "液氮罐",
-});
-
-Translation.addTranslation("h2o Canister", {
-  ru: "Канистра с H2O",
-  zh: "带H2O的罐",
-});
-
-Translation.addTranslation("Masut Canister", {
-  ru: "Канистра с мазутом",
-  zh: "燃料油罐",
-});
-
-Translation.addTranslation("Clean Fuel Canister", {
-  ru: "Канистра с чистым топливом",
-});
-
-Translation.addTranslation("Oil Canister", {
+Translation.addTranslation("item.galacticraft.oil_canister", {
+  en: "Oil canister",
   ru: "Канистра с нефтью",
   zh: "油罐",
-});
-
-Translation.addTranslation("Methane Canister", {
-  ru: "Канистра с метаном",
-  zh: "一罐甲烷",
-});
-
-Translation.addTranslation("Rubber Canister", {
-  ru: "Канистра с каучуком",
-  zh: "橡胶罐",
 });
 
 Translation.addTranslation("Spaces Web", {
@@ -1013,6 +986,6 @@ Translation.addTranslation("Oxygen Storage Module", {
 });
 
 Translation.addTranslation("gc.message.cable.painting_warning", {
-  ru: "It color is not valid",
-  en: "Этого цвета нет"
+  ru: "Этого цвета нет",
+  en: "It color is not valid"
 })

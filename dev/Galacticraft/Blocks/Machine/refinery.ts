@@ -46,7 +46,7 @@ class Refinery extends InputMachine {
 }
 
 SpacesMachine.registerStandartMachine(
-  BlockID.refinery_sc,
+  BlockID.refinery_gc,
   new Refinery(RefineryUI)
 
 );

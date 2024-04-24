@@ -1,25 +1,27 @@
-type liquids = 'fuel' | 'oil';
+type liquids = "fuel" | "oil";
 
 interface ICanisterInputDescriptor<T extends liquids> {
-  slot: string,
-   input: id,
-   output: id,
-   liquid: T
-};
+  slot: string;
+  input: id;
+  output: id;
+  liquid: T;
+}
 
 class Canister extends GItem {
   public id: string;
   public texture: string;
-   
+
   constructor(id) {
-    super(id + "_canister", 1, null, id + "_canister_partial", 0, false);
+    super(id + "_canister", 1, null, id + "_canister_partial", 0, true);
+    Item.addToCreative(id + "_canister", 1, 6);
     this.visual();
     Item.registerNameOverrideFunction(this.id, (item, translation, name) => {
-      
-      Translation.translate(name) +
+      return (
+        Translation.translate(name) +
         "\n§7" +
         (item.data === 0 ? item.data : item.data + "0") +
         " mB / 60 mB"
+      );
     });
   }
 
@@ -38,17 +40,23 @@ class Canister extends GItem {
   public static input<T extends liquids>(
     descriptor: ICanisterInputDescriptor<T>,
     container: ItemContainer,
-    data: TileEntity.TileEntityPrototype["data"],
+    data: TileEntity.TileEntityPrototype["data"]
   ): void {
-    const slot = container.getSlot(descriptor.slot)
-    if((slot.id === descriptor.input && slot.data === 6) &&
-     data[descriptor.liquid] < data.liquid_max) {     
-      if(data.energy){ data.energy -= 50 } 
-      return container.setSlot(descriptor.slot, descriptor.output, 1, 0),
-      data[descriptor.liquid]+=5;
+    const slot = container.getSlot(descriptor.slot);
+    if (
+      slot.id === descriptor.input &&
+      slot.data === 6 &&
+      data[descriptor.liquid] < data.liquid_max
+    ) {
+      if (data.energy) {
+        data.energy -= 50;
+      }
+      return (
+        container.setSlot(descriptor.slot, descriptor.output, 1, 0),
+        (data[descriptor.liquid] += 10)
+      );
     }
   }
-
 
   public static output<T extends liquids>(
     descriptor: ICanisterInputDescriptor<T>,
@@ -56,10 +64,15 @@ class Canister extends GItem {
     data: any
   ): any {
     const slot = container.getSlot(descriptor.slot);
-    if (World.getThreadTime() % 20 === 0 && data[descriptor.liquid] >= 10 && (slot.id === 
-  descriptor.input || (slot.id === descriptor.output && slot.data < 6))) {
-       return container.setSlot(descriptor.slot, descriptor.input, 1, slot.data++),
-       data[descriptor.liquid] -= 10;
+    if (
+      World.getThreadTime() % 20 === 0 &&
+      data[descriptor.liquid] >= 10 &&
+        (slot.id === descriptor.output && slot.data < 6) || slot.id === descriptor.input)
+     {
+      return (
+        container.setSlot(descriptor.slot, descriptor.output, 1, slot.data+=1),
+        (data[descriptor.liquid]--)
+      );
     }
   }
 }

@@ -55,15 +55,12 @@ class RecipeFactory {
         const result_id = (typeof id === "number") ? id : 
         (BlockID[id] ?? ItemID[id]) ??
          (VanillaBlockID[id] ??  VanillaItemID[id]);
-         
-    
+             
     _JSON[k].id = Number(result_id);
     
     }
-Game.message("\nJSON: " + JSON.stringify(_JSON))
-  this.set(_JSON);
 
-    
+  this.set(_JSON);
      
     }
     };

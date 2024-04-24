@@ -57,7 +57,7 @@ class Compressor extends Machine {
         this.data.energy -= this.data.energy_max / 2
       };
     
-      if(World.getThreadTime() % 10 === 0 && this.data.energy > 0) this.data.energy--;
+    //  if(World.getThreadTime() % 10 === 0 && this.data.energy > 0) this.data.energy--;
     }
   };
   public onTick(): void {

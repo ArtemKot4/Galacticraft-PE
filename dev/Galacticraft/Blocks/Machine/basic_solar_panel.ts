@@ -17,7 +17,6 @@ Block.registerPlaceFunction(
 );
 
 
-
 class SolarPanel extends Generator {
   defaultValues = {
     energy: 0,

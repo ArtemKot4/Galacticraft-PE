@@ -10,7 +10,7 @@ const PIPE = Block.createSpecialType({
   sound: "glass",
 });
 
-const STANDART_CABLE_WIDTH = 2 / 8;
+const STANDART_CABLE_WIDTH = (2 / 8);
 
 class Cable {
   public id: string;
@@ -28,13 +28,11 @@ class Cable {
     "pink",
     "red",
     "yellow",
-
     "purple",
     "cyan",
     "brown",
     "light_blue",
     "light_gray",
-
   ] as const;
 
   constructor(public color: string) {}
@@ -71,8 +69,7 @@ class Cable {
     return Block.registerClickFunctionForID(
       BlockID[this.id],
       (coords, item, block, player) => {
-        for (const i in Cable.colors_to_paint) {
-          const color = Cable.colors_to_paint[i];
+        for (const color of Cable.colors_to_paint) {
           const result_id = splited_id
             .slice(0, splited_id.length - 1)
             .concat(color)
@@ -218,3 +215,5 @@ Item.addToCreative(BlockID["improved_aluminum_wire_gray"], 1, 0);
 Item.addToCreative(BlockID["pipe_hydrogen"], 1, 0);
 
 Item.addToCreative(BlockID["pipe_oxygen_gray"], 1, 0);
+
+

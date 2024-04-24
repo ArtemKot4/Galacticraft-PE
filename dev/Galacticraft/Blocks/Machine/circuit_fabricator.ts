@@ -6,7 +6,7 @@ const CircuitFabricatorFactory = new RecipeFactory();
 class CircuitFabricator extends InputMachine {
   defaultValues = {
     progress: 0,
-    progress_max: 500,
+    progress_max: 250,
 
     energy: 0,
     energy_max: 1000,

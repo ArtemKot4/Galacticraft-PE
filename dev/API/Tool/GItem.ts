@@ -32,25 +32,26 @@ class GItem {
 
   }
   public description(text: string, translation?: {}): void {
-   if(translation && typeof text == "string") Translation.addTranslation(text, translation);
+   if(translation) Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
      
-      Translation.translate(name) + "\n§7" + Translation.translate(text)
+      return Translation.translate(name) + "\n§7" + Translation.translate(text)
     });
   }
 
   public info(text: string, translation?: {}): void {
     if(translation) Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
-      if(Entity.getSneaking(Player.getLocal())) return Translation.translate(name) + text
-      else
+      if(Entity.getSneaking(Player.getLocal()) === true) return Translation.translate(name) + Translation.translate(text)
+
         return (
           Translation.translate(name) +
           "\n§7" +
           Translation.translate("Press SHIFT for view information")
         );
       
-    });
-  }
+    
+  })
+};
 
 }
