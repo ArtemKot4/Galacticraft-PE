@@ -147,26 +147,7 @@ this.container.setSlot("chestable2",chestable2.id,chestable2.count,chestable2.da
         this.data.energy += src.add(output) - output;
 
     },
-    click: function(id, count, data, coords) {
 
-
-
-        if (id == ItemID["Space wrench"]) {
-
-            this.blockSource.setBlock(
-                this.x,
-                this.y,
-                this.z,
-                BlockID.workbench_rocket, this.blockSource.getBlockData(
-                    this.x,
-                    this.y,
-                    this.z
-                )+1);
-
-
-        }
-
-    },
     destroyBlock: function () {
         this.blockSource.setBlock(this.x, this.y + 1, this.z, 0);
     }});

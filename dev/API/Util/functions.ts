@@ -3,12 +3,11 @@ const sec = (time) => (World.getThreadTime() % time) * 20 === 0;
 
 //excludes functions of js
 
-const ObjectValues = function(obj: {}) { 
+const ObjectValues = function<T>(obj: {}): T[] { 
   return Object.keys(obj).map(function(v) { 
   return obj[v] 
   }) 
- } 
-  
+ };
  /**
   * ObjectAssign -> реализация недостающего метода Object.assign
   * @include объект для дополнения

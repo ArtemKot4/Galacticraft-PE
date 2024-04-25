@@ -26,7 +26,7 @@ class GBlock {
     if (translation) Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
       if (Entity.getSneaking(Player.getLocal()))
-        return Translation.translate(name) + text;
+        return (Translation.translate(name) + Translation.translate(text));
       else
         return (
           Translation.translate(name) +

@@ -117,7 +117,7 @@ class Cable {
   public createWire() {
     return this.createByPrototype(
       "aluminum_wire_" + this.color,
-      "gc-wire",
+      "gc.wire",
       GJ,
       200,
       WIRE,
@@ -128,7 +128,7 @@ class Cable {
   public createImprovedWire() {
     return this.createByPrototype(
       "improved_aluminum_wire_" + this.color,
-      "gc-improved-wire",
+      "gc.improved-wire",
       GJ,
       400,
       WIRE,
@@ -139,7 +139,7 @@ class Cable {
   public createPipe() {
     return this.createByPrototype(
       "pipe_oxygen_" + this.color,
-      "gc-oxygen-pipe",
+      "gc.oxygen-pipe",
       OB,
       400,
       PIPE
@@ -204,7 +204,7 @@ for (const color of pipeColors) {
 
 new Cable(null).createByPrototype(
   "pipe_hydrogen",
-  "gc-hydrogen-pipe",
+  "gc.hydrogen-pipe",
   OB,
   400,
   PIPE

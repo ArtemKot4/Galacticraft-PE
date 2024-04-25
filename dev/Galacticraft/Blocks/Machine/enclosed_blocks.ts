@@ -6,8 +6,7 @@ new GBlock("enclosed_aluminum_wire", [{
 ).create();
 
 GJ.registerWire(BlockID.enclosed_aluminum_wire, 200);
-ICRender.getGroup("gc-wire").add(BlockID["enclosed_aluminum_wire"], -1);
-
+ICRender.getGroup("gc.wire").add(BlockID["enclosed_aluminum_wire"], -1);
 
 new GBlock("enclosed_fluid_pipe", [{
     name: "Enclosed Oxygen Pipe",
@@ -17,7 +16,8 @@ new GBlock("enclosed_fluid_pipe", [{
 ).create();
 
 GJ.registerWire(BlockID.enclosed_fluid_pipe, 400);
-ICRender.getGroup("gc-oxygen-pipe").add(BlockID["enclosed_fluid_pipe"], -1);
+ICRender.getGroup("gc.oxygen-pipe").add(BlockID["enclosed_fluid_pipe"], -1);
+ICRender.getGroup("gc.hydrogen-pipe").add(BlockID["enclosed_fluid_pipe"], -1)
 
 
 new GBlock("enclosed_heavy_aluminum_wire", [{
@@ -28,4 +28,4 @@ new GBlock("enclosed_heavy_aluminum_wire", [{
 ).create();
  
 GJ.registerWire(BlockID.enclosed_heavy_aluminum_wire, 400);
-ICRender.getGroup("gc-improved-wire").add(BlockID["enclosed_heavy_aluminum_wire"], -1);
+ICRender.getGroup("gc.improved-wire").add(BlockID["enclosed_heavy_aluminum_wire"], -1);

@@ -13,7 +13,15 @@ new GBlock("coal_generator", [{
 const CoalFactory = new RecipeFactory();
 CoalFactory.set({"coal_slot": {
     id: VanillaItemID.coal, count: 1, data: 0, extra: null
-}})
+},
+"power": 3000})
+
+
+CoalFactory.set({"coal_slot": {
+    id: VanillaItemID.stick, count: 1, data: 0, extra: null
+},
+"power": 150})
+
 
 class CoalGenerator extends Generator {
 
@@ -24,6 +32,7 @@ class CoalGenerator extends Generator {
         burning: 0,
         active: false
     };
+
    public static isCoal(slot: name, container: ItemContainer, data: TileEntity['data']): void {
 
         const _slot = container.getSlot(slot);
@@ -31,7 +40,7 @@ class CoalGenerator extends Generator {
             const recipe = RecipeFactory.get(container, CoalFactory.storage[i]); 
           //  if (_slot.id === burnItems[i].id && data.burning != data.burningMax) {
             if (recipe("coal_slot", "id") && data.burning !== data.burning_max) {
-                data.burning += data.burning_max;
+                data.burning += data.burning_max
             
                 _slot.count--
 
@@ -42,8 +51,31 @@ class CoalGenerator extends Generator {
             data.energy += 1 }
         if (data.energy === data.energy_max) { data.active = false; data.burning = 0 }
 
-    }
-    
+    };
+
+   public clientTick(): void {
+    if(this.data.energy <= 0) return;
+       if(World.getThreadTime() % 15 === 0) {
+       return (
+       Particles.addParticle(
+            EParticleType.FLAME, this.x + 0.5,
+            this.y + 0.5,
+            this.z + 0.5,
+            Math.random() / 20,
+            Math.random() / 20,
+            Math.random() / 20),
+
+            Particles.addParticle(
+                EParticleType.CLOUD, this.x + 0.5,
+                this.y + 0.5,
+                this.z + 0.5,
+                Math.random() / 20,
+                Math.random() / 20,
+                Math.random() / 20)
+       )
+       }
+   };
+
     public onTick(): void {
         this.container.sendChanges();
         this.container.validateAll();
@@ -61,13 +93,8 @@ class CoalGenerator extends Generator {
 
         if (this.data.energy > 0) {
             if(World.getThreadTime() % 15 === 0) {
-                Particles.addParticle(
-                    EParticleType.FLAME, this.x + 0.5,
-                    this.y + 0.5,
-                    this.z + 0.5,
-                    Math.random() / 20,
-                    Math.random() / 20,
-                    Math.random() / 20);
+
+
             }
             this.container.setText("Status", Translation.translate("Status: working"));
         }
