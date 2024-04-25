@@ -53,9 +53,8 @@ class CoalGenerator extends Generator {
 
     };
 
-   public clientTick(): void {
-    if(this.data.energy <= 0) return;
-       if(World.getThreadTime() % 15 === 0) {
+   public particles(): void {
+       if(World.getThreadTime() % 15 === 0 && this.data.energy > 0) {
        return (
        Particles.addParticle(
             EParticleType.FLAME, this.x + 0.5,
@@ -79,7 +78,7 @@ class CoalGenerator extends Generator {
     public onTick(): void {
         this.container.sendChanges();
         this.container.validateAll();
-
+     this.particles();
       
 
         CoalGenerator.isCoal("coal_slot", this.container, this.data)

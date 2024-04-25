@@ -35,9 +35,9 @@ class Refinery extends InputMachine {
         liquid: "fuel"
       },this.container,this.data);
 
-      if(this.data.fuel < this.data.liquid_max && this.data.oil >= 5 ){
-        this.data.fuel +=5;
-        this.data.oil -=5;
+      if(this.data.fuel < this.data.liquid_max && this.data.oil > 0 ){
+        this.data.fuel += 1;
+        this.data.oil -= 1;
       };
     };
   

@@ -24,7 +24,7 @@ class GBlock {
  }
   public info(text: string, translation?: {}): void {
     if (translation) Translation.addTranslation(text, translation);
-    Item.registerNameOverrideFunction(this.id, function (item, name) {
+   return Item.registerNameOverrideFunction(this.id, function (item, name) {
       if (Entity.getSneaking(Player.getLocal()))
         return (Translation.translate(name) + Translation.translate(text));
       else
@@ -37,12 +37,12 @@ class GBlock {
   }
   public description(text: string, translation?: {}): void {
     if (translation) Translation.addTranslation(text, translation);
-    Item.registerNameOverrideFunction(this.id, function (item, name) {
-      Translation.translate(name) + "\n§7" + Translation.translate(text);
+    return Item.registerNameOverrideFunction(this.id, function (item, name) {
+      return Translation.translate(name) + "\n§7" + Translation.translate(text);
     });
   }
   public placeableByItem(itemId: any): void {
-    Item.registerUseFunction(itemId, function (coords, item, block, player) {
+   return Item.registerUseFunction(itemId, function (coords, item, block, player) {
       const region = BlockSource.getDefaultForActor(player);
       const place = coords.relative;
       region.setBlock(place.x, place.y, place.z, BlockID[this.id], 0);

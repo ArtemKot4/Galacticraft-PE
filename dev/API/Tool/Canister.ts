@@ -23,6 +23,8 @@ class Canister extends GItem {
         " mB / 60 mB"
       );
     });
+
+    this.setClickLogic();
   }
 
   public visual(): void {
@@ -45,15 +47,16 @@ class Canister extends GItem {
     const slot = container.getSlot(descriptor.slot);
     if (
       slot.id === descriptor.input &&
-      slot.data === 6 &&
+      slot.data > 0 &&
       data[descriptor.liquid] < data.liquid_max
     ) {
       if (data.energy) {
         data.energy -= 50;
       }
       return (
-        container.setSlot(descriptor.slot, descriptor.output, 1, 0),
-        (data[descriptor.liquid] += 10)
+       
+        (data[descriptor.liquid] += slot.data,
+          container.setSlot(descriptor.slot, descriptor.output, 1, 0))
       );
     }
   }
@@ -66,7 +69,7 @@ class Canister extends GItem {
     const slot = container.getSlot(descriptor.slot);
     if (
       World.getThreadTime() % 20 === 0 &&
-      data[descriptor.liquid] >= 10 &&
+      data[descriptor.liquid] > 0 &&
         (slot.id === descriptor.output && slot.data < 6) || slot.id === descriptor.input)
      {
       return (
@@ -74,8 +77,33 @@ class Canister extends GItem {
         (data[descriptor.liquid]--)
       );
     }
+  };
+
+  protected clickerPrototype(item: ItemInstance, player: int, coords: Callback.ItemUseCoordinates, item_data, block_id) {
+    const region = BlockSource.getDefaultForActor(player);
+    return region.setBlock(coords.x, coords.y, coords.z, block_id, 0),
+    Entity.setCarriedItem(player, item.id, item.count, item_data, item.extra)
+  };
+
+  protected takeLiquidOnClick(item: ItemInstance, block: Tile, player: int, coords: Callback.ItemUseCoordinates, liquid: int) {
+      return this.clickerPrototype(item, player, coords, 6, 0);
+ 
+  };
+
+  protected pourOnClick(item: ItemInstance, block: Tile, player: int, coords: Callback.ItemUseCoordinates, liquid: int) {
+    return this.clickerPrototype(item, player, coords, 0, liquid)
+  };
+
+  public setClickLogic() {
+    return Item.registerUseFunction(this.id, (coords, item, block, player) => {
+      const liquid = BlockID[this.id.split("_")[0]];
+      Game.message("id of liquid define by: " +this.id.split("_")[0]);
+      if(item.data < 6 && block.id === liquid) return this.takeLiquidOnClick(item, block, player, coords, liquid) 
+      if(item.data === 6) return this.pourOnClick(item, block, player, coords, liquid)
+    })
   }
 }
+
 
 new Canister("fuel");
 new Canister("oil");
