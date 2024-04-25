@@ -1,4 +1,3 @@
-
 class Refinery extends InputMachine {
   defaultValues = {
     energy: 0,
@@ -11,7 +10,6 @@ class Refinery extends InputMachine {
     this.discharge("EnergySlot");
     this.container.sendChanges();
     this.container.validateAll();
-
     this.container.setScale("energy", this.data.energy / this.data.energy_max);
     this.container.setScale("energy_bar", this.data.energy / this.data.energy_max);
     this.container.setScale("oil_scale", this.data.oil / this.data.liquid_max);
@@ -22,6 +20,12 @@ class Refinery extends InputMachine {
     );
     
     if (this.data.energy >= 50) {
+
+      if(World.getThreadTime() % 2 === 0) {
+        Particles.addParticle(ESpaceParticle.SMOKE, this.x + 0.5, this.y + 1.05, this.z + 0.5, 0, 0.05, 0);
+      }
+
+
       Canister.input({
         slot: "slot_1",
         input: Canister.get("oil"),

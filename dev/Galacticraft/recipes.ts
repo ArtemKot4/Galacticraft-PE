@@ -15,11 +15,11 @@ Callback.addCallback("LevelDisplayed", function () {
   /*  slots:
 slotuer:r1,r2.
 sltuel:l1,l2.
-slotchestable:sc1,sc2,sc3.
+slotchestable:gc1,gc2,gc3.
 craftable:cr.
 drawing:SignRocketbench — drsrb.
              #
-           2#-#3   sc1#  sc2#  sc3#
+           2#-#3   gc1#  gc2#  gc3#
            4#-#5
            6#-#7
         r1#8#-#9#l1  #drsrb
@@ -227,7 +227,7 @@ Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
   Recipes.addShaped(
     { id: ItemID.canister_copper, count: 1, data: 0 },
     ["a a", "a a", "aaa"],
-    ["a", ItemID.ingot_copper_sc, 0]
+    ["a", ItemID.ingot_copper_gc, 0]
   );
   //Медная канистра(слитками)
   Recipes.addShaped(
@@ -441,7 +441,7 @@ Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
   Recipes.addShaped(
     { id: BlockID.AluminumWire, count: 6, data: 0 },
     ["bbb", "aaa", "bbb"],
-    ["a", ItemID.ingot_aluminum_sc, 0, "b", VanillaBlockID.wool, 0]
+    ["a", ItemID.ingot_aluminum_gc, 0, "b", VanillaBlockID.wool, 0]
   );
   //Алюминиевый провод
   Recipes.addShaped(
@@ -449,7 +449,7 @@ Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
     ["b  ", "w  ", "a  "],
     [
       "a",
-      ItemID.ingot_aluminum_sc,
+      ItemID.ingot_aluminum_gc,
       0,
       "b",
       VanillaBlockID.wool,
@@ -463,7 +463,7 @@ Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
   Recipes.addShaped(
     { id: ItemID.canister_tin, count: 1, data: 0 },
     ["a a", "a a", "aaa"],
-    ["a", ItemID.ingot_tin_sc, 0]
+    ["a", ItemID.ingot_tin_gc, 0]
   );
   //Оловяная канистра(слитками)
   Recipes.addShaped(
@@ -539,7 +539,7 @@ Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
     ["aaa", "bcb", "aea"],
     [
       "a",
-      ItemID.ingot_copper_sc,
+      ItemID.ingot_copper_gc,
       0,
       "b",
       VanillaItemID.iron_ingot,
@@ -558,13 +558,13 @@ Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
     ["bab", "aca", "aea"],
     [
       "a",
-      ItemID.ingot_aluminum_sc,
+      ItemID.ingot_aluminum_gc,
       0,
       "b",
       VanillaBlockID.anvil,
       0,
       "c",
-      ItemID.ingot_copper_sc,
+      ItemID.ingot_copper_gc,
       0,
       "e",
       ItemID.wafer_basic,
@@ -582,25 +582,25 @@ Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
   Recipes.addShaped(
     { id: ItemID.tin_shard, count: 9, data: 0 },
     ["a"],
-    ["a", ItemID.ingot_tin_sc, 0]
+    ["a", ItemID.ingot_tin_gc, 0]
   );
 
   Recipes.addShaped(
     { id: ItemID.copper_shard, count: 9, data: 0 },
     ["a"],
-    ["a", ItemID.ingot_copper_sc, 0]
+    ["a", ItemID.ingot_copper_gc, 0]
   );
 
   Recipes.addShaped(
     { id: ItemID.tin_shard, count: 9, data: 0 },
     ["a"],
-    ["a", ItemID.ingot_tin_sc, 0]
+    ["a", ItemID.ingot_tin_gc, 0]
   );
 
   Recipes.addShaped(
     { id: ItemID.aluminum_shard, count: 9, data: 0 },
     ["a"],
-    ["a", ItemID.ingot_aluminum_sc, 0]
+    ["a", ItemID.ingot_aluminum_gc, 0]
   );
 
   Recipes.addShaped(
@@ -739,7 +739,7 @@ Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
     //хранилище кислорода
 
     Recipes.addShaped(
-      { id: BlockID.refinery_sc, count: 1, data: 0 },
+      { id: BlockID.refinery_gc, count: 1, data: 0 },
       [" b ", "aba", "dcd"],
       [
         "a",
@@ -823,7 +823,7 @@ Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
     //хранилище кислорода
 
     Recipes.addShaped(
-      { id: BlockID.refinery_sc, count: 1, data: 0 },
+      { id: BlockID.refinery_gc, count: 1, data: 0 },
       [" b ", "aba", "dcd"],
       [
         "a",
@@ -844,9 +844,9 @@ Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
   }
 
   Recipes.addShaped(
-    { id: BlockID.block_tin_sc, count: 1, data: 0 },
+    { id: BlockID.block_tin_gc, count: 1, data: 0 },
     ["aaa", "aaa", "aaa"],
-    ["a", ItemID.ingot_tin_sc, 0]
+    ["a", ItemID.ingot_tin_gc, 0]
   );
 
   Recipes.addShaped(
@@ -881,7 +881,7 @@ Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
   );
 
   Recipes.addShaped(
-    { id: BlockID.collector_sc, count: 1, data: 0 },
+    { id: BlockID.collector_gc, count: 1, data: 0 },
     ["aaa", "bdc", "eee"],
     [
       "a",
@@ -913,7 +913,7 @@ Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
       ItemID.wafer_basic,
       0,
       "c",
-      BlockID.refinery_sc,
+      BlockID.refinery_gc,
       0,
       "d",
       ItemID.canister_tin,
@@ -929,7 +929,7 @@ Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
     ["aba", "cdc", "efe"],
     [
       "a",
-      ItemID.ingot_aluminum_sc,
+      ItemID.ingot_aluminum_gc,
       0,
       "b",
       VanillaBlockID.lever,
@@ -992,25 +992,25 @@ Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
   );
 
   Recipes.addShaped(
-    { id: ItemID.ingot_tin_sc, count: 1, data: 0 },
+    { id: ItemID.ingot_tin_gc, count: 1, data: 0 },
     ["aaa", "aaa", "aaa"],
     ["a", ItemID.tin_shard, 0]
   );
 
   Recipes.addShaped(
-    { id: ItemID.ingot_copper_sc, count: 1, data: 0 },
+    { id: ItemID.ingot_copper_gc, count: 1, data: 0 },
     ["aaa", "aaa", "aaa"],
     ["a", ItemID.copper_shard, 0]
   );
 
   Recipes.addShaped(
-    { id: ItemID.ingot_tin_sc, count: 1, data: 0 },
+    { id: ItemID.ingot_tin_gc, count: 1, data: 0 },
     ["aaa", "aaa", "aaa"],
     ["a", ItemID.tin_shard, 0]
   );
 
   Recipes.addShaped(
-    { id: ItemID.ingot_aluminum_sc, count: 1, data: 0 },
+    { id: ItemID.ingot_aluminum_gc, count: 1, data: 0 },
     ["aaa", "aaa", "aaa"],
     ["a", ItemID.aluminum_shard, 0]
   );

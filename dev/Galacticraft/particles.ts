@@ -106,3 +106,29 @@ const rain_venus = Particles.registerParticleType({
    
     },
   });
+
+  const smoke_particle = Particles.registerParticleType({
+    texture: "smoke_particle",
+    render: 0,
+    size: [1, .5],
+    lifetime: [30, 50],
+    collision: false,
+
+    animators: {
+        alpha: {
+            fadeIn: 1, fadeOut: 2
+        },
+        size: {
+            fadeOut: 0, fadeIn: 0, start: 0.2, end: 0
+        }
+    }
+});
+
+enum ESpaceParticle {
+ SPOUT = spouticle,
+ ROCKET = rocket_particle,
+ COLLECTOR = collecticle,
+ VENUS_RAIN = rain_venus,
+ SMOKE = smoke_particle
+}
+
