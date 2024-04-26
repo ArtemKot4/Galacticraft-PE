@@ -1,6 +1,6 @@
-﻿new GItem("buggymat_sit", 1);
+﻿new GItem("buggymat_sit", 1).info("Тест1");
 
-new GItem("rocket_fins", 4);
+new GItem("rocket_fins", 4).description("Тест2");
 
 new GItem("nose_cone", 4);
 

@@ -42,8 +42,8 @@ class GItem {
   public info(text: string, translation?: {}): void {
     if(translation) Translation.addTranslation(text, translation);
     Item.registerNameOverrideFunction(this.id, function (item, name) {
-      if(Entity.getSneaking(Player.getLocal()) === true) return Translation.translate(name) + Translation.translate(text)
-
+      if(Entity.getSneaking(Player.getLocal()) === true) {
+        return Translation.translate(name) + Translation.translate(text) }
         return (
           Translation.translate(name) +
           "\n§7" +
