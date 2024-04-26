@@ -66,14 +66,16 @@ class Cable {
 
   public setColorByDye() {
     const splited_id = this.id.split("_");
-    return Block.registerClickFunctionForID(
+    Block.registerClickFunctionForID(
       BlockID[this.id],
       (coords, item, block, player) => {
         for (const color of Cable.colors_to_paint) {
           const result_id = splited_id
             .slice(
               0,
-              splited_id.length - 1
+              splited_id[splited_id.length - 2] === "light" ?
+               splited_id.length - 2 :
+                splited_id.length - 1
             )
             .concat(color)
             .join("_");

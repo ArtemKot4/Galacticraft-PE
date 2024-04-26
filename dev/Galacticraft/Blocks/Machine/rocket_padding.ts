@@ -90,32 +90,32 @@ class Padding {
 
    protected constructFullByStructureIsPlaced() {
 	 Block.registerPlaceFunctionForID(BlockID[this.id], (coords, item, block, player, region) => {
-		region.setBlock(coords.x, coords.y, coords.z, BlockID[this.id], 0)
+		region.setBlock(coords.x, coords.y + 1, coords.z, BlockID[this.id], 0)
 		if (
-			region.getBlockId(coords.x, coords.y, coords.z) ==
+			region.getBlockId(coords.x, coords.y + 1, coords.z) ==
 			  BlockID[this.id] &&
-			region.getBlockId(coords.x - 1, coords.y, coords.z) ==
+			region.getBlockId(coords.x - 1, coords.y + 1, coords.z) ==
 			  BlockID[this.id] &&
-			region.getBlockId(coords.x - 2, coords.y, coords.z) ==
+			region.getBlockId(coords.x - 2, coords.y + 1, coords.z) ==
 			  BlockID[this.id] &&
-			region.getBlockId(coords.x, coords.y, coords.z - 1) ==
+			region.getBlockId(coords.x, coords.y + 1, coords.z - 1) ==
 			  BlockID[this.id] &&
-			region.getBlockId(coords.x - 1, coords.y, coords.z - 1) ==
+			region.getBlockId(coords.x - 1, coords.y + 1, coords.z - 1) ==
 			  BlockID[this.id] &&
-			region.getBlockId(coords.x - 2, coords.y, coords.z - 1) ==
+			region.getBlockId(coords.x - 2, coords.y + 1, coords.z - 1) ==
 			  BlockID[this.id] &&
-			region.getBlockId(coords.x, coords.y, coords.z - 2) ==
+			region.getBlockId(coords.x, coords.y + 1, coords.z - 2) ==
 			  BlockID[this.id] &&
-			region.getBlockId(coords.x - 1, coords.y, coords.z - 2) ==
+			region.getBlockId(coords.x - 1, coords.y + 1, coords.z - 2) ==
 			  BlockID[this.id] &&
-			region.getBlockId(coords.x - 2, coords.y, coords.z - 2) ==
+			region.getBlockId(coords.x - 2, coords.y + 1, coords.z - 2) ==
 			  BlockID[this.id] &&
-			region.getBlockId(coords.x - 2, coords.y, coords.z - 1) ==
+			region.getBlockId(coords.x - 2, coords.y + 1, coords.z - 1) ==
 			  BlockID[this.id]
 		  ) {
 			return region.setBlock(
 			  coords.x - 1,
-			  coords.y,
+			  coords.y + 1,
 			  coords.z - 1,
 			  BlockID[this.id + "_completed"],
 			  0
@@ -136,14 +136,16 @@ class Padding {
 		name: "block.galacticraft." + this.id,
 		texture: [
 			[this.id, 0]
-		]
+		],
+		inCreative: true
 	}]).create(),
 
 	new GBlock(this.id + "_completed", [{
 		name: "block.galacticraft." + this.id + "_completed",
 		texture: [
 			[this.id, 0]
-		]
+		],
+		inCreative: false
 	}]).create(),
 
 	this.setPaddingModel(5 / 16, this.id + "_completed", this.id),

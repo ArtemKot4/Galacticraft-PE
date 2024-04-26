@@ -7,3 +7,5 @@ Item.registerNameOverrideFunction("empty_liquid_canister", function(item, transl
     return Translation.translate("Empty Liquid Canister") + Translation.translate("\n§7Empty") 
 });
 Translation.addTranslation("\n§7Empty", {ru: "\n§7Пусто"});
+
+Item.setLiquidClip("empty_liquid_canister", true);

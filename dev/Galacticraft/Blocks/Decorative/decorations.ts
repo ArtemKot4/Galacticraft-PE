@@ -751,15 +751,15 @@ Translation.addTranslation("Venus Rock 2 Fence", {
   ru: "Забор из вулканического венерианского камня",
 });
 
-IDRegistry.genBlockID("tin_decoration_block_slab");
-Block.createBlock(
-  "tin_decoration_block_slab",
-  [{ name: "Deco Block Slab", texture: [["Deco Block", 0]], inCreative: true }],
-  STONE
-);
-Translation.addTranslation("Deco Block Slab", {
-  ru: "Декоративный-оловянная плита",
-});
+// IDRegistry.genBlockID("tin_decoration_block_slab");
+// Block.createBlock(
+//   "tin_decoration_block_slab",
+//   [{ name: "Deco Block Slab", texture: [["Deco Block", 0]], inCreative: true }],
+//   STONE
+// );
+// Translation.addTranslation("Deco Block Slab", {
+//   ru: "Декоративный-оловянная плита",
+// });
 
 
 // BlockRegistry.createSlabs(
@@ -767,34 +767,34 @@ Translation.addTranslation("Deco Block Slab", {
 //   BlockID.tin_decoration_block
 // );
 
-IDRegistry.genBlockID("tin_decoration_block_2_slab");
-Block.createBlock(
-  "tin_decoration_block_2_slab",
-  [
-    {
-      name: "Deco Tin Block Slab",
-      texture: [
-        ["Deco Block Up", 0],
-        ["Deco Block Up", 0],
-        ["Deco Block Side", 0],
-        ["Deco Block Side", 0],
-        ["Deco Block Side", 0],
-        ["Deco Block Side", 0],
-      ],
-      inCreative: true,
-    },
-  ],
-  STONE
-);
-Translation.addTranslation("Deco Tin Block Slab", {
-  ru: "Украшенная декоративно-оловянная плита",
-});
+// IDRegistry.genBlockID("tin_decoration_block_2_slab");
+// Block.createBlock(
+//   "tin_decoration_block_2_slab",
+//   [
+//     {
+//       name: "Deco Tin Block Slab",
+//       texture: [
+//         ["Deco Block Up", 0],
+//         ["Deco Block Up", 0],
+//         ["Deco Block Side", 0],
+//         ["Deco Block Side", 0],
+//         ["Deco Block Side", 0],
+//         ["Deco Block Side", 0],
+//       ],
+//       inCreative: true,
+//     },
+//   ],
+//   STONE
+// );
+// Translation.addTranslation("Deco Tin Block Slab", {
+//   ru: "Украшенная декоративно-оловянная плита",
+// });
 
 // BlockRegistry.createSlabs(
 //   BlockID.tin_decoration_block_2_slab,
 //   BlockID.tin_decoration_block_2
 // );
-
+/*
 IDRegistry.genBlockID("venus_rock_1_slab");
 Block.createBlock(
   "venus_rock_1_slab",
@@ -1007,3 +1007,4 @@ Translation.addTranslation("The Martian Stone Top Slab", {
 });
 
 // BlockRegistry.createSlabs(BlockID.mars_top_stone_slab, BlockID.mars_top_stone);
+ */
