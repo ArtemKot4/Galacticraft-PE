@@ -53,8 +53,9 @@ class CoalGenerator extends Generator {
 
     };
 
-   public particles(): void {
-       if(World.getThreadTime() % 15 === 0 && this.data.energy > 0) {
+    @BlockEngine.Decorators.NetworkEvent(Side.Client)
+   protected generateParticles(): void {
+
        return (
        Particles.addParticle(
             EParticleType.FLAME, this.x + 0.5,
@@ -72,13 +73,12 @@ class CoalGenerator extends Generator {
                 Math.random() / 20,
                 Math.random() / 20)
        )
-       }
+       
    };
 
     public onTick(): void {
         this.container.sendChanges();
         this.container.validateAll();
-     this.particles();
       
 
         CoalGenerator.isCoal("coal_slot", this.container, this.data)
@@ -91,10 +91,8 @@ class CoalGenerator extends Generator {
 
 
         if (this.data.energy > 0) {
-            if(World.getThreadTime() % 15 === 0) {
-
-
-            }
+            if(World.getThreadTime() % 15 === 0) { this.sendPacket("generateParticles", { }); }
+           //this.generateParticles();
             this.container.setText("Status", Translation.translate("Status: working"));
         }
         else {

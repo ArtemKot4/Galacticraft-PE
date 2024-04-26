@@ -10,7 +10,7 @@ const PIPE = Block.createSpecialType({
   sound: "glass",
 });
 
-const STANDART_CABLE_WIDTH = (2 / 8);
+const STANDART_CABLE_WIDTH = 2 / 8;
 
 class Cable {
   public id: string;
@@ -71,14 +71,16 @@ class Cable {
       (coords, item, block, player) => {
         for (const color of Cable.colors_to_paint) {
           const result_id = splited_id
-            .slice(0, splited_id.length - 1)
+            .slice(
+              0,
+              splited_id.length - 1
+            )
             .concat(color)
             .join("_");
 
-            if (item.id === VanillaItemID[color + "_dye"]) {
-
-              try {
-                const actor = new PlayerActor(player);
+          if (item.id === VanillaItemID[color + "_dye"]) {
+            try {
+              const actor = new PlayerActor(player);
               Particles.addParticle(
                 EParticleType.CLOUD,
                 coords.x + 0.5,
@@ -96,20 +98,31 @@ class Cable {
                 BlockID[result_id],
                 0
               );
-             if(actor.getGameMode() !== EGameMode.CREATIVE) Entity.setCarriedItem(
-                player,
-                item.id,
-                item.count - 1,
-                item.data,
-                item.extra
+              if (actor.getGameMode() !== EGameMode.CREATIVE)
+                Entity.setCarriedItem(
+                  player,
+                  item.id,
+                  item.count - 1,
+                  item.data,
+                  item.extra
+                );
+            } catch {
+              Particles.addParticle(
+                EParticleType.CRIT,
+                coords.x + 0.5,
+                coords.y + 0.5,
+                coords.z + 0.5,
+                0,
+                0.01,
+                0
+              );
+              Game.tipMessage(
+                MathHelper.randomValue(Native.Color.GREEN, Native.Color.RED) +
+                  Translation.translate("gc.message.cable.painting_warning")
               );
             }
-           catch {
-          Particles.addParticle(EParticleType.FLAME, coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, 0, 0.01, 0)
-          Game.tipMessage(MathHelper.randomValue(Native.Color.GREEN, Native.Color.RED) + Translation.translate("gc.message.cable.painting_warning"))
           }
         }
-      }
       }
     );
   }
@@ -189,7 +202,7 @@ const pipeColors = [
   "red",
   "light_gray",
   "yellow",
-  "white"
+  "white",
 ];
 
 for (const color of cableColors) {
@@ -215,5 +228,3 @@ Item.addToCreative(BlockID["improved_aluminum_wire_gray"], 1, 0);
 Item.addToCreative(BlockID["pipe_hydrogen"], 1, 0);
 
 Item.addToCreative(BlockID["pipe_oxygen_gray"], 1, 0);
-
-

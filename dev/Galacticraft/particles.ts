@@ -111,7 +111,7 @@ const rain_venus = Particles.registerParticleType({
     texture: "smoke_particle",
     render: 0,
     size: [1, .5],
-    lifetime: [30, 50],
+    lifetime: [50, 100],
     collision: false,
 
     animators: {
