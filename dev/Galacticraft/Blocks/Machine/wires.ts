@@ -65,21 +65,10 @@ class Cable {
   }
 
   public setColorByDye() {
-    const splited_id = this.id.split("_");
     Block.registerClickFunctionForID(
       BlockID[this.id],
       (coords, item, block, player) => {
         for (const color of Cable.colors_to_paint) {
-          const result_id = splited_id
-            .slice(
-              0,
-              splited_id[splited_id.length - 2] === "light" ?
-               splited_id.length - 2 :
-                splited_id.length - 1
-            )
-            .concat(color)
-            .join("_");
-
           if (item.id === VanillaItemID[color + "_dye"]) {
             try {
               const actor = new PlayerActor(player);
@@ -97,7 +86,7 @@ class Cable {
                 coords.x,
                 coords.y,
                 coords.z,
-                BlockID[result_id],
+                BlockID[this.id.replace(/(_light)?_[^_]+$/, "_" + color)],
                 0
               );
               if (actor.getGameMode() !== EGameMode.CREATIVE)
