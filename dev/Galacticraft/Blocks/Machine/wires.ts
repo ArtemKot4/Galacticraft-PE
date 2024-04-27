@@ -10,11 +10,10 @@ const PIPE = Block.createSpecialType({
   sound: "glass",
 });
 
-const STANDART_CABLE_WIDTH = 2 / 8;
+
 
 class Cable {
-  public id: string;
-
+  public static STANDART_CABLE_WIDTH = (2 / 8);
   public static colors_to_paint = [
     "blue",
     "black",
@@ -35,38 +34,39 @@ class Cable {
     "light_gray",
   ] as const;
 
-  constructor(public color: string) {}
+  constructor(public id: string) {}
 
   public createByPrototype(
-    id: string,
     group: string,
     energy_type: EnergyType,
     energy_provide: int,
     block_type: string | Block.SpecialType,
-    cable_width: int = STANDART_CABLE_WIDTH
+    cable_width: int = Cable.STANDART_CABLE_WIDTH
   ) {
-    this.id = id;
-    return (
-      new GBlock(
-        id,
-        [
-          {
-            name: id,
-            texture: [[id, 0]],
-            inCreative: false,
-          },
-        ],
-        block_type
-      ).create(),
-      TileRenderer.setupWireModel(BlockID[id], 0, cable_width, group),
-      energy_type.registerWire(BlockID[id], energy_provide),
-      this.setColorByDye()
-    );
+    return (color?: (typeof Cable.colors_to_paint)[int]) => {
+      const _id = `${this.id + (color ? "_" + color : "")}`;
+      return (
+        new GBlock(
+          _id,
+          [
+            {
+              name: _id,
+              texture: [[_id, 0]],
+              inCreative: false,
+            },
+          ],
+          block_type
+        ).create(),
+        TileRenderer.setupWireModel(BlockID[_id], 0, cable_width, group),
+        energy_type.registerWire(BlockID[_id], energy_provide),
+        this.setColorByDye(color)
+      );
+    };
   }
 
-  public setColorByDye() {
+  public setColorByDye(id_color: typeof Cable.colors_to_paint[number]) {
     Block.registerClickFunctionForID(
-      BlockID[this.id],
+      BlockID[this.id + "_" + id_color ?? this.id],
       (coords, item, block, player) => {
         for (const color of Cable.colors_to_paint) {
           if (item.id === VanillaItemID[color + "_dye"]) {
@@ -81,12 +81,11 @@ class Cable {
                 0.01,
                 0
               );
-
               BlockSource.getDefaultForActor(player).setBlock(
                 coords.x,
                 coords.y,
                 coords.z,
-                BlockID[this.id.replace(/(_light)?_[^_]+$/, "_" + color)],
+                BlockID[this.id + "_" + color],
                 0
               );
               if (actor.getGameMode() !== EGameMode.CREATIVE)
@@ -117,102 +116,36 @@ class Cable {
       }
     );
   }
-
-  public createWire() {
-    return this.createByPrototype(
-      "aluminum_wire_" + this.color,
-      "gc.wire",
-      GJ,
-      200,
-      WIRE,
-      2 / 10
-    );
-  }
-
-  public createImprovedWire() {
-    return this.createByPrototype(
-      "improved_aluminum_wire_" + this.color,
-      "gc.improved-wire",
-      GJ,
-      400,
-      WIRE,
-      2 / 8
-    );
-  }
-
-  public createPipe() {
-    return this.createByPrototype(
-      "pipe_oxygen_" + this.color,
-      "gc.oxygen-pipe",
-      OB,
-      400,
-      PIPE
-    );
-  }
   public getBlockID() {
     return BlockID[this.id];
   }
 }
 
-const cableColors = [
-  "black",
-  "blue",
-  "dark_blue",
-  "white",
-  "dark_gray",
-  "dark_green",
-  "dark_orange",
-  "dark_lime",
-  "gray",
-  "green",
-  "light_blue",
-  "magenta",
-  "pink",
-  "red",
-  "yellow",
-  "orange",
-  "purple",
-  "cyan",
-  "brown",
-  "light_gray",
-];
+//oxygen pipes and wires cans to painted to colors
+for (const color of Cable.colors_to_paint) {
+  new Cable("improved_aluminum_wire").createByPrototype(
+    "gc.wire",
+    GJ,
+    200,
+    WIRE,
+  )(color)
 
-const pipeColors = [
-  "black",
-  "blue",
-  "brown",
-  "cyan",
-  "gray",
-  "green",
-  "light_blue",
-  "lime",
-  "magenta",
-  "orange",
-  "pink",
-  "purple",
-  "red",
-  "light_gray",
-  "yellow",
-  "white",
-];
-
-for (const color of cableColors) {
-  const cable = new Cable(color);
-  cable.createImprovedWire();
+  new Cable("pipe_oxygen").createByPrototype(
+    "gc.oxygen-pipe",
+    OB,
+    400,
+    PIPE
+  )(color);
 }
 
-for (const color of pipeColors) {
-  const cable = new Cable(color);
-  cable.createPipe();
-}
-
-new Cable(null).createByPrototype(
-  "pipe_hydrogen",
+//hydrogen pipe
+new Cable("pipe_hydrogen").createByPrototype(
   "gc.hydrogen-pipe",
   OB,
   400,
   PIPE
-);
+)();
+
 
 Item.addToCreative(BlockID["improved_aluminum_wire_gray"], 1, 0);
 
