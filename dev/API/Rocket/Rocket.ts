@@ -41,19 +41,53 @@ class Rocket {
   }
 
   constructor(public id, public model_data: IRocketModelData) {}
-
-
 }
 
 //new Rocket("rocket_1", "rocket_padding", 500);
 
-class RocketUIBuilder {
-    public playerInRocket: boolean = false;
-    public container = new UI.Container();
-    constructor(public position: Vector, player: int) {
+interface IRocketButtonDescriptor extends Omit<Vector, "z"> {
+  name: string;
+  bitmap: string;
+  bitmap2: string;
+  scale: int;
+}
 
+class RocketButtonBuilder {
+  public playerInRocket: boolean = false;
+  public storage_container = new UI.Container();
+  public ButtonUIObject = {
+    location: {
+      x: 1000 / 2 - 80,
+      y: 273,
+      width: 100,
+      height: 50,
+    },
+    drawing: [],
+    elements: {},
+  };
+
+  constructor(public position: Vector, public player: int) {}
+  protected buildButton(
+    descriptor: IRocketButtonDescriptor,
+    onClick: (player, rocket_pos: Vector) => void
+  ) {
+    this.ButtonUIObject.elements[descriptor.name] = {
+      type: "button",
+      x: descriptor.x,
+      y: descriptor.y,
+      clicker: {
+        onClick(position, container) {
+          return onClick(this.player, this.position);
+        },
+      },
     };
-    protected buildButton(x, y, z, onClick: (player, rocket_pos: Vector) => void) {
-    
-    }
+  };
+  /** must launced after building all buttons */
+  public build(): UI.Window {
+    return new UI.Window(this.ButtonUIObject);
+  }
+}
+
+class RocketStorageUIBuilder {
+  
 }
