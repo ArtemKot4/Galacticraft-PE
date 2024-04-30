@@ -31,10 +31,15 @@ namespace Atmosphere {
       return animation;
     };
 
-   public static createSkybox(texture?) {
+    public static createStandartSky(texture?, ...skyboxes) {
+         const mesh = new RenderMesh();
+        // mesh.addVertex()
+    };
+
+   public static createSkybox(mesh = new RenderMesh(), texture?) {
     const pos = Player.getPosition();
     const size = 200;
-    const mesh = new RenderMesh();
+    //const mesh = new RenderMesh();
     mesh.addVertex(0, 0, 0, 0, 0);
     mesh.addVertex(0, 0, size, size, 0);
     mesh.addVertex(0, size, 0, 0, 1);
@@ -49,6 +54,7 @@ namespace Atmosphere {
     mesh.addVertex(100, size, 0, 0, 1);
     mesh.addVertex(100, size, size, 1, 1);
 
+    
     // mesh.addVertex(0, 0, 0, 0, 0);
     // mesh.addVertex(0, 0, 0, size, 0);
     // mesh.addVertex(0, 0, 0, 0, 1);

@@ -52,6 +52,7 @@ var rocket_storage = new UI.Container();
         bitmap: "SPC.SPC_nextleft",
         bitmap2: "SPC.SPC_nextleftPRESSED",
         scale: 2.1,
+
         clicker: {
           onClick: function () {
             SPC_b1.close();

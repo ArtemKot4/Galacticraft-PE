@@ -71,6 +71,9 @@ class Cable {
         for (const color of Cable.colors_to_paint) {
           if (item.id === VanillaItemID[color + "_dye"]) {
             try {
+              
+              new StandartRocketButtonBuild(Player.getPosition(), Player.get(), null)
+
               const actor = new PlayerActor(player);
               Particles.addParticle(
                 EParticleType.CLOUD,
@@ -110,6 +113,8 @@ class Cable {
                 MathHelper.randomValue(Native.Color.GREEN, Native.Color.RED) +
                   Translation.translate("gc.message.cable.painting_warning")
               );
+
+            
             }
           }
         }
