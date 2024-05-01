@@ -10,7 +10,7 @@ interface IRocketButtonDescriptor extends Omit<Vector, "z"> {
     public button_container = new UI.Container();
     public ButtonUIObject = {
       location: {
-        x: 1000 / 2 - 185,
+        x: 1000 / 2 - 50,
         y: 310,
         width: 250,
         height: 200,
@@ -28,6 +28,10 @@ interface IRocketButtonDescriptor extends Omit<Vector, "z"> {
         type: "button",
         x: descriptor.x,
         y: descriptor.y,
+        scale: descriptor.scale,
+        bitmap: descriptor.bitmap,
+        bitmap2: descriptor.bitmap2,
+        
         clicker: {
           onClick(position, container) {
             return onClick(this.player, this.position);
