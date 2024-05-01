@@ -3,7 +3,7 @@ namespace Atmosphere {
   function StationUpdatable() {
 
     return {
-      planet: Sky.createBox(100, Math.PI / 2, "earth"),
+      planet: Sky.createBox(350, Math.PI / 2, "earth"),
       update: function () {
       
         if (
@@ -23,9 +23,9 @@ namespace Atmosphere {
         
         return Sky.setupPosition(
           this.planet,
-          pos.x + 50,
+          pos.x + 175,
           pos.y - 100,
-          pos.z - 50
+          pos.z - 175
         );
       },
     };

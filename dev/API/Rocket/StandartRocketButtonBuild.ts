@@ -25,7 +25,7 @@ class StandartRocketButtonBuild extends RocketButtonBuilder {
         x: 0, y: 0,
         bitmap: "butdeact",
         bitmap2: "butact",
-        scale: 3
+        scale: 10
       }, this.sitButtonBehavior);
 
       const storage_button = this.createButton({
@@ -33,7 +33,7 @@ class StandartRocketButtonBuild extends RocketButtonBuilder {
         x: 0, y: 125,
         bitmap: "butdeact",
         bitmap2: "butact",
-        scale: 3,
+        scale: 10,
       }, this.openRocketUIBehaviour)
 
 
