@@ -9,7 +9,7 @@ abstract class RocketButtonBuilder {
   public button_container = new UI.Container();
   public ButtonUIObject = {
     location: {
-      x: 1000 / 2 - 50,
+      x: 1000 / 2 - 65,
       y: 310,
       width: 250,
       height: 200,

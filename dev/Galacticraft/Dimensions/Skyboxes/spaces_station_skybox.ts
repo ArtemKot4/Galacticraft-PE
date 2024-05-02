@@ -1,9 +1,80 @@
 namespace Atmosphere {
+    // WATERMESH.addVertex(-6 / 16, 0, -6 / 16, 0, 0);
+    // WATERMESH.addVertex(6 / 16, 0, -6 / 16, 1, 0);
+    // WATERMESH.addVertex(-6 / 16, 0, 6 / 16, 0, 1);
+  
+    // WATERMESH.addVertex(6 / 16, 0, -6 / 16, 1, 0);
+    // WATERMESH.addVertex(-6 / 16, 0, 6 / 16, 0, 1);
+    // WATERMESH.addVertex(6 / 16, 0, 6 / 16, 1, 1); 
+    //z 6 / 16
+
+
+ class StationSky extends Sky {
+  public static createBox(scale, rotation, texture): Animation.Base {
+    const pos = Player.getPosition();
+    const mesh = new RenderMesh();
+
+
+ const _pos = (8 / 16) as number
+
+
+    // mesh.addVertex(-1, 0, -1, 0, 0);
+    // mesh.addVertex(1, 0, -1, 0.5, 0);
+    // mesh.addVertex(-1, 0, 1, 0, 0.5);
+  
+    // mesh.addVertex(1, 0, -1, 0.5, 0);
+    // mesh.addVertex(-1, 0, 1, 0, 0.5);
+    // mesh.addVertex(1, 0, 1, 0.5, 0.5); 
+
+
+    // mesh.addVertex(-1, 3, -1, 0, 0);
+    // mesh.addVertex(1, 3, -1, 0.5, 0);
+    // mesh.addVertex(-1, 3, 1, 0, 0.5);
+  
+    // mesh.addVertex(1, 3, -1, 0.5, 0);
+    // mesh.addVertex(-1, 3, 1, 0, 0.5);
+    // mesh.addVertex(1, 3, 1, 0.5, 0.5); 
+
+    mesh.addVertex(- _pos, 0, -_pos, 0, 0);
+    mesh.addVertex(_pos, 0, -_pos, 0.5, 0);
+    mesh.addVertex(-_pos, 0, _pos, 0, 0.5);
+  
+    mesh.addVertex(_pos, 0, -_pos, 0.5, 0);
+    mesh.addVertex(-_pos, 0, _pos, 0, 0.5);
+    mesh.addVertex(_pos, 0, _pos, 0.5, 0.5); 
+
+
+    mesh.addVertex(-_pos, 3, -_pos, 0.5, 0.5);
+    mesh.addVertex(_pos, 3, -_pos, 1, 0.5);
+    mesh.addVertex(-_pos, 3, _pos, 0.5, 1);
+  
+    mesh.addVertex(_pos, 3, -_pos, 1, 0.5);
+    mesh.addVertex(-_pos, 3, _pos, 0.5, 1);
+    mesh.addVertex(_pos, 3, _pos, 1, 1); 
+
+
+    mesh.scale(scale, 0, scale);
+
+    mesh.rotate(0, 0, 0, 0, 0, rotation || 0);
+
+    const animation = new Animation.Base(pos.x, pos.y, pos.z);
+
+    animation.describe({
+      mesh: mesh,
+      skin: "environment/" + texture + ".png",
+    });
+
+    animation.setIgnoreLightMode();
+
+    return animation;
+  };
+
+ }
 
   function StationUpdatable() {
 
     return {
-      planet: Sky.createBox(350, Math.PI / 2, "earth"),
+      planet: StationSky.createBox(350, 0, "earth"), //"earth"
       update: function () {
       
         if (
@@ -21,11 +92,11 @@ namespace Atmosphere {
           Player.getVelocity().z * 1.15
         );
         
-        return Sky.setupPosition(
+        return StationSky.setupPosition(
           this.planet,
-          pos.x + 175,
+          pos.x,
           pos.y - 100,
-          pos.z - 175
+          pos.z
         );
       },
     };

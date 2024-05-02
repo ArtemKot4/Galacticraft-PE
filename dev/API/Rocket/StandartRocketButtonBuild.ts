@@ -7,7 +7,7 @@ class StandartRocketButtonBuild extends RocketButtonBuilder {
       const obj = {
        inRocket: false,
        update() {
-     return Entity.setPosition(this.player, rocket_pos.x, Entity.getPosition(this.player).y, rocket_pos.z);
+     return Entity.setPosition(player, rocket_pos.x, Entity.getPosition(player).y, rocket_pos.z);
        }
       };
         return Updatable.addUpdatable(obj)
@@ -30,7 +30,7 @@ class StandartRocketButtonBuild extends RocketButtonBuilder {
 
       const storage_button = this.createButton({
         name: "storage_button",
-        x: 0, y: 125,
+        x: 0, y: 145,
         bitmap: "butdeact",
         bitmap2: "butact",
         scale: 10,
