@@ -1,6 +1,6 @@
 
 class StandartRocketButtonBuild extends RocketButtonBuilder {
-  public storage_ui: RocketStorageUIBuilder = new RocketStorageUIBuilder(500);
+  public storage_ui: RocketStorageUIBuilder = new RocketStorageUIBuilder(500).build();
 
     public sitButtonBehavior(player: int, rocket_pos: Vector) {
       Game.message("Клик!")
@@ -17,9 +17,8 @@ class StandartRocketButtonBuild extends RocketButtonBuilder {
       const client = Network.getClientForPlayer(player);
         return this.storage_ui.openFor(client);
     }
-    constructor(position: Vector, player: int, storage_ui: RocketStorageUIBuilder) {
+    constructor(position: Vector, player: int, storage_ui?: RocketStorageUIBuilder) {
       super(position, player);
-
       const sit_button = this.createButton({
         name: "sit_button",
         x: 0, y: 0,

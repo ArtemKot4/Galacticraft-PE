@@ -56,9 +56,10 @@ class RocketStorageUIBuilder {
         
   };
   public build() {
-    this.ui = new UI.StandardWindow(this.UIObject);
+    const ui = this.ui = new UI.StandardWindow(this.UIObject);
   ItemContainer.registerScreenFactory("galacticraft.rocket_storage.ui", function(container, screenName) { 
- return this.ui; 
+ return ui
  });
+ return this;
   }
 }

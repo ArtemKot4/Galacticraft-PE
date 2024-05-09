@@ -71,6 +71,7 @@ namespace Atmosphere {
 
     constructor(dimension: int) {}
 
+    @final
     static setupPosition(box: Animation.Base, x, y, z) {
       const skybox = box;
       skybox.setPos(x, y, z);
@@ -78,6 +79,8 @@ namespace Atmosphere {
     };
     static update(): void {}
   }
+
+
 };
 
 

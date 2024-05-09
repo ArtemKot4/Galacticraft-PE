@@ -68,13 +68,11 @@ class Cable {
     Block.registerClickFunctionForID(
       BlockID[this.id + "_" + id_color ?? this.id],
       (coords, item, block, player) => {
+        const entity = new PlayerEntity(player);
         for (const color of Cable.colors_to_paint) {
           if (item.id === VanillaItemID[color + "_dye"]) {
             try {
-              
-              new StandartRocketButtonBuild(Player.getPosition(), Player.get(), null)
-
-              const actor = new PlayerActor(player);
+              new StandartRocketButtonBuild(Entity.getPosition(player), player, null)
               Particles.addParticle(
                 EParticleType.CLOUD,
                 coords.x + 0.5,
@@ -91,14 +89,9 @@ class Cable {
                 BlockID[this.id + "_" + color],
                 0
               );
-              if (actor.getGameMode() !== EGameMode.CREATIVE)
-                Entity.setCarriedItem(
-                  player,
-                  item.id,
-                  item.count - 1,
-                  item.data,
-                  item.extra
-                );
+              if (entity.getGameMode() !== EGameMode.CREATIVE)
+                entity.decreaseCarriedItem(1);
+                return;
             } catch {
               Particles.addParticle(
                 EParticleType.CRIT,

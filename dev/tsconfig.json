@@ -15,6 +15,7 @@
 		"API/Prototype/EnergyModule.ts",
 		"API/Util/functions.ts",
 		"API/Tool/GBlock.ts",
+		"API/Atmosphere/CelestialBody.ts",
 		"API/Atmosphere/IGravity.ts",
 		"API/Atmosphere/Sky.ts",
 		"API/Atmosphere/DimensionEvent.ts",

@@ -14,6 +14,7 @@ API/Util/functions.ts
 API/Tool/GBlock.ts
 //GBlock на место Потом
 
+API/Atmosphere/CelestialBody.ts
 API/Atmosphere/IGravity.ts
 API/Atmosphere/Sky.ts
 API/Atmosphere/DimensionEvent.ts

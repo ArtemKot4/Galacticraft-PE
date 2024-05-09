@@ -57,7 +57,7 @@ class IPlanet {
           const params = IPlanet.oreParams[i];
           if (params.planet != dimensionId) return;
           const obj = params.obj;
-          UniqueGen.generateOreInDimension(
+         UniqueGen.generateOreInDimension(
             params.ore,
             0,
             chunkX,
@@ -112,5 +112,9 @@ class IPlanet {
       (this.stone = stone),
       (this.colors = colors || [0, 0, 0, 0, 0, 0]);
     this.createPlanet();
+  };
+
+  public registerByCelestialBody() {
+    
   }
 }

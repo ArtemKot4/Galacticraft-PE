@@ -16,41 +16,25 @@ namespace Atmosphere {
 
 
  const _pos = (8 / 16) as number
+ 
+     //clouds
+//  mesh.addVertex(-_pos, 50, -_pos, 0.5, 0); 
+//  mesh.addVertex(_pos, 50, -_pos, 1, 0); 
+//  mesh.addVertex(-_pos, 50, _pos, 0.5, 1); 
+ 
+//  mesh.addVertex(_pos, 50, -_pos, 1, 0); 
+//  mesh.addVertex(-_pos, 50, _pos, 0.5, 1); 
+//  mesh.addVertex(_pos, 50, _pos, 1, 1);
 
-
-    // mesh.addVertex(-1, 0, -1, 0, 0);
-    // mesh.addVertex(1, 0, -1, 0.5, 0);
-    // mesh.addVertex(-1, 0, 1, 0, 0.5);
-  
-    // mesh.addVertex(1, 0, -1, 0.5, 0);
-    // mesh.addVertex(-1, 0, 1, 0, 0.5);
-    // mesh.addVertex(1, 0, 1, 0.5, 0.5); 
-
-
-    // mesh.addVertex(-1, 3, -1, 0, 0);
-    // mesh.addVertex(1, 3, -1, 0.5, 0);
-    // mesh.addVertex(-1, 3, 1, 0, 0.5);
-  
-    // mesh.addVertex(1, 3, -1, 0.5, 0);
-    // mesh.addVertex(-1, 3, 1, 0, 0.5);
-    // mesh.addVertex(1, 3, 1, 0.5, 0.5); 
-
-    mesh.addVertex(- _pos, 0, -_pos, 0, 0);
-    mesh.addVertex(_pos, 0, -_pos, 0.5, 0);
-    mesh.addVertex(-_pos, 0, _pos, 0, 0.5);
-  
-    mesh.addVertex(_pos, 0, -_pos, 0.5, 0);
-    mesh.addVertex(-_pos, 0, _pos, 0, 0.5);
-    mesh.addVertex(_pos, 0, _pos, 0.5, 0.5); 
-
-
-    mesh.addVertex(-_pos, 3, -_pos, 0.5, 0.5);
-    mesh.addVertex(_pos, 3, -_pos, 1, 0.5);
-    mesh.addVertex(-_pos, 3, _pos, 0.5, 1);
-  
-    mesh.addVertex(_pos, 3, -_pos, 1, 0.5);
-    mesh.addVertex(-_pos, 3, _pos, 0.5, 1);
-    mesh.addVertex(_pos, 3, _pos, 1, 1); 
+ //earth
+ mesh.addVertex(- _pos, 0, -_pos, 0, 0); 
+ mesh.addVertex(_pos, 0, -_pos, 1, 0); 
+ mesh.addVertex(-_pos, 0, _pos, 0, 1); 
+ 
+ mesh.addVertex(_pos, 0, -_pos, 1, 0); 
+ mesh.addVertex(-_pos, 0, _pos, 0, 1); 
+ mesh.addVertex(_pos, 0, _pos, 1, 1); 
+ 
 
 
     mesh.scale(scale, 0, scale);
@@ -64,7 +48,7 @@ namespace Atmosphere {
       skin: "environment/" + texture + ".png",
     });
 
-    animation.setIgnoreLightMode();
+    animation.setSkylightMode();
 
     return animation;
   };
