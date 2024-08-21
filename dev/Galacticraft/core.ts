@@ -92,9 +92,10 @@ const ConfigManager = {
   },
 };
 
-function randomInt(min, max) {
+function randomInt(min: int, max: int) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
+
 const UniqueGen = {
   randomCoords: function (random, chunkX, chunkZ, minHeight, maxHeight) {
     minHeight = minHeight || 0;

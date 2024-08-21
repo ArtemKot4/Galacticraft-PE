@@ -70,9 +70,8 @@ interface ITransportDescriptor {
 }
 
 class Padding {
-  protected id: string;
-
-  protected setPaddingModel(height: int, id, texture: string) {
+  protected id: int;
+  protected setPaddingModel(data: int, height: int, texture: string) {
     const model = BlockRenderer.createModel();
     const render = new ICRender.Model();
     const padding_shape = new ICRender.CollisionShape();
@@ -82,117 +81,98 @@ class Padding {
     entry.addBox(0, 0, 0, 1, height, 1);
     render.addEntry(model);
 
-    return (
-      BlockRenderer.setCustomCollisionShape(BlockID[id], -1, padding_shape),
-      BlockRenderer.setStaticICRender(BlockID[id], -1, render)
+    BlockRenderer.setCustomCollisionShape(this.id, data, padding_shape),
+      BlockRenderer.setStaticICRender(this.id, data, render);
+    return;
+  }
+
+  protected constructFullByStructureIsPlaced() {
+    Block.registerPlaceFunctionForID(
+      BlockID[this.id],
+      (coords, item, block, player, region) => {
+        region.setBlock(coords.x, coords.y + 1, coords.z, BlockID[this.id], 0);
+        for (let i = -1; i <= 1; i++) {
+          for (let k = -1; k <= 1; k++) {
+            const block = region.getBlock(coords.x - i, coords.y, coords.z - k);
+            if (block.id === BlockID[this.id] && block.data === 0) {
+              region.setBlock(
+                coords.x,
+                coords.y,
+                coords.z,
+                BlockID[this.id],
+                1
+              );
+            }
+          }
+        }
+      }
     );
   }
 
-   protected constructFullByStructureIsPlaced() {
-	 Block.registerPlaceFunctionForID(BlockID[this.id], (coords, item, block, player, region) => {
-		region.setBlock(coords.x, coords.y + 1, coords.z, BlockID[this.id], 0)
-		if (
-			region.getBlockId(coords.x, coords.y + 1, coords.z) ==
-			  BlockID[this.id] &&
-			region.getBlockId(coords.x - 1, coords.y + 1, coords.z) ==
-			  BlockID[this.id] &&
-			region.getBlockId(coords.x - 2, coords.y + 1, coords.z) ==
-			  BlockID[this.id] &&
-			region.getBlockId(coords.x, coords.y + 1, coords.z - 1) ==
-			  BlockID[this.id] &&
-			region.getBlockId(coords.x - 1, coords.y + 1, coords.z - 1) ==
-			  BlockID[this.id] &&
-			region.getBlockId(coords.x - 2, coords.y + 1, coords.z - 1) ==
-			  BlockID[this.id] &&
-			region.getBlockId(coords.x, coords.y + 1, coords.z - 2) ==
-			  BlockID[this.id] &&
-			region.getBlockId(coords.x - 1, coords.y + 1, coords.z - 2) ==
-			  BlockID[this.id] &&
-			region.getBlockId(coords.x - 2, coords.y + 1, coords.z - 2) ==
-			  BlockID[this.id] &&
-			region.getBlockId(coords.x - 2, coords.y + 1, coords.z - 1) ==
-			  BlockID[this.id]
-		  ) {
-			return region.setBlock(
-			  coords.x - 1,
-			  coords.y + 1,
-			  coords.z - 1,
-			  BlockID[this.id + "_completed"],
-			  0
-			);
-		  }
-	 })
-   }
+  constructor(id: string) {
+    this.id = BlockID[id];
+    new GBlock(id, [
+      {
+        name: "block.galacticraft." + this.id,
+        texture: [[id, 0]],
+        inCreative: true,
+      },
+    ]).create(),
+      this.setPaddingModel(1, 5 / 16, id + "_padding_completed"),
+      this.setPaddingModel(0, 3 / 16, id);
+    const raycastShape = new ICRender.CollisionShape();
+    raycastShape.addEntry().addBox(0, 0, 0, 1, 2, 1);
+    BlockRenderer.setCustomRaycastShape(this.id, 1, raycastShape);
+    this.constructFullByStructureIsPlaced();
+  }
+}
 
-  constructor(
-    id: string,
-    // public rocket: string,
-    // public transportDescriptor: ITransportDescriptor
-  ) {
-	//TODO: блоки площадки не регаются, исправить.
-    this.id = id + "_padding";
-       Game.message("Класс rocket padding прошёл инициализацию: " + this.id),
-	new GBlock(this.id, [{
-		name: "block.galacticraft." + this.id,
-		texture: [
-			[this.id, 0]
-		],
-		inCreative: true
-	}]).create(),
+const ROCKET_PADDING = new Padding("rocket_padding");
+const BUGGY_PADDING = new Padding("buggy_padding");
 
-	new GBlock(this.id + "_completed", [{
-		name: "block.galacticraft." + this.id + "_completed",
-		texture: [
-			[this.id, 0]
-		],
-		inCreative: false
-	}]).create(),
+class PaddingController extends TileEntityBase {
+  onLoad(): void {
+    if (this.blockSource.getBlockData(this.x, this.y, this.z) === 0) {
+      Game.message("0");
+      return this.selfDestroy();
+    }
+  }
+  onItemUse(
+    coords: Callback.ItemUseCoordinates,
+    item: ItemStack,
+    player: number
+  ): boolean {
+    const tier = RocketManager.getTierForID(item.id);
+    if (typeof tier !== "number") {
+      return;
+    }
+    const rocket_pos = { x: this.x, y: this.y + 0.6, z: this.z };
+    let animation = RocketModeller.createAnimation(
+      RocketModeller.ROCKET_MESH_TIER_1,
+      "GalacticraftCore/rocket_tier_1",
+      rocket_pos
+    );
 
-	this.setPaddingModel(5 / 16, this.id + "_completed", this.id),
-  
-	this.setPaddingModel(3 / 16, this.id, this.id),
+    switch (tier) {
+      case 1:
+        animation = RocketModeller.createAnimation(
+          RocketModeller.ROCKET_MESH_TIER_2,
+          "GalacticraftPlanets/rocket_tier_2",
+          rocket_pos
+        );
+        break;
+      case 2:
+        animation = RocketModeller.createAnimation(
+          RocketModeller.ROCKET_MESH_TIER_3,
+          "GalacticraftPlanets/rocket_tier_3",
+          rocket_pos
+        );
+    };
+    RocketManager.create(rocket_pos, tier, animation)
+  }
+}
 
-	this.constructFullByStructureIsPlaced()
-  };
-
-  
-};
-
-const ROCKET_PADDING = new Padding("rocket")
-const BUGGY_PADDING = new Padding("buggy")
-
-// var model = BlockRenderer.createModel();
-// var render = new ICRender.Model();
-// model.addBox(0, 0, 0, 1, 3 / 16, 1, "landing_pad", 0);
-
-// var Padding1lvl = new ICRender.CollisionShape();
-// var entry = Padding1lvl.addEntry();
-// entry.addBox(0, 0, 0, 1, 3 / 16, 1);
-// BlockRenderer.setCustomCollisionShape(BlockID.rocket_padding, -1, Padding1lvl);
-
-// render.addEntry(model);
-
-// BlockRenderer.setStaticICRender(BlockID.rocket_padding, -1, render);
-
-// var model1 = BlockRenderer.createModel();
-// var render1 = new ICRender.Model();
-
-// var Padding1lvll = new ICRender.CollisionShape();
-// var entry = Padding1lvll.addEntry();
-// entry.addBox(0, 0, 0, 1, 5 / 16, 1);
-// BlockRenderer.setCustomCollisionShape(
-//   BlockID.rocket_padding_completed,
-//   -1,
-//   Padding1lvll
-// );
-
-// render1.addEntry(model1);
-// model1.addBox(0, 0, 0, 1, 5 / 16, 1, "landing_pad", 0);
-// BlockRenderer.setStaticICRender(BlockID.rocket_padding_completed, -1, render1);
-
-// Block.registerDropFunction(
-//   "rocket_padding_completed",
-//   function (coords, blockID) {
-//     return [[BlockID.rocket_padding, 1, 0]];
-//   }
-// );
+TileEntity.registerPrototype(
+  BlockID["rocket_padding"],
+  new PaddingController()
+);

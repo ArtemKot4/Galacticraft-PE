@@ -6,8 +6,11 @@ interface CelestialBodyDescriptor {
 
 class CelestialBody {
 
-    public static final last_coord: [right: int, left: int] = [0, 0]
+    public static readonly last_coord: [right: int, left: int] = [0, 0]
     public static data: CelestialBodyDescriptor[] = [];
 
 }
 
+class CelestialBorderUI {
+    
+}

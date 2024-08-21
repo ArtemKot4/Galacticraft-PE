@@ -109,7 +109,7 @@ const WEB = Block.createSpecialType({
     material: 4
 });
 
-var STONE = Block.createSpecialType({
+const STONE = Block.createSpecialType({
     solid: true,
     material: 4,
     destroytime: 5,
