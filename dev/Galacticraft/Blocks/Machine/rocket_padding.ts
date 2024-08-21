@@ -168,7 +168,8 @@ class PaddingController extends TileEntityBase {
           rocket_pos
         );
     };
-    RocketManager.create(rocket_pos, tier, animation)
+    RocketManager.create(rocket_pos, tier, animation);
+    RocketManager.get(this).animation.load();
   }
 }
 

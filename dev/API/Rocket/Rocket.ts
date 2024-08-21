@@ -57,7 +57,9 @@ abstract class RocketManager {
       RocketManager.data.set(pos, { fuel: 0, tier, animation });
     }
   }
-  public static get = (pos) => RocketManager.data.get(pos);
+  public static get(pos: Vector) {
+    return RocketManager.data.get(pos);
+  }
   public static isValid(pos: Vector) {
     return RocketManager.data.get(pos) !== undefined;
   }
@@ -83,13 +85,13 @@ class Rocket {
   public tier: int;
   public item: GItem;
   constructor() {
-      this.item = new GItem("rocket_tier_" + this.tier, 1);
-      RocketManager.tierList[this.tier] = this.tier;
+    this.item = new GItem("rocket_tier_" + this.tier, 1);
+    RocketManager.tierList[this.tier] = this.tier;
   }
 }
 
 class RocketTier_1 extends Rocket {
- public tier: number = 0;
+  public tier: number = 0;
 }
 
 const Rocket1 = new RocketTier_1();
