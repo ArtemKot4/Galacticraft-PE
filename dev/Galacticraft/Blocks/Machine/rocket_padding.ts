@@ -97,11 +97,11 @@ class Padding {
     } as Block.BlockVariation;
 
     new GBlock(id, [description, description]).create();
-    Block.registerPlaceFunctionForID(BlockID[id], this.placeFunction);
+    Block.registerPlaceFunctionForID(BlockID[id], this.placeFunction.bind(this));
     this.setPaddingModel(1, 5 / 16);
     this.setPaddingModel(0, 3 / 16);
     const raycastShape = new ICRender.CollisionShape();
-    raycastShape.addEntry().addBox(0, 0, 0, 1, 2, 1);
+    raycastShape.addEntry().addBox(0, 0, 0, 1, 4, 1);
     BlockRenderer.setCustomRaycastShape(BlockID[id], 1, raycastShape);
   }
 }

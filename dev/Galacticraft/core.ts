@@ -27,10 +27,10 @@ namespace Modeller {
   export function constructRenderMesh(
     model: string,
     importParams?: Partial<RenderMesh.ImportParams>
-  ) {
+  ): RenderMesh {
     const mesh = new RenderMesh();
     mesh.importFromFile(
-      __dir__ + "/resources/models/" + model + ".obj",
+      __dir__ + "resources/models/" + model + ".obj",
       "obj",
       Object.assign(
         {
@@ -85,6 +85,8 @@ Click.setVolume(0.6);
 const rfGroup = ICRender.getGroup("rf-wire");
 
 const euGroup = ICRender.getGroup("ic-wire");
+
+const gjGroup = ICRender.getGroup("gj-wire");
 
 const GJ = EnergyTypeRegistry.assureEnergyType("galacticraft_joule", 2);
 //Космическая энергия
