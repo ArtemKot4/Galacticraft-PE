@@ -2,6 +2,7 @@ interface IRocketDescriptor {
   fuel: int;
   tier: int;
   animation: Animation.Base;
+  player?: int
 }
 
 abstract class RocketManager {
@@ -14,7 +15,7 @@ abstract class RocketManager {
   }[] = [];
   public static tierList: int[] = [];
   public static data: Map<Vector, IRocketDescriptor> = new Map();
-  public static create(pos: Vector, tier: int, animation?: Animation.Base) {
+  public static create(pos: Vector, tier: int, animation?: Animation.Base): void {
     if (RocketManager.data.get(pos) === undefined) {
       RocketManager.data.set(pos, {
         fuel: 0,
@@ -23,13 +24,13 @@ abstract class RocketManager {
       });
     }
   }
-  public static get(pos: Vector) {
+  public static get(pos: Vector): IRocketDescriptor {
     return RocketManager.data.get(pos);
   }
-  public static isValid(pos: Vector) {
+  public static isValid(pos: Vector): boolean {
     return !!RocketManager.data.get(pos);
   }
-  public static updateFuel(pos: Vector, fuel: int) {
+  public static updateFuel(pos: Vector, fuel: int): void {
     if (this.isValid(pos)) {
       RocketManager.data.get(pos).fuel = fuel;
     }
@@ -43,6 +44,9 @@ abstract class RocketManager {
     }
     Game.message(item.split("_")[3]);
     return Number(item.split("_")[3]);
+  };
+  public static clear(pos: Vector) {
+    return RocketManager.data.delete(pos);
   }
 }
 
@@ -54,7 +58,7 @@ class RocketAnimator {
     if (!validData) {
       throw new java.lang.RuntimeException();
     }
-    const animation = new Animation.Base(pos.x + 0.5, pos.y + 0.3, pos.z + 0.5);
+    const animation = new Animation.Base(pos.x - 0.5, pos.y + 0.3, pos.z - 0.5);
     animation.describe({
       mesh: validData.model,
       skin: "terrain-atlas/" + validData.texture + ".png",
@@ -74,7 +78,7 @@ class RocketAnimator {
   public initialize() {
     this.animation.load();
   }
-  public linkAnimation(player: int) {
+  public linkAnimation(player: int): void {
     if (!this.isLinked) {
       return;
     }
@@ -87,6 +91,9 @@ class RocketAnimator {
         this.animation.setPos(this.pos.x, pos.y, this.pos.z);
       }
     });
+  };
+  public clear() {
+     this.animation.destroy();
   }
 }
 
@@ -101,11 +108,11 @@ abstract class Rocket {
 
 class RocketTier_1 extends Rocket {
   public transferList: string[] = ["moon", "station", "earth"];
-  public tier: number = 0;
+  public tier: number = 1;
   public texture: string = "GalacticraftCore/rocket_tier_1";
   public model: string = "rocket_tier_1";
   constructor(
-    importParams: Partial<RenderMesh.ImportParams> = { scale: [1, 1, 1] }
+    importParams: Partial<RenderMesh.ImportParams> = { scale: [1, 1, 1]}
   ) {
     super();
     this.item = new GItem("rocket_tier_" + this.tier, 1);
@@ -113,7 +120,7 @@ class RocketTier_1 extends Rocket {
     RocketManager.visualList.push({
       tier: this.tier,
       texture: this.texture,
-      model: Modeller.constructRenderMesh(this.model, importParams),
+      model: Modeller.constructRenderMesh(this.model, {...importParams,  translate: [0.5, 0, 0.5]}),
       scale: this.scale || 1,
     });
   }
