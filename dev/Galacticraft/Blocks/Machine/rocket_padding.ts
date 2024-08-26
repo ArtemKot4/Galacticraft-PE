@@ -70,29 +70,18 @@ interface ITransportDescriptor {
 }
 
 class Padding {
-  protected id: int;
-  protected setPaddingModel(data: int, height: int, texture: string) {
-    const model = BlockRenderer.createModel();
-    const render = new ICRender.Model();
-    const padding_shape = new ICRender.CollisionShape();
-    const entry = padding_shape.addEntry();
-
-    model.addBox(0, 0, 0, 1, height, 1, texture, 0);
-    entry.addBox(0, 0, 0, 1, height, 1);
-    render.addEntry(model);
-
-    BlockRenderer.setCustomCollisionShape(this.id, data, padding_shape),
-      BlockRenderer.setStaticICRender(this.id, data, render);
+  protected setPaddingModel(data: int, height: int) {
+  Block.setShape(BlockID[this.id], 0, 0, 0, 1, height, 1, data);
     return;
   }
 
-  protected constructFullByStructureIsPlaced() {
-    Block.registerPlaceFunctionForID(
-      BlockID[this.id],
-      (coords, item, block, player, region) => {
+  protected placeFunction(coords, item, block, player, region) {
         region.setBlock(coords.x, coords.y + 1, coords.z, BlockID[this.id], 0);
         for (let i = -1; i <= 1; i++) {
           for (let k = -1; k <= 1; k++) {
+            if (i === 0 && k === 0) {
+              continue;
+            }
             const block = region.getBlock(coords.x - i, coords.y, coords.z - k);
             if (block.id === BlockID[this.id] && block.data === 0) {
               region.setBlock(
@@ -105,25 +94,22 @@ class Padding {
             }
           }
         }
-      }
-    );
   }
-
-  constructor(id: string) {
-    this.id = BlockID[id];
+  constructor(protected id: string) {
     new GBlock(id, [
       {
-        name: "block.galacticraft." + this.id,
+        name: "block.galacticraft." + id,
         texture: [[id, 0]],
         inCreative: true,
       },
-    ]).create(),
-      this.setPaddingModel(1, 5 / 16, id + "_padding_completed"),
-      this.setPaddingModel(0, 3 / 16, id);
+    ]).create();
+      Block.registerPlaceFunctionForID(
+      BlockID[id],  this.placeFunction);
+      this.setPaddingModel(1, 5 / 16);
+      this.setPaddingModel(0, 3 / 16);
     const raycastShape = new ICRender.CollisionShape();
     raycastShape.addEntry().addBox(0, 0, 0, 1, 2, 1);
-    BlockRenderer.setCustomRaycastShape(this.id, 1, raycastShape);
-    this.constructFullByStructureIsPlaced();
+    BlockRenderer.setCustomRaycastShape(BlockID[id], 1, raycastShape);
   }
 }
 
@@ -143,33 +129,13 @@ class PaddingController extends TileEntityBase {
     player: number
   ): boolean {
     const tier = RocketManager.getTierForID(item.id);
-    if (typeof tier !== "number") {
-      return;
-    }
-    const rocket_pos = { x: this.x, y: this.y + 0.6, z: this.z };
-    let animation = RocketModeller.createAnimation(
-      RocketModeller.ROCKET_MESH_TIER_1,
-      "GalacticraftCore/rocket_tier_1",
-      rocket_pos
-    );
-
-    switch (tier) {
-      case 1:
-        animation = RocketModeller.createAnimation(
-          RocketModeller.ROCKET_MESH_TIER_2,
-          "GalacticraftPlanets/rocket_tier_2",
-          rocket_pos
-        );
-        break;
-      case 2:
-        animation = RocketModeller.createAnimation(
-          RocketModeller.ROCKET_MESH_TIER_3,
-          "GalacticraftPlanets/rocket_tier_3",
-          rocket_pos
-        );
+    if (!tier) {
+      Game.message("it is not rocket: it is a -> " + tier);
     };
-    RocketManager.create(rocket_pos, tier, animation);
-    RocketManager.get(this).animation.load();
+    const pos = {x: this.x + 0.5, y: this.y + 0.4, z: this.z + 0.5};
+    Entity.setCarriedItem(player, item.id, item.count-1, item.data, item.extra);
+    RocketManager.create(pos , tier);
+    RocketManager.get(pos).animation.load();
   }
 }
 

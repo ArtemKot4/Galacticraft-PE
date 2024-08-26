@@ -5,7 +5,7 @@ veinCounts:
     __config__.getFloat("Fossils.Earth.copper"),
 minY:2,
 maxY:100,
-size:randomInt(4,[8,10,12])
+size:randomInt(4,12)
 });
 });
 
@@ -15,7 +15,7 @@ UniqueGen.generateOre(BlockID.ore_tin_sc, 0, chunkX, chunkZ, random,
 veinCounts:  __config__.getFloat("Fossils.Earth.tin"),
 minY:2,
 maxY:100,
-size:randomInt(4,[8,10,12])
+size:randomInt(4,12)
 });
 });
 
@@ -25,7 +25,7 @@ UniqueGen.generateOre(BlockID.ore_aluminum_sc, 0, chunkX, chunkZ, random,
 veinCounts:  __config__.getFloat("Fossils.Earth.aluminum"),
 minY:2,
 maxY:100,
-size:randomInt(4,[8,10,12])
+size:randomInt(4,12)
 });
 });
 
