@@ -41,8 +41,8 @@ abstract class RocketManager {
     if (!item.startsWith("item_rocket_tier")) {
       return null;
     }
-    Game.message(item.split("_")[2]);
-    return Number(item.split("_")[2]);
+    Game.message(item.split("_")[3]);
+    return Number(item.split("_")[3]);
   }
 }
 
@@ -91,15 +91,23 @@ class RocketAnimator {
 }
 
 abstract class Rocket {
-  public transferList: string[] = [];
-  public tier: int = 0;
+  public transferList: string[];
+  public tier: int;
   public item: GItem;
   public texture: string;
   public model: string;
   public scale: number;
+}
+
+class RocketTier_1 extends Rocket {
+  public transferList: string[] = ["moon", "station", "earth"];
+  public tier: number = 0;
+  public texture: string = "GalacticraftCore/rocket_tier_1";
+  public model: string = "rocket_tier_1";
   constructor(
     importParams: Partial<RenderMesh.ImportParams> = { scale: [1, 1, 1] }
   ) {
+    super();
     this.item = new GItem("rocket_tier_" + this.tier, 1);
     RocketManager.tierList[this.tier] = this.tier;
     RocketManager.visualList.push({
@@ -108,16 +116,6 @@ abstract class Rocket {
       model: Modeller.constructRenderMesh(this.model, importParams),
       scale: this.scale || 1,
     });
-  }
-}
-
-class RocketTier_1 extends Rocket {
-  public transferList: string[] = ["moon", "station", "earth"];
-  public tier: number = 0;
-  public texture: string = "GalacticraftCore/rocket_tier_1";
-  public model: string = "rocket_tier_1";
-  constructor(importParams?) {
-    super(importParams || {scale: [1, 1, 1]})
   }
 }
 

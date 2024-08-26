@@ -76,18 +76,19 @@ class Padding {
   }
 
   protected placeFunction(coords, item, block, player, region) {
-    region.setBlock(coords.x, coords.y + 1, coords.z, BlockID[this.id], 0);
+
     for (let i = -1; i <= 1; i++) {
       for (let k = -1; k <= 1; k++) {
         if (i === 0 && k === 0) {
           continue;
         }
-        const block = region.getBlock(coords.x - i, coords.y, coords.z - k);
+        const block = region.getBlock(coords.x + i, coords.y, coords.z + k);
         if (block.id === BlockID[this.id] && block.data === 0) {
-          region.setBlock(coords.x, coords.y, coords.z, BlockID[this.id], 1);
+         return region.setBlock(coords.x, coords.y, coords.z, BlockID[this.id], 1);
         }
       }
-    }
+    };
+    region.setBlock(coords.x, coords.y + 1, coords.z, BlockID[this.id], 0);
   }
   constructor(protected id: string) {
     const description = {
@@ -111,21 +112,20 @@ const BUGGY_PADDING = new Padding("buggy_padding");
 
 class RocketPaddingTile extends TileEntityBase {
   animator: RocketAnimator;
-  onLoad(): void {
-    if (this.blockSource.getBlockData(this.x, this.y, this.z) === 0) {
-      Game.message("0");
-      return this.selfDestroy();
-    }
-  }
   onItemUse(
     coords: Callback.ItemUseCoordinates,
     item: ItemStack,
     player: number
   ): boolean {
+    if (this.blockSource.getBlockData(this.x, this.y, this.z) === 0) {
+      Game.message("0");
+      return;
+    }
     const pos = { x: this.x + 0.5, y: this.y + 0.4, z: this.z + 0.5 };
     const tier = RocketManager.getTierForID(item.id);
     if (!tier) {
       Game.message("it is not rocket: it is a -> " + tier);
+      return;
     }
     if (RocketManager.isValid(pos)) {
       return; //TODO: create logic
