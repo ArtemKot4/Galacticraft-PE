@@ -508,3 +508,13 @@ EquipMent.setInventoryNeeded(true);
 let Flags = {
   station: false,
 };
+
+namespace Game {
+  export function titleMessage(player: int, text: string) {
+    Commands.exec("/title " + player + " title " + text);
+  }
+}
+
+Callback.addCallback("ItemUseNoTarget", (item, player) => {
+    Game.titleMessage(player, Native.Color.GREEN+"Test");
+});

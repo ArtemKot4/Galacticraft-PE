@@ -27,7 +27,7 @@ abstract class RocketManager {
     return RocketManager.data.get(pos);
   }
   public static isValid(pos: Vector) {
-    return RocketManager.data.get(pos) !== undefined;
+    return !!RocketManager.data.get(pos);
   }
   public static updateFuel(pos: Vector, fuel: int) {
     if (this.isValid(pos)) {
@@ -46,9 +46,9 @@ abstract class RocketManager {
   }
 }
 
-abstract class RocketAnimator {
+class RocketAnimator {
   public animation: Animation.Base;
-  public isLinked: boolean = false;
+  protected isLinked: boolean = false;
   public static createAnimation(pos: Vector, tier: int) {
     const validData = RocketManager.visualList.find((v) => v.tier === tier);
     if (!validData) {
@@ -71,20 +71,19 @@ abstract class RocketAnimator {
     }
     this.animation = animation;
   }
-  public initialize(pos: Vector) {
-    RocketManager.get(pos).animation.load();
+  public initialize() {
+    this.animation.load();
   }
   public linkAnimation(player: int) {
     if (!this.isLinked) {
       return;
     }
     this.isLinked = true;
-
+    let pos = Entity.getPosition(player);
     Threading.initThread("thread.galacticraft.rocket_linker", () => {
-      let pos = Entity.getPosition(player);
       while (pos.y < 512) {
-        pos = Entity.getPosition(player);
         java.lang.Thread.sleep(20);
+        pos = Entity.getPosition(player);
         this.animation.setPos(this.pos.x, pos.y, this.pos.z);
       }
     });
@@ -98,7 +97,9 @@ class Rocket {
   public texture: string;
   public model: string;
   public scale: number;
-  constructor(importParams?: Partial<RenderMesh.ImportParams>) {
+  constructor(
+    importParams: Partial<RenderMesh.ImportParams> = { scale: [1, 1, 1] }
+  ) {
     this.item = new GItem("rocket_tier_" + this.tier, 1);
     RocketManager.tierList[this.tier] = this.tier;
     RocketManager.visualList.push({
@@ -112,6 +113,8 @@ class Rocket {
 
 class RocketTier_1 extends Rocket {
   public tier: number = 0;
+  public texture: string = "GalacticraftCore/rocket_tier_1";
+  public model: string = "rocket_tier_1";
 }
 
 const Rocket1 = new RocketTier_1();

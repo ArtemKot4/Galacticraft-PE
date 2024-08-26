@@ -116,7 +116,8 @@ class Padding {
 const ROCKET_PADDING = new Padding("rocket_padding");
 const BUGGY_PADDING = new Padding("buggy_padding");
 
-class PaddingController extends TileEntityBase {
+class RocketPaddingTile extends TileEntityBase {
+  animator: RocketAnimator;
   onLoad(): void {
     if (this.blockSource.getBlockData(this.x, this.y, this.z) === 0) {
       Game.message("0");
@@ -128,18 +129,23 @@ class PaddingController extends TileEntityBase {
     item: ItemStack,
     player: number
   ): boolean {
+    const pos = {x: this.x + 0.5, y: this.y + 0.4, z: this.z + 0.5};
     const tier = RocketManager.getTierForID(item.id);
     if (!tier) {
       Game.message("it is not rocket: it is a -> " + tier);
     };
-    const pos = {x: this.x + 0.5, y: this.y + 0.4, z: this.z + 0.5};
+    if(RocketManager.isValid(pos)) {
+      return; //TODO: create logic
+    }
     Entity.setCarriedItem(player, item.id, item.count-1, item.data, item.extra);
     RocketManager.create(pos , tier);
-    RocketManager.get(pos).animation.load();
+    const animator = this.animator = new RocketAnimator(pos);
+    animator.initialize();
+    return;
   }
 }
 
 TileEntity.registerPrototype(
   BlockID["rocket_padding"],
-  new PaddingController()
+  new RocketPaddingTile()
 );
