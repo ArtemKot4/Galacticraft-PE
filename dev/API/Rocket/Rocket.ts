@@ -58,10 +58,10 @@ abstract class RocketManager {
       while (animator?.animation instanceof Animation.Base) {
         animator.animation.setPos(
           animator.pos.x - 0.5,
-          Entity.getPosition(player).y - 2,
+          Entity.getPosition(player).y - 2.2,
           animator.pos.z - 0.5
         );
-        java.lang.Thread.sleep(1000/1200);
+        java.lang.Thread.sleep(1000/100000);
       }
     } catch (e) {
        Game.message(e);
@@ -73,27 +73,26 @@ abstract class RocketManager {
         
 
         if (World.getThreadTime() % 20 === 0 && timer > -1) {
-          Entity.setPosition(player, pos.x + 0.5, pos.y + 2.4, pos.z + 0.5);
-
           Commands.exec("/title @a title §4" + timer);
           if (timer === 0) {
             RocketManager.get(pos).player = player;
           }
           timer--;
         }
-        if(World.getThreadTime() % 3 === 0 && timer > -1) {
-          Entity.setVelocity(player, 0, 0, randomInt(-0.02, 0.08))
+        if(timer > 0) {
+          Entity.setVelocity(player, 0, 0, 0);
+          Entity.setPosition(player, pos.x + 0.5, pos.y + 2.6, pos.z + 0.5);
         }
         if (timer <= 0) {
            Entity.setPosition(player, pos.x + 0.5, loc.y, pos.z + 0.5);
           Entity.setVelocity(player, 0, 0.6, 0);
           Particles.addParticle(
-            EParticleType.CLOUD,
-            pos.x + randomInt(-0.3, 0.3),
-            pos.y - 0.9,
-            pos.z + randomInt(0.3, -0.3),
+            ESpaceParticle.ROCKET_PARTICLE,
+            loc.x,
+            loc.y - 1.4,
+            loc.z,
             0,
-            -0.098,
+            -0.09,
             0
           );
         }

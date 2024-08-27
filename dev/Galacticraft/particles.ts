@@ -58,6 +58,22 @@ const spouticle = Particles.registerParticleType({
     }
 });
 
+const rocket_particle = Particles.registerParticleType({
+  texture: "rocket_particle",
+  render: 2,
+  size: [3.2, 3.6],
+  lifetime: [10, 15],
+  collision: true,
+
+  animators: {
+      alpha: {
+          fadeIn: 2, fadeOut: 1
+      },
+      size: {
+          fadeOut: 0, fadeIn: 0, start: 0.2, end: 1
+      }
+  }
+});
 
 
 const collecticle = Particles.registerParticleType({
@@ -113,6 +129,7 @@ enum ESpaceParticle {
  SPOUT = spouticle,
  COLLECTOR = collecticle,
  VENUS_RAIN = rain_venus,
- SMOKE = smoke_particle
+ SMOKE = smoke_particle,
+ ROCKET_PARTICLE = rocket_particle
 }
 
