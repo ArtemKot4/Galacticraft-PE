@@ -152,6 +152,10 @@ class RocketPaddingTile extends TileEntityBase {
     if (this.blockSource.getBlockData(this.x, this.y, this.z) === 0) {
       return;
     };
+    if(RocketManager.isValid(this) && !Entity.getSneaking(player) && this.animator) {
+      RocketManager.start(this.animator, this, player);
+      return;
+    }
     this.takeRocket(player);
     const tier = RocketManager.getTierForID(item.id);
     if (tier === null) {

@@ -2,7 +2,7 @@ interface IRocketDescriptor {
   fuel: int;
   tier: int;
   animation: Animation.Base;
-  player?: int
+  player?: int;
 }
 
 abstract class RocketManager {
@@ -15,8 +15,12 @@ abstract class RocketManager {
   }[] = [];
   public static tierList: int[] = [];
   public static data: Map<Vector, IRocketDescriptor> = new Map();
-  public static create(pos: Vector, tier: int, animation?: Animation.Base): void {
-    if (RocketManager.data.get(pos) === undefined) {
+  public static create(
+    pos: Vector,
+    tier: int,
+    animation?: Animation.Base
+  ): void {
+    if (!this.isValid(pos)) {
       RocketManager.data.set(pos, {
         fuel: 0,
         tier,
@@ -37,16 +41,70 @@ abstract class RocketManager {
   }
   public static getTierForID(id: int) {
     let item = IDRegistry.getIdInfo(id).split(":")[1];
-    Game.message(item);
-
     if (!item.startsWith("item_rocket_tier")) {
       return null;
     }
-    Game.message(item.split("_")[3]);
     return Number(item.split("_")[3]);
-  };
+  }
   public static clear(pos: Vector) {
     return RocketManager.data.delete(pos);
+  }
+  public static start(animator: RocketAnimator, pos: Vector, player: int) {
+    let timer = 20;
+    const box = Atmosphere.StationSky.createBox(100, 0, "earth_default");
+    Entity.setPosition(player, pos.x + 0.5, pos.y + 2.4, pos.z + 0.5);
+    Threading.initThread("galacticraft.rocket_link", () => {
+      try {
+      while (animator?.animation instanceof Animation.Base) {
+        animator.animation.setPos(
+          animator.pos.x - 0.5,
+          Entity.getPosition(player).y - 2,
+          animator.pos.z - 0.5
+        );
+      }
+    } catch (e) {
+       Game.message(e);
+    }
+    });
+    const updatable = {
+      update() {
+        const loc = Entity.getPosition(player);
+        Entity.setPosition(player, pos.x + 0.5, loc.y, pos.z + 0.5);
+
+        if (World.getThreadTime() % 20 === 0 && timer > 0) {
+          Commands.exec("/title @a title §4" + timer);
+          if (timer === 0) {
+            RocketManager.get(pos).player = player;
+          }
+          timer--;
+        }
+        if (timer === 0) {
+          Entity.setVelocity(player, 0, 0.6, 0);
+          Particles.addParticle(
+            EParticleType.CLOUD,
+            pos.x + randomInt(-0.3, 0.3),
+            pos.y - 0.9,
+            pos.z + randomInt(0.3, -0.3),
+            0,
+            -0.098,
+            0
+          );
+        }
+        if (loc.y > 300) {
+          Atmosphere.StationSky.setupPosition(box, loc.x, loc.y - 100, loc.z);
+        }
+        if (loc.y > 600) {
+          Entity.setVelocity(player, 0, 0, 0);
+          Player.setFlying(true);
+          box.destroy();
+          animator.clear();
+          RocketManager.clear(pos);
+          this.remove = true;
+        }
+      },
+    } satisfies Updatable;
+    Updatable.addUpdatable(updatable);
+    return;
   }
 }
 
@@ -78,22 +136,8 @@ class RocketAnimator {
   public initialize() {
     this.animation.load();
   }
-  public linkAnimation(player: int): void {
-    if (!this.isLinked) {
-      return;
-    }
-    this.isLinked = true;
-    let pos = Entity.getPosition(player);
-    Threading.initThread("thread.galacticraft.rocket_linker", () => {
-      while (pos.y < 512) {
-        java.lang.Thread.sleep(20);
-        pos = Entity.getPosition(player);
-        this.animation.setPos(this.pos.x, pos.y, this.pos.z);
-      }
-    });
-  };
   public clear() {
-     this.animation.destroy();
+    this.animation.destroy();
   }
 }
 
@@ -112,7 +156,7 @@ class RocketTier_1 extends Rocket {
   public texture: string = "GalacticraftCore/rocket_tier_1";
   public model: string = "rocket_tier_1";
   constructor(
-    importParams: Partial<RenderMesh.ImportParams> = { scale: [1, 1, 1]}
+    importParams: Partial<RenderMesh.ImportParams> = { scale: [1, 1, 1] }
   ) {
     super();
     this.item = new GItem("rocket_tier_" + this.tier, 1);
@@ -120,10 +164,30 @@ class RocketTier_1 extends Rocket {
     RocketManager.visualList.push({
       tier: this.tier,
       texture: this.texture,
-      model: Modeller.constructRenderMesh(this.model, {...importParams,  translate: [0.5, 0, 0.5]}),
+      model: Modeller.constructRenderMesh(this.model, {
+        ...importParams,
+        translate: [0.5, 0, 0.5],
+      }),
       scale: this.scale || 1,
     });
   }
 }
 
 const Rocket1 = new RocketTier_1();
+/*
+Saver.addSavesScope(
+  "scope.galacticraft.rocket_list",
+  function read(scope) {
+    RocketManager.data = scope?.rocket_data || new Map();
+  },
+  function save() {
+    return { rocket_data: RocketManager.data };
+  }
+);
+
+Callback.addCallback("LevelDisplayed", () => {
+  RocketManager?.data?.forEach((v) => {
+    v?.animation?.load();
+  });
+});
+*/

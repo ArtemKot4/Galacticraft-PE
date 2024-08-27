@@ -9,7 +9,7 @@ namespace Atmosphere {
     //z 6 / 16
 
 
- class StationSky extends Sky {
+export class StationSky extends Sky {
   public static createBox(scale, rotation, texture): Animation.Base {
     const pos = Player.getPosition();
     const mesh = new RenderMesh();
