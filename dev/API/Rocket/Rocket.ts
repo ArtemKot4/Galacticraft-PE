@@ -61,6 +61,7 @@ abstract class RocketManager {
           Entity.getPosition(player).y - 2,
           animator.pos.z - 0.5
         );
+        java.lang.Thread.sleep(1000/1200);
       }
     } catch (e) {
        Game.message(e);
@@ -69,16 +70,22 @@ abstract class RocketManager {
     const updatable = {
       update() {
         const loc = Entity.getPosition(player);
-        Entity.setPosition(player, pos.x + 0.5, loc.y, pos.z + 0.5);
+        
 
-        if (World.getThreadTime() % 20 === 0 && timer > 0) {
+        if (World.getThreadTime() % 20 === 0 && timer > -1) {
+          Entity.setPosition(player, pos.x + 0.5, pos.y + 2.4, pos.z + 0.5);
+
           Commands.exec("/title @a title §4" + timer);
           if (timer === 0) {
             RocketManager.get(pos).player = player;
           }
           timer--;
         }
-        if (timer === 0) {
+        if(World.getThreadTime() % 3 === 0 && timer > -1) {
+          Entity.setVelocity(player, 0, 0, randomInt(-0.02, 0.08))
+        }
+        if (timer <= 0) {
+           Entity.setPosition(player, pos.x + 0.5, loc.y, pos.z + 0.5);
           Entity.setVelocity(player, 0, 0.6, 0);
           Particles.addParticle(
             EParticleType.CLOUD,
@@ -96,7 +103,7 @@ abstract class RocketManager {
         if (loc.y > 600) {
           Entity.setVelocity(player, 0, 0, 0);
           Player.setFlying(true);
-          box.destroy();
+          box?.destroy();
           animator.clear();
           RocketManager.clear(pos);
           this.remove = true;
