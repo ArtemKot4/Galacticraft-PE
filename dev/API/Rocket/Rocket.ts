@@ -150,15 +150,17 @@ class RocketAnimator {
     return (this.isLinked = bool);
   }
   public initLink(player: int) {
+
    this.animation.loadCustom(() => {
     this.animation.setInterpolationEnabled(true);
-    this.animation.transform().lock().translate(   this.pos.x - 0.5,
-      Entity.getPosition(player).y - 2.1,
-      this.pos.z - 0.5).unlock();
+    this.animation.setPos(this.pos.x - 0.5, Entity.getPosition(player).y - 2.1,this.pos.z - 0.5)
+   // this.animation.transform().lock().translate(   this.pos.x - 0.5,
+     // Entity.getPosition(player).y - 2.1,
+      //this.pos.z - 0.5).unlock();
     this.animation.updateRender()
    })
 
-    /*
+        /*
     Threading.initThread("galacticraft.rocket_link", () => {
       try {
         while (this.isLinked === true) {
@@ -173,7 +175,7 @@ class RocketAnimator {
         Game.message(e);
       }
     });
-    */
+*/
   }
 }
 
