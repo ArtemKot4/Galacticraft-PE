@@ -10,24 +10,43 @@ namespace Atmosphere {
     public static createBox(scale, rotation, texture): Animation.Base {
       const pos = Player.getPosition();
       const mesh = new RenderMesh();
-      const size = scale;
-      mesh.addVertex(0, 0, 0, 0, 0);
-      mesh.addVertex(0, 0, size, size, 0);
-      mesh.addVertex(0, size, 0, 0, 1);
-      mesh.addVertex(0, 0, size, 1, 0);
-      mesh.addVertex(0, size, 0, 0, 1);
-      mesh.addVertex(0, size, size, 1, 1);
-      mesh.rotate(0, 0, 0, 0, 0, rotation || 0.5);
-
+  
+  
+   const _pos = (8 / 16) as number
+   
+       //clouds
+  //  mesh.addVertex(-_pos, 50, -_pos, 0.5, 0); 
+  //  mesh.addVertex(_pos, 50, -_pos, 1, 0); 
+  //  mesh.addVertex(-_pos, 50, _pos, 0.5, 1); 
+   
+  //  mesh.addVertex(_pos, 50, -_pos, 1, 0); 
+  //  mesh.addVertex(-_pos, 50, _pos, 0.5, 1); 
+  //  mesh.addVertex(_pos, 50, _pos, 1, 1);
+  
+   //earth
+   mesh.addVertex(- _pos, 0, -_pos, 0, 0); 
+   mesh.addVertex(_pos, 0, -_pos, 1, 0); 
+   mesh.addVertex(-_pos, 0, _pos, 0, 1); 
+   
+   mesh.addVertex(_pos, 0, -_pos, 1, 0); 
+   mesh.addVertex(-_pos, 0, _pos, 0, 1); 
+   mesh.addVertex(_pos, 0, _pos, 1, 1); 
+   
+  
+  
+      mesh.scale(scale, 0, scale);
+  
+      mesh.rotate(0, 0, 0, 0, 0, rotation || 0);
+  
       const animation = new Animation.Base(pos.x, pos.y, pos.z);
-
+  
       animation.describe({
         mesh: mesh,
         skin: "environment/" + texture + ".png",
       });
-
-      animation.setIgnoreLightMode();
-
+  
+      animation.setSkylightMode();
+  
       return animation;
     };
 

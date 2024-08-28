@@ -75,7 +75,7 @@ class Padding {
     return;
   }
 
-  protected placeFunction(coords, item, block, player, region) {
+  protected placeFunction(coords: Vector, block: Tile, changedCoords: Vector, region: BlockSource) {
     region.setBlock(coords.x, coords.y + 1, coords.z, BlockID[this.id], 0);
     for (let i = -1; i <= 1; i++) {
       for (let k = -1; k <= 1; k++) {
@@ -98,7 +98,7 @@ class Padding {
     } as Block.BlockVariation;
 
     new GBlock(id, [description, description]).create();
-    Block.registerPlaceFunctionForID(
+    Block.registerNeighbourChangeFunctionForID(
       BlockID[id],
       this.placeFunction.bind(this)
     );

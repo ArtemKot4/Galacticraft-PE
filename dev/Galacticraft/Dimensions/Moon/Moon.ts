@@ -57,7 +57,9 @@ Moon.setOre("tin", {
 })
 
 Callback.addCallback("ItemUse", function (coords, item, block, id, player) {
-  if (Entity.getCarriedItem(player).id == 0 && block.id == BlockID.computer_c) {
+  if (Entity.getCarriedItem(player).id === VanillaItemID.emerald) {
     Dimensions.transfer(player, Moon.getPlanet());
   }
 });
+
+CelestialBody.add(Moon.planet_uid[1], "moon");

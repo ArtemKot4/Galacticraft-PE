@@ -358,3 +358,5 @@ Callback.addCallback("ItemUse", function (coords, item, block, is, player) {
     Dimensions.transfer(player, Venus.getPlanet());
   }
 });
+
+CelestialBody.add(Venus.planet_uid[1], "venus");

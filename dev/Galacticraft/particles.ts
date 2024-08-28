@@ -61,16 +61,16 @@ const spouticle = Particles.registerParticleType({
 const rocket_particle = Particles.registerParticleType({
   texture: "rocket_particle",
   render: 2,
-  size: [3.2, 3.6],
-  lifetime: [10, 15],
+  size: [5.2, 5.6],
+  lifetime: [2, 5],
   collision: true,
 
   animators: {
       alpha: {
-          fadeIn: 2, fadeOut: 1
+        start: 1, end: 0.3
       },
       size: {
-          fadeOut: 0, fadeIn: 0, start: 0.2, end: 1
+          start: 1, end: 0.2
       }
   }
 });

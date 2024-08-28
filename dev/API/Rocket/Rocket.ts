@@ -49,63 +49,64 @@ abstract class RocketManager {
   public static clear(pos: Vector) {
     return RocketManager.data.delete(pos);
   }
+
   public static start(animator: RocketAnimator, pos: Vector, player: int) {
     let timer = 20;
-    const box = Atmosphere.StationSky.createBox(100, 0, "earth_default");
-    Entity.setPosition(player, pos.x + 0.5, pos.y + 2.4, pos.z + 0.5);
-    Threading.initThread("galacticraft.rocket_link", () => {
-      try {
-      while (animator?.animation instanceof Animation.Base) {
-        animator.animation.setPos(
-          animator.pos.x - 0.5,
-          Entity.getPosition(player).y - 2.2,
-          animator.pos.z - 0.5
-        );
-        java.lang.Thread.sleep(1000/100000);
-      }
-    } catch (e) {
-       Game.message(e);
+    let box = null;
+    const currentCelestialBody = CelestialBody.get(Entity.getDimension(player));
+    if (currentCelestialBody !== undefined) {
+      box = Atmosphere.Sky.createBox(100, 0, currentCelestialBody);
     }
-    });
+    Entity.setPosition(player, pos.x + 0.5, pos.y + 2.7, pos.z + 0.5);
+    animator.setLink(true);
+    animator.initLink(player);
     const updatable = {
+      launchCountdown(player: int, timer: int) {
+        Commands.exec("/title @a title §4" + timer);
+        if (timer === 0) {
+          RocketManager.get(pos).player = player;
+        }
+      },
+      touchPlayer(player: int) {
+        Entity.setVelocity(player, 0, 0, 0);
+        Entity.setPosition(player, pos.x + 0.5, pos.y + 2.6, pos.z + 0.5);
+        return;
+      },
+      finish(player: int) {
+        Entity.setVelocity(player, 0, 0, 0);
+        Player.setFlying(true);
+        box?.destroy();
+        animator.clear();
+        RocketManager.clear(pos);
+        this.remove = true;
+      },
       update() {
         const loc = Entity.getPosition(player);
-        
-
         if (World.getThreadTime() % 20 === 0 && timer > -1) {
-          Commands.exec("/title @a title §4" + timer);
-          if (timer === 0) {
-            RocketManager.get(pos).player = player;
-          }
+          this.launchCountdown(player, timer);
           timer--;
         }
-        if(timer > 0) {
-          Entity.setVelocity(player, 0, 0, 0);
-          Entity.setPosition(player, pos.x + 0.5, pos.y + 2.6, pos.z + 0.5);
+        if (timer > -1) {
+          this.touchPlayer(player);
         }
-        if (timer <= 0) {
-           Entity.setPosition(player, pos.x + 0.5, loc.y, pos.z + 0.5);
+        if (timer <= -1) {
+          Entity.setPosition(player, pos.x + 0.5, loc.y, pos.z + 0.5);
           Entity.setVelocity(player, 0, 0.6, 0);
           Particles.addParticle(
             ESpaceParticle.ROCKET_PARTICLE,
             loc.x,
-            loc.y - 1.4,
+            loc.y - 1.6,
             loc.z,
             0,
             -0.09,
             0
           );
         }
-        if (loc.y > 300) {
-          Atmosphere.StationSky.setupPosition(box, loc.x, loc.y - 100, loc.z);
+        if (box !== null && loc.y > 350) {
+          Atmosphere.Sky.setupPosition(box, loc.x, loc.y - 100, loc.z);
         }
         if (loc.y > 600) {
-          Entity.setVelocity(player, 0, 0, 0);
-          Player.setFlying(true);
-          box?.destroy();
-          animator.clear();
-          RocketManager.clear(pos);
-          this.remove = true;
+          this.finish(player);
         }
       },
     } satisfies Updatable;
@@ -144,6 +145,26 @@ class RocketAnimator {
   }
   public clear() {
     this.animation.destroy();
+  }
+  public setLink(bool: boolean) {
+    return (this.isLinked = bool);
+  }
+  public initLink(player: int) {
+    Threading.initThread("galacticraft.rocket_link", () => {
+      try {
+        while (this.isLinked === true) {
+          this.animation.setPos(
+            this.pos.x - 0.5,
+            Entity.getPosition(player).y - 2.1,
+            this.pos.z - 0.5
+          );
+          this.animation.refresh();
+          java.lang.Thread.sleep(1000 / 1000000);
+        }
+      } catch (e) {
+        Game.message(e);
+      }
+    });
   }
 }
 

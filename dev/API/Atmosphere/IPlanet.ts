@@ -1,7 +1,8 @@
+type colors = [sr: int, sg: int, sb: int, fr: int, fg: int, fb: int];
+
 /**
  * Класс, использующийся для регистрации планет
  */
-type colors = [sr: int, sg: int, sb: int, fr: int, fg: int, fb: int];
 
 class IPlanet {
   public biome_uid: string;
@@ -114,7 +115,4 @@ class IPlanet {
     this.createPlanet();
   };
 
-  public registerByCelestialBody() {
-    
-  }
 }

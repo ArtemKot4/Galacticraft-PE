@@ -87,3 +87,5 @@ Callback.addCallback(
     }
   }
 );
+
+CelestialBody.add(Mars.planet_uid[1], "mars");
