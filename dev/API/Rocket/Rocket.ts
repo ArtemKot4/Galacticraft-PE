@@ -150,21 +150,30 @@ class RocketAnimator {
     return (this.isLinked = bool);
   }
   public initLink(player: int) {
+   this.animation.loadCustom(() => {
+    this.animation.setInterpolationEnabled(true);
+    this.animation.transform().lock().translate(   this.pos.x - 0.5,
+      Entity.getPosition(player).y - 2.1,
+      this.pos.z - 0.5).unlock();
+    this.animation.updateRender()
+   })
+
+    /*
     Threading.initThread("galacticraft.rocket_link", () => {
       try {
         while (this.isLinked === true) {
-          this.animation.setPos(
-            this.pos.x - 0.5,
+          this.animation.setInterpolationEnabled(true);
+          this.animation.transform().lock().translate(   this.pos.x - 0.5,
             Entity.getPosition(player).y - 2.1,
-            this.pos.z - 0.5
-          );
-          this.animation.refresh();
-          java.lang.Thread.sleep(1000 / 1000000);
+            this.pos.z - 0.5).unlock();
+          this.animation.updateRender()
+          java.lang.Thread.sleep(1000 / 995);
         }
       } catch (e) {
         Game.message(e);
       }
     });
+    */
   }
 }
 
