@@ -103,9 +103,9 @@ abstract class RocketManager {
           Atmosphere.Sky.setupPosition(box, loc.x, loc.y - 100, loc.z);
         }
         if (loc.y > 600) {
+          CelestialBorder.initCelestials(player, RocketManager.get(pos).tier)
+          CelestialBorder.open();
           this.finish(player);
-           CelestialBorder.initCelestials(player, RocketManager.get(pos).tier)
-           CelestialBorder.open();
         }
       },
     } satisfies Updatable;
