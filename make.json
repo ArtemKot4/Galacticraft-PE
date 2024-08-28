@@ -12,6 +12,10 @@
     {
       "path": "assets/gui",
       "type": "gui"
+    },
+    {
+      "path": "assets/environment",
+      "type": "gui"
     }
   ],
   "sources": [
