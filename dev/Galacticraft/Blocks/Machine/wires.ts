@@ -10,10 +10,8 @@ const PIPE = Block.createSpecialType({
   sound: "glass",
 });
 
-
-
 class Cable {
-  public static STANDART_CABLE_WIDTH = (2 / 8);
+  public static STANDART_CABLE_WIDTH = 2 / 8;
   public static colors_to_paint = [
     "blue",
     "black",
@@ -64,7 +62,7 @@ class Cable {
     };
   }
 
-  public setColorByDye(id_color: typeof Cable.colors_to_paint[number]) {
+  public setColorByDye(id_color: (typeof Cable.colors_to_paint)[number]) {
     Block.registerClickFunctionForID(
       BlockID[this.id + "_" + id_color ?? this.id],
       (coords, item, block, player) => {
@@ -72,7 +70,6 @@ class Cable {
         for (const color of Cable.colors_to_paint) {
           if (item.id === VanillaItemID[color + "_dye"]) {
             try {
-              new StandartRocketButtonBuild(Entity.getPosition(player), player, null)
               Particles.addParticle(
                 EParticleType.CLOUD,
                 coords.x + 0.5,
@@ -91,7 +88,7 @@ class Cable {
               );
               if (entity.getGameMode() !== EGameMode.CREATIVE)
                 entity.decreaseCarriedItem(1);
-                return;
+              return;
             } catch {
               Particles.addParticle(
                 EParticleType.CRIT,
@@ -106,8 +103,6 @@ class Cable {
                 MathHelper.randomValue(Native.Color.GREEN, Native.Color.RED) +
                   Translation.translate("gc.message.cable.painting_warning")
               );
-
-            
             }
           }
         }
@@ -125,8 +120,8 @@ for (const color of Cable.colors_to_paint) {
     "gc.wire",
     GJ,
     200,
-    WIRE,
-  )(color)
+    WIRE
+  )(color);
 
   new Cable("pipe_oxygen").createByPrototype(
     "gc.oxygen-pipe",
@@ -143,7 +138,6 @@ new Cable("pipe_hydrogen").createByPrototype(
   400,
   PIPE
 )();
-
 
 Item.addToCreative(BlockID["improved_aluminum_wire_gray"], 1, 0);
 

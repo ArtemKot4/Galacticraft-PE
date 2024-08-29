@@ -1,69 +1,3 @@
-// new GBlock("rocket_padding", [
-//   { name: "Padding Rocket", texture: [["landing_pad", 0]], inCreative: true },
-// ])
-//   .create()
-//   .info("Place blocks 3x3\nfor create rocket padding");
-// IDRegistry.genBlockID("rocket_padding_completed");
-// Block.createBlock("rocket_padding_completed", [
-//   {
-//     name: "Padding of Rocket",
-//     texture: [["landing_pad", 0]],
-//     inCreative: false,
-//   },
-// ]);
-
-// new GBlock("buggy_padding", [
-//   {
-//     name: "Buggy padding{DEBUG}",
-//     texture: [["buggy_pad", 0]],
-//     inCreative: false,
-//   },
-// ]);
-
-// new GBlock("buggy_padding_completed", [
-//   { name: "Buggy padding", texture: [["buggy_pad", 0]], inCreative: false },
-// ]);
-
-// TileEntity.registerPrototype(BlockID.rocket_padding, {
-//   useNetworkItemContainer: true,
-//   init: function () {
-//     //   for(var i;i<3;i++){
-
-//     if (
-//       this.blockSource.getBlockId(this.x, this.y, this.z) ==
-//         BlockID.rocket_padding &&
-//       this.blockSource.getBlockId(this.x - 1, this.y, this.z) ==
-//         BlockID.rocket_padding &&
-//       this.blockSource.getBlockId(this.x - 2, this.y, this.z) ==
-//         BlockID.rocket_padding &&
-//       this.blockSource.getBlockId(this.x, this.y, this.z - 1) ==
-//         BlockID.rocket_padding &&
-//       this.blockSource.getBlockId(this.x - 1, this.y, this.z - 1) ==
-//         BlockID.rocket_padding &&
-//       this.blockSource.getBlockId(this.x - 2, this.y, this.z - 1) ==
-//         BlockID.rocket_padding &&
-//       this.blockSource.getBlockId(this.x, this.y, this.z - 2) ==
-//         BlockID.rocket_padding &&
-//       this.blockSource.getBlockId(this.x - 1, this.y, this.z - 2) ==
-//         BlockID.rocket_padding &&
-//       this.blockSource.getBlockId(this.x - 2, this.y, this.z - 2) ==
-//         BlockID.rocket_padding &&
-//       this.blockSource.getBlockId(this.x - 2, this.y, this.z - 1) ==
-//         BlockID.rocket_padding
-//       // this.blockSource.getBlockId(this.x - i, this.y, this.z) == BlockID.rocket_padding &&
-//       // this.blockSource.getBlockId(this.x - i, this.y, this.z - i) == BlockID.rocket_padding &&
-//       // this.blockSource.getBlockId(this.x, this.y, this.z - i) == BlockID.rocket_padding
-//     ) {
-//       this.blockSource.setBlock(
-//         this.x - 1,
-//         this.y,
-//         this.z - 1,
-//         BlockID.rocket_padding_completed
-//       );
-//     }
-//   },
-// });
-
 interface ITransportDescriptor {
   model: string;
   texture: string;
@@ -108,48 +42,63 @@ class Padding {
     } as Block.BlockVariation;
 
     new GBlock(id, [description, description]).create();
+
     Block.registerNeighbourChangeFunctionForID(
       BlockID[id],
       this.placeFunction.bind(this)
     );
+
     this.setPaddingModel(1, 5 / 16);
     this.setPaddingModel(0, 3 / 16);
+
     const raycastShape = new ICRender.CollisionShape();
     raycastShape.addEntry().addBox(0, 0, 0, 1, 4, 1);
     BlockRenderer.setCustomRaycastShape(BlockID[id], 1, raycastShape);
   }
 }
 
-const ROCKET_PADDING = new Padding("rocket_padding");
-const BUGGY_PADDING = new Padding("buggy_padding");
 
-class RocketPaddingTile extends TileEntityBase {
-  animator: RocketAnimator;
-  takeRocket(player: int) {
-    if (RocketManager.isValid(this) && Entity.getSneaking(player)) {
-      const extra = new ItemExtraData(this.container.getSlot("slot").extra);
+class RocketPadding extends Padding {
+  takeRocket(player: int, coords: Vector) {
+    if (RocketManager.isValid(coords) && Entity.getSneaking(player)) {
+      const extra = new ItemExtraData();
 
-      const current = RocketManager.get(this);
+      const current = RocketManager.get(coords);
 
       if (current.container) {
         extra.putSerializable("container", current.container);
-        extra.putInt("fuel", current.fuel);
-      }
+      };
+
+      if(current.fuel === -1) {
+        extra.putBoolean("creative", true);
+      };
+
+      extra.putInt("fuel", current.fuel);
+      current.capacity && extra.putInt("capacity", current.capacity);
 
       new PlayerEntity(player).addItemToInventory(
-        ItemID[`rocket_tier_${RocketManager.get(this).tier}`],
+        ItemID[`rocket_tier_${RocketManager.get(coords).tier}`],
         1,
-        0
+        0,
+        extra
       );
 
-      this.container.clearSlot("slot");
-      this?.animator?.clear();
-      RocketManager.clear(this);
+      RocketManager.clear(coords);
     }
   }
-  putRocket(player: int, tier: int, item: ItemInstance) {
-    if (RocketManager.isValid(this)) {
+  putRocket(coords: Vector, item: ItemInstance, player: int, tier: int ) {
+    if (RocketManager.isValid(coords)) {
       return;
+    }
+
+    if (tier === null) {
+      return;
+    };
+
+    if (typeof tier !== "number") {
+      throw new java.lang.RuntimeException(
+        "type of rocket tier is not a number"
+      );
     }
 
     Entity.setCarriedItem(
@@ -160,68 +109,35 @@ class RocketPaddingTile extends TileEntityBase {
       item.extra
     );
 
-    this.container.setSlot("slot", item.id, item.count, item.data, item.extra);
-    RocketManager.create(item, this, tier);
-
-    if (item.extra) {
-    const current = RocketManager.get(this);
-    const container = JSON.parse(item.extra.getSerializable("container"));
-    const fuel = item.extra.getInt("fuel");
-
-  
-      if (container instanceof ItemContainer) {
-        current.container = container;
-      }
-      if (fuel > 1) {
-        current.fuel = fuel;
-      }
-    }
-
-    const animator = (this.animator = new RocketAnimator(this));
-    animator.initialize();
+    RocketManager.create(item, coords, tier);
     return;
   }
-  onItemUse(
-    coords: Callback.ItemUseCoordinates,
-    item: ItemStack,
-    player: number
+  onClick(
+    coords: Callback.ItemUseCoordinates, item: ItemInstance, block: Tile, player: number
   ): boolean {
-    if (this.blockSource.getBlockData(this.x, this.y, this.z) === 0) {
-      return
-    }
-    if (
-      RocketManager.isValid(this) &&
-      !Entity.getSneaking(player) &&
-      this.animator
-    ) {
-      RocketManager.start(this.animator, this, player);
+    const region = BlockSource.getDefaultForActor(player);
+    if (region.getBlockData(coords.x, coords.y, coords.z) === 0) {
       return;
-    }
-    this.takeRocket(player);
+    };
+    
     const tier = RocketManager.getTierForID(item.id);
-    if (tier === null) {
+
+    if (
+      RocketManager.isValid(coords) &&
+      !Entity.getSneaking(player)
+    ) {
+      RocketManager.start(coords, player);
       return;
     }
-    if (typeof tier !== "number") {
-      throw new java.lang.RuntimeException(
-        "type of rocket tier is not a number"
-      );
-    }
-    this.putRocket(player, tier, item);
-  }
-  destroy(): boolean {
-    RocketManager.clear(this);
-    TileEntity.destroyTileEntityAtCoords(
-      this.x,
-      this.y,
-      this.z,
-      this.blockSource
-    );
-    return false;
+    this.takeRocket(player, coords);
+
+    this.putRocket(coords, item, player, tier);
+  };
+  constructor(id: string) {
+    super(id);
+    Block.registerClickFunctionForID(BlockID[id], this.onClick.bind(this));
   }
 }
 
-TileEntity.registerPrototype(
-  BlockID["rocket_padding"],
-  new RocketPaddingTile()
-);
+const ROCKET_PADDING = new RocketPadding("rocket_padding");
+const BUGGY_PADDING = new Padding("buggy_padding");

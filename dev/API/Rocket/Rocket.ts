@@ -1,204 +1,3 @@
-interface IRocketDescriptor {
-  fuel: int;
-  tier: int;
-  animation: Animation.Base;
-  container?: ItemContainer;
-  capacity?: int;
-}
-
-abstract class RocketManager {
-  protected constructor() {}
-
-  public static data: Map<Vector, IRocketDescriptor> = new Map();
-  public static create(
-    item: ItemInstance,
-    pos: Vector,
-    tier: int,
-    animation?: Animation.Base
-  ): void {
-    if (!this.isValid(pos)) {
-
-      const obj = {
-        tier,
-        animation: animation || RocketAnimator.createAnimation(pos, tier),
-      } as IRocketDescriptor;
-
-      RocketManager.data.set(pos, Object.assign(obj, Rocket.get(item)));
-    }
-  }
-  public static get(pos: Vector): IRocketDescriptor {
-    return RocketManager.data.get(pos);
-  }
-  public static isValid(pos: Vector): boolean {
-    return !!RocketManager.data.get(pos);
-  }
-  public static updateFuel(pos: Vector, fuel: int): void {
-    if (this.isValid(pos)) {
-      RocketManager.data.get(pos).fuel = fuel;
-    }
-  }
-  public static getTierForID(id: int) {
-    let item = IDRegistry.getIdInfo(id).split(":")[1];
-
-    if (!item.startsWith("item_rocket_tier")) {
-      return null;
-    }
-
-    return Number(item.split("_")[3]);
-  }
-  public static clear(pos: Vector) {
-    return RocketManager.data.delete(pos);
-  }
-
-  public static start(animator: RocketAnimator, pos: Vector, player: int) {
-    const current = RocketManager.get(pos);
-
-    if (!current) {
-      throw new java.lang.RuntimeException(
-        "rocket can't be started: rocket from this position is not defined"
-      );
-    }
-
-    let timer = 5; //TODO: replace to 20;
-    let box = null;
-
-    const currentCelestialBody = CelestialBody.get(Entity.getDimension(player));
-
-    if (currentCelestialBody !== undefined) {
-      box = Atmosphere.Sky.createBox(100, 0, currentCelestialBody);
-    }
-
-    Entity.setPosition(player, pos.x + 0.5, pos.y + 2.7, pos.z + 0.5);
-
-    const updatable = {
-      launchCountdown(player: int, timer: int) {
-        Commands.exec("/title @a title §4" + timer);
-      },
-
-      touchPlayer(player: int) {
-        Entity.setVelocity(player, 0, 0, 0);
-        Entity.setPosition(player, pos.x + 0.5, pos.y + 2.6, pos.z + 0.5);
-        return;
-      },
-
-      finish(player: int) {
-        Entity.setVelocity(player, 0, 0, 0);
-        Player.setFlying(true);
-        box?.destroy();
-        animator.clear();
-        RocketManager.clear(pos);
-        this.remove = true;
-      },
-
-      update() {
-        const loc = Entity.getPosition(player);
-
-        if (World.getThreadTime() % 20 === 0 && timer > -1) {
-          this.launchCountdown(player, timer);
-          timer--;
-        }
-
-        if (timer > -1) {
-          this.touchPlayer(player);
-        }
-
-        if (timer <= -1) {
-          Entity.setPosition(player, pos.x + 0.5, loc.y, pos.z + 0.5);
-          Entity.setVelocity(player, 0, 0.8, 0);
-          if (!animator.isLinked) {
-            animator.initLink(player);
-          }
-
-          Particles.addParticle(
-            ESpaceParticle.ROCKET_PARTICLE,
-            loc.x,
-            loc.y - 1.6,
-            loc.z,
-            0,
-            -0.09,
-            0
-          );
-        }
-
-        if (box !== null && loc.y > 350) {
-          Atmosphere.Sky.setupPosition(box, loc.x, loc.y - 100, loc.z);
-        }
-
-        if (loc.y > 600) {
-          CelestialBorder.initCelestials(player, current.tier);
-          CelestialBorder.open();
-          this.finish(player);
-        }
-      },
-    } satisfies Updatable;
-    Updatable.addUpdatable(updatable);
-    return;
-  }
-}
-
-class RocketAnimator {
-  public animation: Animation.Base;
-  public isLinked: boolean = false;
-  public static createAnimation(pos: Vector, tier: int) {
-    const validData = Rocket.descriptor.find((v) => v.tier === tier);
-
-    if (!validData) {
-      throw new java.lang.RuntimeException(
-        "rocket is not valid, animation can't be initialized into RocketAnimator"
-      );
-    }
-
-    const animation = new Animation.Base(pos.x - 0.5, pos.y + 0.3, pos.z - 0.5);
-
-    animation.describe({
-      mesh: validData.model,
-      skin: "items-opaque/" + validData.texture + ".png",
-      scale: validData.scale,
-    });
-
-    animation.setInterpolationEnabled(true);
-    return animation;
-  }
-  constructor(public pos: Vector) {
-    const animation = RocketManager.get(pos).animation;
-    if (!animation) {
-      throw new java.lang.RuntimeException("animation is not defined");
-    }
-    this.animation = animation;
-  }
-  public initialize() {
-    this.animation.load();
-  }
-  public clear() {
-    this.animation.destroy();
-  }
-  public setLink(bool: boolean) {
-    return (this.isLinked = bool);
-  }
-  public initLink(player: int) {
-    if (this.isLinked) {
-      return;
-    }
-
-    let start = 0;
-
-    Threading.initThread("galacticraft.rocket_link", () => {
-      try {
-        while (this.animation instanceof Animation.Base) {
-          start += 0.001;
-          this.animation.transform().translate(0, start, 0);
-          this.animation.updateRender();
-          java.lang.Thread.sleep(1000 / 500);
-        }
-      } catch (e) {
-        Game.message(e);
-      }
-    });
-
-    this.isLinked = true;
-  }
-}
-
 type rocket_capacity = 18 | 36 | 54;
 
 const modelList = [];
@@ -213,9 +12,10 @@ abstract class Rocket {
   }[] = [];
 
   public item: GItem;
-  public readonly scale: number = 1;
 
+  public readonly scale: number = 1;
   protected readonly transferList: string[];
+
   public readonly tier: int;
   public readonly texture: string;
   public readonly model: string;
@@ -224,24 +24,24 @@ abstract class Rocket {
     Item.registerNameOverrideFunction(
       this.item.getID(),
       (item, translation, name) => {
-        if (item.extra && !item.extra.getBoolean("creative", false)) {
-          return (
-            Native.Color.BLUE +
-            Translation.translate(name) +
-            "\n" +
-            Native.Color.GRAY +
-            Translation.translate("tooltip.capacity_rocket") +
-            " " +
-            item.extra.getInt("capacity", 0)
+        const data = Native.Color.BLUE + Translation.translate(name);
+
+        if (item.extra && item.extra.getBoolean("creative", false)) {
+          data.concat(
+            Native.Color.RED,
+            "\n",
+            Translation.translate("tooltip.creative_rocket")
+          );
+        } else {
+          data.concat(
+            "\n",
+            Native.Color.GRAY,
+            Translation.translate("tooltip.capacity_rocket"),
+            " " + item.extra.getInt("capacity", 0)
           );
         }
-        return (
-          Native.Color.BLUE +
-          Translation.translate(name) +
-          Native.Color.RED +
-          "\n" +
-          Translation.translate("tooltip.creative_rocket")
-        );
+
+        return data;
       }
     );
   }
@@ -256,6 +56,7 @@ abstract class Rocket {
 
   public addCreativeRocket() {
     const extra = new ItemExtraData();
+
     extra.putBoolean("creative", true);
     extra.putInt("capacity", 54 satisfies rocket_capacity);
 
@@ -265,7 +66,7 @@ abstract class Rocket {
   public setRotatableModel() {
     const model = Modeller.constructRenderMesh(this.model, {
       scale: [0.15, 0.15, 0.15],
-      translate: [0.4, 0, 0.4],
+      translate: [0.4, -0.15, 0.4],
     });
 
     model.rotate(-0.5, 0, 0);
@@ -408,3 +209,8 @@ Callback.addCallback("LevelDisplayed", () => {
 //     modelList[i].rotate(0.01, 0.01, 0);
 //   }
 // });
+
+Translation.addTranslation("message.galacticraft.fuel_invalid", {
+  ru: "Недостаточно топлива!",
+  en: "Fuel is small!",
+});
