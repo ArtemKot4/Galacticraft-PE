@@ -191,6 +191,7 @@ class RocketAnimator {
         Game.message(e);
       }
     });
+    
     this.isLinked = true;
   }
 }

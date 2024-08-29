@@ -114,6 +114,12 @@ const ROCKET_PADDING = new Padding("rocket_padding");
 const BUGGY_PADDING = new Padding("buggy_padding");
 
 class RocketPaddingTile extends TileEntityBase {
+  onLoad(): void {
+    if (this.blockSource.getBlockData(this.x, this.y, this.z) === 0) {
+      TileEntity.destroyTileEntityAtCoords(this.x, this.y, this.z, this.blockSource);
+    };
+   
+  }
   animator: RocketAnimator;
   takeRocket(player: int) {
     if (RocketManager.isValid(this) && Entity.getSneaking(player)) {
@@ -123,11 +129,12 @@ class RocketPaddingTile extends TileEntityBase {
         1,
         0
       );
+      this.container.clearSlot("slot");
       this?.animator?.clear();
       RocketManager.clear(this);
     }
   };
-  putRocket(player: int, tier: int, item: ItemInstance, ) {
+  putRocket(player: int, tier: int, item: ItemInstance) {
     if(RocketManager.isValid(this)) {
       return;
     };
@@ -139,6 +146,7 @@ class RocketPaddingTile extends TileEntityBase {
       item.data,
       item.extra
     );
+    this.container.setSlot("slot", item.id, item.count, item.data, item.extra);
     RocketManager.create(item, this, tier);
     const animator = (this.animator = new RocketAnimator(this));
     animator.initialize();
@@ -149,9 +157,7 @@ class RocketPaddingTile extends TileEntityBase {
     item: ItemStack,
     player: number
   ): boolean {
-    if (this.blockSource.getBlockData(this.x, this.y, this.z) === 0) {
-      return;
-    };
+   
     if(RocketManager.isValid(this) && !Entity.getSneaking(player) && this.animator) {
       RocketManager.start(this.animator, this, player);
       return;
@@ -167,6 +173,11 @@ class RocketPaddingTile extends TileEntityBase {
       );
     }
    this.putRocket(player,  tier, item);
+  };
+  destroy(): boolean {
+    RocketManager.clear(this);
+    TileEntity.destroyTileEntityAtCoords(this.x, this.y, this.z, this.blockSource);
+    return false;
   }
 }
 
