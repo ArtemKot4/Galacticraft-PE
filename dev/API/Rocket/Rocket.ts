@@ -149,7 +149,7 @@ class RocketAnimator {
 
     animation.describe({
       mesh: validData.model,
-      skin: "terrain-atlas/" + validData.texture + ".png",
+      skin: "items-opaque/" + validData.texture + ".png",
       scale: validData.scale,
     });
 
@@ -256,12 +256,12 @@ abstract class Rocket {
 
   public setRotatableModel() {
      const model = Modeller.constructRenderMesh(this.model, {
-      scale: [0.4, 0.4, 0.4],
+      scale: [0.25, 0.25, 0.25],
       translate: [0.5, 0, 0.5],
     });
     ItemModel.getForWithFallback(this.item.getID(), 0).setModelOverrideCallback((v) => {
-      model.rotate(0.01, 0, 0.01);
-      return ItemModel.getForWithFallback(v.id, 0).setModel(model)
+      model.rotate(0.01, 0.01, 0);
+      return ItemModel.getForWithFallback(v.id, 0).setModel(model, this.texture);
     })
   }
 
