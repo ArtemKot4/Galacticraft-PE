@@ -2,24 +2,27 @@ interface IRocketDescriptor {
   fuel: int;
   tier: int;
   animation: Animation.Base;
-  player?: int;
+  container?: UI.Container;
+  capacity?: int;
 }
 
 abstract class RocketManager {
   protected constructor() {}
- 
+
   public static data: Map<Vector, IRocketDescriptor> = new Map();
   public static create(
+    item: ItemInstance,
     pos: Vector,
     tier: int,
     animation?: Animation.Base
   ): void {
     if (!this.isValid(pos)) {
-      RocketManager.data.set(pos, {
-        fuel: 0,
+      let obj = {
         tier,
         animation: animation || RocketAnimator.createAnimation(pos, tier),
-      });
+      } as IRocketDescriptor;
+
+      RocketManager.data.set(pos, Object.assign(obj, Rocket.get(item)));
     }
   }
   public static get(pos: Vector): IRocketDescriptor {
@@ -45,28 +48,36 @@ abstract class RocketManager {
   }
 
   public static start(animator: RocketAnimator, pos: Vector, player: int) {
-    Game.message("tier: " + RocketManager.get(pos).tier);
-    let timer = 5//TODO: replace to 20;
+    const current = RocketManager.get(pos);
+
+    if (!current) {
+      throw new java.lang.RuntimeException(
+        "rocket can't be started: rocket from this position is not defined"
+      );
+    }
+
+    let timer = 5; //TODO: replace to 20;
     let box = null;
+
     const currentCelestialBody = CelestialBody.get(Entity.getDimension(player));
+
     if (currentCelestialBody !== undefined) {
       box = Atmosphere.Sky.createBox(100, 0, currentCelestialBody);
     }
+
     Entity.setPosition(player, pos.x + 0.5, pos.y + 2.7, pos.z + 0.5);
-    animator.setLink(true);
 
     const updatable = {
       launchCountdown(player: int, timer: int) {
         Commands.exec("/title @a title §4" + timer);
-        if (timer === 0) {
-          RocketManager.get(pos).player = player;
-        }
       },
+
       touchPlayer(player: int) {
         Entity.setVelocity(player, 0, 0, 0);
         Entity.setPosition(player, pos.x + 0.5, pos.y + 2.6, pos.z + 0.5);
         return;
       },
+
       finish(player: int) {
         Entity.setVelocity(player, 0, 0, 0);
         Player.setFlying(true);
@@ -75,20 +86,26 @@ abstract class RocketManager {
         RocketManager.clear(pos);
         this.remove = true;
       },
+
       update() {
         const loc = Entity.getPosition(player);
+
         if (World.getThreadTime() % 20 === 0 && timer > -1) {
           this.launchCountdown(player, timer);
           timer--;
         }
+
         if (timer > -1) {
           this.touchPlayer(player);
         }
-        if (timer <= -1) {
 
+        if (timer <= -1) {
           Entity.setPosition(player, pos.x + 0.5, loc.y, pos.z + 0.5);
           Entity.setVelocity(player, 0, 0.8, 0);
-          animator.initLink(player);
+          if (!animator.isLinked) {
+            animator.initLink(player);
+          }
+
           Particles.addParticle(
             ESpaceParticle.ROCKET_PARTICLE,
             loc.x,
@@ -99,11 +116,13 @@ abstract class RocketManager {
             0
           );
         }
+
         if (box !== null && loc.y > 350) {
           Atmosphere.Sky.setupPosition(box, loc.x, loc.y - 100, loc.z);
         }
+
         if (loc.y > 600) {
-          CelestialBorder.initCelestials(player, RocketManager.get(pos).tier)
+          CelestialBorder.initCelestials(player, current.tier);
           CelestialBorder.open();
           this.finish(player);
         }
@@ -116,26 +135,31 @@ abstract class RocketManager {
 
 class RocketAnimator {
   public animation: Animation.Base;
-  protected isLinked: boolean = false;
+  public isLinked: boolean = false;
   public static createAnimation(pos: Vector, tier: int) {
     const validData = Rocket.descriptor.find((v) => v.tier === tier);
+
     if (!validData) {
-      throw new java.lang.RuntimeException();
+      throw new java.lang.RuntimeException(
+        "rocket is not valid, animation can't be initialized into RocketAnimator"
+      );
     }
+
     const animation = new Animation.Base(pos.x - 0.5, pos.y + 0.3, pos.z - 0.5);
+
     animation.describe({
       mesh: validData.model,
       skin: "terrain-atlas/" + validData.texture + ".png",
       scale: validData.scale,
     });
+
+    animation.setInterpolationEnabled(true);
     return animation;
   }
   constructor(public pos: Vector) {
     const animation = RocketManager.get(pos).animation;
     if (!animation) {
-      throw new java.lang.RuntimeException(
-        "animation is not defined"
-      );
+      throw new java.lang.RuntimeException("animation is not defined");
     }
     this.animation = animation;
   }
@@ -149,39 +173,29 @@ class RocketAnimator {
     return (this.isLinked = bool);
   }
   public initLink(player: int) {
-     if(!this.isLinked) {
+    if (this.isLinked) {
       return;
-     }
-  //  this.animation.loadCustom(() => {
-  //   this.animation.setInterpolationEnabled(true);
-  //  // this.animation.setPos(this.pos.x - 0.5, Entity.getPosition(player).y - 2.1,this.pos.z - 0.5)
-  //  this.animation.transform().lock().translate(   0,
-  //    0.1,
-  //     0).unlock();
-  //   this.animation.updateRender()
-  //  })
-let start = 0;
-        
+    }
+
+    let start = 0;
+
     Threading.initThread("galacticraft.rocket_link", () => {
       try {
-        while (this.isLinked === true) {
-        //  start+=0.001;
-        const pos = Entity.getPosition(player);
-          this.animation.setInterpolationEnabled(true);
-          this.animation.setPos(pos.x, pos.y, pos.z);
-          // this.animation.transform().translate( 0,
-          //   start,
-          //   0);
-          this.animation.updateRender()
-          java.lang.Thread.sleep(1000 / 995);
+        while (this.animation instanceof Animation.Base) {
+          start += 0.001;
+          this.animation.transform().translate(0, start, 0);
+          this.animation.updateRender();
+          java.lang.Thread.sleep(1000 / 500);
         }
       } catch (e) {
         Game.message(e);
       }
     });
-     this.isLinked = false;
+    this.isLinked = true;
   }
 }
+
+type rocket_capacity = 18 | 36 | 54;
 
 abstract class Rocket {
   public static descriptor: {
@@ -192,12 +206,116 @@ abstract class Rocket {
     scale?: number;
   }[] = [];
 
-  public transferList: string[];
-  public tier: int;
   public item: GItem;
-  public texture: string;
-  public model: string;
-  public scale: number;
+  public readonly scale: number = 1;
+
+  protected abstract readonly transferList: string[];
+  public abstract readonly tier: int;
+  public abstract readonly texture: string;
+  public abstract readonly model: string;
+
+  public registerTooltip() {
+    Item.registerNameOverrideFunction(
+      this.item.getID(),
+      (item, translation, name) => {
+        if (item.extra && !item.extra.getBoolean("creative", false)) {
+          return (
+            Native.Color.BLUE +
+            Translation.translate(name) +
+            Native.Color.GRAY +
+            Translation.translate("tooltip.capacity_rocket") +
+            " " +
+            item.extra.getInt("capacity", 0)
+          );
+        }
+        return (
+          Native.Color.BLUE +
+          Translation.translate(name) +
+          Native.Color.RED +
+          "\n" +
+          Translation.translate("tooltip.creative_rocket")
+        );
+      }
+    );
+  }
+
+  public addRocketsWithStorage() {
+    [18, 36, 54].forEach((v) => {
+      const extra = new ItemExtraData();
+      extra.putInt("capacity", v);
+      Item.addToCreative(this.item.getID(), 1, 0, extra);
+    });
+  }
+  public addCreativeRocket() {
+    const extra = new ItemExtraData();
+    extra.putBoolean("creative", true);
+    extra.putInt("capacity", 54 satisfies rocket_capacity);
+    Item.addToCreative(this.item.getID(), 1, 0, extra);
+  }
+
+  public build(importParams: Partial<RenderMesh.ImportParams>) {
+    this.item = new GItem("rocket_tier_" + this.tier, 1);
+
+    this.addCreativeRocket();
+    this.registerTooltip();
+
+    Rocket.descriptor.push({
+      tier: this.tier,
+      texture: this.texture,
+      model: Modeller.constructRenderMesh(this.model, {
+        ...importParams,
+        translate: [0.5, 0, 0.5],
+      }),
+      scale: this.scale || 1,
+      transferList: this.transferList,
+    });
+  }
+
+  public getWithCapacity(
+    player: int,
+    capacity?: rocket_capacity,
+    data: int = 0
+  ) {
+    let extra: Nullable<ItemExtraData> = null;
+
+    if (typeof capacity === "number") {
+      extra = new ItemExtraData();
+      extra.putInt("capacity", capacity);
+    }
+
+    return new ItemStack(this.item.getID(), 1, data || 0, extra);
+  }
+
+  public static get(item: ItemInstance) {
+    const obj = {} as IRocketDescriptor;
+
+    if (!item.extra) {
+      return obj;
+    }
+
+    if (item.extra.getBoolean("creative")) {
+      obj.capacity = 54 satisfies rocket_capacity;
+      obj.fuel = -1;
+      return obj;
+    }
+
+    const capacity = item.extra.getInt("capacity");
+    const fuel = item.extra.getInt("fuel", 0);
+
+    if (typeof capacity === "number") {
+      obj.capacity = capacity;
+      obj.container = new UI.Container();
+    }
+
+    obj.fuel = fuel;
+    return obj;
+  }
+
+  constructor(
+    importParams: Partial<RenderMesh.ImportParams> = { scale: [1, 1, 1] }
+  ) {
+    this.build(importParams);
+  }
 }
 
 class RocketTier_1 extends Rocket {
@@ -205,25 +323,10 @@ class RocketTier_1 extends Rocket {
   public tier: number = 1;
   public texture: string = "GalacticraftCore/rocket_tier_1";
   public model: string = "rocket_tier_1";
-  constructor(
-    importParams: Partial<RenderMesh.ImportParams> = { scale: [1, 1, 1] }
-  ) {
+  constructor() {
     super();
-    this.item = new GItem("rocket_tier_" + this.tier, 1);
-    Rocket.descriptor.push({
-      tier: this.tier,
-      texture: this.texture,
-      model: Modeller.constructRenderMesh(this.model, {
-        ...importParams,
-        translate: [0.5, 0, 0.5]
-      },
-      ),
-      scale: this.scale || 1,
-      transferList: this.transferList
-    });
   }
 }
-
 const Rocket1 = new RocketTier_1();
 /*
 Saver.addSavesScope(
@@ -242,3 +345,28 @@ Callback.addCallback("LevelDisplayed", () => {
   });
 });
 */
+
+Translation.addTranslation("tooltip.creative_rocket", {
+  en: "Only for creative",
+  ru: "Только для творческого режима",
+});
+
+Translation.addTranslation("tooltip.capacity_rocket", {
+  en: "Размер хранилища:",
+  ru: "Storage size:",
+});
+
+Translation.addTranslation("item.galacticraft.rocket_tier_1", {
+  en: "Rocket of 1 level",
+  ru: "Ракета 1-го уровня"
+})
+
+Translation.addTranslation("item.galacticraft.rocket_tier_2", {
+  en: "Rocket of 2 level",
+  ru: "Ракета 2-го уровня"
+})
+
+Translation.addTranslation("item.galacticraft.rocket_tier_3", {
+  en: "Rocket of 3 level",
+  ru: "Ракета 3-го уровня"
+})

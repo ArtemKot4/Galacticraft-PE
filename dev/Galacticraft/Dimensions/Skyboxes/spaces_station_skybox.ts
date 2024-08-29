@@ -58,7 +58,7 @@ export class StationSky extends Sky {
   function StationUpdatable() {
 
     return {
-      planet: StationSky.createBox(350, 0, "earth"), //"earth"
+      planet: StationSky.createBox(350, 0, "earth_station"), 
       update: function () {
       
         if (

@@ -1,1 +1,1 @@
-CelestialBody.add(EDimension.NORMAL, "earth_default");
+CelestialBody.add(EDimension.NORMAL, "earth");

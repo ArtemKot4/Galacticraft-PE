@@ -17,49 +17,64 @@ class CelestialBorder {
     drawing: [
       {
         type: "bitmap",
-        width: UI.getScreenHeight() * 2,
-        height: UI.getScreenHeight(),
-        bitmap: "solar",
+        scale: 0.5,
+        bitmap: "CelestialBorder.background",
       },
       {
         type: "bitmap",
-        width: UI.getScreenHeight() * 2,
-        height: UI.getScreenHeight(),
-        bitmap: "solar",
+        scale: 1,
+        bitmap: "CelestialBorder.solar",
       },
     ],
   } as UI.WindowContent;
-  public static UI = new UI.Window(this.content);
+
+  protected static UI = new UI.Window(this.content);
+
   public static initCelestials(player: int, tier: int) {
-    const planetList = Rocket.descriptor.find(
+    CelestialBorder.UI.content = CelestialBorder.content;
+    CelestialBorder.UI.forceRefresh();
+
+    const transferList = Rocket.descriptor.find(
       (v) => v.tier === tier
     ).transferList;
-    if (planetList === undefined) {
-      CelestialBorder.UI.content = CelestialBorder.content;
-      CelestialBorder.UI.forceRefresh();
 
+    const planetList = [];
+    const departurePoint = CelestialBody.get(Entity.getDimension(player));
+
+    if (transferList !== undefined && !transferList.includes(departurePoint)) {
+      planetList.concat(departurePoint);
+    }
+
+    if (transferList === undefined) {
       throw new java.lang.RuntimeException(
         "celestial border cat't redraw ui: tier of rocket is not defined"
       );
     }
+
+    planetList.concat(transferList);
+
     const list = Object.entries(CelestialBody.planetList);
-    for (const arr of list) {
+
+    for (const i in list) {
+      const arr = list[i];
+
       if (!planetList.includes(arr[0])) {
         continue;
       }
-      for (let i = 1; i < UI.getScreenHeight(); i++) {
-        if (i % 70 === 0) {
+
+      for (let height = 1; height <= UI.getScreenHeight(); height++) {
+        if (height % 70 === 0) {
           CelestialBorder.UI.content.elements[arr[0]] = {
             type: "button",
             x: 80,
-            y: i,
+            y: height,
             bitmap: arr[0],
             clicker: {
               onClick: () => {
                 Dimensions.transfer(player, arr[1]);
               },
             },
-            scale: 1.4,
+            scale: 0.4,
           };
         }
       }
@@ -70,3 +85,7 @@ class CelestialBorder {
     CelestialBorder.UI.open();
   }
 }
+
+Callback.addCallback("ItemUseNoTarget", (item, player) => {
+  CelestialBorder.open();
+});

@@ -51,7 +51,13 @@ class GItem {
         );
       
     
-  })
+  });
+
+
 };
+
+public getID() {
+  return ItemID[this.id];
+}
 
 }

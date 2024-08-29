@@ -139,7 +139,7 @@ class RocketPaddingTile extends TileEntityBase {
       item.data,
       item.extra
     );
-    RocketManager.create(this, tier);
+    RocketManager.create(item, this, tier);
     const animator = (this.animator = new RocketAnimator(this));
     animator.initialize();
     return;
