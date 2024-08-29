@@ -245,7 +245,8 @@ abstract class Rocket {
       extra.putInt("capacity", v);
       Item.addToCreative(this.item.getID(), 1, 0, extra);
     });
-  }
+  };
+
   public addCreativeRocket() {
     const extra = new ItemExtraData();
     extra.putBoolean("creative", true);
@@ -253,9 +254,20 @@ abstract class Rocket {
     Item.addToCreative(this.item.getID(), 1, 0, extra);
   }
 
+  public setRotatableModel() {
+     const model = Modeller.constructRenderMesh(this.model, {
+      scale: [0.4, 0.4, 0.4],
+      translate: [0.5, 0, 0.5],
+    });
+    ItemModel.getForWithFallback(this.item.getID(), 0).setModelOverrideCallback((v) => {
+      model.rotate(0.01, 0, 0.01);
+      return ItemModel.getForWithFallback(v.id, 0).setModel(model)
+    })
+  }
+
   public build(importParams: Partial<RenderMesh.ImportParams>) {
     this.item = new GItem("rocket_tier_" + this.tier, 1);
-
+    this.setRotatableModel();
     this.addCreativeRocket();
     this.addRocketsWithStorage();
     this.registerTooltip();
@@ -315,13 +327,18 @@ abstract class Rocket {
   constructor(transferList: string[], tier: int,  texture: string, model: string, scale: int = 1,
     importParams: Partial<RenderMesh.ImportParams> = { scale: [1, 1, 1] }
   ) {
+    this.transferList = transferList.concat("earth", "moon");
+    this.tier = tier;
+    this.texture = texture;
+    this.model = model;
+    this.scale = scale;
     this.build(importParams);
   }
 }
 
 class RocketTier_1 extends Rocket {
   constructor() {
-    super(["moon", "station", "earth"], 1, "GalacticraftCore/rocket_tier_1", "rocket_tier_1");
+    super(["station"], 1, "GalacticraftCore/rocket_tier_1", "rocket_tier_1");
   }
 }
 const Rocket1 = new RocketTier_1();
