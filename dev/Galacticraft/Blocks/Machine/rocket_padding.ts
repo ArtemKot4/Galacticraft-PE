@@ -124,16 +124,6 @@ const ROCKET_PADDING = new Padding("rocket_padding");
 const BUGGY_PADDING = new Padding("buggy_padding");
 
 class RocketPaddingTile extends TileEntityBase {
-  onLoad(): void {
-    if (this.blockSource.getBlockData(this.x, this.y, this.z) === 0) {
-      TileEntity.destroyTileEntityAtCoords(
-        this.x,
-        this.y,
-        this.z,
-        this.blockSource
-      );
-    }
-  }
   animator: RocketAnimator;
   takeRocket(player: int) {
     if (RocketManager.isValid(this) && Entity.getSneaking(player)) {
@@ -196,6 +186,9 @@ class RocketPaddingTile extends TileEntityBase {
     item: ItemStack,
     player: number
   ): boolean {
+    if (this.blockSource.getBlockData(this.x, this.y, this.z) === 0) {
+      return
+    }
     if (
       RocketManager.isValid(this) &&
       !Entity.getSneaking(player) &&

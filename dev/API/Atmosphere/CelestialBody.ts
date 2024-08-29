@@ -63,6 +63,7 @@ class CelestialBorder {
       }
 
       for (let height = 1; height <= UI.getScreenHeight(); height++) {
+        
         if (height % 70 === 0) {
           CelestialBorder.UI.content.elements[arr[0]] = {
             type: "button",

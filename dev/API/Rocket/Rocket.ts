@@ -17,7 +17,8 @@ abstract class RocketManager {
     animation?: Animation.Base
   ): void {
     if (!this.isValid(pos)) {
-      let obj = {
+
+      const obj = {
         tier,
         animation: animation || RocketAnimator.createAnimation(pos, tier),
       } as IRocketDescriptor;
@@ -38,9 +39,11 @@ abstract class RocketManager {
   }
   public static getTierForID(id: int) {
     let item = IDRegistry.getIdInfo(id).split(":")[1];
+
     if (!item.startsWith("item_rocket_tier")) {
       return null;
     }
+
     return Number(item.split("_")[3]);
   }
   public static clear(pos: Vector) {
@@ -255,13 +258,14 @@ abstract class Rocket {
     const extra = new ItemExtraData();
     extra.putBoolean("creative", true);
     extra.putInt("capacity", 54 satisfies rocket_capacity);
+
     Item.addToCreative(this.item.getID(), 1, 0, extra);
   }
 
   public setRotatableModel() {
     const model = Modeller.constructRenderMesh(this.model, {
-      scale: [0.2, 0.2, 0.2],
-      translate: [0.3, 0, 0.3],
+      scale: [0.15, 0.15, 0.15],
+      translate: [0.4, 0, 0.4],
     });
 
     model.rotate(-0.5, 0, 0);
@@ -275,6 +279,7 @@ abstract class Rocket {
 
   public build(importParams: Partial<RenderMesh.ImportParams>) {
     this.item = new GItem("rocket_tier_" + this.tier, 1);
+
     this.setRotatableModel();
     this.addCreativeRocket();
     this.addRocketsWithStorage();
@@ -323,13 +328,12 @@ abstract class Rocket {
       return obj;
     }
 
-
     const capacity = item.extra.getInt("capacity");
     const fuel = item.extra.getInt("fuel", 0);
 
     if (typeof capacity === "number") {
       obj.capacity = capacity;
-    };
+    }
 
     obj.fuel = fuel;
     return obj;
@@ -345,10 +349,10 @@ abstract class Rocket {
   ) {
     const planetList = Rocket.descriptor.find((v) => v.tier === tier - 1);
 
-    if(planetList !== undefined) {
+    if (planetList !== undefined) {
       transferList.concat(planetList.transferList);
-    };
-    
+    }
+
     this.tier = tier;
     this.texture = texture;
     this.model = model || texture;
@@ -365,21 +369,13 @@ class RocketTier_1 extends Rocket {
 
 class RocketTier_2 extends Rocket {
   constructor() {
-    super(
-      ["station, mars"],
-      2,
-      "rocket_tier_2",
-    );
+    super(["station, mars"], 2, "rocket_tier_2");
   }
 }
 
 class RocketTier_3 extends Rocket {
   constructor() {
-    super(
-      ["venus"],
-      3,
-      "rocket_tier_3",
-    );
+    super(["venus"], 3, "rocket_tier_3");
   }
 }
 
