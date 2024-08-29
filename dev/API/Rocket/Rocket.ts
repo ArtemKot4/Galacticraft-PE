@@ -310,6 +310,9 @@ abstract class Rocket {
   public static get(item: ItemInstance) {
     const obj = {} as IRocketDescriptor;
 
+    const container = JSON.parse(item.extra.getSerializable("container"));
+    obj.container = container ?? new ItemContainer();
+
     if (!item.extra) {
       return obj;
     }
@@ -320,15 +323,14 @@ abstract class Rocket {
       return obj;
     }
 
-    const container = JSON.parse(item.extra.getSerializable("container"));
+
     const capacity = item.extra.getInt("capacity");
     const fuel = item.extra.getInt("fuel", 0);
 
     if (typeof capacity === "number") {
       obj.capacity = capacity;
     };
-    
-    obj.container = container ?? new ItemContainer();
+
     obj.fuel = fuel;
     return obj;
   }
