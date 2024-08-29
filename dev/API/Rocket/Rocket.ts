@@ -340,10 +340,12 @@ abstract class Rocket {
     scale: int = 1,
     importParams: Partial<RenderMesh.ImportParams> = { scale: [1, 1, 1] }
   ) {
-    const findedPlanets = Rocket.descriptor.find((v) => v.tier === tier - 1);
-    if(findedPlanets !== undefined) {
-      transferList.concat(findedPlanets.transferList);
+    const planetList = Rocket.descriptor.find((v) => v.tier === tier - 1);
+
+    if(planetList !== undefined) {
+      transferList.concat(planetList.transferList);
     };
+    
     this.tier = tier;
     this.texture = texture;
     this.model = model || texture;
@@ -401,31 +403,6 @@ Callback.addCallback("LevelDisplayed", () => {
   });
 });
 */
-
-Translation.addTranslation("tooltip.creative_rocket", {
-  en: "Only for creative",
-  ru: "Только для творческого режима",
-});
-
-Translation.addTranslation("tooltip.capacity_rocket", {
-  ru: "Размер хранилища:",
-  en: "Storage size:",
-});
-
-Translation.addTranslation("item.galacticraft.rocket_tier_1", {
-  en: "Rocket of 1 level",
-  ru: "Ракета 1-го уровня",
-});
-
-Translation.addTranslation("item.galacticraft.rocket_tier_2", {
-  en: "Rocket of 2 level",
-  ru: "Ракета 2-го уровня",
-});
-
-Translation.addTranslation("item.galacticraft.rocket_tier_3", {
-  en: "Rocket of 3 level",
-  ru: "Ракета 3-го уровня",
-});
 
 // Callback.addCallback("LocalTick", () => {
 //   for (const i in modelList) {

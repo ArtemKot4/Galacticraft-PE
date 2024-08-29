@@ -988,4 +988,31 @@ Translation.addTranslation("Oxygen Storage Module", {
 Translation.addTranslation("gc.message.cable.painting_warning", {
   ru: "Этого цвета нет",
   en: "It color is not valid"
-})
+});
+
+
+
+Translation.addTranslation("tooltip.creative_rocket", {
+  en: "Only for creative",
+  ru: "Только для творческого режима",
+});
+
+Translation.addTranslation("tooltip.capacity_rocket", {
+  ru: "Размер хранилища:",
+  en: "Storage size:",
+});
+
+Translation.addTranslation("item.galacticraft.rocket_tier_1", {
+  en: "Rocket of 1 level",
+  ru: "Ракета 1-го уровня",
+});
+
+Translation.addTranslation("item.galacticraft.rocket_tier_2", {
+  en: "Rocket of 2 level",
+  ru: "Ракета 2-го уровня",
+});
+
+Translation.addTranslation("item.galacticraft.rocket_tier_3", {
+  en: "Rocket of 3 level",
+  ru: "Ракета 3-го уровня",
+});
