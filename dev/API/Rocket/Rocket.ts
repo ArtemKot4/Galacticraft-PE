@@ -340,7 +340,10 @@ abstract class Rocket {
     scale: int = 1,
     importParams: Partial<RenderMesh.ImportParams> = { scale: [1, 1, 1] }
   ) {
-    this.transferList = transferList.concat("earth", "moon");
+    const findedPlanets = Rocket.descriptor.find((v) => v.tier === tier - 1);
+    if(findedPlanets !== undefined) {
+      transferList.concat(findedPlanets.transferList);
+    };
     this.tier = tier;
     this.texture = texture;
     this.model = model || texture;
@@ -351,7 +354,7 @@ abstract class Rocket {
 
 class RocketTier_1 extends Rocket {
   constructor() {
-    super(["station"], 1, "rocket_tier_1");
+    super(["earth", "moon", "station"], 1, "rocket_tier_1");
   }
 }
 
@@ -368,7 +371,7 @@ class RocketTier_2 extends Rocket {
 class RocketTier_3 extends Rocket {
   constructor() {
     super(
-      ["station, mars, venus"],
+      ["venus"],
       3,
       "rocket_tier_3",
     );
