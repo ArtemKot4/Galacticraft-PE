@@ -191,12 +191,14 @@ class RocketAnimator {
         Game.message(e);
       }
     });
-    
+
     this.isLinked = true;
   }
 }
 
 type rocket_capacity = 18 | 36 | 54;
+
+const modelList = [];
 
 abstract class Rocket {
   public static descriptor: {
@@ -223,6 +225,7 @@ abstract class Rocket {
           return (
             Native.Color.BLUE +
             Translation.translate(name) +
+            "\n" +
             Native.Color.GRAY +
             Translation.translate("tooltip.capacity_rocket") +
             " " +
@@ -260,8 +263,11 @@ abstract class Rocket {
       scale: [0.25, 0.25, 0.25],
       translate: [0.5, 0, 0.5],
     });
-    const itemModel = ItemModel.getForWithFallback(this.item.getID(), 0);
-    ItemModel.getForWithFallback(this.item.getID(), 0).setModel(model, this.texture);
+    model.rotate(-0.5, 0, 0);
+    ItemModel.getForWithFallback(this.item.getID(), 0).setModel(
+      model,
+      "models/" + this.texture
+    );
     modelList.push(model);
   }
 
@@ -399,8 +405,8 @@ Translation.addTranslation("tooltip.creative_rocket", {
 });
 
 Translation.addTranslation("tooltip.capacity_rocket", {
-  en: "Размер хранилища:",
-  ru: "Storage size:",
+  ru: "Размер хранилища:",
+  en: "Storage size:",
 });
 
 Translation.addTranslation("item.galacticraft.rocket_tier_1", {
@@ -418,12 +424,8 @@ Translation.addTranslation("item.galacticraft.rocket_tier_3", {
   ru: "Ракета 3-го уровня",
 });
 
-let modelList = [];
-
-Callback.addCallback(
-  "LocalTick", () => {
-    for(const i in modelList){
-      modelList[i].rotate(0.01, 0.01, 0);
-    }
-  }
-);
+// Callback.addCallback("LocalTick", () => {
+//   for (const i in modelList) {
+//     modelList[i].rotate(0.01, 0.01, 0);
+//   }
+// });
