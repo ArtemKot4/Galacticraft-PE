@@ -209,10 +209,10 @@ abstract class Rocket {
   public item: GItem;
   public readonly scale: number = 1;
 
-  protected abstract readonly transferList: string[];
-  public abstract readonly tier: int;
-  public abstract readonly texture: string;
-  public abstract readonly model: string;
+  protected readonly transferList: string[];
+  public readonly tier: int;
+  public readonly texture: string;
+  public readonly model: string;
 
   public registerTooltip() {
     Item.registerNameOverrideFunction(
@@ -257,6 +257,7 @@ abstract class Rocket {
     this.item = new GItem("rocket_tier_" + this.tier, 1);
 
     this.addCreativeRocket();
+    this.addRocketsWithStorage();
     this.registerTooltip();
 
     Rocket.descriptor.push({
@@ -311,7 +312,7 @@ abstract class Rocket {
     return obj;
   }
 
-  constructor(
+  constructor(transferList: string[], tier: int,  texture: string, model: string, scale: int = 1,
     importParams: Partial<RenderMesh.ImportParams> = { scale: [1, 1, 1] }
   ) {
     this.build(importParams);
@@ -319,12 +320,8 @@ abstract class Rocket {
 }
 
 class RocketTier_1 extends Rocket {
-  public transferList: string[] = ["moon", "station", "earth"];
-  public tier: number = 1;
-  public texture: string = "GalacticraftCore/rocket_tier_1";
-  public model: string = "rocket_tier_1";
   constructor() {
-    super();
+    super(["moon", "station", "earth"], 1, "GalacticraftCore/rocket_tier_1", "rocket_tier_1");
   }
 }
 const Rocket1 = new RocketTier_1();
