@@ -47,7 +47,9 @@ interface IRocketDescriptor {
       return Number(item.split("_")[3]);
     }
     public static clear(pos: Vector) {
-      return RocketManager.data.delete(pos);
+        RocketManager.get(pos).animation.clear();
+        RocketManager.data.delete(pos);
+        return;
     }
   
     public static start(pos: Vector, player: int) {
@@ -92,11 +94,13 @@ interface IRocketDescriptor {
   
         update() {
           const loc = Entity.getPosition(player);
+
           if(current.fuel < 250 && current.fuel >= 0) {
             Commands.exec(
               "/title @a title §4" + Translation.translate("message.galacticraft.fuel_invalid")
               );
-          }
+          };
+
           if (World.getThreadTime() % 20 === 0 && timer > -1) {
             this.launchCountdown(player, timer);
             timer--;

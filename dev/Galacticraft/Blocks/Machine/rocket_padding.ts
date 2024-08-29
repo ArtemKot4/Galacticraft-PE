@@ -101,6 +101,7 @@ class RocketPadding extends Padding {
       );
     }
 
+   if(new PlayerActor(player).getGameMode() !== EGameMode.CREATIVE) {
     Entity.setCarriedItem(
       player,
       item.id,
@@ -108,6 +109,7 @@ class RocketPadding extends Padding {
       item.data,
       item.extra
     );
+   };
 
     RocketManager.create(item, coords, tier);
     return;
@@ -128,9 +130,9 @@ class RocketPadding extends Padding {
     ) {
       RocketManager.start(coords, player);
       return;
-    }
-    this.takeRocket(player, coords);
+    };
 
+    this.takeRocket(player, coords);
     this.putRocket(coords, item, player, tier);
   };
   constructor(id: string) {

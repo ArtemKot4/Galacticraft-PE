@@ -26,7 +26,11 @@ abstract class Rocket {
       (item, translation, name) => {
         const data = Native.Color.BLUE + Translation.translate(name);
 
-        if (item.extra && item.extra.getBoolean("creative", false)) {
+        if(!item.extra) {
+          return data;
+        };
+
+        if (item.extra.getBoolean("creative", false)) {
           data.concat(
             Native.Color.RED,
             "\n",
@@ -65,7 +69,7 @@ abstract class Rocket {
 
   public setRotatableModel() {
     const model = Modeller.constructRenderMesh(this.model, {
-      scale: [0.15, 0.15, 0.15],
+      scale: [0.18, 0.18, 0.18],
       translate: [0.4, -0.15, 0.4],
     });
 
@@ -79,7 +83,7 @@ abstract class Rocket {
   }
 
   public build(importParams: Partial<RenderMesh.ImportParams>) {
-    this.item = new GItem("rocket_tier_" + this.tier, 1);
+    this.item = new GItem("rocket_tier_" + this.tier, 1, null, null, 0, true);
 
     this.setRotatableModel();
     this.addCreativeRocket();
@@ -116,7 +120,7 @@ abstract class Rocket {
   public static get(item: ItemInstance) {
     const obj = {} as IRocketDescriptor;
 
-    const container = JSON.parse(item.extra.getSerializable("container"));
+    const container = JSON.parse(item?.extra.getSerializable("container"));
     obj.container = container ?? new ItemContainer();
 
     if (!item.extra) {
