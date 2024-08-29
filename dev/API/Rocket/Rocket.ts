@@ -30,7 +30,7 @@ abstract class Rocket {
           return data;
         };
 
-        if (item.extra.getBoolean("creative", false)) {
+        if (item.extra.getInt("fuel", 0) < 0) {
           data.concat(
             Native.Color.RED,
             "\n",
@@ -61,7 +61,7 @@ abstract class Rocket {
   public addCreativeRocket() {
     const extra = new ItemExtraData();
 
-    extra.putBoolean("creative", true);
+    extra.putInt("fuel", -1);
     extra.putInt("capacity", 54 satisfies rocket_capacity);
 
     Item.addToCreative(this.item.getID(), 1, 0, extra);
@@ -127,12 +127,6 @@ abstract class Rocket {
       return obj;
     }
 
-    if (item.extra.getBoolean("creative")) {
-      obj.capacity = 54 satisfies rocket_capacity;
-      obj.fuel = -1;
-      return obj;
-    }
-
     const capacity = item.extra.getInt("capacity");
     const fuel = item.extra.getInt("fuel", 0);
 
@@ -174,7 +168,7 @@ class RocketTier_1 extends Rocket {
 
 class RocketTier_2 extends Rocket {
   constructor() {
-    super(["station, mars"], 2, "rocket_tier_2");
+    super(["mars"], 2, "rocket_tier_2");
   }
 }
 

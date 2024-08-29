@@ -99,6 +99,7 @@ interface IRocketDescriptor {
             Commands.exec(
               "/title @a title §4" + Translation.translate("message.galacticraft.fuel_invalid")
               );
+              this.remove = true;
           };
 
           if (World.getThreadTime() % 20 === 0 && timer > -1) {

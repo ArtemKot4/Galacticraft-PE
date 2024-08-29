@@ -69,10 +69,6 @@ class RocketPadding extends Padding {
         extra.putSerializable("container", current.container);
       };
 
-      if(current.fuel === -1) {
-        extra.putBoolean("creative", true);
-      };
-
       extra.putInt("fuel", current.fuel);
       current.capacity && extra.putInt("capacity", current.capacity);
 
@@ -84,6 +80,7 @@ class RocketPadding extends Padding {
       );
 
       RocketManager.clear(coords);
+      return;
     }
   }
   putRocket(coords: Vector, item: ItemInstance, player: int, tier: int ) {
@@ -134,6 +131,7 @@ class RocketPadding extends Padding {
 
     this.takeRocket(player, coords);
     this.putRocket(coords, item, player, tier);
+    return;
   };
   constructor(id: string) {
     super(id);
