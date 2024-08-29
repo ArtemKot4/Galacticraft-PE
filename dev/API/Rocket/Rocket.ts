@@ -2,7 +2,7 @@ interface IRocketDescriptor {
   fuel: int;
   tier: int;
   animation: Animation.Base;
-  container?: UI.Container;
+  container?: ItemContainer;
   capacity?: int;
 }
 
@@ -245,7 +245,7 @@ abstract class Rocket {
       extra.putInt("capacity", v);
       Item.addToCreative(this.item.getID(), 1, 0, extra);
     });
-  };
+  }
 
   public addCreativeRocket() {
     const extra = new ItemExtraData();
@@ -255,14 +255,13 @@ abstract class Rocket {
   }
 
   public setRotatableModel() {
-     const model = Modeller.constructRenderMesh(this.model, {
+    const model = Modeller.constructRenderMesh(this.model, {
       scale: [0.25, 0.25, 0.25],
       translate: [0.5, 0, 0.5],
     });
-    ItemModel.getForWithFallback(this.item.getID(), 0).setModelOverrideCallback((v) => {
-      model.rotate(0.01, 0.01, 0);
-      return ItemModel.getForWithFallback(v.id, 0).setModel(model, this.texture);
-    })
+    const itemModel = ItemModel.getForWithFallback(this.item.getID(), 0);
+    ItemModel.getForWithFallback(this.item.getID(), 0).setModel(model, this.texture);
+    modelList.push(model);
   }
 
   public build(importParams: Partial<RenderMesh.ImportParams>) {
@@ -317,14 +316,19 @@ abstract class Rocket {
 
     if (typeof capacity === "number") {
       obj.capacity = capacity;
-      obj.container = new UI.Container();
+      obj.container = new ItemContainer();
     }
 
     obj.fuel = fuel;
     return obj;
   }
 
-  constructor(transferList: string[], tier: int,  texture: string, model: string, scale: int = 1,
+  constructor(
+    transferList: string[],
+    tier: int,
+    texture: string,
+    model: string,
+    scale: int = 1,
     importParams: Partial<RenderMesh.ImportParams> = { scale: [1, 1, 1] }
   ) {
     this.transferList = transferList.concat("earth", "moon");
@@ -341,7 +345,35 @@ class RocketTier_1 extends Rocket {
     super(["station"], 1, "GalacticraftCore/rocket_tier_1", "rocket_tier_1");
   }
 }
+
+class RocketTier_2 extends Rocket {
+  constructor() {
+    super(
+      ["station, mars"],
+      2,
+      "GalacticraftCore/rocket_tier_2",
+      "rocket_tier_2"
+    );
+  }
+}
+
+class RocketTier_3 extends Rocket {
+  constructor() {
+    super(
+      ["station, mars, venus"],
+      3,
+      "GalacticraftCore/rocket_tier_3",
+      "rocket_tier_3"
+    );
+  }
+}
+
 const Rocket1 = new RocketTier_1();
+
+const Rocket2 = new RocketTier_2();
+
+const Rocket3 = new RocketTier_2();
+
 /*
 Saver.addSavesScope(
   "scope.galacticraft.rocket_list",
@@ -372,15 +404,25 @@ Translation.addTranslation("tooltip.capacity_rocket", {
 
 Translation.addTranslation("item.galacticraft.rocket_tier_1", {
   en: "Rocket of 1 level",
-  ru: "Ракета 1-го уровня"
-})
+  ru: "Ракета 1-го уровня",
+});
 
 Translation.addTranslation("item.galacticraft.rocket_tier_2", {
   en: "Rocket of 2 level",
-  ru: "Ракета 2-го уровня"
-})
+  ru: "Ракета 2-го уровня",
+});
 
 Translation.addTranslation("item.galacticraft.rocket_tier_3", {
   en: "Rocket of 3 level",
-  ru: "Ракета 3-го уровня"
-})
+  ru: "Ракета 3-го уровня",
+});
+
+let modelList = [];
+
+Callback.addCallback(
+  "LocalTick", () => {
+    for(const i in modelList){
+      modelList[i].rotate(0.01, 0.01, 0);
+    }
+  }
+);
