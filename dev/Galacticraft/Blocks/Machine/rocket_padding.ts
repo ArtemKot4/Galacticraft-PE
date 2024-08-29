@@ -57,40 +57,40 @@ class Padding {
   }
 }
 
-
 class RocketPadding extends Padding {
   takeRocket(player: int, coords: Vector) {
-    if (RocketManager.isValid(coords) && Entity.getSneaking(player)) {
+    const current = RocketManager.get(coords);
+    Game.message("take rocket: current rocket -> " + JSON.stringify(current));
+    if (current && !!Entity.getSneaking(player)) {
+      Game.message("take rocket");
       const extra = new ItemExtraData();
 
-      const current = RocketManager.get(coords);
 
       if (current.container) {
         extra.putSerializable("container", current.container);
-      };
+      }
 
       extra.putInt("fuel", current.fuel);
       current.capacity && extra.putInt("capacity", current.capacity);
 
       new PlayerEntity(player).addItemToInventory(
-        ItemID[`rocket_tier_${RocketManager.get(coords).tier}`],
+        ItemID["rocket_tier_" + current.tier],
         1,
         0,
         extra
       );
 
-      RocketManager.clear(coords);
-      return;
+      return RocketManager.clear(coords);
     }
   }
-  putRocket(coords: Vector, item: ItemInstance, player: int, tier: int ) {
+  putRocket(coords: Vector, item: ItemInstance, player: int, tier: int) {
     if (RocketManager.isValid(coords)) {
       return;
     }
 
     if (tier === null) {
       return;
-    };
+    }
 
     if (typeof tier !== "number") {
       throw new java.lang.RuntimeException(
@@ -98,44 +98,44 @@ class RocketPadding extends Padding {
       );
     }
 
-   if(new PlayerActor(player).getGameMode() !== EGameMode.CREATIVE) {
-    Entity.setCarriedItem(
-      player,
-      item.id,
-      item.count - 1,
-      item.data,
-      item.extra
-    );
-   };
+    if (new PlayerActor(player).getGameMode() !== EGameMode.CREATIVE) {
+      Entity.setCarriedItem(
+        player,
+        item.id,
+        item.count - 1,
+        item.data,
+        item.extra
+      );
+    }
 
     RocketManager.create(item, coords, tier);
     return;
   }
   onClick(
     coords: Callback.ItemUseCoordinates, item: ItemInstance, block: Tile, player: number
-  ): boolean {
+  ): void {
+    Game.message(""+player);
     const region = BlockSource.getDefaultForActor(player);
+
     if (region.getBlockData(coords.x, coords.y, coords.z) === 0) {
       return;
-    };
-    
-    const tier = RocketManager.getTierForID(item.id);
-
-    if (
-      RocketManager.isValid(coords) &&
-      !Entity.getSneaking(player)
-    ) {
-      RocketManager.start(coords, player);
-      return;
-    };
+    }
 
     this.takeRocket(player, coords);
+
+    const tier = RocketManager.getTierForID(item.id);
+
     this.putRocket(coords, item, player, tier);
+
+    if (RocketManager.isValid(coords) && !Entity.getSneaking(player)) {
+      return RocketManager.start(coords, player);
+    }
+
     return;
-  };
+  }
   constructor(id: string) {
     super(id);
-    Block.registerClickFunctionForID(BlockID[id], this.onClick.bind(this));
+    Block.registerClickFunctionForID(BlockID[id],this.onClick.bind(this));
   }
 }
 

@@ -23,10 +23,10 @@ class RocketAnimator {
       animation.setInterpolationEnabled(true);
     }
     public initialize() {
-      this.animation.load();
+      return this.animation.load();
     }
     public clear() {
-      this.animation.destroy();
+      return this.animation.destroy();
     }
     public setLink(bool: boolean) {
       return (this.isLinked = bool);

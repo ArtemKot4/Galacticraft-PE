@@ -24,24 +24,20 @@ abstract class Rocket {
     Item.registerNameOverrideFunction(
       this.item.getID(),
       (item, translation, name) => {
-        const data = Native.Color.BLUE + Translation.translate(name);
+        let data = Native.Color.BLUE + Translation.translate(name);
 
-        if(!item.extra) {
-          return data;
-        };
-
-        if (item.extra.getInt("fuel", 0) < 0) {
-          data.concat(
+        if (item.extra?.getInt("fuel", 0) < 0) {
+          data = data.concat(
             Native.Color.RED,
             "\n",
             Translation.translate("tooltip.creative_rocket")
           );
         } else {
-          data.concat(
+          data = data.concat(
             "\n",
             Native.Color.GRAY,
             Translation.translate("tooltip.capacity_rocket"),
-            " " + item.extra.getInt("capacity", 0)
+            " " + (item.extra?.getInt("capacity") || 0)
           );
         }
 
@@ -122,19 +118,17 @@ abstract class Rocket {
 
     const container = JSON.parse(item?.extra.getSerializable("container"));
     obj.container = container ?? new ItemContainer();
-
+    obj.fuel = item.extra?.getInt("fuel", 0) ?? 0;
     if (!item.extra) {
       return obj;
     }
 
     const capacity = item.extra.getInt("capacity");
-    const fuel = item.extra.getInt("fuel", 0);
 
     if (typeof capacity === "number") {
       obj.capacity = capacity;
     }
 
-    obj.fuel = fuel;
     return obj;
   }
 

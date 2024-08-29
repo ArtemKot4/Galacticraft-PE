@@ -100,6 +100,7 @@ interface IRocketDescriptor {
               "/title @a title §4" + Translation.translate("message.galacticraft.fuel_invalid")
               );
               this.remove = true;
+              return;
           };
 
           if (World.getThreadTime() % 20 === 0 && timer > -1) {
@@ -114,6 +115,7 @@ interface IRocketDescriptor {
           if (timer <= -1) {
             Entity.setPosition(player, pos.x + 0.5, loc.y, pos.z + 0.5);
             Entity.setVelocity(player, 0, 0.8, 0);
+
             if (!current.animation.isLinked) {
               current.animation.initLink(player);
             }
