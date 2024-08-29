@@ -320,14 +320,15 @@ abstract class Rocket {
       return obj;
     }
 
+    const container = JSON.parse(item.extra.getSerializable("container"));
     const capacity = item.extra.getInt("capacity");
     const fuel = item.extra.getInt("fuel", 0);
 
     if (typeof capacity === "number") {
       obj.capacity = capacity;
-      obj.container = new ItemContainer();
-    }
-
+    };
+    
+    obj.container = container ?? new ItemContainer();
     obj.fuel = fuel;
     return obj;
   }
