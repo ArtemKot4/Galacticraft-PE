@@ -260,11 +260,13 @@ abstract class Rocket {
 
   public setRotatableModel() {
     const model = Modeller.constructRenderMesh(this.model, {
-      scale: [0.25, 0.25, 0.25],
-      translate: [0.5, 0, 0.5],
+      scale: [0.2, 0.2, 0.2],
+      translate: [0.3, 0, 0.3],
     });
+
     model.rotate(-0.5, 0, 0);
-    ItemModel.getForWithFallback(this.item.getID(), 0).setModel(
+
+    ItemModel.getForWithFallback(this.item.getID(), 0).setUiModel(
       model,
       "models/" + this.texture
     );
@@ -334,14 +336,14 @@ abstract class Rocket {
     transferList: string[],
     tier: int,
     texture: string,
-    model: string,
+    model?: string,
     scale: int = 1,
     importParams: Partial<RenderMesh.ImportParams> = { scale: [1, 1, 1] }
   ) {
     this.transferList = transferList.concat("earth", "moon");
     this.tier = tier;
     this.texture = texture;
-    this.model = model;
+    this.model = model || texture;
     this.scale = scale;
     this.build(importParams);
   }
@@ -349,7 +351,7 @@ abstract class Rocket {
 
 class RocketTier_1 extends Rocket {
   constructor() {
-    super(["station"], 1, "GalacticraftCore/rocket_tier_1", "rocket_tier_1");
+    super(["station"], 1, "rocket_tier_1");
   }
 }
 
@@ -358,8 +360,7 @@ class RocketTier_2 extends Rocket {
     super(
       ["station, mars"],
       2,
-      "GalacticraftCore/rocket_tier_2",
-      "rocket_tier_2"
+      "rocket_tier_2",
     );
   }
 }
@@ -369,8 +370,7 @@ class RocketTier_3 extends Rocket {
     super(
       ["station, mars, venus"],
       3,
-      "GalacticraftCore/rocket_tier_3",
-      "rocket_tier_3"
+      "rocket_tier_3",
     );
   }
 }
@@ -379,7 +379,7 @@ const Rocket1 = new RocketTier_1();
 
 const Rocket2 = new RocketTier_2();
 
-const Rocket3 = new RocketTier_2();
+const Rocket3 = new RocketTier_3();
 
 /*
 Saver.addSavesScope(
