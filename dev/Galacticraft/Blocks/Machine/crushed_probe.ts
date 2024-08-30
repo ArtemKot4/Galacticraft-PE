@@ -5,7 +5,7 @@ Translation.addTranslation("Crashed probe", {
  
 class CrashedProbe extends TileEntityBase {
     public static itemList = [] as {id: int, min: int, max: int}[];
-    
+
     data: {isDone: boolean};
 
     defaultValues = {
@@ -24,12 +24,14 @@ class CrashedProbe extends TileEntityBase {
     public isValidContent() {
         if(!!this.data.isDone) {
             return true;
-        }
+        };
+
         for(let i = 0; i < 9; i++) {
             if(this.container.getSlot("slot_" + i).id !== 0) {
                 return true;
             }
         };
+
         return false;
     };
 
@@ -58,6 +60,7 @@ class CrashedProbe extends TileEntityBase {
         if(!this.isValidContent()) {
               this.setupContent(randomInt(0, 5));
         };
+
         this.data.isDone = true;
         return;
     }
@@ -65,7 +68,7 @@ class CrashedProbe extends TileEntityBase {
 
 TileEntity.registerPrototype(BlockID.crashed_probe, new CrashedProbe());
 
-Block.registerDropFunction("ore_silicon", function(coords, blockID){
+Block.registerDropFunction(BlockID["crashed_probe"], function(coords, blockID){
     return [[ItemID.radioisotope_core, 1, 0]] 
 });
 
