@@ -116,7 +116,7 @@ abstract class Rocket {
   public static get(item: ItemInstance) {
     const obj = {} as IRocketDescriptor;
 
-    const container = JSON.parse(item?.extra.getSerializable("container"));
+    const container = JSON.parse(item.extra?.getSerializable("container"));
     obj.container = container ?? new ItemContainer();
     obj.fuel = item.extra?.getInt("fuel", 0) ?? 0;
     if (!item.extra) {

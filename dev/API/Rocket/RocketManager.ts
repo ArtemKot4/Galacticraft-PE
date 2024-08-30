@@ -24,6 +24,7 @@ interface IRocketDescriptor {
   
         RocketManager.data.set(pos, Object.assign(obj, Rocket.get(item)));
         RocketManager.get(pos).animation.initialize();
+        return;
       }
     }
     public static get(pos: Vector): IRocketDescriptor {

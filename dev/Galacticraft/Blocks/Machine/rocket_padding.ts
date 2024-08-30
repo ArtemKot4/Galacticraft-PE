@@ -65,7 +65,6 @@ class RocketPadding extends Padding {
       Game.message("take rocket");
       const extra = new ItemExtraData();
 
-
       if (current.container) {
         extra.putSerializable("container", current.container);
       }
@@ -112,9 +111,12 @@ class RocketPadding extends Padding {
     return;
   }
   onClick(
-    coords: Callback.ItemUseCoordinates, item: ItemInstance, block: Tile, player: number
+    coords: Callback.ItemUseCoordinates,
+    item: ItemInstance,
+    block: Tile,
+    player: number
   ): void {
-    Game.message(""+player);
+    Game.message("" + player);
     const region = BlockSource.getDefaultForActor(player);
 
     if (region.getBlockData(coords.x, coords.y, coords.z) === 0) {
@@ -135,7 +137,7 @@ class RocketPadding extends Padding {
   }
   constructor(id: string) {
     super(id);
-    Block.registerClickFunctionForID(BlockID[id],this.onClick.bind(this));
+    Block.registerClickFunctionForID(BlockID[id], this.onClick.bind(this));
   }
 }
 
