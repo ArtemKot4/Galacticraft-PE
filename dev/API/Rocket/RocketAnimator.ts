@@ -12,7 +12,7 @@ class RocketAnimator {
         );
       }
   
-      const animation = this.animation = new Animation.Base(pos.x - 0.5, pos.y + 0.3, pos.z - 0.5);
+      const animation = this.animation = new Animation.Base(pos.x, pos.y + 0.3, pos.z);
   
       animation.describe({
         mesh: validData.model,

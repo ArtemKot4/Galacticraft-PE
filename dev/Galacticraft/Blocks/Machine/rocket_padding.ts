@@ -59,29 +59,25 @@ class Padding {
 
 class RocketPadding extends Padding {
   takeRocket(player: int, coords: Vector) {
-    const current = RocketManager.get(coords);
-    Game.message("take rocket: current rocket -> " + JSON.stringify(current));
-    if (current && !!Entity.getSneaking(player)) {
-      Game.message("take rocket");
-      const extra = new ItemExtraData();
-
-      if (current.container) {
-        extra.putSerializable("container", current.container);
-      }
-
-      extra.putInt("fuel", current.fuel);
-      current.capacity && extra.putInt("capacity", current.capacity);
-
-      new PlayerEntity(player).addItemToInventory(
-        ItemID["rocket_tier_" + current.tier],
-        1,
-        0,
-        extra
-      );
-
-      return RocketManager.clear(coords);
+    if (!Entity.getSneaking(player)) {
+      return;
     }
-  }
+
+    if (!RocketManager.isValid(coords)) {
+      Game.message("Rocket is not valid");
+    }
+
+    const stack = Rocket.getItemStack(coords);
+
+    if (!stack) {
+      return;
+    }
+
+    new PlayerEntity(player).addItemToInventory(stack);
+
+    return RocketManager.clear(coords);
+  };
+
   putRocket(coords: Vector, item: ItemInstance, player: int, tier: int) {
     if (RocketManager.isValid(coords)) {
       return;
@@ -97,14 +93,10 @@ class RocketPadding extends Padding {
       );
     }
 
-    if (new PlayerActor(player).getGameMode() !== EGameMode.CREATIVE) {
-      Entity.setCarriedItem(
-        player,
-        item.id,
-        item.count - 1,
-        item.data,
-        item.extra
-      );
+    const entity = new PlayerEntity(player);
+
+    if (entity.getGameMode() !== EGameMode.CREATIVE) {
+     entity.decreaseCarriedItem();
     }
 
     RocketManager.create(item, coords, tier);
@@ -123,15 +115,16 @@ class RocketPadding extends Padding {
       return;
     }
 
-    this.takeRocket(player, coords);
+    if (RocketManager.isValid(coords) && !Entity.getSneaking(player)) {
+      return RocketManager.start(coords, player);
+    }
 
     const tier = RocketManager.getTierForID(item.id);
 
     this.putRocket(coords, item, player, tier);
 
-    if (RocketManager.isValid(coords) && !Entity.getSneaking(player)) {
-      return RocketManager.start(coords, player);
-    }
+    this.takeRocket(player, coords);
+
 
     return;
   }

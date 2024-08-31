@@ -65,8 +65,8 @@ abstract class Rocket {
 
   public setRotatableModel() {
     const model = Modeller.constructRenderMesh(this.model, {
-      scale: [0.18, 0.18, 0.18],
-      translate: [0.4, -0.15, 0.4],
+      scale: [0.175, 0.175, 0.175],
+      translate: [0.5, 0.3, 0.5],
     });
 
     model.rotate(-0.5, 0, 0);
@@ -113,7 +113,28 @@ abstract class Rocket {
     return new ItemStack(this.item.getID(), 1, data || 0, extra);
   }
 
-  public static get(item: ItemInstance) {
+  public static getItemStack(pos: Vector, data?: int): Nullable<ItemStack> {
+    if (!RocketManager.isValid(pos)) {
+      return null;
+    }
+
+    const current = RocketManager.get(pos);
+    const extra = new ItemExtraData();
+
+    extra.putInt("fuel", current.fuel);
+
+    current.container && extra.putSerializable("container", current.container);
+    current.capacity && extra.putInt("capacity", current.capacity);
+
+    return new ItemStack(
+      ItemID["rocket_tier_" + current.tier],
+      1,
+      data || 0,
+      extra
+    );
+  }
+
+  public static buildInstance(item: ItemInstance) {
     const obj = {} as IRocketDescriptor;
 
     const container = JSON.parse(item.extra?.getSerializable("container"));
@@ -197,9 +218,9 @@ Callback.addCallback("LevelDisplayed", () => {
 */
 
 // Callback.addCallback("LocalTick", () => {
-//   for (const i in modelList) {
-//     modelList[i].rotate(0.01, 0.01, 0);
-//   }
+//     for (const i in modelList) {
+//       modelList[i].rotate(0.06, 0, 0);
+//     }
 // });
 
 Translation.addTranslation("message.galacticraft.fuel_invalid", {

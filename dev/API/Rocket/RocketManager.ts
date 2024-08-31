@@ -22,7 +22,7 @@ interface IRocketDescriptor {
           animation: new RocketAnimator(pos, tier),
         } as IRocketDescriptor;
   
-        RocketManager.data.set(pos, Object.assign(obj, Rocket.get(item)));
+        RocketManager.data.set(pos, Object.assign(obj, Rocket.buildInstance(item)));
         RocketManager.get(pos).animation.initialize();
         return;
       }
