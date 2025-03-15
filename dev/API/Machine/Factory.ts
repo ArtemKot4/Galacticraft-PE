@@ -1,90 +1,83 @@
-type count = int;
-type slot =
-  | "slot_1"
-  | "slot_2"
-  | "slot_3"
-  | "slot_4"
-  | "slot_5"
-  | "slot_6"
-  | "slot_7"
-  | "slot_9";
-
-type slot_value = "id" | "data" | "count" | "extra";
+type IRecipeContainer = {
+    [key: string]: ItemStack | number;
+};
 
 class RecipeFactory {
-  public storage = [];
-  constructor() {}
-  public set(obj: Record<string, ItemInstance | int>) {
-    this.storage.push(obj);
-    return this;
-  };
-  public static get(container: ItemContainer, storage: object[]) {
-    return function (slot, value: slot_value) {
-      return container.getSlot(slot)[value] === storage[slot][value];
+    public storage: IRecipeContainer[] = [];
+
+    public constructor() {}
+    public set(obj: Record<string, ItemStack | number>) {
+        for(const i in obj) {
+            const recipe = obj[i];
+
+            if(recipe instanceof ItemStack) {
+                recipe.count = recipe.count || 1;
+                recipe.data = recipe.data || -1;
+            };
+        };
+
+        this.storage.push(obj);
+        return this;
     };
-  }
-  public static getForMore(
-    container: ItemContainer,
-    storage: object[],
-    count: int
-  ) {
-    const recipe = RecipeFactory.get(container, storage);
-    for (let i = 1; i <= count; i++) {
-      if (!recipe("slot_" + i, "id")) return false;
+
+    public get(container: ItemContainer | UI.Container, slotName: string): IRecipeContainer {
+        for(const i in this.storage) {
+            const recipe = this.storage[i][slotName] as ItemStack;
+
+            if(RecipeFactory.isValidRecipe(container, slotName, recipe)) {
+                return this.storage[i];
+            };
+        };
+        return null;
+    };
+
+    public static isValidRecipe(container: ItemContainer | UI.Container, slotName: string, stack: ItemStack): string | boolean {
+        const instance = container.getSlot(slotName);
+        if(stack.data === -1) stack.data = instance.data;
+
+        return stack.equals(instance);
+    };
+
+    public getForMore(container: ItemContainer, count: number): Nullable<IRecipeContainer> {
+        for(const i in this.storage) {
+            const storage = this.storage[i];
+
+            for(let i = 0; i < count; i++) {
+                if(!RecipeFactory.isValidRecipe(container, "slot_" + i, storage["slot_" + i] as ItemStack)) return null;
+            };
+            return storage;
+        };
+    };
+
+    public static decreaseSlots(container: ItemContainer, count: number) {
+        for(let i = 1; i <= count; i++) {
+            const slot = container.getSlot("slot_" + i);
+            container.setSlot("slot_" + i, slot.id, slot.count - 1, slot.data, slot.extra);
+        };
+    };
+
+    public static setupResult(container: ItemContainer, slot: name, storage: ItemStack) {
+        return container.setSlot(slot, storage.id, storage.count, storage.data);
+    };
+
+    public static getResult(container: ItemContainer, slot: name, storage: ItemStack) {
+        return !!(container.getSlot(slot).id === (storage.id || 0));
+    };
+
+    public registerFromJSON(machine: string) {
+        const files = FileTools.GetListOfFiles(__dir__ + "resources/recipes/" + machine + "/", "");
+        for(const i in files) {
+            const object = JSON.parse(FileTools.ReadText(files[i].getAbsolutePath()));
+            for(const k in object) {
+                const id = object[k].id;
+                const result_id = typeof id === "number" ? id : BlockID[id] ?? ItemID[id] ?? VanillaBlockID[id] ?? VanillaItemID[id];
+
+                object[k].id = Number(result_id);
+            };
+
+            this.set(object);
+        }
     }
-    return true;
-  }
-  public static decreaseSlots(container: ItemContainer, count) {
-    for (let i = 1; i <= count; i++) {
-      const slot = container.getSlot("slot_" + i);
-      container.setSlot(
-        "slot_" + i,
-        slot.id,
-        slot.count - 1,
-        slot.data,
-        slot.extra
-      );
-    }
-  }
-  public static setupResult(
-    container: ItemContainer,
-    slot: name,
-    storage: ItemInstance
-  ) {
-    return container.setSlot(slot, storage.id, storage.count, storage.data);
-  }
-
-  public static getResult(
-    container: ItemContainer,
-    slot: name,
-    storage: ItemInstance
-  ) {
-    return !!(container.getSlot(slot).id === (storage.id || 0));
-  }
-
-  public registerFromJSON(machine: string) {
-    const DIRS = FileTools.GetListOfFiles(
-      __dir__ + "resources/recipes/" + machine + "/",
-      ""
-    );
-    for (const i in DIRS) {
-      const _JSON = JSON.parse(FileTools.ReadText(DIRS[i].getAbsolutePath()));
-      for (const k in _JSON) {
-        const id = _JSON[k].id;
-        const result_id =
-          typeof id === "number"
-            ? id
-            : BlockID[id] ??
-              ItemID[id] ??
-              VanillaBlockID[id] ??
-              VanillaItemID[id];
-
-        _JSON[k].id = Number(result_id);
-      }
-
-      this.set(_JSON);
-    }
-  }
 }
 
 /*
