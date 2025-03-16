@@ -1,4 +1,4 @@
-class CompressorTile extends MachineTile {
+class CompressorTile extends ProcessingMachine {
     public data = {
         energy: 0,
         progress: 0,
@@ -29,22 +29,20 @@ class CompressorTile extends MachineTile {
 
         this.container.sendChanges();
         this.container.validateAll();
-        this.container.setScale("progressScale", this.data.progress / progressMax);
-        this.container.setScale("BurningScale", this.data.energy / burningMax);
+        this.container.setScale("progress_scale", this.data.progress / progressMax);
+        this.container.setScale("burning_scale", this.data.energy / burningMax);
 
         CoalGeneratorTile.setBurning("coal_slot", this);
         
-        const recipe = BlockList.COMPRESSOR.factory.getForMore(this.container, 9) as Record<string, ItemStack>;
+        const recipe = BlockList.COMPRESSOR.factory.getForMore(this.container, 9) as Record<string, ItemInstance>;
 
-        if (this.data.energy >= capacity / 2 && recipe != null && this.data.progress < progressMax) {
-            this.data.progress++;
-        };
+        this.setProgress(recipe);
 
-        if (this.data.progress >= progressMax) {
+        if(this.isFullProgress()) {
             RecipeFactory.decreaseSlots(this.container, 9);
-            RecipeFactory.setupResult(this.container, "result", recipe.result);
+            RecipeFactory.setupResult(this.container, "slot_result", recipe.result_0);
+            this.clearProgress();
 
-            this.data.progress = 0;
             this.data.energy -= capacity / 2;
         };
     };

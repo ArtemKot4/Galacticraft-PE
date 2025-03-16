@@ -1,3 +1,16 @@
+interface ICompressorRecipe {
+    slot_0: ItemInstance;
+    slot_1: ItemInstance;
+    slot_2: ItemInstance;
+    slot_3: ItemInstance;
+    slot_4: ItemInstance;
+    slot_5: ItemInstance;
+    slot_6: ItemInstance;
+    slot_7: ItemInstance;
+    slot_8: ItemInstance;
+    result_slot_0: ItemInstance;
+};
+
 class Compressor extends MachineBlock {
     public constructor() {
         super(

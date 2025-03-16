@@ -1,57 +1,56 @@
-
 const OxygenCollectorUI = new UI.StandartWindow({
     standard: {
         header: {
             text: {
-                text: Translation.translate("Oxygen Collector")
+                text: Translation.translate("Oxygen Collector"),
             },
         },
         inventory: {
-            standard: true
+            standard: true,
         },
         background: {
-            standard: true
-        }
+            standard: true,
+        },
     },
-    drawing: [{
-        type: "bitmap",
-        x: 400,
-        y: 190,
-        bitmap: "Others.collector_scale_0",
-        scale: 4.3
-    },
-    {
-        type: "bitmap",
-        x: 680,
-        y: 130,
-        bitmap: "o2_noy",
-        scale: 6.0
-    },
-    {
-        type: "bitmap",
-        x: 379,
-        y: 300,
-        bitmap: "slace_en_0",
-        scale: 3.4
-    },
-    {
-        type: "bitmap",
-        x: 370,
-        y: 300,
-        bitmap: "en_noy",
-        scale: 3.4
-    }],
-    elements: {
-        slot1:
+    drawing: [
         {
+            type: "bitmap",
+            x: 400,
+            y: 190,
+            bitmap: "Others.collector_scale_0",
+            scale: 4.3,
+        },
+        {
+            type: "bitmap",
+            x: 680,
+            y: 130,
+            bitmap: "o2_noy",
+            scale: 6.0,
+        },
+        {
+            type: "bitmap",
+            x: 379,
+            y: 300,
+            bitmap: "slace_en_0",
+            scale: 3.4,
+        },
+        {
+            type: "bitmap",
+            x: 370,
+            y: 300,
+            bitmap: "en_noy",
+            scale: 3.4,
+        },
+    ],
+    elements: {
+        slot: {
             type: "slot",
             x: 400,
             y: 110,
             size: 70,
-            bitmap: "Others.en_slot"
+            bitmap: "Others.en_slot",
         },
-        scala:
-        {
+        oxygen_scale: {
             type: "scale",
             x: 400,
             y: 190,
@@ -61,62 +60,56 @@ const OxygenCollectorUI = new UI.StandartWindow({
             clicker: {
                 onClick: function () {
                     RV && RV.RecipeTypeRegistry.openRecipePage("Collector");
-                }
-            }
+                },
+            },
         },
-        o2:
-        {
+        oxygen_icon: {
             type: "scale",
             x: 680,
             y: 130,
             bitmap: "o2_yes",
             scale: 6.0,
-            direction: 1
+            direction: 1,
         },
-        OXYGEN:
-        {
+        oxygen_status: {
             type: "text",
             x: 480,
             y: 135,
             width: 100,
             height: 30,
-            text: "Oxygen Bar"
+            text: "Oxygen Bar",
         },
-        Status:
-        {
+        status: {
             type: "text",
             x: 420,
             y: 250,
             width: 100,
             height: 30,
-            text: "Статус: Нейтральный"
+            text: "Статус: Нейтральный",
         },
-        LeavesStatus:
-        {
+        leaves_display: {
             type: "text",
             x: 420,
             y: 280,
             width: 99,
             height: 20,
-            text: "Кислорода использовано:"
+            text: "Кислорода использовано:",
         },
-        Energy: {
+        energy_icon: {
             type: "scale",
             x: 370,
             y: 300,
             bitmap: "en_yes",
             scale: 3.4,
-            direction: 1
+            direction: 1,
         },
-        ENERGYBar: {
+        energy_bar: {
             type: "scale",
             x: 379,
             y: 300,
             bitmap: "slace_en_1",
             scale: 3.4,
-            direction: 0
+            direction: 0,
         },
-      
-    }
-}
-);
+    },
+});

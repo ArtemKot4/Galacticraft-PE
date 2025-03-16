@@ -51,8 +51,7 @@ const CoalGeneratorUI = new UI.StandartWindow({
         },
       },
     },
-
-    EnergyText: {
+    energy_display: {
       type: "text",
       x: 400,
       y: 190,
@@ -60,7 +59,7 @@ const CoalGeneratorUI = new UI.StandartWindow({
       height: 30,
       text: "Energy type is not defined",
     },
-    Status: {
+    status: {
       type: "text",
       x: 400,
       y: 220,
