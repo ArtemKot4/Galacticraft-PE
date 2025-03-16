@@ -1,16 +1,16 @@
 type IRecipeContainer = {
-    [key: string]: ItemStack | number;
+    [key: string]: ItemInstance | number;
 };
 
 class RecipeFactory {
     public storage: IRecipeContainer[] = [];
 
     public constructor() {}
-    public set(obj: Record<string, ItemStack | number>) {
+    public set(obj: Record<string, ItemInstance | number>) {
         for(const i in obj) {
             const recipe = obj[i];
 
-            if(recipe instanceof ItemStack) {
+            if(recipe instanceof Object) {
                 recipe.count = recipe.count || 1;
                 recipe.data = recipe.data || -1;
             };
@@ -22,7 +22,7 @@ class RecipeFactory {
 
     public get(container: ItemContainer | UI.Container, slotName: string): IRecipeContainer {
         for(const i in this.storage) {
-            const recipe = this.storage[i][slotName] as ItemStack;
+            const recipe = this.storage[i][slotName] as ItemInstance;
 
             if(RecipeFactory.isValidRecipe(container, slotName, recipe)) {
                 return this.storage[i];
@@ -31,11 +31,11 @@ class RecipeFactory {
         return null;
     };
 
-    public static isValidRecipe(container: ItemContainer | UI.Container, slotName: string, stack: ItemStack): string | boolean {
+    public static isValidRecipe(container: ItemContainer | UI.Container, slotName: string, item: ItemInstance): string | boolean {
         const instance = container.getSlot(slotName);
-        if(stack.data === -1) stack.data = instance.data;
+        if(item.data === -1) item.data = instance.data;
 
-        return stack.equals(instance);
+        return new ItemStack(item).equals(instance);
     };
 
     public getForMore(container: ItemContainer | UI.Container, count: number): Nullable<IRecipeContainer> {
@@ -43,7 +43,7 @@ class RecipeFactory {
             const storage = this.storage[i];
 
             for(let i = 0; i < count; i++) {
-                if(!RecipeFactory.isValidRecipe(container, "slot_" + i, storage["slot_" + i] as ItemStack)) return null;
+                if(!RecipeFactory.isValidRecipe(container, "slot_" + i, storage["slot_" + i] as ItemInstance)) return null;
             };
             return storage;
         };
@@ -56,11 +56,11 @@ class RecipeFactory {
         };
     };
 
-    public static setupResult(container: ItemContainer | UI.Container, slot: name, storage: ItemStack) {
+    public static setupResult(container: ItemContainer | UI.Container, slot: name, storage: ItemInstance) {
         return container.setSlot(slot, storage.id, storage.count, storage.data);
     };
 
-    public static getResult(container: ItemContainer | UI.Container, slot: name, storage: ItemStack) {
+    public static getResult(container: ItemContainer | UI.Container, slot: name, storage: ItemInstance) {
         return !!(container.getSlot(slot).id === (storage.id || 0));
     };
 
@@ -71,7 +71,9 @@ class RecipeFactory {
             for(const k in object) {
                 const instance = object[k];
                 if(typeof instance === "object") {
-                    object[k] = new ItemStack(Utils.parseID(instance.id), instance.count || 1, instance.data || 0);
+                    instance.id = Utils.parseID(instance.id);
+                    instance.count = instance.count || 1;
+                    instance.data = instance.data || 0;
                 };
             };
 

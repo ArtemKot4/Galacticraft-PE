@@ -21,8 +21,9 @@ class CoalGeneratorTile extends Generator {
         const recipe = BlockList.COAL_GENERATOR.factory.get(tile.container, slotName);
 
         if(recipe != null) {
-            tile.data.burning += tile.data.burningMax;
             tile.container.setSlot(slotName, slot.id, slot.count-1, slot.data);
+            
+            tile.data.burning += tile.data.burningMax;
             tile.data.active = true;
         };
 
