@@ -1,5 +1,5 @@
-abstract class MachineStorage extends Machine {
-    public override defaultValues = {
+abstract class MachineStorage extends MachineTile {
+    public override data = {
       energy: 0,
       energy_max: 0,
     };
