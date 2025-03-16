@@ -69,10 +69,10 @@ class RecipeFactory {
         for(const i in files) {
             const object = JSON.parse(FileTools.ReadText(files[i].getAbsolutePath()));
             for(const k in object) {
-                const id = object[k].id;
-                const result_id = typeof id === "number" ? id : BlockID[id] ?? ItemID[id] ?? VanillaBlockID[id] ?? VanillaItemID[id];
-
-                object[k].id = Number(result_id);
+                const instance = object[k];
+                if(typeof instance === "object") {
+                    object[k] = new ItemStack(instance.id, instance.count || 1, instance.data || 0);
+                };
             };
 
             this.set(object);

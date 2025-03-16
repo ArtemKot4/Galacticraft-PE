@@ -1,4 +1,4 @@
-abstract class Generator extends Machine {
+abstract class Generator extends MachineTile {
     public override data = {
         energy: 0
     };
