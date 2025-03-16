@@ -38,7 +38,7 @@ class RecipeFactory {
         return stack.equals(instance);
     };
 
-    public getForMore(container: ItemContainer, count: number): Nullable<IRecipeContainer> {
+    public getForMore(container: ItemContainer | UI.Container, count: number): Nullable<IRecipeContainer> {
         for(const i in this.storage) {
             const storage = this.storage[i];
 
@@ -49,18 +49,18 @@ class RecipeFactory {
         };
     };
 
-    public static decreaseSlots(container: ItemContainer, count: number) {
+    public static decreaseSlots(container: ItemContainer | UI.Container, count: number) {
         for(let i = 1; i <= count; i++) {
             const slot = container.getSlot("slot_" + i);
             container.setSlot("slot_" + i, slot.id, slot.count - 1, slot.data, slot.extra);
         };
     };
 
-    public static setupResult(container: ItemContainer, slot: name, storage: ItemStack) {
+    public static setupResult(container: ItemContainer | UI.Container, slot: name, storage: ItemStack) {
         return container.setSlot(slot, storage.id, storage.count, storage.data);
     };
 
-    public static getResult(container: ItemContainer, slot: name, storage: ItemStack) {
+    public static getResult(container: ItemContainer | UI.Container, slot: name, storage: ItemStack) {
         return !!(container.getSlot(slot).id === (storage.id || 0));
     };
 
@@ -71,14 +71,16 @@ class RecipeFactory {
             for(const k in object) {
                 const instance = object[k];
                 if(typeof instance === "object") {
-                    object[k] = new ItemStack(instance.id, instance.count || 1, instance.data || 0);
+                    object[k] = new ItemStack(Utils.parseID(instance.id), instance.count || 1, instance.data || 0);
                 };
             };
 
             this.set(object);
-        }
-    }
-}
+        };
+
+        return this;
+    };
+};
 
 /*
 public registerFromJSON(machine: string) {

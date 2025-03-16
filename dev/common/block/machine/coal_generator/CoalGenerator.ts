@@ -17,13 +17,5 @@ class CoalGenerator extends MachineBlock {
         return new CoalGeneratorTile();
     };
 
-    public factory: RecipeFactory = new RecipeFactory()
-    .set({
-        "coal_slot": new ItemStack(VanillaItemID.coal, 1),
-        "power": 3000
-    })
-    .set({
-        "coal_slot": new ItemStack(VanillaItemID.stick, 1),
-        "power": 150
-    });
+    public factory: RecipeFactory = new RecipeFactory().registerFromJSON("fuel");
 };

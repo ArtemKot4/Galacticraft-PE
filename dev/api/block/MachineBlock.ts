@@ -34,4 +34,12 @@ abstract class MachineBlock extends GalacticraftBlock {
     public isWrenchable(): boolean {
         return true;
     };
+
+    public getMaterial(): string {
+        return "stone";
+    };
+
+    public getDestroyLevel(): EDestroyLevel {
+        return EDestroyLevel.STONE;
+    };
 };

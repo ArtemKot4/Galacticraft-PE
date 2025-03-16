@@ -560,57 +560,6 @@ new GBlock("oxygen_storage_module", [{
 
       
 
-
-  
-
-
-
-
-
-
-  new GBlock(
-    "compressor_gj",
-    [
-      {
-        name: "Compressor",
-        texture: [
-          ["Machine", 0],
-          ["Machine", 0],
-          ["Machine", 0],
-          ["Compressor", 0],
-          ["Machine", 0],
-          ["Machine", 0],
-        ],
-        inCreative: true,
-      },
-      {
-        name: "Compressor",
-        texture: [
-          ["Machine", 0],
-          ["Machine", 0],
-          ["Machine", 0],
-          ["Compressor", 0],
-          ["Machine", 0],
-          ["Machine", 0],
-        ],
-        inCreative: false,
-      },
-      {
-        name: "Compressor",
-        texture: [
-          ["Machine", 0],
-          ["Machine", 0],
-          ["Machine", 0],
-          ["Compressor", 0],
-          ["Machine", 0],
-          ["Machine", 0],
-        ],
-        inCreative: false,
-      },
-    ],
-    STONE
-  ).createWithRotation();
-
   new GBlock(
     "electric_compressor_gj",
     [
