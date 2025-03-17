@@ -21,8 +21,8 @@ abstract class MachineBlock extends GalacticraftBlock {
                 const func = Block.getPlaceFunc(block.id);
 
                 if (func) {
-                    func(coords, item, block, player, region);
-                }
+                    return func(coords, item, block, player, region);
+                };
             });
         };
     };

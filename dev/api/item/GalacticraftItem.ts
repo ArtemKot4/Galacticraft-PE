@@ -21,4 +21,8 @@ class GalacticraftItem extends BasicItem {
             return Translation.translate(name);
         });
     };
+
+    public getName(): string {
+        return "item.galacticraft." + this.id;
+    };
 };

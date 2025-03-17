@@ -24,7 +24,6 @@ api/item/Battery.ts
 api/item/Ballone.ts
 api/item/Canister.ts
 
-
 api/Prototype/IPlanetModule.ts
 api/Prototype/EnergyModule.ts
 
@@ -81,20 +80,8 @@ common/Dimensions/Asteroids/block/asteroid_blocks.ts
 
 common/block/Decorative/footprint.ts
 
-common/item/food.ts
-common/item/thermal_armor.ts
-common/item/entity_loot.ts
-common/item/machine_parts.ts
-
-common/item/oxygen_gear.ts
-common/item/oxygen_tanks.ts
-common/item/parachutes.ts
-common/item/radioisotope_core.ts
-common/item/schematics.ts
-common/item/Tools.ts
-common/item/battery.ts
-common/item/entity_loot.ts
-
+common/item/PrelaunchChecklist.ts
+common/item/MachineWrench.ts
 common/item/ItemList.ts
 
 
@@ -106,11 +93,6 @@ common/block/ore/mars_ores.ts
 common/block/ore/asteroids_ores.ts
 common/block/ore/venus_ores.ts
 common/block/ore/block_ores.ts
-
-common/item/ores.ts
-
-
-
 
 
 common/Dimensions/Moon/Moon.ts
@@ -125,19 +107,6 @@ common/block/machine/wires.ts
 
 
 common/item/machine_parts.ts
-
-
-
-
-
-
-
-
-
-
-
-common/Canisters/canisters.ts
-common/Canisters/empty_liquid_canister.ts
 
 
 
