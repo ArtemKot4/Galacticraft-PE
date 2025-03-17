@@ -29,7 +29,7 @@ class Battery extends GalacticraftItem {
 
     public onNameOverride?(item: ItemInstance, translation: string, name: string);
     
-    public static chargeMachine(tile: Machine, batterySlot: string) {
+    public static chargeMachine(tile: CommonTileEntity & MachineTile, batterySlot: string) {
         const slot = tile.container.getSlot(batterySlot);
 
         if(slot.id in Battery.list) {

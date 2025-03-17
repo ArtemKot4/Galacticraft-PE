@@ -177,6 +177,10 @@ namespace ItemList {
     
     export const FREQUENCY_MODULE = new GalacticraftItem("frequency_module", {name: "frequency_module", meta: 0});
     
+    export const BATTERY = new Battery("battery_gc", { name: "battery", meta: 0 }, 1000, 0);
+
+    export const ATOMIC_BATTERY = new Battery("atomic_battery", { name: "atomic_battery", meta: 0 }, -1, 10);
+    
     export const SHIELD_CONTROLLER = new GalacticraftItem("shield_controller", {name: "shield_controller", meta: 0});
 };
 
