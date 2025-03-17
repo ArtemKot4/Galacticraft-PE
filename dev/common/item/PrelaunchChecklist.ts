@@ -1,4 +1,10 @@
 ﻿class PrelaunchChecklist extends GalacticraftItem {
+    public fixedPoints: string[];
+
+    public registerPoint(point: string): void {
+        this.fixedPoints.push(point);
+    };
+
     public constructor() {
         super("prelaunch_checklist", {
             name: "prelaunch_checklist",
@@ -96,19 +102,15 @@
         this.UI.setContent(this.getDefaultContent());
 
         const rows: string[][] = [];
-        const allPoints = this.getSelectedPoints(item);
 
-        for(let i = 0; i < allPoints.length; i++) {
+        const copy = this.fixedPoints.slice();
+        for(let i = 0; i < copy.length; i++) {
             if(i % 10 === 0) {
-                rows.push(allPoints.splice(0, i));
+                rows.push(copy.splice(0, i));
             };
         };
 
-        let pagePoints = {};
-        
-        for(let i = 0; i < rows.length; i++) {
-            pagePoints[i] = [];
-        };
+        let selectedPoints: Record<number, string[]> = {};
 
         let page = 0;
         const content = this.UI.getContent();
@@ -124,7 +126,7 @@
                 onClick: () => {
                     page = Math.max(0, page - 1);
 
-                    pagePoints[page] = this.drawPage(rows[page]);
+                    selectedPoints[page] = this.drawPage(rows[page]);
                     this.UI.forceRefresh();
                 }
             }
@@ -141,7 +143,7 @@
                 onClick: () => {
                     page = Math.min(rows.length - 1, page + 1);
 
-                    pagePoints[page] = this.drawPage(rows[page]);
+                    selectedPoints[page] = this.drawPage(rows[page]);
                     this.UI.forceRefresh();
                 }
             }
@@ -155,7 +157,13 @@
             bitmap: "black_cross",
             clicker: {
                 onClick: () => {
-                    Network.sendToServer("packet.galacticraft.prelaunch_checklist_points_set", pagePoints);
+                    let all: string[] = [];
+
+                    for(const i in selectedPoints) {
+                        all.concat(selectedPoints[i]);
+                    };
+
+                    Network.sendToServer("packet.galacticraft.prelaunch_checklist_points_set", { points: all });
                     this.UI.close();
                 }
             }
@@ -188,7 +196,7 @@
     };
 };
 
-Network.addServerPacket("packet.galacticraft.prelaunch_checklist_points_set", (client, data: Record<number, string[]>) => {
+Network.addServerPacket("packet.galacticraft.prelaunch_checklist_points_set", (client, data: { points: string[] }) => {
     if(!client || !data) return;
     const playerUid = client.getPlayerUid();
     const item = Entity.getCarriedItem(playerUid);
@@ -198,16 +206,10 @@ Network.addServerPacket("packet.galacticraft.prelaunch_checklist_points_set", (c
         return;
     };
 
-    let all = [];
-
-    for(let i in data) {
-        all.concat(data[i]);
-    };
-
-    ItemList.PRELAUNCH_CHECKLIST.setSelectedPoints(all, item, playerUid)
+    ItemList.PRELAUNCH_CHECKLIST.setSelectedPoints(data.points, item, playerUid)
 });
 
 Translation.addTranslation("item.galacticraft.prelaunch_checklist", {
     en: "Prelaunch Checklist",
-    ru: "Том для подготовки космонавтов"
+    ru: "Том по подготовке космонавтов"
 });

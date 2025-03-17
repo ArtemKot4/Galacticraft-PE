@@ -5,4 +5,6 @@ namespace BlockList {
     export const COMPRESSOR = new Compressor();
     export const ELECTRIC_COMPRESSOR = new ElectricCompressor();
     export const CIRCUIT_FABRICATOR = new CircuitFabricator();
+    export const REFINERY = new Refinery();
+    export const FUEL_LOADER = new FuelLoader();
 };

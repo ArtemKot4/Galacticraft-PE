@@ -36,7 +36,7 @@ const FuelLoaderUI = new UI.StandartWindow({
         },
     ],
     elements: {
-        canister_slot: {
+        input_slot: {
             type: "slot",
             x: 355,
             y: 120,
