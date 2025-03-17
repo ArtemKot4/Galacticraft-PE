@@ -89,22 +89,6 @@
             y+= 20;
         };
 
-        content.elements["close_button"] = {
-            type: "button",
-            x: 10,
-            y: 11,
-            scale: this.SCALE,
-            bitmap: "black_cross",
-            clicker: {
-                onClick: () => {
-                    Network.sendToServer("packet.galacticraft.prelaunch_checklist_points_set", {
-                        points: selectedPoints
-                    });
-                    this.UI.close();
-                }
-            }
-        };
-
         return selectedPoints;
     };
 
@@ -120,9 +104,9 @@
             };
         };
 
-        let pagePoints = 0;
+        let pagePoints = {};
         for(let i = 0; i < rows.length; i++) {
-            pagePoints[i] = {}
+            pagePoints[i] = [];
         };
 
         let page = 0;
@@ -162,6 +146,20 @@
             }
         };
 
+        content.elements["close_button"] = {
+            type: "button",
+            x: 10,
+            y: 11,
+            scale: this.SCALE,
+            bitmap: "black_cross",
+            clicker: {
+                onClick: () => {
+                    Network.sendToServer("packet.galacticraft.prelaunch_checklist_points_set", pagePoints);
+                    this.UI.close();
+                }
+            }
+        };
+
         this.UI.forceRefresh();
     };
 
@@ -189,8 +187,8 @@
     };
 };
 
-Network.addServerPacket("packet.galacticraft.prelaunch_checklist_points_set", (client, data: { points: string[] }) => {
-    if(!client || !data.points) return;
+Network.addServerPacket("packet.galacticraft.prelaunch_checklist_points_set", (client, data: Record<number, string[]>) => {
+    if(!client || !data) return;
     const playerUid = client.getPlayerUid();
     const item = Entity.getCarriedItem(playerUid);
 
@@ -199,7 +197,13 @@ Network.addServerPacket("packet.galacticraft.prelaunch_checklist_points_set", (c
         return;
     };
 
-    ItemList.PRELAUNCH_CHECKLIST.setSelectedPoints(data.points, item, playerUid)
+    let all = [];
+
+    for(let i in data) {
+        all.concat(data[i]);
+    };
+
+    ItemList.PRELAUNCH_CHECKLIST.setSelectedPoints(all, item, playerUid)
 });
 
 Translation.addTranslation("item.galacticraft.prelaunch_checklist", {
