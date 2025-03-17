@@ -105,6 +105,7 @@
         };
 
         let pagePoints = {};
+        
         for(let i = 0; i < rows.length; i++) {
             pagePoints[i] = [];
         };
@@ -179,7 +180,7 @@
         return sections.split(",");
     };
 
-    public setSelectedPoints(points: string[], item: ItemInstance, playerUid: number) {
+    public setSelectedPoints(points: string[], item: ItemInstance, playerUid: number): void {
         const extra = new ItemExtraData();
         extra.putString("points", points.join(","));
         
