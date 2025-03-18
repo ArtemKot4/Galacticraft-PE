@@ -6,6 +6,10 @@ abstract class MachineTile extends CommonTileEntity implements EnergyModule {
         return new UI.StandardWindow();
     };
 
+    public getScreenName(): string {
+        return "main";
+    };
+
     public override data = {
         energy: 0
     };

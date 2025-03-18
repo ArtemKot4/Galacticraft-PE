@@ -1,4 +1,4 @@
-class SolarPanelTop extends GalacticraftBlock implements IBlockModel {
+class SolarPanelTop extends GalacticraftBlock implements IBlockModel, IClickCallback {
     public constructor() {
         super("solar_panel_top", [
             {
@@ -17,5 +17,9 @@ class SolarPanelTop extends GalacticraftBlock implements IBlockModel {
         const region = BlockSource.getDefaultForActor(player);
         region.destroyBlock(coords.x, coords.y, coords.z, false);
         region.destroyBlock(coords.x, coords.y - 1, coords.z, true);
+    };
+
+    public onClick(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number): void {
+        MachineBlock.openTileEntity(TileEntity.getTileEntity(coords.x, coords.y - 1, coords.z), player);
     };
 };

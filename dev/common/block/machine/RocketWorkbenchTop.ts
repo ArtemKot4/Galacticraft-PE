@@ -27,4 +27,8 @@ class RocketWorkbenchTop extends GalacticraftBlock implements IBlockModel, IDest
     public getModel(): BlockModel {
         return new BlockModel(__modelsdir__, "rocket_workbench_top", "assembly").translate(1, 1, 1);
     };
+
+    public onClick(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number): void {
+        MachineBlock.openTileEntity(TileEntity.getTileEntity(coords.x, coords.y - 1, coords.z), player);
+    };
 };

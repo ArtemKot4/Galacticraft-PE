@@ -42,4 +42,12 @@ abstract class MachineBlock extends GalacticraftBlock {
     public getDestroyLevel(): EDestroyLevel {
         return EDestroyLevel.STONE;
     };
+
+    public static openTileEntity(tile: TileEntity, player: number) {
+        if(!tile) return;
+        const client = Network.getClientForPlayer(player); 
+        
+        if(!client) return;
+        (tile.container as ItemContainer).openFor(client, "main");
+    };
 };

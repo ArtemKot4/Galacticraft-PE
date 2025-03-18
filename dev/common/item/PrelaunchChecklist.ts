@@ -1,4 +1,4 @@
-﻿class PrelaunchChecklist extends GalacticraftItem {
+﻿class PrelaunchChecklist extends GalacticraftItem  implements ItemUseCallback, INoTargetUseCallback {
     public fixedPoints: string[];
 
     public registerPoint(point: string): void {
@@ -42,8 +42,8 @@
      * @param row array of points
      * @returns selected points
      */
-    public drawPage(row: string[]): string[] {
-        let selectedPoints: string[] = [];
+    public drawPage(row: string[], currentPoints: string[]): string[] {
+        let selectedPoints: string[] = currentPoints;
         const content = this.UI.getContent();
 
         let y = 70;
@@ -67,7 +67,7 @@
                 x: this.POINT_TEXT_LOCATION + 115.5,
                 y: y - 2,
                 scale: this.SCALE,
-                bitmap: "unknown"
+                bitmap: selectedPoints.includes(point) ? "prelaunch_checklist.selection" : "unknown"
             };
 
             content.elements[point + "_point"] = {
@@ -126,7 +126,7 @@
                 onClick: () => {
                     page = Math.max(0, page - 1);
 
-                    selectedPoints[page] = this.drawPage(rows[page]);
+                    selectedPoints[page] = this.drawPage(rows[page], this.getSelectedPoints(item));
                     this.UI.forceRefresh();
                 }
             }
@@ -143,7 +143,7 @@
                 onClick: () => {
                     page = Math.min(rows.length - 1, page + 1);
 
-                    selectedPoints[page] = this.drawPage(rows[page]);
+                    selectedPoints[page] = this.drawPage(rows[page], this.getSelectedPoints(item));
                     this.UI.forceRefresh();
                 }
             }
@@ -194,7 +194,29 @@
         
         Entity.setCarriedItem(playerUid, item.id, item.count, item.data, extra);
     };
+
+    public open(item: ItemInstance) {
+        if(!this.UI.isOpened()) {
+            this.UI.open();
+        };
+        this.draw(item);
+        return;
+    };
+
+    public onNoTargetUse(item: ItemStack, player: number): void {
+        const client = Network.getClientForPlayer(player);
+        if(client) client.send("packet.galacticraft.open_prelaunch_checklist", item);
+    };
+
+    public onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number): void {
+        return this.onNoTargetUse(item, player);
+    };
 };
+
+Network.addClientPacket("packet.galacticraft.open_prelaunch_checklist", (data: ItemInstance) => {
+    if(!data) return;
+    ItemList.PRELAUNCH_CHECKLIST.open(data);
+});
 
 Network.addServerPacket("packet.galacticraft.prelaunch_checklist_points_set", (client, data: { points: string[] }) => {
     if(!client || !data) return;
