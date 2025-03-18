@@ -1,4 +1,5 @@
 abstract class MachineTile extends CommonTileEntity implements EnergyModule {
+    public container: ItemContainer;
     public override useNetworkItemContainer = true;
 
     public getScreenByName(): UI.StandartWindow {

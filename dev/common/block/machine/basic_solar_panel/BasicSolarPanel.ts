@@ -1,4 +1,4 @@
-class BasicSolarPanel extends MachineBlock implements IPlaceCallback {
+class BasicSolarPanel extends MachineBlock implements IPlaceCallback, IDestroyCallback {
     public constructor() {
         super("basic_solar_panel", [
             {
@@ -47,6 +47,12 @@ class BasicSolarPanel extends MachineBlock implements IPlaceCallback {
     public onPlace(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number, region: BlockSource): void | Vector {
         region.setBlock(coords.relative.x, coords.relative.y, coords.relative.z, this.getID(), block.data);
         region.setBlock(coords.relative.x, coords.relative.y + 1, coords.relative.z, BlockID["solar_panel_gc"], 0);
+    };
+
+    public onDestroy(coords: Callback.ItemUseCoordinates, block: Tile, player: number): void {
+        const region = BlockSource.getDefaultForActor(player);
+        region.destroyBlock(coords.x, coords.y, coords.z, true);
+        region.destroyBlock(coords.x, coords.y + 1, coords.z, false);
     };
 
     public getTileEntity(): CommonTileEntity {

@@ -10,4 +10,5 @@ namespace BlockList {
     export const REFINERY = new Refinery();
     export const FUEL_LOADER = new FuelLoader();
     export const GEOTHERMAL_GENERATOR = new GeothermalGenerator();
+    export const ROCKET_WORKBENCH_TOP = new RocketWorkbenchTop();
 };

@@ -22,7 +22,7 @@ class GeothermalGeneratorTile extends Generator {
         this.container.sendChanges();
         this.container.validateAll();
         this.container.setScale("geothermal_scale", this.data.energy / this.getCapacity());
-        
+
         UIHelper.Machine.setEnergyDisplay(this);
 
         if(this.isActiveSpout() && !this.isFull()) {
