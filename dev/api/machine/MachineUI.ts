@@ -7,6 +7,9 @@ namespace UIHelper {
                 tile.container.setText("status", Translation.translate("message.galacticraft.status.no_energy"))
             };
         };
+        export function setEnergyDisplay(tile: CommonTileEntity & MachineTile) {
+            tile.container.setText("energy_display", "gJ: " + tile.data.energy + "/" + tile.getCapacity());
+        }
     };
 };
 

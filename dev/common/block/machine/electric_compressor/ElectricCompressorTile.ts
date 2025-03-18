@@ -12,6 +12,10 @@ class ElectricCompressorTile extends ProcessingMachine {
         return 250;
     };
 
+    public getScreenByName(): UI.StandartWindow {
+        return ElectricCompressorUI;
+    };
+
     public onTick(): void {
         const capacity = this.getCapacity();
         const progressMax = this.getProgressMax();

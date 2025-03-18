@@ -39,23 +39,14 @@ class CoalGeneratorTile extends Generator {
     public onTick(): void {
         this.container.sendChanges();
         this.container.validateAll();
-
-        CoalGeneratorTile.setBurning("coal_slot", this);
-
         this.container.setScale("progress_scale", this.data.energy / this.getCapacity());
         this.container.setText("EnergyText", "gJ :" + this.data.energy + " / " + this.getCapacity());
 
-        if(this.data.energy > 0) {
-            this.container.setText("Status", Translation.translate("Status: working"));
-        } else {
-            this.container.setText("Status", Translation.translate("Status: fuel empty"));
-        };
-
-        if(this.data.energy >= this.getCapacity()) {
-            this.container.setText("Status", Translation.translate("Status: storage full"));
-        };
-
+        UIHelper.Machine.setEnergyStatus(this);
+        CoalGeneratorTile.setBurning("coal_slot", this);
+        
         this.networkData.putBoolean("active", this.data.active);
+        this.networkData.sendChanges();
     };
 
     public getLocalTileEntity(): LocalTileEntity {

@@ -10,4 +10,8 @@ abstract class Generator extends MachineTile {
     public canExtractEnergy(): boolean {
         return true;
     };
+
+    public isFull(): boolean {
+        return this.data.energy >= this.getCapacity();
+    };
 };

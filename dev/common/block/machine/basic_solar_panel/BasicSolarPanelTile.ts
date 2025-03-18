@@ -18,14 +18,11 @@ class SolarPanelTile extends Generator {
         this.container.setScale("energy_bar", this.data.energy / capacity);
         this.container.setScale("energy_icon", this.data.energy / 100);
         this.container.setText("energy_display", "Sj :" + this.data.energy + " / " + capacity);
-
-        if(this.data.energy >= 5000) {
-            this.container.setText("status", Translation.translate("message.galacticraft.status.full"));
-        }
+        
+        UIHelper.Machine.setEnergyStatus(this);
 
         if(light >= 2) {
             this.container.setText("light_level_display", Translation.translate("message.galacticraft.status.lightlevel_enough"));
-            this.container.setText("status", Translation.translate("message.galacticraft.status.working"));
         };
 
         if(World.getThreadTime() % 1 == 0 && light == 15 && this.data.energy != capacity) {
@@ -37,7 +34,6 @@ class SolarPanelTile extends Generator {
                 this.data.energy -= 1;
             };
 
-            this.container.setText("status", Translation.translate("message.galacticraft.status.waiting"));
             this.container.setText("light_level_display", Translation.translate("message.galacticraft.status.lightlevel_not_enough"));
         };
     };

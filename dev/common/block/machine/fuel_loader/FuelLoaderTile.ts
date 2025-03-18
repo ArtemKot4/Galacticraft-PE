@@ -11,10 +11,14 @@ class FuelLoaderTile extends LiquidMachine {
         this.container.setScale("energy_bar", this.data.energy / capacity);
         this.container.setScale("fuel_scale", fuelAmount / liquidCapacity);
 
-        this.container.setText("energy_display", "gJ :" + this.data.energy + " / " + capacity);
+        UIHelper.Machine.setEnergyDisplay(this);
     
         this.fillFromSlot("input_slot", "fuel");
         this.fillRocket();
+    };
+
+    public getScreenByName(): UI.StandartWindow {
+        return FuelLoaderUI;
     };
 
     public findRocket(): unknown {

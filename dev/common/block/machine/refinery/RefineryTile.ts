@@ -22,4 +22,8 @@ class RefineryTile extends LiquidMachine {
             this.data.energy -= capacity / 2;
         };
     };
+
+    public getScreenByName(): UI.StandartWindow {
+        return RefineryUI;
+    };
 };
