@@ -3,9 +3,11 @@ type IRecipeContainer = {
 };
 
 class RecipeFactory {
+    public static list: RecipeFactory[] = [];
     public storage: IRecipeContainer[] = [];
 
-    public constructor() {}
+    private constructor() {};
+
     public set(obj: Record<string, ItemInstance | number>) {
         for(const i in obj) {
             const recipe = obj[i];
@@ -20,7 +22,7 @@ class RecipeFactory {
         return this;
     };
 
-    public get(container: ItemContainer | UI.Container, slotName: string): IRecipeContainer {
+    public getRecipe(container: ItemContainer | UI.Container, slotName: string): IRecipeContainer {
         for(const i in this.storage) {
             const recipe = this.storage[i][slotName] as ItemInstance;
 
@@ -31,14 +33,7 @@ class RecipeFactory {
         return null;
     };
 
-    public static isValidRecipe(container: ItemContainer | UI.Container, slotName: string, item: ItemInstance): string | boolean {
-        const instance = container.getSlot(slotName);
-        if(item.data === -1) item.data = instance.data;
-
-        return new ItemStack(item).equals(instance);
-    };
-
-    public getForMore(container: ItemContainer | UI.Container, count: number): Nullable<IRecipeContainer> {
+    public getRecipeByMore(container: ItemContainer | UI.Container, count: number): Nullable<IRecipeContainer> {
         for(const i in this.storage) {
             const storage = this.storage[i];
 
@@ -49,23 +44,8 @@ class RecipeFactory {
         };
     };
 
-    public static decreaseSlots(container: ItemContainer | UI.Container, count: number) {
-        for(let i = 1; i <= count; i++) {
-            const slot = container.getSlot("slot_" + i);
-            container.setSlot("slot_" + i, slot.id, slot.count - 1, slot.data, slot.extra);
-        };
-    };
-
-    public static setupResult(container: ItemContainer | UI.Container, slot: name, storage: ItemInstance) {
-        return container.setSlot(slot, storage.id, storage.count, storage.data);
-    };
-
-    public static getResult(container: ItemContainer | UI.Container, slot: name, storage: ItemInstance) {
-        return !!(container.getSlot(slot).id === (storage.id || 0));
-    };
-
-    public registerFromJSON(machine: string) {
-        const files = FileTools.GetListOfFiles(__dir__ + "resources/recipes/" + machine + "/", "");
+    public registerFromPath(dir: string) {
+        const files = FileTools.GetListOfFiles(dir, "");
         for(const i in files) {
             const object = JSON.parse(FileTools.ReadText(files[i].getAbsolutePath()));
             for(const k in object) {
@@ -81,6 +61,43 @@ class RecipeFactory {
         };
 
         return this;
+    };
+
+    public static register(name: string): RecipeFactory {
+        RecipeFactory.list[name] = new RecipeFactory();
+        return RecipeFactory.list[name];
+    };
+
+    public static isValidRecipe(container: ItemContainer | UI.Container, slotName: string, item: ItemInstance): string | boolean {
+        item = item || { id: 0, count: 0, data: 0 };
+        
+        const instance = container.getSlot(slotName);
+        if(item.data === -1) item.data = instance.data;
+
+        return (
+            item.id === instance.id && 
+            item.count === instance.count && 
+            item.data === instance.data
+        );
+    };
+
+    public static decreaseSlots(container: ItemContainer | UI.Container, count: number) {
+        for(let i = 0; i < count; i++) {
+            const slot = container.getSlot("slot_" + i);
+            container.setSlot("slot_" + i, slot.id, slot.count - 1, slot.data, slot.extra);
+        };
+    };
+
+    public static setResult(container: ItemContainer | UI.Container, slot: name, item: ItemInstance) {
+        return container.setSlot(slot, item.id, item.count, item.data);
+    };
+
+    public static getResult(container: ItemContainer | UI.Container, slot: name, item: ItemInstance) {
+        return !!(container.getSlot(slot).id === (item.id || 0));
+    };
+
+    public static get(name: string): RecipeFactory {
+        return RecipeFactory.list[name];
     };
 };
 

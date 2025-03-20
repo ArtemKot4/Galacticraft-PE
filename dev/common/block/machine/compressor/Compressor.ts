@@ -59,6 +59,6 @@ class Compressor extends MachineBlock {
     public getTileEntity(): CommonTileEntity {
         return new CompressorTile();
     };
-
-    public static factory = new RecipeFactory().registerFromJSON("compressor");
 };
+
+RecipeFactory.register("compressor").registerFromPath(__dir__ + "resources/recipes/compressor");

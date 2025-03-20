@@ -35,14 +35,14 @@ class ElectricCompressorTile extends ProcessingMachine {
             UIHelper.Machine.setEnergyStatus(this);
         };
 
-        const recipe = BlockList.COMPRESSOR.factory.getForMore(this.container, 9);
+        const recipe = RecipeFactory.get("compressor").getRecipeByMore(this.container, 9);
 
         this.setProgress(recipe);
 
         if(this.isFullProgress()) {
             RecipeFactory.decreaseSlots(this.container, 9);
-            RecipeFactory.setupResult(this.container, "slot_result_0", recipe.result as ItemInstance);
-            RecipeFactory.setupResult(this.container, "slot_result_1", (recipe.result_2 || recipe.result) as ItemInstance);
+            RecipeFactory.setResult(this.container, "slot_result_0", recipe.result as ItemInstance);
+            RecipeFactory.setResult(this.container, "slot_result_1", (recipe.result_2 || recipe.result) as ItemInstance);
             this.clearProgress();
 
             this.data.energy -= capacity / 2;

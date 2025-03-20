@@ -43,6 +43,6 @@ class CircuitFabricator extends MachineBlock {
     public getTileEntity(): CommonTileEntity {
         return new CircuitFabricatorTile();
     };
-
-    public factory: RecipeFactory = new RecipeFactory().registerFromJSON("circuit");
 };
+
+RecipeFactory.register("circuit_fabricator").registerFromPath(__dir__ + "resources/recipes/circuit")

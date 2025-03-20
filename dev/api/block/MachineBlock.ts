@@ -1,5 +1,4 @@
 abstract class MachineBlock extends GalacticraftBlock {
-    public factory: RecipeFactory;
 
     public constructor(id: string, variationList: Block.BlockVariation[]) {
         super(id, variationList);

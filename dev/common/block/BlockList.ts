@@ -12,3 +12,5 @@ namespace BlockList {
     export const ROCKET_WORKBENCH_TOP = new RocketWorkbenchTop();
     export const CRASHED_PROBE = new CrashedProbe();
 };
+
+CrashedProbe.addItem(0.25, ItemList.CANISTER_COPPER.id, 8);
