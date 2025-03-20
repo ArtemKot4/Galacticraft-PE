@@ -3,12 +3,14 @@ abstract class MachineBlock extends GalacticraftBlock {
     public constructor(id: string, variationList: Block.BlockVariation[]) {
         super(id, variationList);
 
-        ICRender.getGroup("rf-wire").add(BlockID[id], -1),
+            ICRender.getGroup("rf-wire").add(BlockID[id], -1),
             ICRender.getGroup("ic-wire").add(BlockID[id], -1),
             ICRender.getGroup("gj-wire").add(BlockID[id], -1),
             ICRender.getGroup("gj-improved-wire").add(BlockID[id], -1),
             ICRender.getGroup("bt-wire").add(BlockID[id], -1),
             ICRender.getGroup("fc-wire").add(BlockID[id], -1);
+            EnergyTileRegistry.addEnergyTypeForId(this.id, EnergyTypes.GJ);
+            EnergyTileRegistry.addEnergyTypeForId(this.id, EnergyTypes.EU);
 
         if (this.isWrenchable()) {
             Block.registerPlaceFunctionForID(this.id, (coords, item, block, player, region) => {

@@ -1,16 +1,3 @@
-
-Block.registerPlaceFunction("workbench_rocket", function(coords, item, block, player) {
-    var region = BlockSource.getDefaultForActor(player);
-    var spaces = coords.relative
-
-    region.setBlock(spaces.x, spaces.y, spaces.z, item.id, item.data);
-    region.setBlock(spaces.x, spaces.y + 1, spaces.z, BlockID.workbench_nasa,0);
-});
-
-
-
-
-
 SpacesMachine.registerStandartMachine(BlockID.workbench_rocket, {
     useNetworkItemContainer: true,
     getScreenName() {

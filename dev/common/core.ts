@@ -58,15 +58,13 @@ function checkDimension(thread, player?) {
 // Bucket.setVolume(0.6);
 
 // Click.setVolume(0.6);
+namespace EnergyTypes {
+    export const GJ = EnergyTypeRegistry.assureEnergyType("galacticraft_joule", 2);
+    export const OB = EnergyTypeRegistry.assureEnergyType("oxygen_bar", 2);
+    export const EU = EnergyTypeRegistry.assureEnergyType("Eu", 1);
+    export const RF = EnergyTypeRegistry.assureEnergyType("RF", 0.25);
+};
 
-const GJ = EnergyTypeRegistry.assureEnergyType("galacticraft_joule", 2);
-//Космическая энергия
-const OB = EnergyTypeRegistry.assureEnergyType("oxygen_bar", 2);
-
-const EU = EnergyTypeRegistry.assureEnergyType("Eu", 1);
-
-const RF = EnergyTypeRegistry.assureEnergyType("RF", 0.25);
-const ft = EnergyTypeRegistry.assureEnergyType("FutureTock", 0.25);
 
 let RV;
 
@@ -84,10 +82,6 @@ const ConfigManager = {
     },
 };
 
-function randomInt(min: int, max: int) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 const UniqueGen = {
     randomCoords: function (random, chunkX, chunkZ, minHeight, maxHeight) {
         minHeight = minHeight || 0;
@@ -101,7 +95,7 @@ const UniqueGen = {
     generateOre: function (id, data, chunkX, chunkZ, random, params) {
         for (let i = 0; i < params.veinCounts; i++) {
             let coords = this.randomCoords(random, chunkX, chunkZ, params.minY, params.maxY);
-            GenerationUtils.generateOre(coords.x, coords.y, coords.z, id, data, params.size, false, random.nextInt());
+            GenerationUtils.generateOre(coords.x, coords.y, coords.z, id, data, params.size, false);
         }
     },
     generateOreInDimension: function (id, data, chunkX, chunkZ, random, params) {
@@ -438,3 +432,6 @@ OxygenTILE.setTouchable(false);
 EquipMent.setInventoryNeeded(true);
 
 const __modelsdir__ = __dir__ + "resources/assets/models/";
+
+
+const itemTagGroup = TagRegistry.getOrCreateGroup("items");
