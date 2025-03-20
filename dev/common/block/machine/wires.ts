@@ -12,7 +12,7 @@ const PIPE = Block.createSpecialType({
 
 class Cable {
   public static STANDART_CABLE_WIDTH = 2 / 8;
-  public static colors_to_paint = [
+  public static readonly PAINT_COLORS = <const> [
     "blue",
     "black",
     "white",
@@ -30,7 +30,7 @@ class Cable {
     "brown",
     "light_blue",
     "light_gray",
-  ] as const;
+  ];
 
   constructor(public id: string) {}
 
@@ -144,3 +144,4 @@ Item.addToCreative(BlockID["improved_aluminum_wire_gray"], 1, 0);
 Item.addToCreative(BlockID["pipe_hydrogen"], 1, 0);
 
 Item.addToCreative(BlockID["pipe_oxygen_gray"], 1, 0);
+//нужно доделать

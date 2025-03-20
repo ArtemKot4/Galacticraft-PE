@@ -1,9 +1,16 @@
 ﻿class PrelaunchChecklist extends GalacticraftItem  implements ItemUseCallback, INoTargetUseCallback {
     public fixedPoints: string[];
+    public SCALE: number = 1.8;
+    public POINT_TEXT_LOCATION = 20;
 
-    public registerPoint(point: string): void {
-        this.fixedPoints.push(point);
-    };
+    public UI: UI.Window = (() => {
+        const window = new UI.Window();
+        window.setBlockingBackground(true);
+        window.setDynamic(true);
+        window.setTouchable(true);
+
+        return window;
+    })();
 
     public constructor() {
         super("prelaunch_checklist", {
@@ -11,9 +18,6 @@
             meta: 0
         });
     };
-
-    public SCALE: number = 1.8;
-    public POINT_TEXT_LOCATION = 20;
 
     public getDefaultContent = () => (
         {
@@ -43,7 +47,7 @@
      * @returns selected points
      */
     public drawPage(row: string[], currentPoints: string[]): string[] {
-        let selectedPoints: string[] = currentPoints;
+        let selectedPoints: string[] = currentPoints || [];
         const content = this.UI.getContent();
 
         let y = 70;
@@ -172,14 +176,13 @@
         this.UI.forceRefresh();
     };
 
-    public UI: UI.Window = (() => {
-        const window = new UI.Window();
-        window.setBlockingBackground(true);
-        window.setDynamic(true);
-        window.setTouchable(true);
-
-        return window;
-    })();
+    public open(item: ItemInstance) {
+        if(!this.UI.isOpened()) {
+            this.UI.open();
+        };
+        this.draw(item);
+        return;
+    };
 
     public getSelectedPoints(item: ItemInstance): Nullable<string[]> {
         if(!item.extra) return null;
@@ -195,12 +198,8 @@
         Entity.setCarriedItem(playerUid, item.id, item.count, item.data, extra);
     };
 
-    public open(item: ItemInstance) {
-        if(!this.UI.isOpened()) {
-            this.UI.open();
-        };
-        this.draw(item);
-        return;
+    public registerPoint(point: string): void {
+        this.fixedPoints.push(point);
     };
 
     public onNoTargetUse(item: ItemStack, player: number): void {
