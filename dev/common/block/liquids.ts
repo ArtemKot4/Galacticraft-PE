@@ -1,73 +1,50 @@
-const BLOCK_TYPE_LIQUID = Block.createSpecialType({
-  solid: false,
-  renderlayer: 1,
-  explosionres: 10000,
-});
+class GalacticraftLiquid {
+    public static types: string[] = [];
+    public constructor(public type: string) {
+        GalacticraftLiquid.types.push(type);
+    };
 
-class GCLiquid {
-  public id: string;
+    public createBlock(still_texture: string, flow_texture: string, block_type?: string): this {
+        Block.createLiquidBlock(
+            "liquid_galacticraft_" + this.type,
+            {
+              name: "block.galacticraft.liquid." + this.type,
+              still: {
+                texture: [still_texture, 0],
+                id: "liquid_galacticraft_" + this.type + "_still",
+              },
+              flowing: {
+                texture: [flow_texture, 0],
+                id: "liquid_galacticraft_" + this.type + "_flow",
+              }
+            },
+            block_type || {
+                solid: false,
+                renderlayer: 1,
+                explosionres: 10000
+            }
+        );
+        return this;
+    };
 
-  constructor(id, block_type?) {
-    this.id = id + "_gc";
-    this.create(block_type || BLOCK_TYPE_LIQUID);
-    this.onClick();
-  }
+    public static isValidType(type: string): boolean {
+        return GalacticraftLiquid.types.includes(type);
+    };
 
-  public create(block_type: string | Block.SpecialType) {
-  
-    const name = "block.galacticraft.liquid." + this.id;
-      LiquidRegistry.registerLiquid(this.id, name, [this.id + "_flow"]),
-      Block.createLiquidBlock(
-        this.id,
-        {
-          name: name,
-          still: {
-            texture: [this.id + "_still", 0],
-            id: this.id + "_still",
-          },
-          flowing: {
-            texture: [this.id + "_flow", 0],
-            id: this.id + "_flow",
-          },
-          bucket: {
-            texture: { name: "bucket_of_" + this.id, meta: 0 },
-            id: "bucket_of_" + this.id,
-          },
-        },
-        block_type
-      )
-  }
+    public static getLiquidBlock(type: string) {
+        return LiquidRegistry.getBlockByLiquid("liquid_galacticraft_" + type);
+    };
 
-  public onClick() {
+    public static getLiquidTypeByBlock(block: Tile) {
+        const liquid = LiquidRegistry.getLiquidByBlock(block.id)
+        if(!liquid) return null;
+        if(!liquid.includes("liquid_galacticraft")) return null;
+        const splited = liquid.split("_");
+        return splited.slice(2).join("_");
+    };
+};
 
-    Block.registerClickFunctionForID(
-      BlockID[this.id],
-      (coords, item, block, player) => {
-        Game.message("Сработало!");
-        if (item.id === ItemID.empty_liquid_canister) {
-          const region = BlockSource.getDefaultForActor(player);
-          const split = this.id.split("_");
-          try {
-            return (
-              Entity.setCarriedItem(
-                player,
-                ItemID[
-                  split.slice(0, split.length - 1).join("_") + "_canister"
-                ],
-                1,
-                6,
-                item.extra
-              ),
-              region.setBlock(coords.x, coords.y, coords.z, 0, 0)
-            );
-          } catch {
-          Game.message("Id is not valid")
-          }
-        }
-      }
-    );
-  }
-}
-
-new GCLiquid("oil");
-new GCLiquid("fuel");
+namespace LiquidList {
+    export const OIL = new GalacticraftLiquid("oil").createBlock("oil_still", "oil_flow");
+    export const FUEL = new GalacticraftLiquid("fuel").createBlock("fuel_still", "fuel_flow");
+};
