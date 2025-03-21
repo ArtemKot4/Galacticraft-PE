@@ -35,12 +35,14 @@ class GalacticraftLiquid {
         return LiquidRegistry.getBlockByLiquid("liquid_galacticraft_" + type);
     };
 
-    public static getLiquidTypeByBlock(block: Tile) {
+    public static getLiquidTypeByBlock(block: Tile): Nullable<string> {
         const liquid = LiquidRegistry.getLiquidByBlock(block.id)
         if(!liquid) return null;
-        if(!liquid.includes("liquid_galacticraft")) return null;
-        const splited = liquid.split("_");
-        return splited.slice(2).join("_");
+        if(liquid.includes("liquid_galacticraft")) {
+            const splited = liquid.split("_");
+            return splited.slice(2).join("_");
+        };
+        return null;
     };
 };
 
