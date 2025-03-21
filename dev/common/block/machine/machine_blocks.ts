@@ -1,4 +1,4 @@
-new GBlock("workbench_nasa", [{
+/*new GBlock("workbench_nasa", [{
     name: "Workbench Nasa",
     texture: [["assembly",
         0],
@@ -481,7 +481,7 @@ new GBlock("oxygen_storage_module", [{
             ["Machine Oxygen Input",
                 0]],
         inCreative: false
-    },/* {
+    }, {
         name: "Oxygen Storage Module",
         texture: [["Machine",
             0],
@@ -496,7 +496,7 @@ new GBlock("oxygen_storage_module", [{
             ["Machine Oxygen Input",
                 0]],
         inCreative: false
-    },*/ {
+    },* {
         name: "Oxygen Storage Module",
         texture: [["Machine",
             0],
@@ -533,11 +533,7 @@ new GBlock("oxygen_storage_module", [{
     STONE
   ).createWithRotation();
   
-  
-  /*EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_compressor, gj);
-  EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_compressor, ob);
-      EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_compressor, EU);
-      EnergyTileRegistry.addEnergyTypeForId(BlockID.oxygen_compressor, RF);*/
+
   
   new GBlock(
     "oxygen_decompressor",
@@ -556,4 +552,4 @@ new GBlock("oxygen_storage_module", [{
       },
     ],
     STONE
-  ).createWithRotation();
+  ).createWithRotation();*/

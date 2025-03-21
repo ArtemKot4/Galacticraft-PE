@@ -38,7 +38,7 @@ class OxygenCollectorTile extends Generator {
         let leaves = 0;
         for(let i = -radius; i <= radius; i++) {
             for(let k = 0; k <= radius; k++) {
-                const blockID = this.blockSource.getBlockID(x, this.y - i, this.z + k);
+                const blockID = this.blockSource.getBlockID(x, this.y + i, this.z + k);
                 if(Utils.getBlockTags(blockID).includes("leaves")) {
                     leaves++;
                 };

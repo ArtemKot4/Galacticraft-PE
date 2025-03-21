@@ -11,6 +11,7 @@ namespace BlockList {
     export const GEOTHERMAL_GENERATOR = new GeothermalGenerator();
     export const ROCKET_WORKBENCH_TOP = new RocketWorkbenchTop();
     export const CRASHED_PROBE = new CrashedProbe();
+    export const OXYGEN_COLLECTOR = new OxygenCollector();
 };
 
 CrashedProbe.addItem(0.25, ItemList.CANISTER_COPPER.id, 8);

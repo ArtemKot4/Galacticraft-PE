@@ -1,0 +1,55 @@
+enum ECelestialType {
+    GALAXY = 0,
+    SYSTEM = 1,
+    STAR = 2,
+    PLANET = 3,
+    SATELLITE = 4
+};
+
+class CelestialBody implements ILocalizeable {
+    public type: ECelestialType;
+    public x: number;
+    public y: number;
+    public icon: number;
+    public scale: number;
+    public name: string;
+    public localizedName: string;
+    public description: string;
+
+    public getName(): string {
+        return this.name;
+    };
+
+    public getLocalizedName(): string {
+        return this.localizedName;
+    };
+
+    public getDescription(): string {
+        return this.description;
+    };
+
+    public getSpeed(): number {
+        return 1.0;
+    };
+
+    public getType(): ECelestialType {
+        return this.type;
+    };
+
+    public getLink(): unknown {
+        return null;
+    };
+
+    public constructor(object?: ILocalizeable) {
+        const type = this.getType();
+        const link = this.getLink();
+        if(object) {
+            if(object instanceof Satellite) this.type = ECelestialType.SATELLITE;
+            else if(object instanceof Planet) this.type = ECelestialType.PLANET;
+            if(object instanceof SpaceSystem) this.type = ECelestialType.SYSTEM;
+            if(object instanceof Galaxy) this.type = ECelestialType.GALAXY;
+            this.name = object.getName();
+            this.localizedName = object.getLocalizedName();
+        };
+    };
+};
