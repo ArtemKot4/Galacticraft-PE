@@ -41,7 +41,7 @@ class CrashedProbeTile extends CommonTileEntity {
         for(let i = 0; i < this.getSize(); i++) {
             let item = {
                 id: VanillaBlockID.web,
-                count: randomInt(1, 8),
+                count: MathHelper.randomInt(1, 8),
                 data: 0
             };
             const current = CrashedProbe.getRandomItem();

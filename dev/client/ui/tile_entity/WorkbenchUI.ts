@@ -176,7 +176,7 @@ const ManipulatorsUI = new UI.StandartWindow({
             bitmap2: "button_1",
             clicker: {
                 onClick: function () {
-                    Click.play();
+                    //coming soon...
                 },
             },
         },

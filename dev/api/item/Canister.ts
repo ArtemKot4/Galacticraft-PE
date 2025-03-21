@@ -34,7 +34,7 @@ class Canister extends GalacticraftItem implements IconOverrideCallback, INameOv
         return EItemCategory.TOOL;
     };
 
-    public static add(liquid: name) {
+    public static add(liquid: string) {
         Canister.liquidList.push(liquid);
     };
 }

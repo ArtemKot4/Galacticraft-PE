@@ -88,11 +88,11 @@ class RecipeFactory {
         };
     };
 
-    public static setResult(container: ItemContainer | UI.Container, slot: name, item: ItemInstance) {
+    public static setResult(container: ItemContainer | UI.Container, slot: string, item: ItemInstance) {
         return container.setSlot(slot, item.id, item.count, item.data);
     };
 
-    public static getResult(container: ItemContainer | UI.Container, slot: name, item: ItemInstance) {
+    public static getResult(container: ItemContainer | UI.Container, slot: string, item: ItemInstance) {
         return !!(container.getSlot(slot).id === (item.id || 0));
     };
 

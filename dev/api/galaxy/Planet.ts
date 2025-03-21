@@ -22,7 +22,9 @@ abstract class Planet extends Dimension implements IPlanet {
         return new CelestialBody();
     };
 
-    public addSatellite(satellite: Satellite): void {};
+    public addSatellite(satellite: Satellite): void {
+        this.satellites[satellite.getName()] = satellite;
+    };
 
     public constructor(id: number, stringId: string) {
         super(id, stringId);
@@ -32,3 +34,5 @@ abstract class Planet extends Dimension implements IPlanet {
         return [false, false];
     }; 
 };
+
+

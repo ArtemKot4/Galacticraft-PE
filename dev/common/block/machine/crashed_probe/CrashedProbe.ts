@@ -69,7 +69,7 @@ class CrashedProbe extends GalacticraftBlock {
 
     public static getRandomItem(): ItemInstance & { chance: number } {
         const item = MathHelper.randomFromArray(CrashedProbe.items);
-        item.count = randomInt(1, item.count);
+        item.count = MathHelper.randomInt(1, item.count);
         return item;
     };
 };

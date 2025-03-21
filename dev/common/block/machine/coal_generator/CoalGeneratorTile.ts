@@ -10,7 +10,7 @@ class CoalGeneratorTile extends Generator {
         return 3000;
     };
 
-    public static setBurning(slotName: name, tile: CommonTileEntity & MachineTile): void {
+    public static setBurning(slotName: string, tile: CommonTileEntity & MachineTile): void {
         if(tile.data.energy >= tile.getCapacity()) { 
             tile.data.active = false; 
             tile.data.burning = 0;

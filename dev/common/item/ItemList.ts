@@ -217,5 +217,5 @@ Block.registerDropFunction("moonore_sapphire", function (coords, blockID) {
 });
 
 Block.registerDropFunction("moonore_cheese", function (coords, blockID) {
-    return [[ItemList.CHEESE_CURD.id, randomInt(1, 3), 0]];
+    return [[ItemList.CHEESE_CURD.id, MathHelper.randomInt(1, 3), 0]];
 });

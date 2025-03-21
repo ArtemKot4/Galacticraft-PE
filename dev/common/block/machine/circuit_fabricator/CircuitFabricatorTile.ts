@@ -29,13 +29,13 @@ class CircuitFabricatorTile extends ProcessingMachine {
         this.container.setScale("burning_scale", this.data.progress / progressMax);
         this.container.setScale("energy_bar", this.data.energy / capacity);
 
-        const recipe = BlockList.CIRCUIT_FABRICATOR.factory.getForMore(this.container, 5);
+        const recipe = RecipeFactory.get("circuit_fabricator").getRecipeByMore(this.container, 5);
 
         this.setProgress(recipe);
 
         if(this.isFullProgress()) {
             RecipeFactory.decreaseSlots(this.container, 5);
-            RecipeFactory.setupResult(this.container, "slot_result", recipe.result as ItemInstance);
+            RecipeFactory.setResult(this.container, "slot_result", recipe.result as ItemInstance);
             this.clearProgress();
 
             this.data.energy -= capacity / 2;
