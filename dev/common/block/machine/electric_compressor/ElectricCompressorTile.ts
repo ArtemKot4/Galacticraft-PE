@@ -4,7 +4,7 @@ class ElectricCompressorTile extends ProcessingMachine {
         energy: 0
     };
 
-    public getCapacity(): number {
+    public getEnergyCapacity(): number {
         return 1000;
     };
 
@@ -17,7 +17,7 @@ class ElectricCompressorTile extends ProcessingMachine {
     };
 
     public onTick(): void {
-        const capacity = this.getCapacity();
+        const capacity = this.getEnergyCapacity();
         const progressMax = this.getProgressMax();
 
         this.container.sendChanges();

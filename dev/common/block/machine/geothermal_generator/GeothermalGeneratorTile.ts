@@ -1,5 +1,5 @@
 class GeothermalGeneratorTile extends Generator {
-    public getCapacity(): number {
+    public getEnergyCapacity(): number {
         return 3000;
     };
 
@@ -8,7 +8,7 @@ class GeothermalGeneratorTile extends Generator {
     };
 
     public onDestroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
-        if(this.isFull()) {
+        if(this.isFullEnergy()) {
             this.blockSource.explode(this.x, this.y, this.z, 1, true);
         };
     };
@@ -21,11 +21,11 @@ class GeothermalGeneratorTile extends Generator {
     public onTick(): void {
         this.container.sendChanges();
         this.container.validateAll();
-        this.container.setScale("geothermal_scale", this.data.energy / this.getCapacity());
+        this.container.setScale("geothermal_scale", this.data.energy / this.getEnergyCapacity());
 
         UIHelper.Machine.setEnergyDisplay(this);
 
-        if(this.isActiveSpout() && !this.isFull()) {
+        if(this.isActiveSpout() && !this.isFullEnergy()) {
             this.data.energy++;
         };
     };

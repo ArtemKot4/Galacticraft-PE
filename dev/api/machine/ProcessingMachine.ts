@@ -9,7 +9,7 @@ abstract class ProcessingMachine extends InputMachine {
     public isValid(recipe: Record<string, unknown>): boolean {
         return (
             recipe != null && 
-            this.data.energy >= (this.getCapacity() / 2) && 
+            this.data.energy >= (this.getEnergyCapacity() / 2) && 
             this.data.progress < this.getProgressMax()
         );
     };

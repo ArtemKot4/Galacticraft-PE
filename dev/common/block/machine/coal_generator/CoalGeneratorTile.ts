@@ -6,12 +6,12 @@ class CoalGeneratorTile extends Generator {
         active: false
     };
 
-    public getCapacity(): number {
+    public getEnergyCapacity(): number {
         return 3000;
     };
 
     public static setBurning(slotName: string, tile: CommonTileEntity & MachineTile): void {
-        if(tile.data.energy >= tile.getCapacity()) { 
+        if(tile.isFullEnergy()) { 
             tile.data.active = false; 
             tile.data.burning = 0;
             return;
@@ -30,17 +30,18 @@ class CoalGeneratorTile extends Generator {
         if(
             tile.data.burning === tile.data.burningMax && 
             tile.data.active && 
-            tile.data.energy <= tile.getCapacity()
+            tile.data.energy <= tile.getEnergyCapacity()
         ) { 
             tile.data.energy += 1;
         };
     };
 
     public onTick(): void {
+        const capacity = this.getEnergyCapacity();
         this.container.sendChanges();
         this.container.validateAll();
-        this.container.setScale("progress_scale", this.data.energy / this.getCapacity());
-        this.container.setText("EnergyText", "gJ :" + this.data.energy + " / " + this.getCapacity());
+        this.container.setScale("progress_scale", this.data.energy / capacity);
+        this.container.setText("EnergyText", "gJ :" + this.data.energy + " / " + capacity);
 
         UIHelper.Machine.setEnergyStatus(this);
         CoalGeneratorTile.setBurning("coal_slot", this);

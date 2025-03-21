@@ -12,8 +12,4 @@ abstract class Generator extends MachineTile {
     //     const output = Math.min(1, this.data.energy);
     //     this.data.energy += src.add(output) - output;
     // };
-
-    public isFull(): boolean {
-        return this.data.energy >= this.getCapacity();
-    };
 };

@@ -14,7 +14,7 @@ abstract class MachineTile extends CommonTileEntity implements EnergyTile {
         energy: 0
     };
     
-    public getCapacity(): number {
+    public getEnergyCapacity(): number {
         return 5000;
     };
 
@@ -36,8 +36,12 @@ abstract class MachineTile extends CommonTileEntity implements EnergyTile {
     };
 
     public energyReceive(type: string, amount: number, voltage: number): number {
-        const add = Math.min(amount, this.getCapacity() - this.data.energy);
+        const add = Math.min(amount, this.getEnergyCapacity() - this.data.energy);
         this.data.energy += add;
         return add;
+    };
+
+    public isFullEnergy(): boolean {
+        return this.data.energy >= this.getEnergyCapacity();
     };
 };
