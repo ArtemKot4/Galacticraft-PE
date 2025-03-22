@@ -1,6 +1,6 @@
 class FuelLoaderTile extends LiquidMachine {
     public onTick(): void {
-        const capacity = this.getCapacity();
+        const capacity = this.getEnergyCapacity();
         const liquidCapacity = this.getLiquidCapacity();
         const fuelAmount = this.liquidStorage.getAmount("fuel");
 
@@ -26,6 +26,6 @@ class FuelLoaderTile extends LiquidMachine {
     };
 
     public fillRocket() {
-        if(this.data.energy < this.getCapacity() / 2) return;
+        if(this.data.energy < this.getEnergyCapacity() / 2) return;
     };
 };

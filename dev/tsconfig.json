@@ -139,6 +139,8 @@
 		"common/block/misc/venus_spout/VenusSpout.ts",
 		"common/block/misc/venus_spout/VenusSpoutTile.ts",
 		"common/block/misc/venus_spout/LocalVenusSpoutTile.ts",
+		"common/block/misc/glowstone_torch/GlowstoneTorch.ts",
+		"common/block/misc/unlit_torch/UnlitTorch.ts",
 		"common/block/BlockList.ts",
 		"common/Integrations/Recipe Viewer Integration.ts",
 		"common/Integrations/Industrial Craft 2 Experimental Integration.ts",

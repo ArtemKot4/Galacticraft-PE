@@ -1,75 +1,70 @@
 {
-  "resources": [
-    { "path": "recipes", "type": "resource_directory" },
-    {
-      "path": "assets",
-      "type": "resource_directory"
-    },
-    {
-      "path": "models",
-      "type": "resource_directory"
-    },
-    {
-      "path": "assets/gui",
-      "type": "gui"
-    },
-    {
-      "path": "assets/environment",
-      "type": "gui"
-    }
-  ],
-  "sources": [
-    {
-      "source": "dev",
-      "target": "main.js",
-      "type": "main",
-      "language": "typescript"
-    },
-    {
-      "source": "launcher.js",
-      "type": "launcher",
-      "language": "javascript"
-    },
-    {
-      "source": "lib/*",
-      "type": "library",
-      "language": "javascript"
-    }
-  ],
-  "compile": [
-    {
-      "source": "native",
-      "type": "native"
-    },
-    {
-      "source": "java",
-      "type": "java"
-    }
-  ],
-  "additional": [
-    {
-      "source": "config.json",
-      "targetDir": "."
-    },
-    {
-      "source": "config.info.json",
-      "targetDir": "."
-    }
-  ],
-  "info": {
-    "name": "Galacticraft 4 PE",
-    "author": "Artem",
-    "version": "alpha pre-release 1.0.0",
-    "description": "",
-    "icon": "mod_icon.png",
-    "project": {
-      "compiledLibraries": true
-    }
-  },
-  "project": {
-    "compiledLibraries": true
-  },
-  "api": "CoreEngine",
-  "linkNative": ["minecraftpe", "innercore", "nativejs"],
-  "excludeFromRelease": []
+	"$schema": "https://raw.githubusercontent.com/zheka2304/innercore-mod-toolchain/develop/toolchain/schemas/make.schema.json",
+	"resources": [
+		{
+			"type": "minecraft_resource_pack",
+			"path": "minecraft_packs/resource"
+		},
+	    {
+			"type": "minecraft_behavior_pack",
+			"path": "minecraft_packs/behavior"
+		},
+		{
+			"path": "assets",
+			"type": "resource_directory"
+		},
+        {
+            "path": "recipes",
+            "type": "resource_directory"
+        },
+		{
+			"path": "assets/gui",
+			"type": "gui"
+		}
+	],
+	"project": {
+		"composite": false
+	},
+	"sources": [
+		{
+			"source": "dev",
+			"target": "main.js",
+			"type": "main",
+			"language": "typescript"
+		},
+		{
+			"source": "launcher.js",
+			"type": "launcher",
+			"language": "javascript"
+		},
+		{
+			"source": "lib/*",
+			"type": "library",
+			"language": "typescript"
+		}
+	],
+	"additional": [
+		{
+			"source": "config.json",
+			"targetDir": "."
+		},
+		{
+			"source": "config.info.json",
+			"targetDir": "."
+		}
+	],
+	"info": {
+		"name": "Galacticraft PE",
+		"author": "ArtemKot",
+		"version": "2025",
+		"description": "New representation of original galactiraft and port of galacticraft 4 to mobile devices",
+		"icon": "mod_icon.png"
+	},
+	"api": "CoreEngine",
+	"linkNative": [
+		"minecraftpe",
+		"innercore",
+		"nativejs"
+	],
+	"excludeFromRelease": []
 }

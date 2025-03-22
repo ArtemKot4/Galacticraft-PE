@@ -1,14 +1,14 @@
 namespace UIHelper {
     export namespace Machine {
         export function setEnergyStatus(tile: CommonTileEntity & MachineTile) {
-            if(tile.data.energy >= tile.getCapacity()) {
+            if(tile.data.energy >= tile.getEnergyCapacity()) {
                 tile.container.setText("status", Translation.translate("message.galacticraft.status.energy_full"))
             } else if(tile.data.energy <= 0) {
                 tile.container.setText("status", Translation.translate("message.galacticraft.status.no_energy"))
             };
         };
         export function setEnergyDisplay(tile: CommonTileEntity & MachineTile) {
-            tile.container.setText("energy_display", "gJ: " + tile.data.energy + "/" + tile.getCapacity());
+            tile.container.setText("energy_display", "gJ: " + tile.data.energy + "/" + tile.getEnergyCapacity());
         }
     };
 };

@@ -18,4 +18,4 @@ class CoalGenerator extends MachineBlock {
     };
 };
 
-RecipeFactory.register("coal_generator").registerFromPath(__dir__ + "resources/recipes/coal"); //в конце должна быть / или нет?
+RecipeFactory.register("coal_generator").registerPath(__dir__ + "resources/recipes/coal"); //в конце должна быть / или нет?

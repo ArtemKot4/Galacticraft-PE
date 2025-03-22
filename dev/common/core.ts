@@ -23,18 +23,6 @@ IMPORT("ChargeItem");
 
 type number3 = [number, number, number];
 
-function checkDimension(thread, player?) {
-    if (World.getThreadTime() % thread == 0) {
-        return (
-            Player.getDimension() == Moon.getPlanet() ||
-            Player.getDimension() == Mars.getPlanet() ||
-            Player.getDimension() == Venus.getPlanet() ||
-            Player.getDimension() == Asteroids.getPlanet() ||
-            Player.getDimension() == SpacesStation.getPlanet()
-        );
-    }
-}
-
 // const Click = new Sound("click.ogg");
 
 // const Bucket = new Sound("bucket.ogg");
@@ -434,4 +422,7 @@ EquipMent.setInventoryNeeded(true);
 const __modelsdir__ = __dir__ + "resources/assets/models/";
 
 
-const itemTagGroup = TagRegistry.getOrCreateGroup("items");
+const ITEM_TAG_GROUP = TagRegistry.getOrCreateGroup("items");
+const BLOCK_TAG_GROUP = TagRegistry.getOrCreateGroup("blocks");
+
+const GC_WIRE_GROUP = ICRender.getGroup("gc.wire");

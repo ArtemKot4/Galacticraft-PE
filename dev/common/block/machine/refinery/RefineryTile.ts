@@ -1,6 +1,6 @@
 class RefineryTile extends LiquidMachine {
     public onTick(): void {
-        const capacity = this.getCapacity();
+        const capacity = this.getEnergyCapacity();
         const liquidCapacity = this.getLiquidCapacity();
         const oilAmount = this.liquidStorage.getAmount("oil");
         const fuelAmount = this.liquidStorage.getAmount("fuel");

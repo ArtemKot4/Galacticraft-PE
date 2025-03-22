@@ -33,6 +33,10 @@ abstract class Planet extends Dimension implements IPlanet {
     public generateCaves(): [caves: boolean, underwater_caves: boolean] {
         return [false, false];
     }; 
+
+    public getTags(): string[] {
+        return ["space"];
+    };
 };
 
 

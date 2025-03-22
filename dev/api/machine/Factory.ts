@@ -5,7 +5,7 @@ type IRecipeContainer = {
 class RecipeFactory {
     public static list: RecipeFactory[] = [];
     public storage: IRecipeContainer[] = [];
-
+    public path: string;
     private constructor() {};
 
     public set(obj: Record<string, ItemInstance | number>) {
@@ -44,8 +44,13 @@ class RecipeFactory {
         };
     };
 
-    public registerFromPath(dir: string) {
-        const files = FileTools.GetListOfFiles(dir, "");
+    public registerPath(path: string) {
+        this.path = path;
+        return this;
+    };
+
+    public static registerFromPath(path: string, factory: RecipeFactory) {
+        const files = FileTools.GetListOfFiles(path, "");
         for(const i in files) {
             const object = JSON.parse(FileTools.ReadText(files[i].getAbsolutePath()));
             for(const k in object) {
@@ -57,11 +62,9 @@ class RecipeFactory {
                 };
             };
 
-            this.set(object);
+            factory.storage.push(object);
         };
-
-        return this;
-    };
+    }
 
     public static register(name: string): RecipeFactory {
         RecipeFactory.list[name] = new RecipeFactory();

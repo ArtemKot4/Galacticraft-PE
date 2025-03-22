@@ -45,4 +45,4 @@ class CircuitFabricator extends MachineBlock {
     };
 };
 
-RecipeFactory.register("circuit_fabricator").registerFromPath(__dir__ + "resources/recipes/circuit")
+RecipeFactory.register("circuit_fabricator").registerPath(__dir__ + "resources/recipes/circuit")

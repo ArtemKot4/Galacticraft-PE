@@ -36,7 +36,7 @@ class Battery extends GalacticraftItem {
             const battery = Battery.list[slot.id];
             if(World.getThreadTime() % battery.speed === 0) {
                 if(battery.capacity === -1) {
-                    tile.data.energy = Math.min(tile.getCapacity(), tile.data.energy);
+                    tile.data.energy = Math.min(tile.getEnergyCapacity(), tile.data.energy);
                     return;
                 };
                 tile.data.energy += ChargeItemRegistry.getEnergyFromSlot(slot, "galacticraft_joule", 1, 1);

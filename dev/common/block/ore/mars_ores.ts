@@ -1,5 +1,5 @@
-IDRegistry.genBlockID("desh");
-Block.createBlock("desh",[{name: "Desh Ore", texture: [["desh", 0]], inCreative: true} ],STONE);
+// IDRegistry.genBlockID("desh");
+// Block.createBlock("desh",[{name: "Desh Ore", texture: [["desh", 0]], inCreative: true} ],STONE);
 
-new IronBlock("iron", "mars").create();
+// new IronBlock("iron", "mars").create();
 

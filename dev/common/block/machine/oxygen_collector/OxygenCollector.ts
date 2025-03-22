@@ -50,8 +50,6 @@ class OxygenCollector extends MachineBlock {
         ]);
 
         EnergyTileRegistry.addEnergyTypeForId(this.id, EnergyTypes.OB);
-
-        
     };
 
     public getTileEntity(): CommonTileEntity {
@@ -59,5 +57,5 @@ class OxygenCollector extends MachineBlock {
     };
 };
 
-itemTagGroup.addTagsFor(VanillaBlockID.leaves, "leaves");
-itemTagGroup.addTagsFor(VanillaBlockID.leaves2, "leaves");
+BLOCK_TAG_GROUP.addTagsFor(VanillaBlockID.leaves, "leaves");
+BLOCK_TAG_GROUP.addTagsFor(VanillaBlockID.leaves2, "leaves");

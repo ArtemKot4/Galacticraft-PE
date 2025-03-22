@@ -1,65 +1,13 @@
-SpacesMachine.addCollectorLeaves({ leaf: VanillaBlockID.leaves });
-SpacesMachine.addCollectorLeaves({ leaf: VanillaBlockID.leaves2 });
-//SpacesMachine.addCollectorLeaves({leaf: VanillaBlockID.vic_a2_tantros_leaves});
-
 Callback.addCallback("LevelDisplayed", function () {
-  return (
-    CompressorFactory.registerFromJSON("compressor"),
-    CircuitFabricatorFactory.registerFromJSON("circuit")
-  );
+    for(const i in RecipeFactory.list) {
+        const factory = RecipeFactory.list[i];
+        if(!factory.path) continue;
+
+        RecipeFactory.registerFromPath(factory.path, factory);
+    };
 });
 
 Callback.addCallback("LevelDisplayed", function () {
-
-
-  /*  slots:
-slotuer:r1,r2.
-sltuel:l1,l2.
-slotchestable:gc1,gc2,gc3.
-craftable:cr.
-drawing:SignRocketbench — drsrb.
-             #
-           2#-#3   gc1#  gc2#  gc3#
-           4#-#5
-           6#-#7
-        r1#8#-#9#l1  #drsrb
-        r2# #10 #l2   #cr
-          Интерфейс*/
-
-  SpacesMachine.addDefaultRocketRecipe(
-    {
-      cone: ItemID.nose_cone,
-      cover_1: ItemID.heavy_plating,
-      cover_2: ItemID.heavy_plating,
-      cover_3: ItemID.heavy_plating,
-      cover_4: ItemID.heavy_plating,
-      cover_5: ItemID.heavy_plating,
-      cover_6: ItemID.heavy_plating,
-      cover_7: ItemID.heavy_plating,
-      cover_8: ItemID.heavy_plating,
-      engine: ItemID.engine_tier,
-      fin_1: ItemID.rocket_fins,
-      fin_2: ItemID.rocket_fins,
-      fin_3: ItemID.rocket_fins,
-      fin_4: ItemID.rocket_fins,
-    },
-    {
-      rocket: ItemID.rocket_tier_1,
-    }
-  );
-  /*
-Recipes.addShaped({id: ItemID.blade, count: 1, data: 0}, [
-    "a",
-    "a",
-    ""
-], ['a', VanillaItemID.iron_ingot, 0]);
-
-Recipes.addShaped({id: ItemID.blades, count: 1, data: 0}, [
-    "aaa",
-    "",
-    ""
-], ['a', ItemID.blade, 0]);*/
-
   Recipes.addShaped(
     { id: BlockID.energy_storage_module, count: 1, data: 0 },
     ["bbb", "aaa", "bbb"],
