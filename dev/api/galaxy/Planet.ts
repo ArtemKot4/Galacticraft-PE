@@ -30,11 +30,15 @@ abstract class Planet extends Dimension implements IPlanet {
         super(id, stringId);
     };
 
-    public generateCaves(): [caves: boolean, underwater_caves: boolean] {
+    public override hasBedrockLayer(): boolean {
+        return true;
+    };
+    
+    public override generateCaves(): [caves: boolean, underwater_caves: boolean] {
         return [false, false];
     }; 
 
-    public getTags(): string[] {
+    public override getTags(): string[] {
         return ["space"];
     };
 };

@@ -117,6 +117,10 @@ abstract class Station extends Satellite {
         return true;
     };
 
+    public override hasBedrockLayer(): boolean {
+        return false;
+    };
+
     public override getLayers(): Dimensions.TerrainLayerParams[] {
         return [
             {
@@ -159,9 +163,11 @@ Network.addClientPacket("packet.galacticraft.create_station_animation", (packetD
     const meshData = JSON.parse(packetData.mesh) as IStationMeshData[];
     const resultMesh = new RenderMesh();
 
-    for(const data of meshData) {
+    for(const i in meshData) {
+        const data = meshData[i]
         const mesh = new RenderMesh();
-        for(const vertex of data.vertexes) {
+        for(const k in data.vertexes) {
+            const vertex = data.vertexes[k];
             mesh.addVertex(vertex[0], vertex[1], vertex[2], vertex[3], vertex[4]);
         };
         resultMesh.addMesh(mesh, data.x, data.y, data.z);
@@ -183,6 +189,6 @@ Network.addClientPacket("packet.galacticraft.create_station_animation", (packetD
             };
             const pos = Player.getPosition();
             animation.setPos(pos.x, pos.y - packetData.distance, pos.z);
-        },
+        }
     });
 });

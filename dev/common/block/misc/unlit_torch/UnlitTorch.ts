@@ -16,10 +16,11 @@ class UnlitTorch extends BasicBlock {
         return 2;
     }
 }
+TagRegistry.addTagsFor("dimensions", EDimension.NORMAL, ["oxygen"], true);
 
 TileEntity.registerPrototype(BlockID["unlit_torch"], {
     init: function() {
-        if(Utils.getDimensionTags((this.blockSource as BlockSource).getDimension()).includes("space")) {
+        if(!Utils.getDimensionTags((this.blockSource as BlockSource).getDimension()).includes("oxygen")) {
             this.blockSource.setBlock(this.x, this.y, this.z, BlockID.torch_off_lit, 0);
         } else {
             TileEntity.destroyTileEntityAtCoords(this.x, this.y, this.z, this.blockSource);
