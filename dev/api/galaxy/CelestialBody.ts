@@ -2,7 +2,7 @@ class CelestialBody implements ILocalizeable {
     public type: ECelestialType;
     public x: number;
     public y: number;
-    public icon: number;
+    public icon: string;
     public scale: number;
     public name: string;
     public localizedName: string;
@@ -30,6 +30,10 @@ class CelestialBody implements ILocalizeable {
 
     public getLink(): unknown {
         return null;
+    };
+
+    public setIcon(icon: string): void {
+        this.icon = icon;
     };
 
     public constructor(object?: ILocalizeable) {

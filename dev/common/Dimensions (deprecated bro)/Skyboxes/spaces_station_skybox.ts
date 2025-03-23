@@ -27,112 +27,112 @@ export class StationSky extends Sky {
 //  mesh.addVertex(_pos, 50, _pos, 1, 1);
 
  //earth
- mesh.addVertex(- _pos, 0, -_pos, 0, 0); 
- mesh.addVertex(_pos, 0, -_pos, 1, 0); 
- mesh.addVertex(-_pos, 0, _pos, 0, 1); 
+//  mesh.addVertex(- _pos, 0, -_pos, 0, 0); 
+//  mesh.addVertex(_pos, 0, -_pos, 1, 0); 
+//  mesh.addVertex(-_pos, 0, _pos, 0, 1); 
  
- mesh.addVertex(_pos, 0, -_pos, 1, 0); 
- mesh.addVertex(-_pos, 0, _pos, 0, 1); 
- mesh.addVertex(_pos, 0, _pos, 1, 1); 
+//  mesh.addVertex(_pos, 0, -_pos, 1, 0); 
+//  mesh.addVertex(-_pos, 0, _pos, 0, 1); 
+//  mesh.addVertex(_pos, 0, _pos, 1, 1); 
  
 
 
-    mesh.scale(scale, 0, scale);
+//     mesh.scale(scale, 0, scale);
 
-    mesh.rotate(0, 0, 0, 0, 0, rotation || 0);
+//     mesh.rotate(0, 0, 0, 0, 0, rotation || 0);
 
-    const animation = new Animation.Base(pos.x, pos.y, pos.z);
+//     const animation = new Animation.Base(pos.x, pos.y, pos.z);
 
-    animation.describe({
-      mesh: mesh,
-      skin: "environment/" + texture + ".png",
-    });
+//     animation.describe({
+//       mesh: mesh,
+//       skin: "environment/" + texture + ".png",
+//     });
 
-    animation.setSkylightMode();
+//     animation.setSkylightMode();
 
-    return animation;
-  };
+//     return animation;
+//   };
 
- }
+//  }
 
-  function StationUpdatable() {
+//   function StationUpdatable() {
 
-    return {
-      planet: StationSky.createBox(350, 0, "earth_station"), 
-      update: function () {
+//     return {
+//       planet: StationSky.createBox(350, 0, "earth_station"), 
+//       update: function () {
       
-        if (
-          sec(5) &&
-          Entity.getDimension(Player.getLocal()) !== SpacesStation.getPlanet()
-        ) {
-          this.remove = true;
-        }
+//         if (
+//           sec(5) &&
+//           Entity.getDimension(Player.getLocal()) !== SpacesStation.getPlanet()
+//         ) {
+//           this.remove = true;
+//         }
 
-        const pos = Entity.getPosition(Player.getLocal());
-       if(Player.getFlying() === false) Entity.setVelocity(
-          Player.get(),
-          Player.getVelocity().x * 1.15,
-          Player.getVelocity().y * 1.15,
-          Player.getVelocity().z * 1.15
-        );
+//         const pos = Entity.getPosition(Player.getLocal());
+//        if(Player.getFlying() === false) Entity.setVelocity(
+//           Player.get(),
+//           Player.getVelocity().x * 1.15,
+//           Player.getVelocity().y * 1.15,
+//           Player.getVelocity().z * 1.15
+//         );
         
-        return StationSky.setupPosition(
-          this.planet,
-          pos.x,
-          pos.y - 100,
-          pos.z
-        );
-      },
-    };
-  };
+//         return StationSky.setupPosition(
+//           this.planet,
+//           pos.x,
+//           pos.y - 100,
+//           pos.z
+//         );
+//       },
+//     };
+//   };
 
 
-Callback.addCallback("LevelDisplayed", () => {
-  if(Entity.getDimension(Player.getLocal()) === SpacesStation.getPlanet()) {
-    Updatable.addLocalUpdatable(StationUpdatable());
-    if(Flags.station === false) {
+// Callback.addCallback("LevelDisplayed", () => {
+//   if(Entity.getDimension(Player.getLocal()) === SpacesStation.getPlanet()) {
+//     Updatable.addLocalUpdatable(StationUpdatable());
+//     if(Flags.station === false) {
 
-    Player.setPosition(0, 100, 0);
+//     Player.setPosition(0, 100, 0);
 
-      World.setBlock(0, 99, 0, BlockID["spaces_station_block"], 0);
-      World.setBlock(0, 98, 0, BlockID["tin_decoration_block"], 0);
-      World.setBlock(1, 98, 0, BlockID["tin_decoration_block"], 0);
-      World.setBlock(-1, 98, 0, BlockID["tin_decoration_block"], 0);
+//       World.setBlock(0, 99, 0, BlockID["spaces_station_block"], 0);
+//       World.setBlock(0, 98, 0, BlockID["tin_decoration_block"], 0);
+//       World.setBlock(1, 98, 0, BlockID["tin_decoration_block"], 0);
+//       World.setBlock(-1, 98, 0, BlockID["tin_decoration_block"], 0);
 
-      World.setBlock(1, 98, 1 ,BlockID["tin_decoration_block"], 0);
-      World.setBlock(-1, 98, -1, BlockID["tin_decoration_block"], 0);
+//       World.setBlock(1, 98, 1 ,BlockID["tin_decoration_block"], 0);
+//       World.setBlock(-1, 98, -1, BlockID["tin_decoration_block"], 0);
 
-      World.setBlock(1, 98, -1, BlockID["tin_decoration_block"], 0);
-      World.setBlock(-1, 98, 1, BlockID["tin_decoration_block"], 0);
+//       World.setBlock(1, 98, -1, BlockID["tin_decoration_block"], 0);
+//       World.setBlock(-1, 98, 1, BlockID["tin_decoration_block"], 0);
 
-      World.setBlock(0, 98, -1, BlockID["tin_decoration_block"], 0);
-      World.setBlock(0, 98, 1, BlockID["tin_decoration_block"], 0);
+//       World.setBlock(0, 98, -1, BlockID["tin_decoration_block"], 0);
+//       World.setBlock(0, 98, 1, BlockID["tin_decoration_block"], 0);
 
-      Flags.station = true;
-  }
-};
+//       Flags.station = true;
+//   }
+// };
 
-Callback.addCallback("PlayerChangedDimension", function (player, from, to) {
-  const dimension = Entity.getDimension(player);
-  alert("Да, это станция!");
-  if(dimension === SpacesStation.getPlanet()) {
-     Updatable.addLocalUpdatable(StationUpdatable())
-}})
+// Callback.addCallback("PlayerChangedDimension", function (player, from, to) {
+//   const dimension = Entity.getDimension(player);
+//   alert("Да, это станция!");
+//   if(dimension === SpacesStation.getPlanet()) {
+//      Updatable.addLocalUpdatable(StationUpdatable())
+// }})
 
-});
+// });
 
-Saver.addSavesScope("Station",
-    function read(scope){
-        if(scope && scope.Flags){Flags = scope.Flags}
-    },
-    function save(){
-        return {
-            Flags: Flags
-        }
-    }
-);
+// Saver.addSavesScope("Station",
+//     function read(scope){
+//         if(scope && scope.Flags){Flags = scope.Flags}
+//     },
+//     function save(){
+//         return {
+//             Flags: Flags
+//         }
+//     }
+// );
 
-  };
+//   };
 
 
 

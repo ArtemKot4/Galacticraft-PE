@@ -33,6 +33,7 @@
 		"api/galaxy/Galaxy.ts",
 		"api/galaxy/Planet.ts",
 		"api/galaxy/Satellite.ts",
+		"api/galaxy/Station.ts",
 		"api/galaxy/ECelestialType.ts",
 		"api/galaxy/CelestialBody.ts",
 		"api/galaxy/SpaceSystem.ts",

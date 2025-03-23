@@ -47,6 +47,12 @@ class GalacticraftLiquid {
 };
 
 namespace LiquidList {
-    export const OIL = new GalacticraftLiquid("oil").createBlock("oil_still", "oil_flow");
-    export const FUEL = new GalacticraftLiquid("fuel").createBlock("fuel_still", "fuel_flow");
+    export const OIL = new GalacticraftLiquid("oil")
+    .createBlock("oil_still", "oil_flow");
+
+    export const FUEL = new GalacticraftLiquid("fuel")
+    .createBlock("fuel_still", "fuel_flow");
+    
+    export const SULPHURIC_ACID = new GalacticraftLiquid("sulphuric_acid")
+    .createBlock("sulfuric_acid_still", "sulfuric_acid_flow");
 };
