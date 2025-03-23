@@ -92,6 +92,22 @@ namespace BlockList {
 
     EnergyTypes.GJ.registerWire(ENCLOSED_HEAVY_ALUMINUM_WIRE.id, 200);
     GC_WIRE_GROUP.add(ENCLOSED_HEAVY_ALUMINUM_WIRE.id, -1);
+
+    class Space extends BasicBlock {
+        public getLightOpacity(): number {
+            return 15;
+        };
+
+        public getDestroyTime(): number {
+            return -1;
+        };
+
+        public constructor() {
+            super("space", [{ name: "Space Air", texture: [["Black", 0]], inCreative: false }]);
+        };
+    };
+
+    export const SPACE = new Space();
 };
 
 CrashedProbe.addItem(0.25, ItemList.CANISTER_COPPER.id, 8);

@@ -113,6 +113,36 @@ abstract class Station extends Satellite {
         }];
     };
 
+    public override hasStars(): boolean {
+        return true;
+    };
+
+    public override getLayers(): Dimensions.TerrainLayerParams[] {
+        return [
+            {
+                minY: 0,
+                maxY: 1,
+                material: {
+                base: BlockList.SPACE.id,
+                surface: {
+                    id: BlockList.SPACE.id,
+                    data: 0,
+                    width: 1,
+                },
+                cover: BlockList.SPACE.id,
+                }
+            }
+        ];
+    };
+
+    public override getSkyColor(): number[] {
+        return [0, 0, 0];
+    };
+
+    public override getFogColor(): number[] {
+        return [0, 0, 0];
+    };
+
     public override insidePlayerDimensionTransfer(playerUid: number, from: number): void {
         const client = Network.getClientForPlayer(playerUid);
         if(client) {
