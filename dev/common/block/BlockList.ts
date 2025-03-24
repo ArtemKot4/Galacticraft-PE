@@ -16,9 +16,9 @@ namespace BlockList {
     export const GLOWSTONE_TORCH = new GlowstoneTorch();
     export const UNLIT_TORCH = new UnlitTorch();
 
-    export const LAPIZ_MOON = new BasicBlock("lapiz_moon", [{ name: "Sapphire Block", texture: [["moonlapiz_block", 0]], inCreative: true }]);
-    export const MOONORE_CHEESE = new BasicBlock("moonore_cheese", [{ name: "Lunar Cheese Ore", texture: [["Moonore Cheese", 0]], inCreative: true }]);
-    export const MOONORE_SAPPHIRE = new BasicBlock("moonore_sapphire", [{ name: "Lunar Sapphire", texture: [["Moonore Sapphire", 0]], inCreative: true }]);
+    export const BLOCK_MOON_SAPPHIRE = new BasicBlock("block_moon_sapphire", [{ name: "Sapphire Block", texture: [["block_moon_sapphire", 0]], inCreative: true }]);
+    export const MOON_CHEESE = new BasicBlock("moon_cheese", [{ name: "Lunar Cheese Ore", texture: [["moon_cheese", 0]], inCreative: true }]);
+    export const MOON_SAPPHIRE = new BasicBlock("moon_sapphire", [{ name: "Lunar Sapphire", texture: [["moon_sapphire", 0]], inCreative: true }]);
     export const VENUS_QUARTZ = new BasicBlock("venus_quartz", [{ name: "venus_quartz", texture: [["venus_quartz", 0]], inCreative: true }]);
     export const DECORATION_DESH = new BasicBlock("decoration_desh", [{ name: "Desh Block", texture: [["Decoration Desh", 0]], inCreative: true }]);
     export const BLOCK_TIN = new BasicBlock("block_tin_gc", [{ name: "Block Tin", texture: [["Block Tin", 0]], inCreative: true }]);
@@ -29,6 +29,37 @@ namespace BlockList {
     export const BLOCK_BRONZE = new BasicBlock("block_bronze_gc", [{ name: "Block Of Bronze", texture: [["bronze_block", 0]], inCreative: true }]);
     export const BLOCK_STEEL = new BasicBlock("block_steel_gc", [{ name: "Block Of Steel", texture: [["block_steel_sc", 0]], inCreative: true }]);
     export const BLOCK_TITANIUM = new BasicBlock("block_titanium_gc", [{ name: "Block Titanium", texture: [["Block Titanium", 0]], inCreative: true }]);
+    
+    export const ORE_COPPER_EARTH = new BasicBlock("ore_copper_earth", [{
+        name: "block.galacticraft.ore_copper_earth",
+        texture: [["ore_copper_earth", 0]],
+        inCreative: true
+    }]);
+
+    export const ORE_TIN_EARTH = new BasicBlock("ore_tin_earth", [{
+        name: "block.galacticraft.ore_tin_earth",
+        texture: [["ore_tin_earth", 0]],
+        inCreative: true
+    }]);
+
+    export const ORE_SILICON_EARTH = new BasicBlock("ore_silicon_earth", [{
+        name: "block.galacticraft.ore_silicon_earth",
+        texture: [["ore_silicon_earth", 0]],
+        inCreative: true
+    }]);
+
+    export const ORE_COPPER_MOON = new BasicBlock("ore_copper_moon", [{
+        name: "block.galacticraft.ore_copper_moon",
+        texture: [["ore_copper_moon", 0]],
+        inCreative: true
+    }]);
+
+    export const ORE_TIN_MOON = new BasicBlock("ore_tin_moon", [{
+        name: "block.galacticraft.ore_tin_moon",
+        texture: [["ore_tin_moon", 0]],
+        inCreative: true
+    }]);
+    
     export const BLOCK_IRON_STEEL = new BasicBlock("block_iron_steel_gc", [
         {
             name: "Iron Steel Block",
@@ -108,6 +139,21 @@ namespace BlockList {
     };
 
     export const SPACE = new Space();
+    export const MOON_STONE_TOP = new BasicBlock("moon_stone_top",[{ name: "Lunar Top Side", texture: [["Top Side", 0],["Top", 0],["Top Side", 0],["Top", 0],["Top Side", 0],["Top Side", 0]], inCreative: true }]);
+    export const MOON_STONE = new BasicBlock("moon_stone",[{ name: "Lunar Stone", texture: [["Lunar Stone", 0]], inCreative: true }]);
+    export const MOON_STONE_MIDDLE = new BasicBlock("moon_stone_middle",[{ name: "Lunar Dirt", texture: [["Middle", 0]], inCreative: true }]);
 };
 
 CrashedProbe.addItem(0.25, ItemList.CANISTER_COPPER.id, 8);
+
+Translation.addTranslation("Lunar Stone",{
+    ru: "Лунный камень"
+})
+
+Translation.addTranslation("Lunar Top Side",{
+    ru: "Лунный грунт"
+})
+
+Translation.addTranslation("Lunar Dirt",{
+    ru: "Лунная почва"
+})

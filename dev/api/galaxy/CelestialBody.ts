@@ -2,7 +2,7 @@ class CelestialBody implements ILocalizeable {
     public type: ECelestialType;
     public x: number;
     public y: number;
-    public icon: string;
+    public bitmap: string;
     public scale: number;
     public name: string;
     public localizedName: string;
@@ -32,8 +32,9 @@ class CelestialBody implements ILocalizeable {
         return null;
     };
 
-    public setIcon(icon: string): void {
-        this.icon = icon;
+    public setBitmap(bitmap: string): this {
+        this.bitmap = bitmap;
+        return this;
     };
 
     public constructor(object?: ILocalizeable) {

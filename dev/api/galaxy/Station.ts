@@ -66,7 +66,7 @@ abstract class Station extends Satellite {
     };
 
     public getBoxTexture(): string {
-        return this.getCelestialBody().icon.replace(".", "/");
+        return this.getCelestialBody().bitmap.replace(".", "/");
     };
 
     public getFormatTexture(): string {

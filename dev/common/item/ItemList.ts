@@ -97,17 +97,17 @@ namespace ItemList {
 
     export const COMPRESSED_TITANIUM = new GalacticraftItem("compressed_titanium", { name: "compressed_titanium", meta: 0 });
 
-    export const INGOT_ALUMINUM = new GalacticraftItem("ingot_aluminum", { name: "ingot_aluminum", meta: 0 });
+    export const INGOT_ALUMINUM = new GalacticraftItem("ingot_aluminum_gc", { name: "ingot_aluminum_gc", meta: 0 });
 
-    export const INGOT_COPPER = new GalacticraftItem("ingot_copper", { name: "ingot_copper", meta: 0 });
+    export const INGOT_COPPER = new GalacticraftItem("ingot_copper_gc", { name: "ingot_copper_gc", meta: 0 });
 
-    export const INGOT_DESH = new GalacticraftItem("ingot_desh", { name: "ingot_desh", meta: 0 });
+    export const INGOT_DESH = new GalacticraftItem("ingot_desh_gc", { name: "ingot_desh", meta: 0 });
 
-    export const INGOT_LEAD = new GalacticraftItem("ingot_lead", { name: "ingot_lead", meta: 0 });
+    export const INGOT_LEAD = new GalacticraftItem("ingot_lead_gc", { name: "ingot_lead_gc", meta: 0 });
 
-    export const INGOT_TIN = new GalacticraftItem("ingot_tin", { name: "ingot_tin", meta: 0 });
+    export const INGOT_TIN = new GalacticraftItem("ingot_tin_gc", { name: "ingot_tin_gc", meta: 0 });
 
-    export const INGOT_TITANIUM = new GalacticraftItem("ingot_titanium", { name: "ingot_titanium", meta: 0 });
+    export const INGOT_TITANIUM = new GalacticraftItem("ingot_titanium_gc", { name: "ingot_titanium", meta: 0 });
 
     export const SHARD_TIN = new GalacticraftItem("shard_tin", { name: "shard_tin", meta: 0 });
 
