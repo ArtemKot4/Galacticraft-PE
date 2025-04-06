@@ -291,7 +291,7 @@ Callback.addCallback("ServerPlayerLoaded", (player) => {
     };
 });
 
-Callback.addCallback("LevelDisplayed", () => {
+Callback.addCallback("LocalLevelLeft", () => {
     Equipment.list = {};
 });
 
@@ -300,7 +300,7 @@ Callback.addCallback("LocalPlayerLoaded", (player) => {
         if(screenName === "gear") {
             return Equipment.GEAR_WINDOW;
         };
-        
+
         if(screenName === "oxygen_display") {
             return Equipment.OXYGEN_DISPLAY_WINDOW;
         };
