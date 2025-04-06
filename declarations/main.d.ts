@@ -1,3 +1,7 @@
+interface ILocalizeable {
+    getName(): string;
+    getLocalizedName(): string;
+}
 declare namespace Utils {
     const NativeBlock: typeof com.zhekasmirnov.innercore.api.NativeBlock;
     function setEmptyBlockCollision(id: number): void;
@@ -107,10 +111,13 @@ declare namespace UIHelper {
 declare enum EScreenName {
     IN_GAME_PLAY_SCREEN = "in_game_play_screen",
     WORLD_LOADING_PROGRESS_SCREEN = "world_loading_progress_screen",
-    INVENTORY_SCREEN = "inventory_screen",
     ENDER_CHEST_SCREEN = "ender_chest_screen",
     FURNACE_SCREEN = "furnace_screen",
-    SMALL_CHEST_SCREEN = "small_chest_screen"
+    SMALL_CHEST_SCREEN = "small_chest_screen",
+    CREATIVE_INVENTORY_SCREEN = "creative_inventory_screen",
+    SURVIVAL_INVENTORY_SCREEN = "survival_inventory_screen",
+    INVENTORY_SCREEN = "inventory_screen",
+    INVENTORY_SCREEN_POCKET = "inventory_screen_pocket"
 }
 interface INotificationTimerParams {
     /**
@@ -359,14 +366,6 @@ declare class TransparentNotification extends Notification {
     setAlpha(value: number): void;
     protected run(style: INotificationStyle, data: INotificationWindowData): void;
 }
-declare namespace WorldSaves {
-    const defaultData: {
-        players: {};
-    };
-    let data: {
-        players: Record<number, typeof defaultData.players & Scriptable>;
-    } & Scriptable;
-}
 declare class Vector3 {
     x: number;
     y: number;
@@ -508,19 +507,19 @@ interface IItemTextureDescription {
     name: string | itemTextureAnimated;
     meta: number;
 }
-interface IconOverrideCallback {
+interface IIconOverrideCallback {
     onIconOverride?(item: ItemInstance, isModUi: boolean): void | Item.TextureData;
 }
 interface INoTargetUseCallback {
     onNoTargetUse(item: ItemStack, player: number): void;
 }
-interface ItemUsingReleasedCallback {
+interface IItemUsingReleasedCallback {
     onUsingReleased(item: ItemStack, ticks: number, player: number): void;
 }
-interface ItemUsingCompleteCallback {
+interface IItemUsingCompleteCallback {
     onUsingComplete(item: ItemStack, player: number): void;
 }
-interface ItemUseCallback {
+interface IItemUseCallback {
     onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number): void;
 }
 interface INameOverrideCallback {
@@ -556,7 +555,7 @@ declare class BasicItem<T extends Item.ItemParams = Item.ItemParams> {
     getTags?(): string[];
     isThrowable?(): boolean;
     getFood?(): number;
-    static setFunctions(instance: (IconOverrideCallback | INoTargetUseCallback | ItemUsingReleasedCallback | ItemUsingCompleteCallback | ItemUseCallback | INameOverrideCallback | ItemHandComponent | BasicItem) & {
+    static setFunctions(instance: (IIconOverrideCallback | INoTargetUseCallback | IItemUsingReleasedCallback | IItemUsingCompleteCallback | IItemUseCallback | INameOverrideCallback | ItemHandComponent | BasicItem) & {
         id: number;
     }): void;
     create(params: ItemParams): void;
@@ -959,6 +958,133 @@ declare abstract class Dimension {
     insidePlayerDimensionTransfer?(playerUid: number, from: number): void;
     outsidePlayerDimensionTransfer?(playerUid: number, to: number): void;
 }
+/**
+ * Enum with names of all callbacks
+ */
+declare enum ECallback {
+    CRAFT_RECIPE_PRE_PROVIDED = "CraftRecipePreProvided",
+    CRAFT_RECIPE_PROVIDED_FUNCTION = "CraftRecipeProvidedFunction",
+    VANILLA_WORKBENCH_CRAFT = "VanillaWorkbenchCraft",
+    VANILLA_WORKBENCH_POST_CRAFT = "VanillaWorkbenchPostCraft",
+    VANILLA_WORKBENCH_RECIPE_SELECTED = "VanillaWorkbenchRecipeSelected",
+    CONTAINER_CLOSED = "ContainerClosed",
+    CONTAINER_OPENED = "ContainerOpened",
+    CUSTOM_WINDOW_OPENED = "CustomWindowOpened",
+    CUSTOM_WINDOW_CLOSED = "CustomWindowClosed",
+    CORE_CONFIGURED = "CoreConfigured",
+    PRE_LOADED = "PreLoaded",
+    API_LOADED = "APILoaded",
+    MODS_LOADED = "ModsLoaded",
+    POST_LOADED = "PostLoaded",
+    PRE_BLOCKS_DEFINED = "PreBlocksDefined",
+    BLOCKS_DEFINED = "BlocksDefined",
+    ADD_RUNTIME_PACKS = "AddRuntimePacks",
+    LEVEL_SELECTED = "LevelSelected",
+    DIMENSION_LOADED = "DimensionLoaded",
+    DESTROY_BLOCK_END = "DestroyBlock",
+    DESTROY_BLOCK_START = "DestroyBlockStart",
+    DESTROY_BLOCK_CONTINUE = "DestroyBlockContinue",
+    BUILD_BLOCK = "BuildBlock",
+    BLOCK_CHANGED = "BlockChanged",
+    BREAK_BLOCK = "BreakBlock",
+    ITEM_USE = "ItemUse",
+    ITEM_USE_LOCAL_SERVER = "ItemUseLocalServer",
+    EXPLOSION = "Explosion",
+    FOOD_EATEN = "FoodEaten",
+    EXP_ADD = "ExpAdd",
+    EXP_LEVEL_ADD = "ExpLevelAdd",
+    NATIVE_COMMAND = "NativeCommand",
+    PLAYER_ATTACK = "PlayerAttack",
+    ENTITY_ADDED = "EntityAdded",
+    ENTITY_REMOVED = "EntityRemoved",
+    ENTITY_ADDED_LOCAL = "EntityAddedLocal",
+    ENTITY_REMOVED_LOCAL = "EntityRemovedLocal",
+    ENTITY_DEATH = "EntityDeath",
+    ENTITY_HURT = "EntityHurt",
+    ENTITY_INTERACT = "EntityInteract",
+    EXP_ORBS_SPAWNED = "ExpOrbsSpawned",
+    PROJECTILE_HIT = "ProjectileHit",
+    REDSTONE_SIGNAL = "RedstoneSignal",
+    POP_BLOCK_RESOURCES = "PopBlockResources",
+    ITEM_ICON_OVERRIDE = "ItemIconOverride",
+    ITEM_NAME_OVERRIDE = "ItemNameOverride",
+    ITEM_USE_NO_TARGET = "ItemUseNoTarget",
+    ITEM_USING_RELEASED = "ItemUsingReleased",
+    ITEM_USING_COMPLETE = "ItemUsingComplete",
+    ITEM_DISPENSED = "ItemDispensed",
+    NATIVE_GUI_CHANGED = "NativeGuiChanged",
+    ENCHANT_POST_ATTACK = "EnchantPostAttack",
+    ENCHANT_GET_PROTECTION_BONUS = "EnchantGetProtectionBonus",
+    ENCHANT_GET_DAMAGE_BONUS = "EnchantGetDamageBonus",
+    ENCHANT_POST_HURT = "EnchantPostHurt",
+    GENERATE_CHUNK = "GenerateChunk",
+    GENERATE_CHUNK_UNDERGROUND = "GenerateChunkUnderground",
+    GENERATE_NETHER_CHUNK = "GenerateNetherChunk",
+    GENERATE_END_CHUNK = "GenerateEndChunk",
+    GENERATE_CHUNK_UNIVERSAL = "GenerateChunkUniversal",
+    GENERATE_BIOME_MAP = "GenerateBiomeMap",
+    PRE_PROCESS_CHUNK = "PreProcessChunk",
+    POST_PROCESS_CHUNK = "PostProcessChunk",
+    READ_SAVES = "ReadSaves",
+    WRITE_SAVES = "WriteSaves",
+    CUSTOM_BLOCK_TESSELLATION = "CustomBlockTessellation",
+    LOCAL_PLAYER_TICK = "LocalPlayerTick",
+    SERVER_PLAYER_TICK = "ServerPlayerTick",
+    CUSTOM_DIMENSION_TRANSFER = "CustomDimensionTransfer",
+    BLOCK_EVENT_ENTITY_INSIDE = "BlockEventEntityInside",
+    BLOCK_EVENT_ENTITY_STEP_ON = "BlockEventEntityStepOn",
+    BLOCK_EVENT_NEIGHBOUR_CHANGE = "BlockEventNeighbourChange",
+    CONNECTING_TO_HOST = "ConnectingToHost",
+    DIMENSION_UNLOADED = "DimensionUnloaded",
+    LEVEL_PRE_LEFT = "LevelPreLeft",
+    GAME_LEFT = "GameLeft",
+    LEVEL_LEFT = "LevelLeft",
+    LOCAL_LEVEL_LEFT = "LocalLevelLeft",
+    LOCAL_LEVEL_PRE_LEFT = "LocalLevelPreLeft",
+    SERVER_LEVEL_LEFT = "ServerLevelLeft",
+    SERVER_LEVEL_PRE_LEFT = "ServerLevelPreLeft",
+    ITEM_USE_LOCAL = "ItemUseLocal",
+    SYSTEM_KEY_EVENT_DISPATCHED = "SystemKeyEventDispatched",
+    NAVIGATION_BACK_PRESSED = "NavigationBackPressed",
+    LEVEL_CREATED = "LevelCreated",
+    LEVEL_DISPLAYED = "LevelDisplayed",
+    LEVEL_PRE_LOADED = "LevelPreLoaded",
+    LEVEL_LOADED = "LevelLoaded",
+    LOCAL_LEVEL_LOADED = "LocalLevelLoaded",
+    REMOTE_LEVEL_LOADED = "RemoteLevelLoaded",
+    REMOTE_LEVEL_PRE_LOADED = "RemoteLevelPreLoaded",
+    SERVER_LEVEL_LOADED = "ServerLevelLoaded",
+    SERVER_LEVEL_PRE_LOADED = "ServerLevelPreLoaded",
+    TICK = "tick",
+    LOCAL_TICK = "LocalTick",
+    APP_SUSPENDED = "AppSuspended",
+    ENTITY_PICK_UP_DROP = "EntityPickUpDrop",
+    LOCAL_PLAYER_LOADED = "LocalPlayerLoaded",
+    SERVER_PLAYER_LOADED = "ServerPlayerLoaded",
+    SERVER_PLAYER_LEFT = "ServerPlayerLeft",
+    LOCAL_PLAYER_CHANGED_DIMENSION = "LocalPlayerChangedDimension",
+    PLAYER_CHANGED_DIMENSION = "PlayerChangedDimension",
+    LOCAL_PLAYER_EAT = "LocalPlayerEat",
+    SERVER_PLAYER_EAT = "ServerPlayerEat",
+    GENERATE_CUSTOM_DIMENSION_CHUNK = "GenerateCustomDimensionChunk",
+    TILE_ENTITY_ADDED = "TileEntityAdded",
+    TILE_ENTITY_REMOVED = "TileEntityRemoved"
+}
+/**
+ * The factory of decorators to add callback from function.
+ * @example
+ * ```ts
+    class Example {
+        SubscribeEvent(ECallback.LOCAL_TICK)
+        public onTick() {
+            Game.message("example")
+        }
+    };
+ * ```
+ * @param event {@link ECallback} enum value
+ * @returns decorator
+ */
+declare function SubscribeEvent(event: ECallback): (target: any, key: string, descriptor: PropertyDescriptor) => PropertyDescriptor;
 interface IPlayerDataCommand extends ICommandParams {
     key: string;
 }

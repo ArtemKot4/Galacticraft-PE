@@ -336,18 +336,17 @@ Callback.addCallback("ServerPlayerTick", (playerUid, isPlayerDead) => {
     };
 });
 
-Callback.addCallback("NativeGuiChanged", function (screenName) {
-    if(screenName == "survival_inventory_screen" || screenName == "creative_inventory_screen" || screenName == "inventory_screen" || screenName == "inventory_screen_pocket") {
+Callback.addCallback("NativeGuiChanged", (screenName) => {
+    if(screenName == EScreenName.INVENTORY_SCREEN) {
         Equipment.OPEN_BUTTON_WINDOW.open();
+        Network.sendToServer("packet.galacticraft.close_equipment_screen", {});
     } else {
         Equipment.OPEN_BUTTON_WINDOW.close();
 
-        if(screenName === EScreenName.IN_GAME_PLAY_SCREEN) {
+        if(screenName == EScreenName.IN_GAME_PLAY_SCREEN) {
             Network.sendToServer("packet.galacticraft.open_equipment_screen", {
                 screenName: "oxygen_display"
             });
-        } else {
-            Network.sendToServer("packet.galacticraft.close_equipment_screen", {});
         };
     };
 });

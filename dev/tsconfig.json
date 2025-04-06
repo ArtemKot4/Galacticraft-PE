@@ -38,6 +38,7 @@
 		"api/galaxy/CelestialBody.ts",
 		"api/galaxy/SpaceSystem.ts",
 		"api/Galacticraft.ts",
+		"api/Equipment.ts",
 		"common/Dimensions/Moon/block/moon_blocks.ts",
 		"common/Dimensions/Mars/block/mars_blocks.ts",
 		"common/Dimensions/Venus/block/venus_blocks.ts",

@@ -19,9 +19,9 @@ class Battery extends GalacticraftItem {
 
         if(capacity == -1) {
             this.capacityDisplay = Translation.translate("message.galacticraft.infinity");
-            this.onNameOverride = (item, translation, name) => this.capacityDisplay;
+            this.onNameOverride = (item, translation, name) => Translation.translate(name) + "\n" + this.capacityDisplay;
         } else {
-            this.onNameOverride = (item, translation, name) => Translation.translate(name) + "\n" + EColor.GRAY + "gJ: " + item.extra ? item.extra.getInt("energy", 0) : 0 + " / " + this.capacity;
+            this.onNameOverride = (item, translation, name) => Translation.translate(name) + "\n" + EColor.GRAY + "gJ: " + item.extra != null ? item.extra.getInt("energy", 0) : 0 + " / " + this.capacity;
         };
 
         Item.registerNameOverrideFunction(this.id, this.onNameOverride);

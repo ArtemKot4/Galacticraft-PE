@@ -1,4 +1,4 @@
-class Canister extends GalacticraftItem implements IconOverrideCallback, INameOverrideCallback, ItemUseCallback {
+class Canister extends GalacticraftItem implements IIconOverrideCallback, INameOverrideCallback, IItemUseCallback {
     public static readonly liquidMax: number = 500;
     public static types: string[] = [];
 
@@ -28,7 +28,7 @@ class Canister extends GalacticraftItem implements IconOverrideCallback, INameOv
         const amount = (item.extra && item.extra.getInt("amount")) || 0;
         const liquid = (item.extra && item.extra.getString("type")) || "empty";
 
-        return Translation.translate("item.galacticraft." + liquid + "_canister") + EColor.GRAY + Translation.translate("message.galacticraft.filling") + amount + " / " + Canister.liquidMax + " mB";
+        return Translation.translate("item.galacticraft." + liquid + "_canister") + "\n" + EColor.GRAY + Translation.translate("message.galacticraft.filling") + amount + " / " + Canister.liquidMax + " mB";
     };
 
     public onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number): void {

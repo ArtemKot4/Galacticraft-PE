@@ -1,6 +1,6 @@
-﻿class PrelaunchChecklist extends GalacticraftItem  implements ItemUseCallback, INoTargetUseCallback {
-    public fixedPoints: string[];
-    public SCALE: number = 1.8;
+﻿class PrelaunchChecklist extends GalacticraftItem  implements IItemUseCallback, INoTargetUseCallback {
+    public fixedPoints: string[] = [];
+    public SCALE: number = 2;
     public POINT_TEXT_LOCATION = 20;
 
     public UI: UI.Window = (() => {

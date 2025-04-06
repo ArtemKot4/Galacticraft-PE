@@ -1,5 +1,4 @@
 abstract class MachineBlock extends GalacticraftBlock {
-
     public constructor(id: string, variationList: Block.BlockVariation[]) {
         super(id, variationList);
 
@@ -12,17 +11,11 @@ abstract class MachineBlock extends GalacticraftBlock {
             EnergyTileRegistry.addEnergyTypeForId(this.id, EnergyTypes.GJ);
             EnergyTileRegistry.addEnergyTypeForId(this.id, EnergyTypes.EU);
 
-        if (this.isWrenchable()) {
-            Block.registerPlaceFunctionForID(this.id, (coords, item, block, player, region) => {
-                if (Utils.getItemTags(item.id).includes("wrench")) {
-                    region.setBlock(coords.x, coords.y, coords.z, block.id, block.data >= 4 ? 1 : block.data++);
+        if(this.isWrenchable() && !("onItemUse" in this)) {
+            Block.registerClickFunctionForID(this.id, (coords, item, block, player) => {
+                if(Utils.getItemTags(item.id).includes("wrench")) {
+                    BlockSource.getDefaultForActor(player).setBlock(coords.x, coords.y, coords.z, block.id, block.data >= 4 ? 1 : block.data++);
                     return;
-                }
-
-                const func = Block.getPlaceFunc(block.id);
-
-                if (func) {
-                    return func(coords, item, block, player, region);
                 };
             });
         };

@@ -63,8 +63,9 @@ class CrashedProbeTile extends CommonTileEntity {
     };
 
     public onClick(coords: Callback.ItemUseCoordinates, item: ItemStack, player: number): boolean | void {
-        if(this.data.lock) return;
+        if(this.data.lock) return false;
         this.setItems();
         this.lock();
+        return false;
     };
 };
