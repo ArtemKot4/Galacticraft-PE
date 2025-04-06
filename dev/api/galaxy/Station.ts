@@ -7,10 +7,12 @@ interface IStationBox {
 };
 
 interface IStationMeshData {
-    x: number;
-    y: number;
-    z: number;
-    vertexes: [x: number, y: number, z: number, u: number, v: number][];
+    x?: number;
+    y?: number;
+    z?: number;
+    vertexes?: [x: number, y: number, z: number, u: number, v: number][];
+    model_path?: string;
+    import_params?: com.zhekasmirnov.innercore.api.NativeRenderMesh.ImportParams;
 };
 
 abstract class Station extends Satellite {
@@ -166,11 +168,18 @@ Network.addClientPacket("packet.galacticraft.create_station_animation", (packetD
     for(const i in meshData) {
         const data = meshData[i]
         const mesh = new RenderMesh();
-        for(const k in data.vertexes) {
-            const vertex = data.vertexes[k];
-            mesh.addVertex(vertex[0], vertex[1], vertex[2], vertex[3], vertex[4]);
+        if("model_path" in data) {
+            mesh.importFromFile(data.model_path, "obj", data.import_params || {
+                invertV: false,
+                noRebuild: false
+            });
+        } else if("vertexes" in data) {
+            for(const k in data.vertexes) {
+                const vertex = data.vertexes[k];
+                mesh.addVertex(vertex[0], vertex[1], vertex[2], vertex[3], vertex[4]);
+            };
         };
-        resultMesh.addMesh(mesh, data.x, data.y, data.z);
+        resultMesh.addMesh(mesh, data.x || 0, data.y || 0, data.z || 0);
     };
 
     animation.describe({

@@ -78,7 +78,7 @@ class Moon extends Satellite {
     };
 };
 
-Galacticraft.getPlanet("milky_way", "solar_system", "earth").addSatellite(new Moon(28, "moon"));
+Galacticraft.addSatellite("milky_way", "solar_system", "earth", new Moon(28, "moon"));
 
 Translation.addTranslation("galacticraft.satellite.moon", {
     en: "Moon",

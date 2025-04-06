@@ -142,6 +142,11 @@ namespace BlockList {
     export const MOON_STONE_TOP = new BasicBlock("moon_stone_top",[{ name: "Lunar Top Side", texture: [["Top Side", 0],["Top", 0],["Top Side", 0],["Top", 0],["Top Side", 0],["Top Side", 0]], inCreative: true }]);
     export const MOON_STONE = new BasicBlock("moon_stone",[{ name: "Lunar Stone", texture: [["Lunar Stone", 0]], inCreative: true }]);
     export const MOON_STONE_MIDDLE = new BasicBlock("moon_stone_middle",[{ name: "Lunar Dirt", texture: [["Middle", 0]], inCreative: true }]);
+    export const VENUS_ROCK_0 = new GalacticraftBlock("venus_rock_0", [{ name: "Venus Rock 0", texture: [["Venus Rock 0", 0]], inCreative: true }]);
+    export const VENUS_ROCK_1 = new GalacticraftBlock("venus_rock_1", [{ name: "Venus Rock venus_rock_1", texture: [["Venus Rock 1", 0]], inCreative: true }]);
+    export const VENUS_ROCK_2 = new GalacticraftBlock("venus_rock_2", [{ name: "Venus Rock 2", texture: [["Venus Rock 2", 0]], inCreative: true }]);
+    export const VENUS_ROCK_3 = new GalacticraftBlock("venus_rock_3", [{ name: "Venus Rock 3", texture: [["venus_rock", 3]], inCreative: true }]);
+
 };
 
 CrashedProbe.addItem(0.25, ItemList.CANISTER_COPPER.id, 8);

@@ -51,6 +51,10 @@ namespace Galacticraft {
         return galaxies[galaxyName].systems[systemName].planets[planetName];
     };
 
+    export function addSatellite(galaxyName: string, systemName: string, planetName: string, satellite: Satellite) {
+        getPlanet(galaxyName, systemName, planetName).addSatellite(satellite);
+    };
+
     class MilkyWay extends Galaxy {
         public getName(): string {
             return "milky_way";
