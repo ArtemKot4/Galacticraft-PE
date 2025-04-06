@@ -1,12 +1,12 @@
 class Ballone extends GalacticraftItem {
     public static list: Record<number, number> = {};
-    public constructor(stringID: string, oxygenSize: number) {
+    public constructor(stringID: string, public capacity: number) {
         super(stringID, {
             name: stringID,
             meta: 0
         });
 
-        Ballone.list[this.id] = oxygenSize;
+        Ballone.list[this.id] = capacity;
     };
 
     public static is(id: number): boolean {
@@ -19,7 +19,7 @@ class Ballone extends GalacticraftItem {
 };
 
 namespace Equipment {
-    export const players: Record<number, ItemContainer> = {};
+    export let list: Record<number, ItemContainer> = {};
 
     export const GEAR_WINDOW = (() => {
         const content = {
@@ -57,6 +57,7 @@ namespace Equipment {
                     clicker: {
                         onClick(coords, container) {
                             container.close();
+                            OPEN_BUTTON_WINDOW.open();
                         }
                     }
                 },
@@ -209,8 +210,42 @@ namespace Equipment {
         return window;
     })();
 
+    export const OPEN_BUTTON_WINDOW = new UI.Window({
+        location: {
+            x: 10,
+            y: 10,
+            width: 50,
+            height: 50,
+        },
+        drawing: [
+            {
+                type: "background",
+                color: android.graphics.Color.argb(0, 0, 0, 0),
+            },
+        ],
+        elements: {
+            button: {
+                type: "button",
+                x: 0,
+                y: 0,
+                bitmap: "equipment.mask",
+                width: 50,
+                height: 50,
+                clicker: {
+                    onClick(coords, container) {
+                        container.close();
+
+                        Network.sendToServer("packet.galacticraft.open_equipment_screen", {
+                            screenName: "gear"
+                        });
+                    }
+                }
+            }
+        }
+    });
+
     export function createItemContainerFor(player: number) {
-        const container = Equipment.players[player] = new ItemContainer();
+        const container = Equipment.list[player] = new ItemContainer();
         container.setClientContainerTypeName("galacticraft:equipment_storage:player_" + player);
 
         const condition = (container, str, id, count, data, extra, time) => Ballone.is(id) ? count : 0;
@@ -222,19 +257,42 @@ namespace Equipment {
         return container;
     };
 
-    export function getItemContainerFor(player: number): Nullable<ItemContainer> {
-        return Equipment.players[player] || null;
+    export function getItemContainerFor(player: number): ItemContainer {
+        return Equipment.list[player] ??= Equipment.createItemContainerFor(player);
     };
 
     export function getOxygenAmount(container: ItemContainer): number {
         return container.getSlot("ballone_left_slot").data + container.getSlot("ballone_right_slot").data;
     };
+
+    Network.addServerPacket("packet.galacticraft.open_equipment_screen", (client, data: {
+        screenName: string
+    }) => {
+        if(client === null || !data.screenName) return;
+
+        const container = Equipment.getItemContainerFor(client.getPlayerUid());
+
+        if(data.screenName === "oxygen_display" && Equipment.getOxygenAmount(container) <= 0) {
+            return;
+        };
+        container.openFor(client, data.screenName);
+    });
+
+    Network.addServerPacket("packet.galacticraft.close_equipment_screen", (client, data) => {
+        if(client === null) return;
+
+        Equipment.getItemContainerFor(Player.getLocal()).closeFor(client);
+    });
 };
 
-Callback.addCallback("ServerPlayerLoaded", (player: number) => {
-    if(!(player in Equipment.players)) {
-       Equipment.players[player] = Equipment.createItemContainerFor(player);
+Callback.addCallback("ServerPlayerLoaded", (player) => {
+    if(!(player in Equipment.list)) {
+       Equipment.list[player] = Equipment.createItemContainerFor(player);
     };
+});
+
+Callback.addCallback("LevelDisplayed", () => {
+    Equipment.list = {};
 });
 
 Callback.addCallback("LocalPlayerLoaded", (player) => {
@@ -242,6 +300,7 @@ Callback.addCallback("LocalPlayerLoaded", (player) => {
         if(screenName === "gear") {
             return Equipment.GEAR_WINDOW;
         };
+        
         if(screenName === "oxygen_display") {
             return Equipment.OXYGEN_DISPLAY_WINDOW;
         };
@@ -251,24 +310,49 @@ Callback.addCallback("LocalPlayerLoaded", (player) => {
 Callback.addCallback("ServerPlayerTick", (playerUid, isPlayerDead) => {
     if(isPlayerDead) return;
 
-    if(World.getThreadTime() % 10 === 0) {
+    const noOxygen = Utils.getDimensionTags(Entity.getDimension(playerUid)).includes("no_oxygen");
+    if(!noOxygen) return;
+
+    if(World.getThreadTime() % 20 === 0) {
         const container = Equipment.getItemContainerFor(playerUid);
 
         if(container != null) {
-            const name = container.getClientContainerTypeName();
-            if(name !== "oxygen_display") return;
+            const window = container.getWindow();
+            if(!window.isOpened()) return;
 
-            const left_amount = container.getSlot("ballone_left_slot").data;
-            const right_amount = container.getSlot("ballone_right_slot").data;
+            const leftAmount = container.getSlot("ballone_left_slot").data;
+            const rightAmount = container.getSlot("ballone_right_slot").data;
+            const amount = leftAmount + rightAmount;
             
-            container.setClientText("oxygen_capacity_display", `${left_amount + right_amount}/5000`);
+            container.setClientText("oxygen_capacity_display", `${amount} / 5000`);
+            container.setClientScale("ballone_left", leftAmount / 5000);
+            container.setClientScale("ballone_right", rightAmount / 5000);
 
-            container.setClientScale("ballone_left", left_amount/5000);
-            container.setClientScale("ballone_right", right_amount/5000);
-
-            if(left_amount + right_amount <= 0) {
+            if(amount <= 0) {
                 Entity.damageEntity(playerUid, 1);
+                Game.titleMessage(Native.Color.RED + Translation.translate("message.galacticraft.no_oxygen_danger"))
             };
         };
     };
+});
+
+Callback.addCallback("NativeGuiChanged", function (screenName) {
+    if(screenName == "survival_inventory_screen" || screenName == "creative_inventory_screen" || screenName == "inventory_screen" || screenName == "inventory_screen_pocket") {
+        Equipment.OPEN_BUTTON_WINDOW.open();
+    } else {
+        Equipment.OPEN_BUTTON_WINDOW.close();
+
+        if(screenName === EScreenName.IN_GAME_PLAY_SCREEN) {
+            Network.sendToServer("packet.galacticraft.open_equipment_screen", {
+                screenName: "oxygen_display"
+            });
+        } else {
+            Network.sendToServer("packet.galacticraft.close_equipment_screen", {});
+        };
+    };
+});
+
+Translation.addTranslation("message.galacticraft.no_oxygen_danger", {
+    en: "Danger! Not enough oxygen",
+    ru: "Опасно! Недостаточно кислорода"
 });
