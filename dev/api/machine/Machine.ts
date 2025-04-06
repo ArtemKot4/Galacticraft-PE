@@ -1,13 +1,6 @@
 abstract class MachineTile extends CommonTileEntity implements EnergyTile {
-    public container: ItemContainer;
-    public override useNetworkItemContainer = true;
-
     public getScreenByName(): UI.StandartWindow {
         return new UI.StandardWindow();
-    };
-
-    public getScreenName(): string {
-        return "main";
     };
 
     public override data = {
@@ -43,5 +36,20 @@ abstract class MachineTile extends CommonTileEntity implements EnergyTile {
 
     public isFullEnergy(): boolean {
         return this.data.energy >= this.getEnergyCapacity();
+    };
+
+    public isWrenchable(): boolean {
+        return true;
+    };
+
+    public onItemClick(id: number, count: number, data: number, coords: Callback.ItemUseCoordinates, player: number, extra: ItemExtraData): boolean {
+        super.onItemClick(id, count, data, coords, player, extra);
+
+        if(this.isWrenchable() && Utils.getItemTags(id).includes("wrench")) {
+            const block = this.blockSource.getBlock(coords.x, coords.y, coords.z);
+            BlockSource.getDefaultForActor(player).setBlock(coords.x, coords.y, coords.z, block.id, block.data >= 4 ? 1 : block.data + 1);
+            
+            return true;
+        };
     };
 };

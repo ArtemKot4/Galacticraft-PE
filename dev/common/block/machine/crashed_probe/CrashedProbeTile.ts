@@ -6,12 +6,25 @@ class CrashedProbeTile extends CommonTileEntity {
 
     public getScreenByName(): UI.StandartWindow {
         return new UI.StandardWindow({
+            standard: {
+                header: {
+                    text: {
+                        text: Translation.translate("block.galacticraft.crashed_probe"),
+                    },
+                },
+                inventory: {
+                    standard: true,
+                },
+                background: {
+                    standard: true,
+                },
+            },
             elements: (() => {
                 const obj: UI.ElementSet = {};
                 let x = 380;
                 let y = 110;
 
-                for(let i = 0; i < this.getSize(); i++) {
+                for(let i = 1; i <= this.getSize(); i++) {
                     obj[String(i)] = {
                         type: "slot",
                         size: 70,
