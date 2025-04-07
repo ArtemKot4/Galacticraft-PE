@@ -52,9 +52,9 @@ declare namespace com.zhekasmirnov.innercore.api.NativeAPI {
 declare namespace ToolAPI {
     function isAxe(item: number): boolean;
     function isPickaxe(item: number): boolean;
+    function isShovel(item: number): boolean;
 }
 declare namespace Game {
-    function actionbarMessage(message: string): void;
     function titleMessage(message: string): void;
 }
 declare namespace RuntimeData {
@@ -499,8 +499,8 @@ declare class ItemStack implements ItemInstance {
     getStringID(): string;
     copy(): ItemStack;
 }
-interface ItemHandComponent {
-    onHand?(item: ItemInstance, player_uid: number): void;
+interface IItemHoldCallback {
+    onItemHold?(item: ItemInstance, playerUid: number, slotIndex: number): void;
 }
 type itemTextureAnimated = [texture: string, frames: number | number[], interval: number];
 interface IItemTextureDescription {
@@ -539,7 +539,6 @@ interface IGlintItem {
 }
 type ItemParams = Item.ItemParams | Item.FoodParams | Item.ArmorParams;
 declare class BasicItem<T extends Item.ItemParams = Item.ItemParams> {
-    static handFunctions: Map<number, (item: ItemInstance, playerUid: number) => void>;
     maxStack: number;
     texture: IItemTextureDescription;
     id: number;
@@ -555,10 +554,15 @@ declare class BasicItem<T extends Item.ItemParams = Item.ItemParams> {
     getTags?(): string[];
     isThrowable?(): boolean;
     getFood?(): number;
-    static setFunctions(instance: (IIconOverrideCallback | INoTargetUseCallback | IItemUsingReleasedCallback | IItemUsingCompleteCallback | IItemUseCallback | INameOverrideCallback | ItemHandComponent | BasicItem) & {
+    static setFunctions(instance: (IIconOverrideCallback | INoTargetUseCallback | IItemUsingReleasedCallback | IItemUsingCompleteCallback | IItemUseCallback | INameOverrideCallback | IItemHoldCallback | BasicItem) & {
         id: number;
     }): void;
     create(params: ItemParams): void;
+}
+declare namespace Item {
+    const holdFunctions: Record<number, Callback.ItemHoldFunction>;
+    function registerHoldFunctionForID(id: number, func: Callback.ItemHoldFunction): void;
+    function registerHoldFunction(id: string | number, func: Callback.ItemHoldFunction): void;
 }
 declare enum EDestroyLevel {
     HAND = 0,
@@ -784,12 +788,12 @@ declare abstract class CommonTileEntity implements TileEntity {
      * Scriptable object that contains default data of tile entity.
      */
     defaultValues: Scriptable;
-    container: ItemContainer | UI.Container;
+    container: ItemContainer;
     liquidStorage: LiquidRegistry.Storage;
     isLoaded: boolean;
     remove: boolean;
     noupdate: boolean;
-    useNetworkItemContainer?: boolean;
+    readonly useNetworkItemContainer: boolean;
     events: {
         [packetName: string]: (packetData: any, packetExtra: any) => void;
     };
@@ -801,6 +805,7 @@ declare abstract class CommonTileEntity implements TileEntity {
         network: string[];
         container: string[];
     };
+    constructor();
     created(): void;
     /**@deprecated
      * Use {@link onInit} instead
@@ -838,20 +843,30 @@ declare abstract class CommonTileEntity implements TileEntity {
     onInit(): void;
     onLoad(): void;
     onUnload(): void;
+    /**
+     * Method, calls when player clicks on block with this tile entity. If method returns false, ui will be opened.
+     * @param coords
+     * @param item
+     * @param player
+     * @returns boolean
+     */
     onClick(coords: Callback.ItemUseCoordinates, item: ItemStack, player: number): boolean | void;
     onDestroyBlock(coords: Callback.ItemUseCoordinates, player: number): void;
     onProjectileHit(coords: Callback.ItemUseCoordinates, target: Callback.ProjectileHitTarget): void;
     onDestroyTile(): boolean | void;
     onTick(): void;
     getGuiScreen(): Nullable<UI.IWindow>;
-    getScreenByName(screenName?: string): Nullable<UI.IWindow>;
+    getScreenByName(screenName?: string, container?: ItemContainer): Nullable<UI.IWindow>;
+    getScreenName(player: number, coords: Vector): string;
     onItemClick(id: number, count: number, data: number, coords: Callback.ItemUseCoordinates, player: number, extra: Nullable<ItemExtraData>): boolean;
     requireMoreLiquid(liquid: string, amount: number): void;
     sendPacket: (name: string, data: object) => {};
     sendResponse: (packetName: string, someData: object) => {};
     selfDestroy(): void;
     getLocalTileEntity(): LocalTileEntity;
-    constructor();
+}
+declare namespace TileEntity {
+    function buildEvents(prototype: TileEntity.TileEntityPrototype): void;
 }
 declare class PlayerUser {
     playerUid: number;
@@ -1068,14 +1083,18 @@ declare enum ECallback {
     SERVER_PLAYER_EAT = "ServerPlayerEat",
     GENERATE_CUSTOM_DIMENSION_CHUNK = "GenerateCustomDimensionChunk",
     TILE_ENTITY_ADDED = "TileEntityAdded",
-    TILE_ENTITY_REMOVED = "TileEntityRemoved"
+    TILE_ENTITY_REMOVED = "TileEntityRemoved",
+    /**
+     * Custom callback. Works in one time of 8 ticks, if player held the item.
+     */
+    ITEM_HOLD = "ItemHold"
 }
 /**
  * The factory of decorators to add callback from function.
  * @example
  * ```ts
     class Example {
-        SubscribeEvent(ECallback.LOCAL_TICK)
+        [@SubscribeEvent(ECallback.LOCAL_TICK)]
         public onTick() {
             Game.message("example")
         }
@@ -1084,7 +1103,35 @@ declare enum ECallback {
  * @param event {@link ECallback} enum value
  * @returns decorator
  */
-declare function SubscribeEvent(event: ECallback): (target: any, key: string, descriptor: PropertyDescriptor) => PropertyDescriptor;
+declare function SubscribeEvent(event: ECallback): MethodDecorator;
+/**
+ * Decorator to add callback from function by function name and same function. Format will be "onNameOfCallback". "on" optional.
+ * @example
+ * ```ts
+ * class ExampleDestroyBlock {
+        [@SubscribeEvent]
+        public onDestroyBlock() {
+            Game.message("break block")
+        }
+    }
+ * ```
+ * @param target
+ * @param key
+ * @param descriptor
+ */
+declare function SubscribeEvent(target: unknown, key: string, descriptor: PropertyDescriptor): PropertyDescriptor;
+declare namespace Callback {
+    /**
+     * Function used in "ItemHold" callback. Callback works one time of 8 ticks.
+     * @since 0.1a
+     * @param item ItemInstance of held item
+     * @param playerUid unique identifier of holder player
+     */
+    interface ItemHoldFunction {
+        (item: ItemInstance, playerUid: number, slotIndex: number): void;
+    }
+    function addCallback(name: "ItemHold", func: ItemHoldFunction, priority?: number): void;
+}
 interface IPlayerDataCommand extends ICommandParams {
     key: string;
 }

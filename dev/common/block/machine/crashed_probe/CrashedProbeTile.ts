@@ -1,5 +1,4 @@
 class CrashedProbeTile extends CommonTileEntity {
-    public container: ItemContainer;
     public data = {
         lock: false
     };
@@ -21,19 +20,19 @@ class CrashedProbeTile extends CommonTileEntity {
             },
             elements: (() => {
                 const obj: UI.ElementSet = {};
-                let x = 380;
+                let x = 290;
                 let y = 110;
 
                 for(let i = 1; i <= this.getSize(); i++) {
                     obj[String(i)] = {
                         type: "slot",
-                        size: 70,
+                        size: 80,
                         x: x,
                         y: y,
                     };
-                    x += 70;
+                    x += 80;
                     if(i % 10 === 0) {
-                        y += 70;
+                        y += 80;
                     };
                 };
                 return obj;
