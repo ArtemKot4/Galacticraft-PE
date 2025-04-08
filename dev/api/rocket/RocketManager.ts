@@ -43,18 +43,30 @@ class RocketController {
 
                 Updatable.addUpdatable({
                     update() {
-                        if(World.getThreadTime() % 20 === 0) {
+                        if(World.getThreadTime() % 20 === 0) { 
                             if(timer >= 0) {
                                 client.sendMessage(Native.Color.RED + timer--);
+                                if(!Entity.getRider(entity)) {
+                                    this.remove = true;
+                                }
                             } else {
                                 rocket.launched = true;
                             };
 
                             if(rocket.launched === true) {
+                                Entity.rideAnimal(entity, player);
                                 const pos = Entity.getPosition(entity);
-                                if(pos.y >= 400 && !body) {
+                                if(pos.y >= 400 && body === false) {
                                     body = true;
-                                    RocketController.linkRender(Entity.getDimension(player));
+                                    const celestial = Galacticraft.findCelestialByID(Entity.getDimension(entity));
+                                    if(celestial != null && !Station.isStation(celestial)) {
+                                        Game.message("skybox");
+
+                                        client.send("packet.galacticraft.set_rocket_skybox_render", {
+                                            entity,
+                                            texture: celestial.getCelestialBody().getTexture()
+                                        });
+                                    }
                                 }
                                 if(pos.y >= 1000) {
                                     Entity.setMobile(entity, false);
@@ -64,7 +76,7 @@ class RocketController {
                         };
 
                         if(timer <= 0) {
-                            Entity.setVelocity(entity, 0, 1, 0);
+                            Entity.setVelocity(entity, 0, 1.5, 0);
                             if(client) {
                                 client.send("packet.galacticraft.rocket_velocity_set", {
                                     entity
@@ -77,37 +89,33 @@ class RocketController {
         }
     };
 
-    public static linkRender(entity: number): void {
-        const render = new AttachableRender(entity);
-        const mesh = new RenderMesh();
+    public static createRenderer(texture: string): Nullable<ActorRenderer> {
+        return new ActorRenderer()
+        .addPart("body")
+        .endPart()
+        .addPart("skybox", "body")
+        .addBox(-150, -100, 150, 0, 0, 0, 1, 0, 0)
+        .setTexture(texture)
+        .endPart();
+    };
 
-        const pos = 8 / 16;
+    public static linkRender(entity: number, texture: string): AttachableRender {
+        const renderer = RocketController.createRenderer(texture);
 
-        mesh.addVertex(-pos, -100, -pos, 0, 0);
-        mesh.addVertex(pos, -100, -pos, 1, 0);
-        mesh.addVertex(-pos, -100, pos, 0, 1);
-        mesh.addVertex(pos, -100, -pos, 1, 0);
-        mesh.addVertex(-pos, -100, pos, 0, 1);
-        mesh.addVertex(pos, -100, pos, 1, 1);
-        mesh.scale(350, 350, 350);
-        const renderer = new ActorRenderer("chestplate");
-        renderer.addPart("planet", mesh);
-
-        render.setRenderer(renderer);
-        const celestial = Galacticraft.findCelestialByID(Entity.getDimension(entity));
-
-        if(celestial != null) {
-            const body = celestial.getCelestialBody();
-
-            render.setTexture(body.getPath() + body.bitmap + ".png");
+        if(renderer != null) {
+            return new AttachableRender(entity).setRenderer(renderer);
         };
     };
 };
 
+Network.addClientPacket("packet.galacticraft.set_rocket_skybox_render", (data: { entity: number, texture: string }) => {
+    RocketController.linkRender(data.entity, data.texture);
+});
+
 Network.addClientPacket("packet.galacticraft.rocket_velocity_set", (data: {
     entity: number, x: number, y: number, z: number
 }) => {
-    if(RocketManager.isRocket(data.entity)) Entity.setVelocity(data.entity, 0, 1, 0);
+    if(RocketManager.isRocket(data.entity)) Entity.setVelocity(data.entity, 0, 1.5, 0);
 });
 
 class RocketEvents {
@@ -143,3 +151,14 @@ class RocketEvents {
         };
     };
 }
+
+        // const mesh = new RenderMesh();
+
+        // const pos = 8 / 16;
+
+        // mesh.addVertex(-pos, -100, -pos, 0, 0);
+        // mesh.addVertex(pos, -100, -pos, 1, 0);
+        // mesh.addVertex(-pos, -100, pos, 0, 1);
+        // mesh.addVertex(pos, -100, -pos, 1, 0);
+        // mesh.addVertex(-pos, -100, pos, 0, 1);
+        // mesh.addVertex(pos, -100, pos, 1, 1);

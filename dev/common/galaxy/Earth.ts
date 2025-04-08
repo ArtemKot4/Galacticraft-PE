@@ -17,7 +17,7 @@ Galacticraft.registerPlanet("milky_way", "solar_system",
         return true;
     },
     getCelestialBody() {
-        return new CelestialBody()
+        return new CelestialBody(this)
     },
     id: EDimension.OVERWORLD
 });

@@ -36,6 +36,14 @@ class CelestialBody implements ILocalizeable {
         return "gui/planet/";
     };
 
+    public getBitmap(): string {
+        return this.getPath().replace("/", ".") + this.bitmap + ".png";
+    };
+
+    public getTexture(): string {
+        return this.getPath() + this.bitmap + ".png";
+    };
+
     public setBitmap(bitmap: string): this {
         this.bitmap = bitmap;
         return this;
@@ -51,6 +59,7 @@ class CelestialBody implements ILocalizeable {
             if(object instanceof Galaxy) this.type = ECelestialType.GALAXY;
             this.name = object.getName();
             this.localizedName = object.getLocalizedName();
+            if(!this.bitmap) this.setBitmap(this.name);
         };
     };
 };

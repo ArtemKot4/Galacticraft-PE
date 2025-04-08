@@ -3,7 +3,7 @@ abstract class Satellite extends Planet {
         return Translation.translate(`galacticraft.satellite.${this.getName()}`);
     };
 
-    public static isStation(satellite: Satellite): satellite is Station {
+    public static isStation(satellite: IPlanet): satellite is Station {
         return satellite instanceof Station;
     };
 };
