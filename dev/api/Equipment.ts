@@ -225,7 +225,7 @@ namespace Equipment {
 
     export function createItemContainerFor(player: number) {
         const container = Equipment.list[player] = new ItemContainer();
-        container.setClientContainerTypeName("galacticraft:equipment_storage:player_" + player);
+        container.setClientContainerTypeName("galacticraft.equipment_storage:" + player);
 
         const condition = (container, str, id, count, data, extra, time) => Ballone.is(id) ? count : 0;
 
@@ -275,7 +275,7 @@ Callback.addCallback("LocalLevelLeft", () => {
 });
 
 Callback.addCallback("LocalPlayerLoaded", (player) => {
-    ItemContainer.registerScreenFactory("galacticraft:equipment_storage:player_" + player, (container: ItemContainer, screenName: string) => {
+    ItemContainer.registerScreenFactory("galacticraft.equipment_storage:" + player, (container: ItemContainer, screenName: string) => {
         if(screenName === "gear") {
             return Equipment.GEAR_WINDOW;
         };

@@ -208,6 +208,10 @@ common/block/misc/unlit_torch/UnlitTorch.ts
 
 common/block/BlockList.ts
 
+common/rocket/RocketTier1.ts
+common/rocket/RocketTier2.ts
+common/rocket/RocketTier3.ts
+
 common/Integrations/Recipe Viewer Integration.ts
 
 
