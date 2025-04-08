@@ -1,4 +1,8 @@
 class RocketTier1 extends Rocket {
+    public override getTier(): number {
+        return 1;
+    };
+    
     public override getFuelCapacity(): number {
         return 500;
     };
@@ -12,4 +16,4 @@ class RocketTier1 extends Rocket {
     };
 };
 
-RocketManager.registerRocket("galacticraft:rocket_tier_1", RocketTier1);
+RocketManager.registerRocket("galacticraft:rocket_tier_1<>", RocketTier1);

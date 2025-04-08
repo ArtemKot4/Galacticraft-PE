@@ -59,6 +59,46 @@ namespace Galacticraft {
         return getPlanet(galaxyName, systemName, planetName).satellites[satelliteName];
     };
 
+    export function findPlanetByID(id: number): Nullable<IPlanet> {
+
+        for(const galaxy in galaxies) {
+            for(const system in galaxies[galaxy].systems) {
+                for(const planet in galaxies[galaxy].systems[system].planets) {
+                    if(galaxies[galaxy].systems[system].planets[planet].id === id) {
+                        return galaxies[galaxy].systems[system].planets[planet];
+                    };
+                };
+            };
+        };
+
+        return null;  
+    };
+
+    export function findSatelliteByID(id: number): Nullable<Satellite> {
+        for(const galaxy in galaxies) {
+            for(const system in galaxies[galaxy].systems) {
+                for(const planet in galaxies[galaxy].systems[system].planets) {
+                    for(const satellite in galaxies[galaxy].systems[system].planets[planet].satellites) {
+                        if(galaxies[galaxy].systems[system].planets[planet].satellites[satellite].id === id) {
+                            return galaxies[galaxy].systems[system].planets[planet].satellites[satellite];
+                        };
+                    };
+                };
+            };
+        };
+
+        return null;
+    };
+
+    export function findCelestialByID(id: number): Nullable<IPlanet | Satellite> {
+        const planet = Galacticraft.findPlanetByID(id);
+        if(planet) {
+            return planet;
+        };
+
+        return Galacticraft.findSatelliteByID(id);
+    };
+
     class MilkyWay extends Galaxy {
         public getName(): string {
             return "milky_way";

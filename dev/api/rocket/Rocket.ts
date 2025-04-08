@@ -5,6 +5,7 @@ interface IRocketTargetContainer {
 }
 
 abstract class Rocket {
+    abstract getTier(): number;
     abstract getFuelCapacity(): number;
     abstract getTargetList(): IRocketTargetContainer[];
 

@@ -32,6 +32,10 @@ class CelestialBody implements ILocalizeable {
         return null;
     };
 
+    public getPath(): string {
+        return "gui/planet/";
+    };
+
     public setBitmap(bitmap: string): this {
         this.bitmap = bitmap;
         return this;

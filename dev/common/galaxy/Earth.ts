@@ -18,7 +18,8 @@ Galacticraft.registerPlanet("milky_way", "solar_system",
     },
     getCelestialBody() {
         return new CelestialBody()
-    }
+    },
+    id: EDimension.OVERWORLD
 });
 
 Translation.addTranslation("galacticraft.planet.earth", {
