@@ -1,6 +1,9 @@
 Galacticraft.registerPlanet("milky_way", "solar_system", 
     {
     satellites: {},
+    getTier() {
+        return 1;
+    },
     getName(): string {
         return "earth";
     },

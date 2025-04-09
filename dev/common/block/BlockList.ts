@@ -12,6 +12,7 @@ namespace BlockList {
     export const ROCKET_WORKBENCH_TOP = new RocketWorkbenchTop();
     export const CRASHED_PROBE = new CrashedProbe();
     export const OXYGEN_COLLECTOR = new OxygenCollector();
+    export const ROCKET_PADDING = new RocketPadding();
 
     export const GLOWSTONE_TORCH = new GlowstoneTorch();
     export const UNLIT_TORCH = new UnlitTorch();

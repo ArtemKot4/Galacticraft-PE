@@ -4,5 +4,6 @@ interface IPlanet extends ILocalizeable {
     hasDefaultSkyboxes(): boolean;
     getCelestialBody(): CelestialBody;
     addSatellite(satellite: Satellite): void;
+    getTier?(): number;
     id: number;
 };

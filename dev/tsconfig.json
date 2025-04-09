@@ -39,6 +39,8 @@
 		"api/galaxy/SpaceSystem.ts",
 		"api/Galacticraft.ts",
 		"api/Equipment.ts",
+		"api/rocket/RocketTimer.ts",
+		"api/rocket/RocketEntity.ts",
 		"api/rocket/Rocket.ts",
 		"api/rocket/RocketManager.ts",
 		"api/rocket/RocketEvents.ts",

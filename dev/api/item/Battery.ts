@@ -17,17 +17,18 @@ class Battery extends GalacticraftItem {
 
         Battery.list[this.id] = this;
 
+        let overrideFunction: Callback.ItemNameOverrideFunction = null;
+
         if(capacity == -1) {
             this.capacityDisplay = Translation.translate("message.galacticraft.infinity");
-            this.onNameOverride = (item, translation, name) => Translation.translate(name) + "\n" + this.capacityDisplay;
+            overrideFunction = (item, translation, name) => Translation.translate(name) + "\n" + this.capacityDisplay;
         } else {
-            this.onNameOverride = (item, translation, name) => Translation.translate(name) + "\n" + EColor.GRAY + "gJ: " + item.extra && item.extra.getInt ? item.extra.getInt("energy", 0) : 0 + " / " + this.capacity;
+            overrideFunction = (item, translation, name) => Translation.translate(name) + "\n" + EColor.GRAY + "gJ: " + (item.extra && item.extra.getInt ? item.extra.getInt("energy", 0) : 0) + " / " + this.capacity;
         };
 
-        Item.registerNameOverrideFunction(this.id, this.onNameOverride);
+        Item.registerNameOverrideFunction(this.id, overrideFunction);
     };
 
-    public onNameOverride?(item: ItemInstance, translation: string, name: string);
     
     public static chargeMachine(tile: CommonTileEntity & MachineTile, batterySlot: string) {
         const slot = tile.container.getSlot(batterySlot);

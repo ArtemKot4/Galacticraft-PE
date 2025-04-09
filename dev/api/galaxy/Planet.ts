@@ -2,6 +2,9 @@ abstract class Planet extends Dimension implements IPlanet {
     public static oreList: Record<number, ReturnType<typeof Planet.prototype.getOres>> = {};
     public satellites: Record<string, Satellite> = {};
 
+    public getTier(): Nullable<number> {
+        return null;
+    };
     /**
      * Method to declare gravity of planet
      * @default 0.25

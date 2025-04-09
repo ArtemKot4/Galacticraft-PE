@@ -1,20 +1,30 @@
 class RocketManager {
-    public static rockets: Record<number, Rocket> = {};
-    public static rocketTypes: Record<string, new (entity: number) => Rocket> = {};
+    public static existRockets: Record<number, RocketEntity> = {};
+    public static registeredRockets: Record<string, Rocket> = {};
 
     public static isRocket(entity: number): boolean {
-        return Entity.getTypeName(entity) in RocketManager.rocketTypes;
+        return Entity.getTypeName(entity) in RocketManager.registeredRockets;
     };
 
-    public static addRocket(entity: number): Rocket {
-        return RocketManager.rockets[entity] = new RocketManager.rocketTypes[Entity.getTypeName(entity)](entity) as Rocket;
+    public static addRocketEntity(rocket: Rocket, entity: number, fuel: number, slotCount?: number): RocketEntity {
+        const entityClass = rocket.getEntity();
+
+        return RocketManager.existRockets[entity] = new entityClass(rocket, entity, fuel, slotCount);
     };
 
-    public static getRocket(entity: number): Nullable<Rocket> {
-        return RocketManager.rockets[entity] || null;
+    public static getRocketEntity(entity: number): Nullable<RocketEntity> {
+        return RocketManager.existRockets[entity] || null;
     };
 
-    public static registerRocket(type: string, rocket: new (entity: number) => Rocket) {
-        RocketManager.rocketTypes[type] = rocket; 
+    public static getRocketByEntity(entity: number): Nullable<Rocket> {
+        return RocketManager.registeredRockets[Entity.getTypeName(entity)] || null
+    };
+
+    public static hasRocket(entity: number): boolean {
+        return entity in RocketManager.existRockets;
+    };
+
+    public static registerRocket(rocket: Rocket) {
+        RocketManager.registeredRockets[rocket.getEntityType()] = rocket; 
     };
 };

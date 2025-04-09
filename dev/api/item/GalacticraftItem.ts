@@ -23,6 +23,6 @@ class GalacticraftItem extends BasicItem {
     };
 
     public getName(): string {
-        return "item.galacticraft." + this.id;
+        return "item.galacticraft." + this.stringID;
     };
 };

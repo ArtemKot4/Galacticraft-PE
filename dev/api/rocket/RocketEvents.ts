@@ -1,38 +1,44 @@
 class RocketEvents {
     @SubscribeEvent
     public onEntityAdded(entity: number) {
-        if(RocketManager.isRocket(entity)) {
-            RocketManager.addRocket(entity);
+        if(!RocketManager.hasRocket(entity)) {
+            RocketManager.getRocketEntity(entity);
         };
     };
 
     @SubscribeEvent
     public onEntityInteract(entity: number, player: number, coords: Vector): void {
         if(RocketManager.isRocket(entity)) {
-            const rocket = RocketManager.addRocket(entity);
+            let rocket = RocketManager.getRocketEntity(entity);
+
+            if(rocket == null) {
+                rocket = RocketManager.addRocketEntity(RocketManager.getRocketByEntity(entity), entity, 0, 0);
+            };
 
             if(Entity.getSneaking(player) === true) {
                 Game.prevent();
-                const client = Network.getClientForPlayer(player);
-
-                if(client) rocket.container.openFor(client, "fuel_storage");
+                if(!rocket.addFuelBy(player)) {
+                    rocket.openContainer(player);
+                };
             } else {
                 //debug next string:
                 return rocket.launch(player);
-            }
+            };
         };
     };
 
     @SubscribeEvent
     public onEntityHurt(attacker: number, entity: number, damageValue: number, damageType: Entity.DamageSource | number, armorReducesDamage: boolean) {
-        const rocket = RocketManager.getRocket(entity);
+        const rocket = RocketManager.getRocketEntity(entity);
 
-        if(rocket != null && !Entity.getSneaking(attacker)) {
+        if(rocket != null) {
             Game.prevent();
-            rocket.finalize();
+            if(!Entity.getSneaking(attacker)) {
+                rocket.finalize();
+            };
         };
     };
-}
+};
 
         // const mesh = new RenderMesh();
 

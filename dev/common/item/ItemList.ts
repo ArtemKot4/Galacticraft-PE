@@ -182,6 +182,24 @@ namespace ItemList {
     export const ATOMIC_BATTERY = new Battery("atomic_battery", { name: "atomic_battery", meta: 0 }, -1, 10);
     
     export const SHIELD_CONTROLLER = new GalacticraftItem("shield_controller", {name: "shield_controller", meta: 0});
+
+    class RocketItem extends GalacticraftItem implements INameOverrideCallback {
+        public onNameOverride(item: ItemInstance, translation: string, name: string): string | void {
+            if(item.extra != null) {
+                return Translation.translate(name) + "\n" + "fuel: " + item.extra.getInt("amount") + "\n" + "slot count: " + item.extra.getInt("slotCount");
+            };
+
+            return Translation.translate(name);
+        }
+    }
+    export const ROCKET_TIER_1 = new RocketItem("rocket_tier_1", {name: "rocket_tier_1", meta: 0}, { stack: 1, isTech: false });
+
+    Item.addToCreative(ROCKET_TIER_1.id, 1, 0, (() => {
+        const extra = new ItemExtraData();
+        extra.putInt("amount", 1000);
+        extra.putInt("slotCount", 18);
+        return extra;
+    })()) //debug
 };
 
 Block.registerDropFunction("ore_solar_asteroids", function (coords, blockID) {

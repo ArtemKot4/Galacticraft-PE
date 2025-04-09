@@ -8,22 +8,43 @@ class GalacticraftLiquid {
         Block.createLiquidBlock(
             "liquid_galacticraft_" + this.type,
             {
-              name: "block.galacticraft.liquid." + this.type,
-              still: {
-                texture: [still_texture, 0],
-                id: "liquid_galacticraft_" + this.type + "_still",
-              },
-              flowing: {
-                texture: [flow_texture, 0],
-                id: "liquid_galacticraft_" + this.type + "_flow",
-              }
+                name: "block.galacticraft.liquid." + this.type,
+                still: {
+                    texture: [still_texture, 0],
+                    id: "liquid_galacticraft_" + this.type + "_still",
+                },
+                flowing: {
+                    texture: [flow_texture, 0],
+                    id: "liquid_galacticraft_" + this.type + "_flow",
+                },
             },
             block_type || {
                 solid: false,
                 renderlayer: 1,
-                explosionres: 10000
+                explosionres: 10000,
             }
         );
+        
+        return this;
+    };
+
+    public createBucket(texture: string): this {
+        IDRegistry.genItemID("bucket_galacticraft_" + this.type);
+        Item.createItem("bucket_galacticraft_" + this.type, "bucket." + this.type, {
+            name: "bucket"
+        }, {
+            stack: 1,
+            isTech: false
+        });
+
+        LiquidRegistry.registerItem(this.type, {
+            id: ItemID["bucket_galacticraft_" + this.type],
+            data: 0
+        }, {
+            id: VanillaItemID.bucket,
+            data: 0
+        });
+
         return this;
     };
 
@@ -48,11 +69,14 @@ class GalacticraftLiquid {
 
 namespace LiquidList {
     export const OIL = new GalacticraftLiquid("oil")
-    .createBlock("oil_still", "oil_flow");
+    .createBlock("oil_still", "oil_flow")
+    .createBucket("bucket_oil_gc");
 
     export const FUEL = new GalacticraftLiquid("fuel")
-    .createBlock("fuel_still", "fuel_flow");
+    .createBlock("fuel_still", "fuel_flow")
+    .createBucket("bucket_fuel_gc");
     
     export const SULPHURIC_ACID = new GalacticraftLiquid("sulphuric_acid")
-    .createBlock("sulfuric_acid_still", "sulfuric_acid_flow");
+    .createBlock("sulfuric_acid_still", "sulfuric_acid_flow")
+    .createBucket("bucket_sulphuric_acid_gc");
 };

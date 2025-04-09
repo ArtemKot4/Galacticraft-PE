@@ -66,6 +66,22 @@ class Canister extends GalacticraftItem implements IIconOverrideCallback, INameO
         };
         Canister.types.push(type);
     };
+
+    public static is(id: number) {
+        return id === ItemList.CANISTER.id;
+    };
+
+    public static getLiquid(item: ItemInstance): Nullable<{
+        type: string, amount: number
+    }> {
+        if(Canister.is(item.id) && item.extra) {
+            return {
+                type: item.extra.getString("type", "empty"),
+                amount: item.extra.getInt("amount", 0),
+            };
+        };
+        return null;
+    };
 };
 
 Callback.addCallback("ModsLoaded", () => {
