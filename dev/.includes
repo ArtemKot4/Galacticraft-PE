@@ -39,6 +39,7 @@ api/Equipment.ts
 
 api/rocket/Rocket.ts
 api/rocket/RocketManager.ts
+api/rocket/RocketEvents.ts
 
 common/Dimensions/Moon/block/moon_blocks.ts
 common/Dimensions/Mars/block/mars_blocks.ts
