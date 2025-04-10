@@ -20,7 +20,7 @@ class RocketManager {
         return RocketManager.registeredRockets[Entity.getTypeName(entity)] || null
     };
 
-    public static hasRocket(entity: number): boolean {
+    public static hasRocketEntity(entity: number): boolean {
         return entity in RocketManager.existRockets;
     };
 

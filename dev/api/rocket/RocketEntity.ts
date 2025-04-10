@@ -1,6 +1,7 @@
 class RocketEntity {
     public entity: number;
     public container: ItemContainer;
+    public blockSource: BlockSource;
     public fuel: number;
     public slotCount: number;
     public launched: boolean;
@@ -10,10 +11,11 @@ class RocketEntity {
         this.slotCount = slotCount;
         this.launched = false;
         this.container = new ItemContainer();
+        this.blockSource = BlockSource.getDefaultForDimension(this.getDimension());
         this.container.setGlobalSlotSavingEnabled(true);
         this.container.setClientContainerTypeName("galacticraft.rocket:" + entity);
 
-        this.fuel = fuel; //debug
+        this.fuel = 1000; //debug 1000: need be equals fuel
 
         Network.sendToAllClients("packet.galacticraft.register_rocket_screen_factory", { 
             entity,
@@ -35,8 +37,8 @@ class RocketEntity {
         return Galacticraft.findCelestialByID(this.getDimension());
     };
 
-    public hasRider(): boolean {
-        return Entity.getRider(this.entity) > 0;
+    public getRider(): number {
+        return Entity.getRider(this.entity);
     };
 
     public addFuel(amount: number): number {
@@ -97,6 +99,39 @@ class RocketEntity {
         };
     };
 
+    public findRocketPadding(): Nullable<Vector3> {
+        const id = this.rocket.getRocketPadding();
+        const pos = this.getPosition();
+        
+        let height = pos.y;
+        while(this.blockSource.getBlockID(pos.x, height, pos.z) === 0) {
+            height--;
+            if(this.blockSource.getBlockID(pos.x, height, pos.z) === id) {
+                return new Vector3(pos.x, height, pos.z);
+            };
+        };
+        return null;
+    };
+
+    public packRocketPadding(coords: Vector): void {
+        if(coords != null) {
+            for(let i = -1; i <= 1; i++) {
+                for(let j = -1; j <= 1; j++) {
+                    this.blockSource.destroyBlock(coords.x + i, coords.y, coords.z + j, false);
+                };
+            };
+            this.container.setSlot(this.findEmptySlot(), this.rocket.getRocketPadding(), 9, 0);
+        };
+    };
+
+    public findEmptySlot(): string {
+        for(let i = 1; i <= this.slotCount; i++) {
+            if(this.container.getSlot(String(i)).isEmpty()) {
+                return String(i);
+            };
+        };
+    };
+
     public launch(player: number): void {
         const client = Network.getClientForPlayer(player);
 
@@ -111,21 +146,23 @@ class RocketEntity {
 
             const speed = this.rocket.getFlySpeed();
             const height = this.rocket.getFinalHeight();
+            const startHeight = this.getPosition().y;
             const self = this;
 
             Updatable.addUpdatable({
                 update() {
                     if(World.getThreadTime() % 20 === 0) { 
                         if(timer >= 0) {
+                            timer -= 1;
+
                             if(!timerInited) {
-                                RocketTimer.init(player, timer);
+                                RocketTimer.init(player, timer + 1);
                                 timerInited = true;
                             };
-
-                            if(!self.hasRider()) {
-                                client.sendMessage(Translation.translate("message.galacticraft.rocket_empty"))
-                                this.remove = true;
-                            };
+                            // if(!self.hasRider()) {
+                            //     client.sendMessage(Translation.translate("message.galacticraft.rocket_empty"))
+                            //     this.remove = true;
+                            // };
                         } else {
                             self.launched = true;
                         };
@@ -136,6 +173,13 @@ class RocketEntity {
                             if(pos.y >= height / 2 && body === false) {
                                 body = true;
                             };
+
+                            if(pos.y === startHeight + 3) {
+                                const paddingCoords = self.findRocketPadding();
+                                if(paddingCoords != null) {
+                                    self.packRocketPadding(paddingCoords);
+                                }
+                            }
 
                             if(pos.y >= height) {
                                 self.stop();
@@ -160,15 +204,14 @@ class RocketEntity {
 
     public finalize(): void {
         const pos = this.getPosition();
-        const region = BlockSource.getDefaultForActor(this.entity);
 
         const item = this.rocket.getDrop();
         const extra = new ItemExtraData();
         extra.putInt("amount", this.fuel);
         extra.putInt("slotCount", this.slotCount || 0);
 
-        region.spawnDroppedItem(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, item.id, item.count, item.data, extra);
-        this.container.dropAt(region, pos.x, pos.y, pos.z);
+        this.blockSource.spawnDroppedItem(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, item.id, item.count, item.data, extra);
+        this.container.dropAt(this.blockSource, pos.x, pos.y, pos.z);
         Entity.remove(this.entity);
             
         delete RocketManager.existRockets[this.entity];
@@ -209,7 +252,10 @@ Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (d
             },
             inventory: {
                 standard: true
-            }
+            },
+            background: {
+                standard: true
+            },
         },
         drawing: [],
         elements: {}
@@ -217,7 +263,7 @@ Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (d
 
     let y = 30;
     let slotSize = 70;
-    let fuelStorageX = 120 + 50;
+    let fuelStorageX = 120 + 250;
 
     for(let i = 1; i <= data.slotCount; i++) {
         if(i % 9 === 0) {
@@ -232,19 +278,21 @@ Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (d
         };
     };
 
-    content.elements["fuel_scale"] = {
-        type: "scale",
-        bitmap: "rocket.fuel_storage_0",
-        x: fuelStorageX,
-        y: y + 30
-    };
-
     content.drawing.push({
         type: "bitmap",
+        bitmap: "rocket.fuel_storage_0",
+        x: fuelStorageX,
+        y: y + 30,
+        scale: 5
+    });
+
+    content.elements["fuel_scale"] = {
+        type: "scale",
         bitmap: "rocket.fuel_storage_1",
         x: fuelStorageX,
-        y: y + 30
-    });
+        y: y + 30,
+        scale: 5
+    };
 
     const window = new UI.StandardWindow(content);
 

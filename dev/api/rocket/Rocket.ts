@@ -15,7 +15,7 @@ abstract class Rocket {
     abstract getEntityType(): string;
     abstract getTier(): number;
     abstract getFuelCapacity(): number;
-    abstract getTargetList(): IRocketTargetContainer[];
+    public getTargetList?(): IRocketTargetContainer[];
 
     public getTimerMax(): number {
         return 10;
@@ -39,5 +39,9 @@ abstract class Rocket {
 
     public create(entity: number, slotCount: number) {
         RocketManager.addRocketEntity(this,  entity, slotCount);
+    };
+
+    public getRocketPadding(): number {
+        return BlockList.ROCKET_PADDING.id;
     };
 };

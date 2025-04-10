@@ -1,5 +1,5 @@
 class RocketTimer {
-    public static value: number;
+    public static value: number = -1;
     public static inited: boolean = false;
 
     public static UI: UI.Window = (() => {
@@ -14,16 +14,17 @@ class RocketTimer {
                 "text": {
                     type: "text",
                     y: UI.getScreenHeight() / 2 - 20,
+                    x: 500 - 20,
                     font: {
                         size: 40,
-                        color: android.graphics.Color.RED,
-                        alignment: com.zhekasmirnov.innercore.api.mod.ui.types.Font.ALIGN_CENTER 
+                        color: android.graphics.Color.RED
                     },
                     text: "0"
                 }
             }
         });
         window.setAsGameOverlay(true);
+        window.setTouchable(false);
         window.setDynamic(true);
         return window;
     })();
@@ -38,7 +39,7 @@ class RocketTimer {
     };
 
     public static updateText(timer: number) {
-        RocketTimer.UI.getElements().get("text").setBinding("text", timer);
+        return RocketTimer.UI.getElements().get("text").setBinding("text", timer);
     };
 }
 

@@ -6,11 +6,11 @@ const FuelLoaderUI = new UI.StandartWindow({
             },
         },
         inventory: {
-            standard: true,
+            standard: true
         },
         background: {
-            standard: true,
-        },
+            standard: true
+        }
     },
     drawing: [
         {

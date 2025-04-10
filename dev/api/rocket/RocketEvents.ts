@@ -1,8 +1,8 @@
 class RocketEvents {
     @SubscribeEvent
     public onEntityAdded(entity: number) {
-        if(!RocketManager.hasRocket(entity)) {
-            RocketManager.getRocketEntity(entity);
+        if(RocketManager.isRocket(entity) && !RocketManager.hasRocketEntity(entity)) {
+            RocketManager.addRocketEntity(RocketManager.getRocketByEntity(entity), entity, 0, 0);
         };
     };
 

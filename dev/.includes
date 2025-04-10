@@ -121,9 +121,9 @@ client/ui/tile_entity/WorkbenchUI.ts
 
 
 
-
-
-
+common/rocket/RocketTier1.ts
+common/rocket/RocketTier2.ts
+common/rocket/RocketTier3.ts
 
 
 common/block/machine/RocketWorkbenchTop.ts
@@ -211,10 +211,6 @@ common/block/misc/unlit_torch/UnlitTorch.ts
 
 common/block/BlockList.ts
 
-common/rocket/RocketTier1.ts
-common/rocket/RocketTier2.ts
-common/rocket/RocketTier3.ts
-
 common/Integrations/Recipe Viewer Integration.ts
 
 
@@ -257,12 +253,6 @@ common/Dimensions/Skyboxes/venus_skybox.ts
 common/Dimensions/Skyboxes/spaces_station_skybox.ts
 
 common/Dimensions/Earth/world_ore_generation.ts
-
-
-<!-- 
-Rocket/gui.ts
-Rocket/rocket_1.ts
-Rocket/callback.ts -->
 
 common/recipes.ts
 common/last.ts

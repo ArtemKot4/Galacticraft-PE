@@ -9,26 +9,34 @@ class RocketPadding extends BasicBlock {
         Block.setShape(this.id, 0, 0, 0, 1, 3 / 16, 1, 0);
         Block.setShape(this.id, 0, 0, 0, 1, 5 / 16, 1, 1);
     };
+
+    public override getTileEntity(): CommonTileEntity {
+        return new RocketPaddingTile();
+    };
 };
 
 class RocketPaddingTile extends CommonTileEntity {
-    public onInit(): void {
-        if(this.isValidStructure()) {
-            this.blockSource.setBlock(this.x - 1, this.y, this.z - 1, this.blockID, 1);
-        };
-    };
-
-    public isValidStructure(): boolean {
-        for(let i = 0; i <= 2; i++) {
-            for(let k = 0; k <= 2; k++) {
-                if(this.blockSource.getBlockId(this.x - i, this.y, this.z - k) !== this.blockID) {
-                    return false;
-                };
-            };
-        };
+    // public isValidStructure(): boolean {
+    //     const vectors = [
+    //         [this.x, this.y, this.z], 
+    //         [this.x - 1, this.y, this.z], 
+    //         [this.x - 2, this.y, this.z], 
+    //         [this.x, this.y, this.z - 1], 
+    //         [this.x - 1, this.y, this.z - 1], 
+    //         [this.x - 2, this.y, this.z - 1],
+    //         [this.x, this.y, this.z - 2],
+    //         [this.x - 1, this.y, this.z - 2],
+    //         [this.x - 2, this.y, this.z - 2]
+    //     ];
     
-        return true;
-    };
+    //     for(let i in vectors) {
+    //         if(this.blockSource.getBlockId(vectors[i][0], vectors[i][1], vectors[i][2]) !== this.blockID) {
+    //             return false;
+    //         }
+    //     };
+
+    //     return true;
+    // };
 
     public findRocket(item: ItemStack): Nullable<Rocket> {
         for(const i in RocketManager.registeredRockets) {
@@ -40,9 +48,28 @@ class RocketPaddingTile extends CommonTileEntity {
         return null;
     };
 
-    public onClick(coords: Callback.ItemUseCoordinates, item: ItemStack, player: number): boolean | void {
+    public override onInit(): void {
+        Game.message("padding init") //debug
+        if(
+            this.blockSource.getBlockId(this.x, this.y, this.z) == this.blockID &&
+            this.blockSource.getBlockId(this.x - 1, this.y, this.z) == this.blockID &&
+            this.blockSource.getBlockId(this.x - 2, this.y, this.z) == this.blockID &&
+            this.blockSource.getBlockId(this.x, this.y, this.z - 1) == this.blockID &&
+            this.blockSource.getBlockId(this.x - 1, this.y, this.z - 1) == this.blockID &&
+            this.blockSource.getBlockId(this.x - 2, this.y, this.z - 1) == this.blockID &&
+            this.blockSource.getBlockId(this.x, this.y, this.z - 2) == this.blockID &&
+            this.blockSource.getBlockId(this.x - 1, this.y, this.z - 2) == this.blockID &&
+            this.blockSource.getBlockId(this.x - 2, this.y, this.z - 2) == this.blockID &&
+            this.blockSource.getBlockId(this.x - 2, this.y, this.z - 1) == this.blockID
+        ) {
+            return this.blockSource.setBlock(this.x - 1, this.y, this.z - 1, this.blockID, 1);
+        };
+    };
+
+    public override onClick(coords: Callback.ItemUseCoordinates, item: ItemStack, player: number): boolean | void {
         if(this.blockSource.getBlockData(this.x, this.y, this.z) === 1) {
             const rocket = this.findRocket(item);
+            Game.message(rocket && rocket.getEntityType()) //debug
             if(rocket !== null) {
                 let fuel = 0;
                 let slotCount = 0;

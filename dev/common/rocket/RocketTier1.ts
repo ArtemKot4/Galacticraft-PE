@@ -14,14 +14,6 @@ class RocketTier1 extends Rocket {
     public override getDrop(): ItemInstance {
         return new ItemStack(ItemList.ROCKET_TIER_1.id, 1);
     };
-
-    public override getTargetList(): IRocketTargetContainer[] {
-        return [{
-            galaxy: "milky_way",
-            system: "solar_system",
-            planet: ["earth"]
-        }];
-    };
 };
 
 RocketManager.registerRocket(new RocketTier1());
