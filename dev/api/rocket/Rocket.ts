@@ -41,7 +41,10 @@ abstract class Rocket {
         RocketManager.addRocketEntity(this,  entity, slotCount);
     };
 
-    public getRocketPadding(): number {
-        return BlockList.ROCKET_PADDING.id;
+    public getRocketPadding(): Tile {
+        return {
+            id: BlockList.ROCKET_PADDING.id,
+            data: 1
+        };
     };
 };

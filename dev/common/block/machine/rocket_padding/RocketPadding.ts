@@ -39,8 +39,8 @@ class RocketPaddingTile extends CommonTileEntity {
     // };
 
     public findRocket(item: ItemStack): Nullable<Rocket> {
-        for(const i in RocketManager.registeredRockets) {
-            const rocket = RocketManager.registeredRockets[i];
+        for(const i in RocketManager.rocketTypes) {
+            const rocket = RocketManager.rocketTypes[i];
             if(rocket.getDrop().id === item.id) {
                 return rocket;
             };
@@ -67,10 +67,10 @@ class RocketPaddingTile extends CommonTileEntity {
     };
 
     public override onClick(coords: Callback.ItemUseCoordinates, item: ItemStack, player: number): boolean | void {
-        if(this.blockSource.getBlockData(this.x, this.y, this.z) === 1) {
-            const rocket = this.findRocket(item);
-            Game.message(rocket && rocket.getEntityType()) //debug
-            if(rocket !== null) {
+        const rocket = this.findRocket(item);
+        if(rocket != null) {
+            const padding = rocket.getRocketPadding();
+            if(this.blockID === padding.id && this.blockSource.getBlockData(this.x, this.y, this.z) === padding.data) {
                 let fuel = 0;
                 let slotCount = 0;
 
@@ -79,8 +79,12 @@ class RocketPaddingTile extends CommonTileEntity {
                     slotCount = item.extra.getInt("slotCount",0);
                 };
 
-                RocketManager.addRocketEntity(rocket, this.blockSource.spawnEntity(this.x + 0.5, this.y + 0.5, this.z + 0.5, rocket.getEntityType()), fuel, slotCount)
-                new PlayerUser(player).decreaseCarriedItem(1);
+                const entity = this.blockSource.spawnEntity(this.x + 0.5, this.y + 0.2 , this.z + 0.5, rocket.getEntityType().slice(0, -2));
+                RocketManager.addRocketEntity(rocket, entity, fuel, slotCount);
+                
+                if(!Utils.isCreativePlayer(player)) {
+                    new PlayerUser(player).decreaseCarriedItem(1);
+                };
             };
         };
     };

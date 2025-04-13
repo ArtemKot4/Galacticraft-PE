@@ -35,13 +35,28 @@ class RocketTimer {
             client.send("packet.galacticraft.init_rocket_timer_thread", {
                 timer
             });
-        }
+        };
     };
 
     public static updateText(timer: number) {
-        return RocketTimer.UI.getElements().get("text").setBinding("text", timer);
+        return RocketTimer.UI.getElements().get("text").setBinding("text", String(timer));
     };
-}
+
+    public static start() {
+        Updatable.addLocalUpdatable({
+            update() {
+                RocketTimer.updateText(RocketTimer.value);
+
+                if(RocketTimer.value <= 0) {
+                    RocketTimer.UI.close();
+                    RocketTimer.inited = false;
+                    RocketTimer.value = 0;
+                    this.remove = true;
+                };
+            }
+        });
+    };
+};
 
 Network.addClientPacket("packet.galacticraft.init_rocket_timer_thread", (data: {
     timer: number
@@ -50,22 +65,8 @@ Network.addClientPacket("packet.galacticraft.init_rocket_timer_thread", (data: {
 
     if(RocketTimer.inited === false) {
         RocketTimer.UI.open();
-
-        Threading.initThread("thread.galacticraft.rocket_timer", () => {
-            while(RocketTimer.value >= 0) {
-                if(RocketTimer.value < 0) {
-                    RocketTimer.UI.close();
-                    RocketTimer.inited = false;
-                    RocketTimer.value = 0;
-                    return;
-                };
-
-                RocketTimer.updateText(RocketTimer.value);
-
-                java.lang.Thread.sleep(1000);
-            };
-        });
-    }
+        RocketTimer.start();
+    };
 
     RocketTimer.inited = true;
 });

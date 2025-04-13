@@ -1,30 +1,41 @@
-class RocketManager {
-    public static existRockets: Record<number, RocketEntity> = {};
-    public static registeredRockets: Record<string, Rocket> = {};
+namespace RocketManager {
+    export let rockets: Record<number, RocketEntity> = {};
+    export const rocketTypes: Record<string, Rocket> = {};
 
-    public static isRocket(entity: number): boolean {
-        return Entity.getTypeName(entity) in RocketManager.registeredRockets;
+    export function isRocket(entity: number): boolean {
+        return Entity.getTypeName(entity) in RocketManager.rocketTypes;
     };
 
-    public static addRocketEntity(rocket: Rocket, entity: number, fuel: number, slotCount?: number): RocketEntity {
+    export function addRocketEntity(rocket: Rocket, entity: number, fuel: number, slotCount?: number): RocketEntity {
         const entityClass = rocket.getEntity();
 
-        return RocketManager.existRockets[entity] = new entityClass(rocket, entity, fuel, slotCount);
+        return RocketManager.rockets[entity] = new entityClass(rocket, entity, fuel, slotCount);
     };
 
-    public static getRocketEntity(entity: number): Nullable<RocketEntity> {
-        return RocketManager.existRockets[entity] || null;
+    export function getRocketEntity(entity: number): Nullable<RocketEntity> {
+        return RocketManager.rockets[entity] || null;
     };
 
-    public static getRocketByEntity(entity: number): Nullable<Rocket> {
-        return RocketManager.registeredRockets[Entity.getTypeName(entity)] || null
+    export function getRocketByEntity(entity: number): Nullable<Rocket> {
+        return RocketManager.rocketTypes[Entity.getTypeName(entity)] || null
     };
 
-    public static hasRocketEntity(entity: number): boolean {
-        return entity in RocketManager.existRockets;
+    export function hasRocketEntity(entity: number): boolean {
+        return entity in RocketManager.rockets;
     };
 
-    public static registerRocket(rocket: Rocket) {
-        RocketManager.registeredRockets[rocket.getEntityType()] = rocket; 
+    export function registerRocket(rocket: Rocket) {
+        RocketManager.rocketTypes[rocket.getEntityType()] = rocket; 
     };
+
+    export function deleteRocketEntity(entity: number): void {
+        delete RocketManager.rockets[entity];
+    };
+
+    Saver.addSavesScope("galacticraft.rockets", function read(scope: typeof rockets) {
+        rockets = scope || {};
+    },
+    function save() {
+        return rockets;
+    });
 };

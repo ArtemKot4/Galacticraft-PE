@@ -21,8 +21,8 @@ class RocketEvents {
                     rocket.openContainer(player);
                 };
             } else {
-                //debug next string:
-                return rocket.launch(player);
+                rocket.rider = player;
+                rocket.launch(player);
             };
         };
     };
@@ -34,7 +34,7 @@ class RocketEvents {
         if(rocket != null) {
             Game.prevent();
             if(!Entity.getSneaking(attacker)) {
-                rocket.finalize();
+                rocket.destroy(entity);
             };
         };
     };

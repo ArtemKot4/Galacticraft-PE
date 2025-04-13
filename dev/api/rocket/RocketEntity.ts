@@ -1,7 +1,9 @@
 class RocketEntity {
     public entity: number;
+    public rider: number;
     public container: ItemContainer;
     public blockSource: BlockSource;
+    public startHeight: number;
     public fuel: number;
     public slotCount: number;
     public launched: boolean;
@@ -15,7 +17,8 @@ class RocketEntity {
         this.container.setGlobalSlotSavingEnabled(true);
         this.container.setClientContainerTypeName("galacticraft.rocket:" + entity);
 
-        this.fuel = 1000; //debug 1000: need be equals fuel
+        this.fuel = fuel || 0;
+        this.startHeight = this.getPosition().y;
 
         Network.sendToAllClients("packet.galacticraft.register_rocket_screen_factory", { 
             entity,
@@ -35,10 +38,6 @@ class RocketEntity {
 
     public getCelestial(): Nullable<IPlanet> {
         return Galacticraft.findCelestialByID(this.getDimension());
-    };
-
-    public getRider(): number {
-        return Entity.getRider(this.entity);
     };
 
     public addFuel(amount: number): number {
@@ -73,11 +72,7 @@ class RocketEntity {
         return false;
     };
 
-    public ride(entity: number): void {
-        Entity.rideAnimal(this.entity, entity);
-    };
-
-    public initCelestialBodyRender(client: NetworkClient): void {
+    public sendCelestialRenderFor(client: NetworkClient): void {
         const celestial = this.getCelestial();
         if(celestial != null && !Station.isStation(celestial)) {
             Game.message("skybox");
@@ -100,13 +95,14 @@ class RocketEntity {
     };
 
     public findRocketPadding(): Nullable<Vector3> {
-        const id = this.rocket.getRocketPadding();
+        const padding = this.rocket.getRocketPadding();
         const pos = this.getPosition();
         
         let height = pos.y;
         while(this.blockSource.getBlockID(pos.x, height, pos.z) === 0) {
             height--;
-            if(this.blockSource.getBlockID(pos.x, height, pos.z) === id) {
+            const block = this.blockSource.getBlock(pos.x, height, pos.z);
+            if(block.id === padding.id && block.data === padding.data) {
                 return new Vector3(pos.x, height, pos.z);
             };
         };
@@ -116,11 +112,11 @@ class RocketEntity {
     public packRocketPadding(coords: Vector): void {
         if(coords != null) {
             for(let i = -1; i <= 1; i++) {
-                for(let j = -1; j <= 1; j++) {
-                    this.blockSource.destroyBlock(coords.x + i, coords.y, coords.z + j, false);
+                for(let k = -1; k <= 1; k++) {
+                    this.blockSource.destroyBlock(coords.x + i, coords.y, coords.z + k, false);
                 };
             };
-            this.container.setSlot(this.findEmptySlot(), this.rocket.getRocketPadding(), 9, 0);
+            this.container.setSlot(this.findEmptySlot(), this.rocket.getRocketPadding().id, 9, 0);
         };
     };
 
@@ -142,27 +138,23 @@ class RocketEntity {
         if(this.launched === false) {
             let body = false;
             let timer = this.rocket.getTimerMax();
-            let timerInited = false;
+            let packedPadding = false;
 
             const speed = this.rocket.getFlySpeed();
             const height = this.rocket.getFinalHeight();
-            const startHeight = this.getPosition().y;
             const self = this;
 
             Updatable.addUpdatable({
                 update() {
                     if(World.getThreadTime() % 20 === 0) { 
                         if(timer >= 0) {
+                            RocketTimer.init(player, timer);
                             timer -= 1;
 
-                            if(!timerInited) {
-                                RocketTimer.init(player, timer + 1);
-                                timerInited = true;
+                            if(!self.rider) {
+                                client.sendMessage(Translation.translate("message.galacticraft.rocket_empty"))
+                                this.remove = true;
                             };
-                            // if(!self.hasRider()) {
-                            //     client.sendMessage(Translation.translate("message.galacticraft.rocket_empty"))
-                            //     this.remove = true;
-                            // };
                         } else {
                             self.launched = true;
                         };
@@ -171,29 +163,31 @@ class RocketEntity {
                             const pos = self.getPosition();
 
                             if(pos.y >= height / 2 && body === false) {
+                                self.sendCelestialRenderFor(client);
                                 body = true;
                             };
 
-                            if(pos.y === startHeight + 3) {
+                            if(pos.y >= self.startHeight + 5 && !packedPadding) {
                                 const paddingCoords = self.findRocketPadding();
                                 if(paddingCoords != null) {
                                     self.packRocketPadding(paddingCoords);
-                                }
-                            }
+                                    packedPadding = true;
+                                };
+                            };
 
                             if(pos.y >= height) {
                                 self.stop();
                                 this.remove = true;
-                            }        
-                        }
+                            };        
+                        };
                     };
 
                     if(timer <= 0) {
                         self.fly(client, speed);
-                    }
+                    };
                 }
-            })
-        }
+            });
+        };
     };
 
     public stop(): void {
@@ -202,8 +196,9 @@ class RocketEntity {
         //GalaxyMap.openFor(rocket, player);
     };
 
-    public finalize(): void {
+    public destroy(entity?: number): void {
         const pos = this.getPosition();
+        Game.message(JSON.stringify(pos) + " -> debug");
 
         const item = this.rocket.getDrop();
         const extra = new ItemExtraData();
@@ -212,9 +207,9 @@ class RocketEntity {
 
         this.blockSource.spawnDroppedItem(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, item.id, item.count, item.data, extra);
         this.container.dropAt(this.blockSource, pos.x, pos.y, pos.z);
-        Entity.remove(this.entity);
+        Entity.remove(entity || this.entity);
             
-        delete RocketManager.existRockets[this.entity];
+        RocketManager.deleteRocketEntity(entity || this.entity);
     };
 
     public openContainer(player: number): void {
@@ -226,7 +221,7 @@ class RocketEntity {
         };
     };
 
-    public static createRenderer(texture: string): ActorRenderer {
+    public static createCelestialRenderer(texture: string): ActorRenderer {
         return new ActorRenderer()
         .addPart("body")
         .endPart()
@@ -236,9 +231,9 @@ class RocketEntity {
         .endPart();
     };
 
-    public static linkRender(entity: number, texture: string): AttachableRender {
+    public static linkCelestialRender(entity: number, texture: string): AttachableRender {
         return new AttachableRender(entity)
-        .setRenderer(RocketEntity.createRenderer(texture));
+        .setRenderer(RocketEntity.createCelestialRenderer(texture));
     };
 }
 
@@ -263,18 +258,22 @@ Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (d
 
     let y = 30;
     let slotSize = 70;
+    let xIndex = 0;
     let fuelStorageX = 120 + 250;
 
     for(let i = 1; i <= data.slotCount; i++) {
-        if(i % 9 === 0) {
-            y += slotSize;
-        };
+        xIndex++;
 
         content.elements[String(i)] = {
             type: "slot",
             size: slotSize,
-            x: 120 + (10 * i),
+            x: 120 * (slotSize + xIndex),
             y 
+        };
+
+        if(i % 9 === 0) {
+            y += slotSize;
+            xIndex = 1;
         };
     };
 
@@ -282,16 +281,16 @@ Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (d
         type: "bitmap",
         bitmap: "rocket.fuel_storage_0",
         x: fuelStorageX,
-        y: y + 30,
-        scale: 5
+        y: y + slotSize + 30,
+        scale: 7
     });
 
     content.elements["fuel_scale"] = {
         type: "scale",
         bitmap: "rocket.fuel_storage_1",
         x: fuelStorageX,
-        y: y + 30,
-        scale: 5
+        y: y + slotSize + 30,
+        scale: 7
     };
 
     const window = new UI.StandardWindow(content);
@@ -304,7 +303,7 @@ Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (d
 });
 
 Network.addClientPacket("packet.galacticraft.set_rocket_skybox_render", (data: { entity: number, texture: string }) => {
-    RocketEntity.linkRender(data.entity, data.texture);
+    RocketEntity.linkCelestialRender(data.entity, data.texture);
 });
 
 Network.addClientPacket("packet.galacticraft.rocket_velocity_set", (data: {
