@@ -137,7 +137,7 @@ class RocketEntity {
     };
 
     public isValidRider(): boolean {
-        return Entity.getRiding(this.rider);
+        return Entity.getRider(this.entity) === this.rider;
     };
 
     public launch(player: number): void {
@@ -166,7 +166,7 @@ class RocketEntity {
                         };
 
                         if(timer >= -1) {
-                            RocketTimer.sendFor(client, self.isValidRider() ? timer : -1);
+                            RocketTimer.sendFor(client, timer);
                             timer--;
 
                             if(!self.isValidRider()) {
