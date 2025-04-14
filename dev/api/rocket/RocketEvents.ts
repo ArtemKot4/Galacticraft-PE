@@ -22,6 +22,7 @@ class RocketEvents {
                 };
             } else {
                 rocket.rider = player;
+                RocketDisplay.startFor(Network.getClientForPlayer(player), rocket.getCelestial()?.getDisplayTexture(), rocket.startHeight, rocket.rocket.getFinalHeight(), entity);
                 rocket.launch(player);
             };
         };

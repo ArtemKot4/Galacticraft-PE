@@ -16,7 +16,7 @@ class RocketTimer {
                     y: UI.getScreenHeight() / 2 - 20,
                     x: 500 - 20,
                     font: {
-                        size: 40,
+                        size: 50,
                         color: android.graphics.Color.RED
                     },
                     text: "0"
@@ -29,8 +29,7 @@ class RocketTimer {
         return window;
     })();
 
-    public static init(player: number, timer: number) {
-        const client = Network.getClientForPlayer(player);
+    public static sendFor(client: NetworkClient, timer: number) {
         if(client != null) {
             client.send("packet.galacticraft.init_rocket_timer_thread", {
                 timer
@@ -42,17 +41,22 @@ class RocketTimer {
         return RocketTimer.UI.getElements().get("text").setBinding("text", String(timer));
     };
 
-    public static start() {
+    public static close(): void {
+        RocketTimer.UI.close();
+        RocketTimer.inited = false;
+        RocketTimer.value = 0;
+    };
+
+    public static start(): void {
         Updatable.addLocalUpdatable({
             update() {
-                RocketTimer.updateText(RocketTimer.value);
-
-                if(RocketTimer.value <= 0) {
-                    RocketTimer.UI.close();
-                    RocketTimer.inited = false;
-                    RocketTimer.value = 0;
+                if(RocketTimer.value <= -1) {
+                    RocketTimer.close();
                     this.remove = true;
+                    return;
                 };
+
+                RocketTimer.updateText(RocketTimer.value);
             }
         });
     };

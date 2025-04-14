@@ -5,5 +5,6 @@ interface IPlanet extends ILocalizeable {
     getCelestialBody(): CelestialBody;
     addSatellite(satellite: Satellite): void;
     getTier?(): number;
+    getDisplayTexture?(): string;
     id: number;
 };

@@ -5,6 +5,10 @@ abstract class Planet extends Dimension implements IPlanet {
     public getTier(): Nullable<number> {
         return null;
     };
+
+    public getDisplayTexture(): string {
+        return null;
+    };
     /**
      * Method to declare gravity of planet
      * @default 0.25

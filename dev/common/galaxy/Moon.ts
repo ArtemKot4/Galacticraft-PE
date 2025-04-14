@@ -7,6 +7,10 @@ class Moon extends Satellite {
         return "moon";
     };
 
+    public override getDisplayTexture(): string {
+        return "moon_rocket_gui"
+    }
+
     public override hasStars(): boolean {
         return true;
     };

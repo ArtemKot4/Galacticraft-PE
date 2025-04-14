@@ -74,7 +74,7 @@ class RocketEntity {
 
     public sendCelestialRenderFor(client: NetworkClient): void {
         const celestial = this.getCelestial();
-        if(celestial != null && !Station.isStation(celestial)) {
+        if(this.isValidRider() && celestial != null && !Station.isStation(celestial)) {
             Game.message("skybox");
 
             client.send("packet.galacticraft.set_rocket_skybox_render", {
@@ -128,6 +128,18 @@ class RocketEntity {
         };
     };
 
+    public cancel(client: NetworkClient, message: string, color?: EColor): void {
+        this.launched = false;
+
+        if(client) {
+            client.sendMessage(Translation.translate(message));
+        };
+    };
+
+    public isValidRider(): boolean {
+        return Entity.getRiding(this.rider);
+    };
+
     public launch(player: number): void {
         const client = Network.getClientForPlayer(player);
 
@@ -136,6 +148,8 @@ class RocketEntity {
         };
 
         if(this.launched === false) {
+            this.launched = true;
+
             let body = false;
             let timer = this.rocket.getTimerMax();
             let packedPadding = false;
@@ -147,19 +161,18 @@ class RocketEntity {
             Updatable.addUpdatable({
                 update() {
                     if(World.getThreadTime() % 20 === 0) { 
-                        if(timer >= 0) {
-                            RocketTimer.init(player, timer);
-                            timer -= 1;
-
-                            if(!self.rider) {
-                                client.sendMessage(Translation.translate("message.galacticraft.rocket_empty"))
-                                this.remove = true;
-                            };
-                        } else {
-                            self.launched = true;
+                        if(self.launched === false) {
+                            this.remove = true;
                         };
 
-                        if(self.launched === true) {
+                        if(timer >= -1) {
+                            RocketTimer.sendFor(client, self.isValidRider() ? timer : -1);
+                            timer--;
+
+                            if(!self.isValidRider()) {
+                                return self.cancel(client, "message.galacticraft.rocket_empty", EColor.RED);
+                            };
+                        } else {
                             const pos = self.getPosition();
 
                             if(pos.y >= height / 2 && body === false) {
@@ -180,9 +193,7 @@ class RocketEntity {
                                 this.remove = true;
                             };        
                         };
-                    };
 
-                    if(timer <= 0) {
                         self.fly(client, speed);
                     };
                 }
@@ -267,7 +278,7 @@ Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (d
         content.elements[String(i)] = {
             type: "slot",
             size: slotSize,
-            x: 120 * (slotSize + xIndex),
+            x: 120 + (slotSize * xIndex),
             y 
         };
 

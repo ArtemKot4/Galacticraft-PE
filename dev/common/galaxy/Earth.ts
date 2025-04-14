@@ -4,6 +4,9 @@ Galacticraft.registerPlanet("milky_way", "solar_system",
     getTier() {
         return 1;
     },
+    getDisplayTexture() {
+        return "earth_rocket_gui";
+    },
     getName(): string {
         return "earth";
     },
