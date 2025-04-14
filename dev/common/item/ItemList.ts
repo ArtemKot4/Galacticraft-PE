@@ -197,7 +197,7 @@ namespace ItemList {
     Item.addToCreative(ROCKET_TIER_1.id, 1, 0, (() => {
         const extra = new ItemExtraData();
         extra.putInt("amount", 1000);
-        extra.putInt("slotCount", 18);
+        extra.putInt("slotCount", 128);
         return extra;
     })()) //debug
 };
