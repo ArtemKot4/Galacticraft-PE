@@ -37,7 +37,7 @@ abstract class Rocket {
         return RocketEntity;
     };
 
-    public create(entity: number, slotCount: number) {
+    public create(entity: number, slotCount: number): void {
         RocketManager.addRocketEntity(this,  entity, slotCount);
     };
 

@@ -1,17 +1,51 @@
+/**
+ * Class, describes behavior of a rocket. Extend to change default behavior
+ */
 class RocketEntity {
+    /**
+     * Entity ID of the rocket in the world
+     */
     public entity: number;
     public rider: number;
+    /**
+     * Current launch {@link ELaunchPhase phase} 
+     */
+    public launchPhase: ELaunchPhase;
+    /**
+     * Number of current countdown
+     */
+    public timer: number;
+    /**
+     * Item container of the rocket
+     */
     public container: ItemContainer;
+    /**
+     * {@link BlockSource} for the rocket
+     */
     public blockSource: BlockSource;
+    /**
+     * Start height of the rocket
+     */
     public startHeight: number;
+    /**
+     * Fuel amount
+     */
     public fuel: number;
+    /**
+     * Slot count of the rocket
+     */
     public slotCount: number;
+    /**
+     * Whether rocket was already launched
+     */
     public launched: boolean;
     
     public constructor(public rocket: Rocket, entity: number, fuel: number, slotCount: number) {
         this.entity = entity;
         this.slotCount = slotCount;
         this.launched = false;
+        this.launchPhase = ELaunchPhase.PRE_LAUNCH;
+        this.timer = this.rocket.getTimerMax();
         this.container = new ItemContainer();
         this.blockSource = BlockSource.getDefaultForDimension(this.getDimension());
         this.container.setGlobalSlotSavingEnabled(true);
@@ -27,18 +61,38 @@ class RocketEntity {
         });
     };
 
+    /**
+     * Method to get entity position in the world
+     * @returns {@link Vector}
+     */
+
     public getPosition(): Vector {
         const pos = Entity.getPosition(this.entity);
         return { x: pos.x + 0.5, y: pos.y, z: pos.z + 0.5 };
     };
 
+    /**
+     * Method to get entity dimension
+     */
+
     public getDimension(): number {
         return Entity.getDimension(this.entity);
     };
 
+    /**
+     * Method to get celestial of world where rocket is launched
+     * @returns IPlanet object of the rocket
+     */
+
     public getCelestial(): Nullable<IPlanet> {
         return Galacticraft.findCelestialByID(this.getDimension());
     };
+
+    /**
+     * Method to add fuel and get value, how much fuel was added
+     * @param amount amount of the fuel to add
+     * @returns added amount
+     */
 
     public addFuel(amount: number): number {
         const capacity = this.rocket.getFuelCapacity();
@@ -52,6 +106,12 @@ class RocketEntity {
             return 0;
         };
     };
+
+    /**
+     * Method to add fuel by player
+     * @param player player unique identifier
+     * @returns boolean, whether fuel was added
+     */
 
     public addFuelBy(player: number): boolean {
         const item = Entity.getCarriedItem(player);
@@ -72,6 +132,10 @@ class RocketEntity {
         return false;
     };
 
+    /**
+     * Method to add velocity to the rocket
+     */
+
     public fly(client: NetworkClient, speed: number): void {
         Entity.setVelocity(this.entity, 0, speed, 0);
         if(client) {
@@ -81,6 +145,10 @@ class RocketEntity {
             });
         };
     };
+
+    /**
+     * Method to find {@link Vector3 position} padding of the rocket
+     */
 
     public findRocketPadding(): Nullable<Vector3> {
         const padding = this.rocket.getRocketPadding();
@@ -97,6 +165,11 @@ class RocketEntity {
         return null;
     };
 
+    /**
+     * Method to pack rocket padding
+     * @param coords {@link Vector}
+     */
+
     public packRocketPadding(coords: Vector): void {
         if(coords != null) {
             for(let i = -1; i <= 1; i++) {
@@ -108,6 +181,10 @@ class RocketEntity {
         };
     };
 
+    /**
+     * Method to get empty slot in rocket inventory
+     */
+
     public findEmptySlot(): string {
         for(let i = 1; i <= this.slotCount; i++) {
             if(this.container.getSlot(String(i)).isEmpty()) {
@@ -116,17 +193,53 @@ class RocketEntity {
         };
     };
 
+    /**
+     * Method to cancel launch
+     * @param client {@link NetworkClient}
+     * @param message your message
+     * @param color {@link EColor color}
+     */
+
     public cancel(client: NetworkClient, message: string, color?: EColor): void {
         this.launched = false;
+        this.timer = this.rocket.getTimerMax();
 
         if(client) {
             client.sendMessage(color || "" + Translation.translate(message));
         };
     };
 
+    /**
+     * Method to check if rocket has valid rider
+     * @returns boolean
+     */
+
     public isValidRider(): boolean {
         return Entity.getRider(this.entity) == this.rider;
     };
+
+    /**
+     * Method to do launch countdown
+     */
+
+    public countdown(client: NetworkClient) {
+        if(this.timer < -1) {
+            return this.launchPhase = ELaunchPhase.FLY; 
+        };
+
+        if(!this.isValidRider()) {
+            RocketTimer.sendFor(client, -1);
+            return this.cancel(client, "message.galacticraft.rocket_empty", EColor.RED);
+        };
+        
+        RocketTimer.sendFor(client, this.timer);
+        this.timer--;
+    };
+
+    /**
+     * Method to launch rocket with launchPhases
+     * @param player player unique identifier
+     */
 
     public launch(player: number): void {
         const client = Network.getClientForPlayer(player);
@@ -139,37 +252,24 @@ class RocketEntity {
             this.launched = true;
 
             let body = false;
-            let timer = this.rocket.getTimerMax();
             let packedPadding = false;
 
-            const speed = this.rocket.getFlySpeed();
             const height = this.rocket.getFinalHeight();
             const self = this;
 
             Updatable.addUpdatable({
                 update() {
                     if(World.getThreadTime() % 20 === 0) { 
-                        if(self.launched === false) {
-                            this.remove = true;
+                        if(self.launched === false || self.launchPhase === ELaunchPhase.LANDING) {
+                            return this.remove = true;
                         };
 
-                        if(timer >= -1) {
-                            if(self.fuel < self.rocket.getMinFuelAmount()) {
-                                return self.cancel(client, "message.galacticraft.not_enough_rocket_fuel", EColor.RED);
-                            };
+                        if(self.launchPhase === ELaunchPhase.PRE_LAUNCH) {
+                            self.countdown(client);
+                            return;
+                        };
 
-                            RocketTimer.sendFor(client, timer);
-                            timer--;
-
-                            if(!self.isValidRider()) {
-                                RocketTimer.sendFor(client, -1);
-                                return self.cancel(client, "message.galacticraft.rocket_empty", EColor.RED);
-                            };
-
-                            if(timer === -1) {
-                                self.fuel -= self.rocket.getMinFuelAmount();
-                            };
-                        } else {
+                        if(self.launchPhase === ELaunchPhase.FLY) {
                             const pos = self.getPosition();
 
                             if(pos.y >= height / 2 && body === false) {
@@ -186,12 +286,10 @@ class RocketEntity {
                             };
 
                             if(pos.y >= height) {
-                                self.stop();
-                                this.remove = true;
+                                return self.stop();
                             };        
-
                             
-                            self.fly(client, speed);
+                            self.fly(client, self.rocket.getFlySpeed());
                         };
                     };
                 }
@@ -199,11 +297,20 @@ class RocketEntity {
         };
     };
 
+    /**
+     * Method to stop rocket and open galaxy map with specified rocket params
+     */
+
     public stop(): void {
         Entity.setMobile(this.entity, false);
         this.fuel = Math.max(0, this.fuel - this.rocket.getMinFuelAmount());
+        this.launchPhase = ELaunchPhase.LANDING;
         //GalaxyMap.openFor(rocket, player);
     };
+
+    /**
+     * Method to destroy rocket data and drop container
+     */
 
     public destroy(entity?: number): void {
         const pos = Entity.getPosition(entity || this.entity);
@@ -214,12 +321,17 @@ class RocketEntity {
         extra.putInt("amount", this.fuel);
         extra.putInt("slotCount", this.slotCount || 0);
 
-        this.blockSource.spawnDroppedItem(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, item.id, item.count, item.data, extra);
+        this.blockSource.spawnDroppedItem(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, item.id, item.count || 1, item.data || 0, extra);
         this.container.dropAt(this.blockSource, pos.x, pos.y, pos.z);
         Entity.remove(entity || this.entity);
             
         RocketManager.deleteRocketEntity(entity || this.entity);
     };
+
+    /**
+     * Method to open container
+     * @param player player unique identifier
+     */
 
     public openContainer(player: number): void {
         const client = Network.getClientForPlayer(player);
@@ -229,6 +341,11 @@ class RocketEntity {
             this.container.openFor(client, "fuel_storage");
         };
     };
+
+    /**
+     * Method to send celestial render for client
+     * @param client {@link NetworkClient}
+     */
 
     public sendCelestialRenderFor(client: NetworkClient): void {
         const celestial = this.getCelestial();
@@ -242,20 +359,39 @@ class RocketEntity {
         }
     };
 
+    /**
+     * Method to create celestial renderer with specified texture
+     * @param texture string texture
+     * @returns ActorRenderer
+     */
+
     public static createCelestialRenderer(texture: string): ActorRenderer {
         return new ActorRenderer()
         .addPart("body")
         .endPart()
         .addPart("skybox", "body")
-        .addBox(-150, -100, 150, 0, 0, 0, 1, 0, 0)
+        .addBox(0, 0, 0, 350, 350, 350, 1, 0, 0)
         .setTexture(texture)
         .endPart();
     };
+
+    /**
+     * Method to link celestial render with entity
+     * @param entity entity identifier in world
+     * @param texture string texture
+     * @returns AttachableRender
+     */
 
     public static linkCelestialRender(entity: number, texture: string): AttachableRender {
         return new AttachableRender(entity)
         .setRenderer(RocketEntity.createCelestialRenderer(texture));
     };
+
+    /**
+     * Method to build container ui with specified slot count
+     * @param slotCount number
+     * @returns UI.StandardWindow
+     */
 
     public static buildContainerUI(slotCount: number): UI.StandardWindow {
         const content = {
@@ -276,15 +412,17 @@ class RocketEntity {
             elements: {}
         } as UI.StandardWindowContent;
         
-        let fuelStorageX = 120 + 250;
+        const maxStringGrid = 9;
+        let slotSize = 90;
+        let fuelStorageX = (50 + (slotSize * maxStringGrid)) / 2;
 
         content.drawing.push({
             type: "bitmap",
             bitmap: "rocket.fuel_storage_0",
             x: fuelStorageX,
             y: 50,
-            width: 36 * 7, 
-            height: 40 * 7
+            width: 36 * 6.7, 
+            height: 40 * 6.7
         });
     
         content.elements["fuel_scale"] = {
@@ -292,12 +430,11 @@ class RocketEntity {
             bitmap: "rocket.fuel_storage_1",
             x: fuelStorageX,
             y: 50,
-            width: 36 * 7,
-            height: 40 * 7
+            width: 36 * 6.7,
+            height: 40 * 6.7
         };
 
         if(slotCount) {
-            let slotSize = 70;
             let y = 50 + (40 * 7) + 30;
             let xIndex = 0;
         
@@ -307,20 +444,19 @@ class RocketEntity {
                 content.elements[String(i)] = {
                     type: "slot",
                     size: slotSize,
-                    x: 120 + (slotSize * xIndex),
+                    x: 50 + (slotSize * xIndex),
                     y 
                 };
         
-                if(i % 9 === 0) {
+                if(i % maxStringGrid === 0) {
                     y += slotSize;
                     xIndex = 0;
                 };
             };
 
-            content.standard.minHeight = Math.floor(slotCount / 9) * slotSize;
-        }
+            content.standard.minHeight = Math.floor(slotCount / maxStringGrid) * slotSize + 10;
+        };
 
-    
         return new UI.StandardWindow(content);
     };
 };
