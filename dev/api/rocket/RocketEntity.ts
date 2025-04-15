@@ -6,6 +6,9 @@ class RocketEntity {
      * Entity ID of the rocket in the world
      */
     public entity: number;
+    /**
+     * Unique identifier of player who launched rocket
+     */
     public rider: number;
     /**
      * Current launch {@link ELaunchPhase phase} 
@@ -405,7 +408,7 @@ class RocketEntity {
                     standard: true,
                 },
                 background: {
-                    standard: true,
+                    standard: true
                 }
             },
             drawing: [],
