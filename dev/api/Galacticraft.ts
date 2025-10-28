@@ -25,7 +25,7 @@ namespace Galacticraft {
      * Type of galacticraft energy
      */
     export const JOULE = EnergyTypeRegistry.createEnergyType("galacticraft_joule", 1);
-    export const galaxies: Record<string, Galaxy> = {};
+    const galaxies: Record<string, Galaxy> = {};
     export function registerGalaxy(galaxy: Galaxy) {
         const name = galaxy.getName();
         if(name in galaxies) {
@@ -33,4 +33,37 @@ namespace Galacticraft {
         }
         return (galaxies[name] = galaxy);
     }
+
+    export function getGalaxy(name: string): Nullable<Galaxy> {
+        return galaxies[name] || null;
+    }
+
+    let CURRENT_GALAXY = "milky_way";
+
+    export function getCurrentGalaxyName(): string {
+        return CURRENT_GALAXY;
+    }
+
+    export function setCurrentGalaxy(name: string) {
+        const galaxy = getGalaxy(name);
+
+        if(galaxy == null) {
+            throw new GalacticraftException(`Galaxy by name "${name}" is not exists`);
+        }
+        CURRENT_GALAXY = name;
+    }
+
+    export function getCurrentGalaxy(): Galaxy {
+        return getGalaxy(CURRENT_GALAXY);
+    }
+
+    export type OreData = {
+        block: Tile,
+        minY: number,
+        maxY: number
+        veinCounts: number; 
+        count: [number, number]
+    }
+
+    export const generationData: Record<number, ReturnType<typeof Planet.prototype.getOreData>> = {};
 }

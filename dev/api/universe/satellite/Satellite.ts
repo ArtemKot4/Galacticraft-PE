@@ -5,4 +5,8 @@ class Satellite extends Planet implements ISatellite {
         super(id, stringId, biome);
         this.linkedPlanet = planet;
     }
+
+    public static isStation(satellite: ISatellite): satellite is Station {
+        return satellite instanceof Station;
+    }
 }

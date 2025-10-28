@@ -1,5 +1,6 @@
 namespace BlockList {
     export const COAL_GENERATOR = new CoalGenerator();
+    export const ROCKET_PADDING = new RocketPadding();
 
     export const BLOCK_MOON_SAPPHIRE = new BasicBlock("block_moon_sapphire_gc", [{ name: "Sapphire Block", texture: [["block_moon_sapphire", 0]], inCreative: true }]);
     export const MOON_CHEESE = new BasicBlock("moon_cheese_gc", [{ name: "block.galacticraft.moon_cheese", texture: [["moon_cheese", 0]], inCreative: true }]);

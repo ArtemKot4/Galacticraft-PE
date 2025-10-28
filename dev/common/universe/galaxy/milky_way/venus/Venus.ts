@@ -24,6 +24,10 @@ class Venus extends Planet {
         ]
     }
 
+    public override getIcon(): string {
+        return "environment.venus";
+    }
+
     public override getDayLength(): number {
         return 10;
     }

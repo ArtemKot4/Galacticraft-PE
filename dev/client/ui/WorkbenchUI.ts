@@ -99,10 +99,10 @@ const ManipulatorsUI = new UI.StandartWindow(
             scale: 1.4,
             bitmap: "Button",
             bitmap2: "button_1",
-            clicker: {
-                onClick: function() {
-                    Click.play();
-                }
-            }
+            // clicker: {
+            //     onClick: function() {
+            //         Click.play();
+            //     }
+            // }
         }},
 });

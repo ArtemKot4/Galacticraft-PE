@@ -7,4 +7,5 @@ abstract class WeatherEvent {
      * In ticks
      */
     abstract getDuration(): number[];
+    abstract onCall(): void;
 }

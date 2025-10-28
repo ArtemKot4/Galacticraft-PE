@@ -1,7 +1,10 @@
 {
 	"extends": "..\\tsconfig.json",
 	"compilerOptions": {
-		"outFile": "F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain\\toolchain\\build\\toolchain_galacticraft_pe-4fca3\\sources\\main.js"
+		"outFile": "F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain\\toolchain\\build\\toolchain_galacticraft_pe-4fca3\\sources\\main.js",
+		"lib": [
+			"esnext"
+		]
 	},
 	"exclude": [],
 	"include": [
@@ -9,6 +12,7 @@
 		"api/Galacticraft.ts",
 		"client/ui/lib/Component.tsx",
 		"api/utils/GalacticraftException.ts",
+		"api/utils/UniqueGen.ts",
 		"api/block/machine/Recipes.ts",
 		"api/block/machine/MachineBlock.ts",
 		"api/block/machine/ElectricBlock.ts",
@@ -22,7 +26,7 @@
 		"api/universe/planet/Planet.ts",
 		"api/universe/satellite/ISatellite.ts",
 		"api/universe/satellite/Satellite.ts",
-		"api/universe/station/Station.ts",
+		"api/universe/satellite/station/Station.ts",
 		"client/ui/menu/GalacticraftSettings.ts",
 		"client/ui/BasicSolarPanelUI.ts",
 		"client/ui/CircuitFabricatorUI.ts",
@@ -41,6 +45,7 @@
 		"common/block/machine/coal_generator/CoalGeneratorTile.ts",
 		"common/block/machine/coal_generator/LocalCoalGeneratorTile.ts",
 		"common/block/machine/coal_generator/CoalGenerator.ts",
+		"common/block/machine/rocket_padding/RocketPadding.ts",
 		"common/block/BlockList.ts",
 		"common/universe/galaxy/milky_way/earth/Earth.ts",
 		"common/universe/galaxy/milky_way/earth/Moon.ts",

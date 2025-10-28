@@ -1,5 +1,23 @@
 class Planet extends Dimension implements IPlanet {
+    public satellites: ISatellite[];
+
+    public getName(): string {
+        return "unnamed";
+    }
+
+    public getLocalizedName(): string {
+        return "message.galacticraft.unnamed";
+    }
+
     public getIcon(): Nullable<string> {
+        return null;
+    }
+
+    public canHasStation(): boolean {
+        return true;
+    }
+
+    public getOreData(): { ores: Galacticraft.OreData[], stone: number[] } {
         return null;
     }
 
@@ -38,9 +56,6 @@ class Planet extends Dimension implements IPlanet {
     public getMobIDsWithProbability(): Record<number, string> {
         return null;
     }
-
-    public satellites: ISatellite[];
-    public canHasStation: boolean;
     
     public hasOxygen(): boolean {
         return false;

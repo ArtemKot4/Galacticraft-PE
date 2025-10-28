@@ -58,11 +58,11 @@ const OxygenCollectorUI = new UI.StandartWindow({
             bitmap: "Others.collector_scale_1",
             scale: 4.3,
             direction: 0,
-            clicker: {
-                onClick: function () {
-                    RV && RV.RecipeTypeRegistry.openRecipePage("Collector");
-                }
-            }
+            // clicker: {
+            //     onClick: function () {
+            //         RV && RV.RecipeTypeRegistry.openRecipePage("Collector");
+            //     }
+            // }
         },
         o2:
         {

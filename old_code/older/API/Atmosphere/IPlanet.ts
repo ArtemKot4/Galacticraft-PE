@@ -80,7 +80,9 @@ class IPlanet {
 
   public setOre(
     ore: string | int,
-    obj: { height: [int, int]; veinCounts: int; count: [int, int]; stone?: int }
+    obj: { height: [int, int]; 
+        veinCounts: int; 
+        count: [int, int]; stone?: int }
   ): void {
     if (!obj) return;
     obj.stone = obj.stone || this.stone;

@@ -37,6 +37,35 @@ class Mars extends Planet {
             }
 		];
 	}
+
+    public getOreData(): { ores: Galacticraft.OreData[]; stone: number[]; } {
+        return {
+            ores: [
+                {
+                    block: { id: BlockList.DESH.id, data: 0 },
+                    veinCounts: __config__.getFloat("generation.mars.desh") || 2,
+                    minY: 2,
+                    maxY: 100,
+                    count: [4, 12]
+                }
+            ],
+            stone: [VanillaBlockID.stone]
+        }
+    }
+
+    public override getIcon(): string {
+        return "environment.mars";
+    }
+
+    public override getName(): string {
+        return "mars";
+    }
+
+    public override getLocalizedName(): string {
+        return "celestialbody.galacticraft.mars";
+    }
+
+
 	public override getGravity(): number {
 		return 38;
 	}

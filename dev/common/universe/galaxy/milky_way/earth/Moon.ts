@@ -30,6 +30,47 @@ class Moon extends Satellite {
             }
         ];
     }
+
+    public getOreData(): { ores: Galacticraft.OreData[]; stone: number[]; } {
+        return {
+            ores: [
+                {
+                    block: { id: BlockList.ORE_COPPER_MOON.id, data: 0 },
+                    veinCounts: __config__.getFloat("generation.moon.copper") || 5,
+                    minY: 2,
+                    maxY: 65,
+                    count: [3, 10]
+                },
+                {
+                    block: { id: BlockList.ORE_TIN_MOON.id, data: 0 },
+                    veinCounts: __config__.getFloat("generation.moon.tin") || 5,
+                    minY: 2,
+                    maxY: 65,
+                    count: [3, 10]
+                },
+                {
+                    block: { id: BlockList.MOON_CHEESE.id, data: 0 },
+                    veinCounts: __config__.getFloat("generation.moon.cheese") || 7,
+                    minY: 2,
+                    maxY: 65,
+                    count: [5, 20]
+                }
+            ],
+            stone: [BlockList.MOON_STONE.id]
+        }
+    }
+
+    public override getIcon(): string {
+        return "environment.moon";
+    }
+
+    public override getName(): string {
+        return "moon";
+    }
+
+    public override getLocalizedName(): string {
+        return "celestialbody.galacticraft.moon";
+    }
     
     public override getGravity(): number {
         return 18;
@@ -55,3 +96,9 @@ class Moon extends Satellite {
         return [0, 0, 0];
     }
 }
+
+Callback.addCallback("ItemUse", (c, i, b, isE, p) => {
+    if(i.id == VanillaItemID.stick) {
+        Dimensions.transfer(p, 28);
+    }
+})

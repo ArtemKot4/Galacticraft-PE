@@ -1,9 +1,13 @@
 class CoalGeneratorTile extends GeneratorTile {
+    public defaultValues = {
+        burning: 0
+    }
+    
     public override onLoad(): void {
         this.sendEnergyStatus();
     }
 
-    public override getGuiScreen(): UI.IWindow {
+    public override getScreenByName(): UI.IWindow {
         return CoalGeneratorUI;
     }
 
