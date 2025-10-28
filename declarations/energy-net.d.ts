@@ -1,5 +1,3 @@
-/// <reference path="C:\Users\Пользователь\Desktop\Игры\HORIZON MODDING KERNEL\Inner Core Mod Toolchain\toolchain\toolchain\declarations\core-engine.d.ts" /> 
-
 declare namespace EnergyTypeRegistry {
     type WireData = {
         type: EnergyType;

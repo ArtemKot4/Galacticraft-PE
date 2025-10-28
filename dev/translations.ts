@@ -93,8 +93,8 @@ Translation.addTranslation("Place blocks 3x3\nfor create rocket padding", {
   zh: "放置3x3\n块以创建发射台",
 });
 
-Translation.addTranslation("Press SHIFT for view information", {
-  ru: "Нажмите SHIFT для подробной информации",
+Translation.addTranslation("message.galacticraft.tip_on_sneaking", {
+  ru: "Присядьте для подробной информации",
   zh: "按SHIFT获取更多信息",
 });
 

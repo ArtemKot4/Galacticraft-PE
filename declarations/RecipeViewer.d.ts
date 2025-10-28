@@ -1,4 +1,3 @@
-/// <reference path="C:\Users\Пользователь\Desktop\Игры\HORIZON MODDING KERNEL\Inner Core Mod Toolchain\toolchain\toolchain\declarations\core-engine.d.ts" /> 
 declare type ItemType = "block" | "item";
 declare interface ItemInfo {
     id: number;
