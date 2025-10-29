@@ -6,5 +6,9 @@ interface IPlanet extends IAtmosphereProperties, ILocalizeable {
 	canHasStation(): boolean;
 	getIcon(): Nullable<string>;
     getOreData(): { ores: Galacticraft.OreData[], stone: number[] };
-	satellites?: ISatellite[];
+    getMusicNameAndPath?(): [name: string, path: string];
+    addSatellite?(satellite: ISatellite): this;
+    
+	satellites?: number[];
+    stations?: Record<number, Station>;
 }

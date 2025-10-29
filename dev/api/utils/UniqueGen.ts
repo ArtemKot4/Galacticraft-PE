@@ -23,7 +23,7 @@ const UniqueGen = {
 };
 
 Callback.addCallback("GenerateChunkUniversal", (chunkX: number, chunkZ: number, random: java.util.Random, dimensionId: number, chunkSeed: number, worldSeed: number, dimensionSeed: number) => {
-    const data = Galacticraft.generationData[dimensionId];
+    const data = Galacticraft.getIPlanetByID(dimensionId).getOreData();
     if(data != null && data.ores != null && data.ores.length > 0) {
         for(const i in data.ores) {
             const { block, minY, maxY, veinCounts, count } = data.ores[i];

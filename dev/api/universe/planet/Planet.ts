@@ -1,5 +1,5 @@
 class Planet extends Dimension implements IPlanet {
-    public satellites: ISatellite[];
+    public satellites: number[];
 
     public getName(): string {
         return "unnamed";
@@ -59,12 +59,5 @@ class Planet extends Dimension implements IPlanet {
     
     public hasOxygen(): boolean {
         return false;
-    }
-
-    public getTags(): string[] {
-        if(this.hasOxygen()) {
-            return ["no_oxygen"];
-        } 
-        return [];
     }
 }

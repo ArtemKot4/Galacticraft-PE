@@ -1,5 +1,4 @@
 class Earth implements IPlanet {
-    public satellites: ISatellite[] = [new Moon(this, 28, "moon_gc", new CustomBiome("moon_gc"))];
     public id = 0;
     
     public getOreData(): { ores: Galacticraft.OreData[]; stone: number[]; } {
@@ -86,4 +85,6 @@ class Earth implements IPlanet {
     public hasOxygen(): boolean {
         return true;
     }
+
+    public addSatellite?(satellite: ISatellite): this;
 }

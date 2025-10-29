@@ -1,3 +1,4 @@
+IMPORT("SoundLib");
 IMPORT("EnergyNet");
 IMPORT("ChargeItem");
 
@@ -25,7 +26,10 @@ namespace Galacticraft {
      * Type of galacticraft energy
      */
     export const JOULE = EnergyTypeRegistry.createEnergyType("galacticraft_joule", 1);
+    
+    export const IPlanetData: Record<number, IPlanet> = {};
     const galaxies: Record<string, Galaxy> = {};
+
     export function registerGalaxy(galaxy: Galaxy) {
         const name = galaxy.getName();
         if(name in galaxies) {
@@ -38,6 +42,7 @@ namespace Galacticraft {
         return galaxies[name] || null;
     }
 
+    
     let CURRENT_GALAXY = "milky_way";
 
     export function getCurrentGalaxyName(): string {
@@ -57,6 +62,10 @@ namespace Galacticraft {
         return getGalaxy(CURRENT_GALAXY);
     }
 
+    export function getIPlanetByID(id: number): Nullable<IPlanet> {
+        return IPlanetData[id] || null;
+    }
+
     export type OreData = {
         block: Tile,
         minY: number,
@@ -64,6 +73,4 @@ namespace Galacticraft {
         veinCounts: number; 
         count: [number, number]
     }
-
-    export const generationData: Record<number, ReturnType<typeof Planet.prototype.getOreData>> = {};
 }
