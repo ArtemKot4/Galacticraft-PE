@@ -2,12 +2,21 @@ class CoalGenerator extends ElectricBlock {
     public constructor() {
         super("coal_generator", [{
             name: "block.galacticraft.coal_generator",
-            texture: [["Machine", 0], ["Machine", 0], ["Machine", 0], ["Coal Generator", 0], ["Machine Output", 0], ["Machine Output", 0]],
+            texture: [["machine", 0], ["machine", 0], ["machine", 0], ["coal_generator_gc", 0], ["machine_output", 0], ["machine_output", 0]],
             inCreative: true
         }]);
     }
 
-    public getTileEntity(): ElectricTile {
+    public override getStorageInterface(): StorageDescriptor {
+        return {
+            slots: {
+                coal_slot: { input: true }
+            },
+            isValidInput: (item, side, tile) => Recipes.getFuelBurnDuration(item.id, item.data) != 0
+        }
+    }
+
+    public override getTileEntity(): ElectricTile {
         return new CoalGeneratorTile();
     }
 }

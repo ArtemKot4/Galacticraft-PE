@@ -1,6 +1,7 @@
 IMPORT("SoundLib");
 IMPORT("EnergyNet");
 IMPORT("ChargeItem");
+IMPORT("StorageInterface");
 
 namespace Galacticraft {
     export namespace ToolTips {

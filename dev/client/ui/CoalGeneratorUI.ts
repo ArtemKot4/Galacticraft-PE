@@ -2,41 +2,32 @@ const CoalGeneratorUI = new UI.StandartWindow({
 	standard: {
 		header: {
 			text: {
-				text: Translation.translate("Coal Generator"),
-			},
+				text: Translation.translate("tile.galacticraft.coal_generator")
+			}
 		},
 		inventory: {
-			standard: true,
+			standard: true
 		},
 		background: {
-			standard: true,
+			standard: true
 		},
 	},
 	drawing: [
-		//     {
-		//     type: "bitmap",
-		//     x: 402,
-		//     y: 45,
-		//     scale: 3.4,
-		//   bitmap:
-		//         "generators.coalscale1"
-
-		//     },
 		{
 			type: "bitmap",
 			x: 490,
 			y: 110,
 			bitmap: "arrow_bar_1",
-			scale: 4.2,
-		},
+			scale: 4.2
+		}
 	],
 	elements: {
 		coal_slot: {
 			type: "slot",
 			x: 400,
 			y: 110,
-			bitmap: "coalslot",
-			size: 70,
+			bitmap: "coal_slot",
+			size: 70
 		},
 		progress_scale: {
 			type: "scale",
@@ -44,37 +35,28 @@ const CoalGeneratorUI = new UI.StandartWindow({
 			y: 110,
 			scale: 4.2,
 			direction: 0,
-			bitmap: "arrow_bar_scale",
+			bitmap: "arrow_bar_scale"
 			// clicker: {
 			// 	onClick: function () {
 			// 		RV && RV.RecipeTypeRegistry.openRecipePage("generator 2");
 			// 	}
 			// }
 		},
-
-		EnergyText: {
+		energy_display: {
 			type: "text",
 			x: 400,
 			y: 190,
 			width: 100,
 			height: 30,
-			text: "Energy type is not defined",
+			text: "0/0 gJ"
 		},
-		Status: {
-			type: "text",
-			x: 400,
-			y: 220,
-			width: 100,
-			height: 30,
-			text: "Status: energy is not defined",
-		},
-		// FiringStatus: {
-		//     type: "text",
-		//     x: 545,
-		//     y: 55,
-		//     width: 100,
-		//     height: 30,
-		//     text: "Burning: %"
-		// },
-	},
+		// status: {
+		// 	type: "text",
+		// 	x: 400,
+		// 	y: 220,
+		// 	width: 100,
+		// 	height: 30,
+		// 	text: "Status"
+		// }
+	}
 });

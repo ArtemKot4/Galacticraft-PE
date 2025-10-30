@@ -1,11 +1,9 @@
 abstract class ElectricTile extends CommonTileEntity implements EnergyTile {
-    public constructor() {
-        super();
-        this.defaultValues = this.defaultValues || {};
-        this.defaultValues.energy = 0;
-    }
+    public setupContainer(): void {}
 
-    public data: Scriptable & { energy: number };
+    public onInit(): void {
+        this.setupContainer();
+    }
 
     public canReceiveEnergy(side: number, type: string): boolean {
         return true;
