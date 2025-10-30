@@ -14,8 +14,7 @@ namespace Galacticraft {
                 const expression = item.id in Item.nameOverrideFunctions ? Item.nameOverrideFunctions[item.id](item, translation, name) : Translation.translate(name);
                 return (
                     expression + "\n" + Native.Color.GRAY + (
-                        Entity.getSneaking(Player.getLocal()) == true ?
-                        Translation.translate(tip) : "message.galacticraft.tip_on_sneaking"
+                        Translation.translate(Entity.getSneaking(Player.getLocal()) == true ? tip : "message.galacticraft.tip_on_sneaking") 
                     )
                 );
             });
@@ -26,9 +25,10 @@ namespace Galacticraft {
      * Type of galacticraft energy
      */
     export const JOULE = EnergyTypeRegistry.createEnergyType("galacticraft_joule", 1);
-    
     export const IPlanetData: Record<number, IPlanet> = {};
     const galaxies: Record<string, Galaxy> = {};
+    let CURRENT_GALAXY = "milky_way";
+    let musicAudioSource: AudioSourceClient = null;
 
     export function registerGalaxy(galaxy: Galaxy) {
         const name = galaxy.getName();
@@ -42,8 +42,6 @@ namespace Galacticraft {
         return galaxies[name] || null;
     }
 
-    
-    let CURRENT_GALAXY = "milky_way";
 
     export function getCurrentGalaxyName(): string {
         return CURRENT_GALAXY;
@@ -73,4 +71,36 @@ namespace Galacticraft {
         veinCounts: number; 
         count: [number, number]
     }
+
+    Callback.addCallback("PreLoaded", () => {
+        SoundLib.initClient(16);
+    });
+
+    Callback.addCallback("DimensionLoaded", (currentId, lastId) => {
+        const planet = Galacticraft.getIPlanetByID(currentId);
+        if("getMusicNameAndPath" in planet) {
+            const musicName = planet.getMusicNameAndPath()[0];
+            musicAudioSource = new AudioSourceClient(Player.getPosition());
+            // alert("поток запущен");
+
+            // Threading.initThread("thread.galacticraft.music", () => {
+            //     while(true) {
+            //         java.lang.Thread.sleep(1000*10);
+            //         alert("10 сек прошли")
+            //         if(true){//Math.random() > 0.5) {
+            //             musicAudioSource.playSingle(musicName, false, 1, 1000, Player.getPosition());
+            //             alert("музыка запущена")
+            //         }
+            //         if(Player.getDimension() != currentId) {
+            //             musicAudioSource.unload();
+            //             alert("Поток выключен")
+            //             return;
+            //         }
+            //     }
+            // });
+            musicAudioSource.update();
+            alert("музыка запущена")
+            return musicAudioSource.playSingle(musicName, false, 1, 1000, Player.getPosition()); //debug
+        }
+    });
 }

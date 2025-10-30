@@ -27,6 +27,13 @@ api/universe/satellite/Satellite.ts
 
 api/universe/satellite/station/Station.ts
 
+api/rocket/ELaunchPhase.ts
+api/rocket/RocketTimer.ts
+api/rocket/RocketManager.ts
+api/rocket/Rocket.ts
+api/rocket/RocketEntity.ts
+api/rocket/RocketEvents.ts
+
 client/ui/menu/GalacticraftSettings.ts
 
 client/ui/BasicSolarPanelUI.ts

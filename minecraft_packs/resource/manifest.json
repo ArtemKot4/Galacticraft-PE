@@ -1,7 +1,7 @@
 {
-	"format_version": 2,
+	"format_version": "2",
 	"header": {
-		"name": "[SpacesCraft Script] JsonScript",
+		"name": "Galacticraft resource",
 		"description": "Дополнительный скрипт в виде аддона,для добавления необходимых вещей как ракета,и прочих вещей,которых нельзя добавить в Horizon",
 		"min_engine_version": [
 			1,

@@ -1,7 +1,18 @@
 {
 	"$schema": "https://raw.githubusercontent.com/zheka2304/innercore-mod-toolchain/develop/toolchain/schemas/make.schema.json",
 	"resources": [
-		{"path": "recipes", "type": "resource_directory"},
+		{
+            "path": "recipes",
+            "type": "resource_directory"
+        },
+        {
+			"type": "minecraft_resource_pack",
+			"path": "minecraft_packs/resource"
+		},
+	    {
+			"type": "minecraft_behavior_pack",
+			"path": "minecraft_packs/behavior"
+		},
 		{
 			"path": "assets",
 			"type": "resource_directory"

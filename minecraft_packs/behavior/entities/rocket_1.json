@@ -2,7 +2,7 @@
 	"format_version": "1.16.100",
 	"minecraft:entity": {
 		"description": {
-			"identifier": "galacticraft:rocket_1",
+			"identifier": "galacticraft:rocket_tier_1",
 			"is_spawnable": true,
 			"is_summonable": true,
 			"is_experimental": false
@@ -32,6 +32,7 @@
 			},
 			"minecraft:movement.basic": {
 			},
+            
 			"minecraft:jump.static": {},
 			"minecraft:can_climb": {},
 			"minecraft:collision_box": {
@@ -40,7 +41,6 @@
 			},
 			"minecraft:rideable": {
               "seat_count": 1,
-              "interact_text": "sit",
               "pull_in_entities": true,
               "seats": {
                   "position": [ 0.0, 0.7, 0.0 ]
@@ -49,7 +49,9 @@
             "minecraft:scale": {
              "value": 1.4
             },
-			"minecraft:physics": {},
+			"minecraft:physics": {
+				"has_gravity": false
+			},
 			"minecraft:pushable": {
 				"is_pushable": false,
 				"is_pushable_by_piston": false

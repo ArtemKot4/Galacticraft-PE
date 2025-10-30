@@ -1,7 +1,7 @@
 abstract class Galaxy implements ILocalizeable {
     public planets: Set<number> = new Set();
 
-    public addPlanet(planet: IPlanet) {
+    public addPlanet(planet: IPlanet): this {
         this.processIPlanet(planet);
         this.planets.add(planet.id);
         Galacticraft.IPlanetData[planet.id] = planet;

@@ -60,6 +60,10 @@ class Moon extends Satellite {
         }
     }
 
+    public getMusicNameAndPath(): [name: string, path: string] {
+        return ["spacerace.ogg", __dir__ + "assets/sound/spacerace.ogg"];
+    }
+
     public override getIcon(): string {
         return "environment.moon";
     }
@@ -97,8 +101,16 @@ class Moon extends Satellite {
     }
 }
 
+//debug:
 Callback.addCallback("ItemUse", (c, i, b, isE, p) => {
     if(i.id == VanillaItemID.stick) {
-        Dimensions.transfer(p, 28);
+        if(Player.getDimension() != 28) {
+            Dimensions.transfer(p, 28);
+        } else {
+            Dimensions.transfer(p, 0);
+        }
+    }
+    if(i.id == VanillaItemID.bone) {
+        SoundLib.getClient().playSound("spacerace", false, 1, 1)
     }
 })

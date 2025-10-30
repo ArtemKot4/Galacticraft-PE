@@ -5,6 +5,8 @@ class Planet extends Dimension implements IPlanet {
         return "unnamed";
     }
 
+    public getMusicNameAndPath?(): [name: string, path: string];
+
     public getLocalizedName(): string {
         return "message.galacticraft.unnamed";
     }
