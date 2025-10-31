@@ -1,7 +1,6 @@
 class LocalCoalGeneratorTile extends LocalTileEntity {
     public override onTick(): void {
-        const hasEnergy = this.networkData.getBoolean("has_energy", false);
-        if(hasEnergy) {
+        if(this.networkData.getBoolean("has_energy", false) != false) {
             Particles.addParticle(EParticleType.FLAME, 
                 this.x + 0.3,
                 this.y + 0.5,

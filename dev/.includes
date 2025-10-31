@@ -55,6 +55,10 @@ common/block/machine/coal_generator/CoalGeneratorTile.ts
 common/block/machine/coal_generator/LocalCoalGeneratorTile.ts
 common/block/machine/coal_generator/CoalGenerator.ts
 common/block/machine/rocket_padding/RocketPadding.ts
+common/block/wire/WireBase.ts
+common/block/wire/Wire.ts
+common/block/wire/ImprovedWire.ts
+common/block/wire/LiquidPipe.ts
 
 common/block/BlockList.ts
 

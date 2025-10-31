@@ -26,6 +26,11 @@ namespace Galacticraft {
      * Type of galacticraft energy
      */
     export const JOULE = EnergyTypeRegistry.createEnergyType("galacticraft_joule", 1);
+    /**
+     * Type of galacticraft energy as oxygen
+     */
+    export const OXYGEN = EnergyTypeRegistry.createEnergyType("galacticraft_oxygen", 1);
+    
     export const IPlanetData: Record<number, IPlanet> = {};
     const galaxies: Record<string, Galaxy> = {};
     let CURRENT_GALAXY = "milky_way";
@@ -71,6 +76,12 @@ namespace Galacticraft {
         maxY: number
         veinCounts: number; 
         count: [number, number]
+    }
+
+    export interface IWireBoxDescription {
+        side: [x: number, z: number], 
+        box: [number, number, number, number, number, number], 
+        data: number
     }
 
     Callback.addCallback("PreLoaded", () => {

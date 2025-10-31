@@ -26,30 +26,41 @@ class CoalGeneratorTile extends GeneratorTile {
         this.sendEnergyStatus();
     }
 
-    public override onTick(): void {
-        StorageInterface.checkHoppers(this);
+    public doEnergy(): void {
+        if(this.data.burning > 0 && !this.isFullEnergy()) {
+            this.data.energy = Math.min(this.data.energy + 1, this.getCapacity());
+            this.data.burning--;
+        }
+    }
 
-        this.sendEnergyStatus();
-        this.container.validateSlot("coal_slot");
-        this.container.sendChanges();
-
-        const capacity = this.getCapacity();
+    public doBurning(): void {
         const slot = this.container.getSlot("coal_slot");
         const burningDuration = Recipes.getFuelBurnDuration(slot.id, slot.data);
 
-        if(this.data.burning > 0 && !this.isFullEnergy()) {
-            this.data.energy = Math.min(this.data.energy + 1, capacity);
-            this.data.burning--;
-        }
-        if(this.data.burning == 0 && burningDuration != 0 && this.data.energy < capacity) {
+        if(this.data.burning == 0 && burningDuration != 0 && this.data.energy < this.getCapacity()) {
             this.data.burning = this.data.burningMax = burningDuration;
             this.container.setSlot("coal_slot", slot.id, slot.count - 1, slot.data);
         }
+    }
+
+    public decreaseBurning(): void {
         if(World.getThreadTime() % 60 == 0 && this.isFullEnergy() && this.data.burning > 0) {
             this.data.burning--;
         }
+    }
+
+    public override onTick(): void {
+        const capacity = this.getCapacity();
+
+        StorageInterface.checkHoppers(this);
+        this.container.validateSlot("coal_slot");
+        this.container.sendChanges();
+        this.sendEnergyStatus();
+        this.doEnergy();
+        this.doBurning();
+        this.decreaseBurning();
         this.container.setScale("progress_scale", this.data.energy / capacity);
-        this.container.setText("energy_display", this.data.energy + " / " + this.getCapacity() + " gJ");   
+        this.container.setText("energy_display", this.data.energy + " / " + capacity + " gJ");   
     }
     
     public override getLocalTileEntity(): LocalTileEntity {

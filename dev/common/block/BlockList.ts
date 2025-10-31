@@ -1,4 +1,6 @@
 namespace BlockList {
+    export const IMPROVED_WIRE = new ImprovedWire();
+    export const LIQUID_PIPE = new LiquidPipe();
     export const COAL_GENERATOR = new CoalGenerator();
     export const ROCKET_PADDING = new RocketPadding();
 
@@ -62,17 +64,16 @@ namespace BlockList {
     ]);
 
     Galacticraft.JOULE.registerWire(ENCLOSED_ALUMINUM_WIRE.id, 200);
-    ICRender.getGroup("gc.wire").add(ENCLOSED_ALUMINUM_WIRE.id, -1);
+    ICRender.getGroup("galacticraft.wire").add(ENCLOSED_ALUMINUM_WIRE.id, -1);
 
     export const ENCLOSED_FLUID_PIPE = new BasicBlock("enclosed_fluid_pipe", [{
-            name: "Enclosed Oxygen Pipe",
-            texture: [["Enclosed Fluid Pipe", 0]],
-            inCreative: true,
-        }
-    ]);
+        name: "Enclosed Oxygen Pipe",
+        texture: [["Enclosed Fluid Pipe", 0]],
+        inCreative: true
+    }]);
 
     Galacticraft.JOULE.registerWire(ENCLOSED_FLUID_PIPE.id, 200);
-    ICRender.getGroup("gc.liquid-pipe").add(ENCLOSED_FLUID_PIPE.id, -1);
+    ICRender.getGroup("galacticraft.liquid_pipe").add(ENCLOSED_FLUID_PIPE.id, -1);
 
     export const ENCLOSED_HEAVY_ALUMINUM_WIRE = new BasicBlock("enclosed_heavy_aluminum_wire", [{
         name: "Enclosed Heavy Aluminum Wire",
@@ -81,7 +82,7 @@ namespace BlockList {
     }]);
 
     Galacticraft.JOULE.registerWire(ENCLOSED_HEAVY_ALUMINUM_WIRE.id, 200);
-    ICRender.getGroup("gc.improved-wire").add(ENCLOSED_HEAVY_ALUMINUM_WIRE.id, -1);
+    ICRender.getGroup("galacticraft.improved_wire").add(ENCLOSED_HEAVY_ALUMINUM_WIRE.id, -1);
 
     class Space extends BasicBlock {
         public getLightOpacity(): number {
@@ -114,6 +115,5 @@ namespace BlockList {
     
     Block.registerDropFunction(MARS_BOTTOM_STONE.id, function(coords, blockID){
         return [[MARS_COBBLESTONE.id, 1, 0]] 
-    });
-    
+    });   
 }

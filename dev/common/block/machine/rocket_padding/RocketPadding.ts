@@ -1,4 +1,16 @@
 class RocketPadding extends MachineBlock implements IItemUseCallback, IDestroyCallback {
+    public constructor() {
+        super("rocket_padding", [{
+            inCreative: true,
+            name: "block.galacticraft.rocket_padding",
+            texture: [["rocket_padding", 0]]
+        }]);
+
+        this.getGroup().add(this.id, 0);
+        const [model, shape] = this.getModelByCondition();
+        BlockRenderer.setStaticICRender(this.id, -1, model);
+        BlockRenderer.setCustomCollisionAndRaycastShape(this.id, -1, shape);
+    }   
     /**
      * Radius is indentation of middle by x and z
      */
@@ -14,39 +26,30 @@ class RocketPadding extends MachineBlock implements IItemUseCallback, IDestroyCa
         return ICRender.getGroup("galacticraft.rocket_padding");
     }
 
-    public getModelByCondition(): ICRender.Model {
+    public getModelByCondition(): [ICRender.Model, ICRender.CollisionShape] {
         const group = this.getGroup();
         const modelBottom = new BlockRenderer.Model(0, 0, 0, 1, 3 / 16, 1, this.id, 0);
         const modelTop = new BlockRenderer.Model(0, 3 / 16, 0, 1, 5 / 16, 1, this.id, 0);
         const render = new ICRender.Model();
-
+        const shape = new ICRender.CollisionShape();
+        const condition = ICRender.AND(
+            ICRender.BLOCK(-1, 0, 0, group, false),
+            ICRender.BLOCK(0, 0, -1, group, false),
+            ICRender.BLOCK(0, 0, 1, group, false),
+            ICRender.BLOCK(1, 0, 0, group, false),
+            ICRender.BLOCK(-1, 0, 1, group, false),
+            ICRender.BLOCK(1, 0, -1, group, false),
+            ICRender.BLOCK(1, 0, 1, group, false),
+            ICRender.BLOCK(-1, 0, -1, group, false)
+        );
+        shape.addEntry().addBox(0, 0, 0, 1, 3 / 16, 1);
+        shape.addEntry().setCondition(condition).addBox(0, 3 / 16, 0, 1, 5 / 16, 1);
         render.addEntry(modelBottom);
         render.addEntry(modelTop)
-        .setCondition(
-            ICRender.AND(
-                ICRender.BLOCK(-1, 0, 0, group, false),
-                ICRender.BLOCK(0, 0, -1, group, false),
-                ICRender.BLOCK(0, 0, 1, group, false),
-                ICRender.BLOCK(1, 0, 0, group, false),
-                ICRender.BLOCK(-1, 0, 1, group, false),
-                ICRender.BLOCK(1, 0, -1, group, false),
-                ICRender.BLOCK(1, 0, 1, group, false),
-                ICRender.BLOCK(-1, 0, -1, group, false)
-            )
-        );
-        return render;
-    }
+        .setCondition(condition);
 
-    public constructor() {
-        super("rocket_padding", [{
-            inCreative: true,
-            name: "block.galacticraft.rocket_padding",
-            texture: [["rocket_padding", 0]]
-        }]);
-
-        this.getGroup().add(this.id, 0);
-        BlockRenderer.setStaticICRender(this.id, -1, this.getModelByCondition());
-    }    
+        return [render, shape];
+    } 
 
     public onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number): void {
         
@@ -59,7 +62,7 @@ class RocketPadding extends MachineBlock implements IItemUseCallback, IDestroyCa
         }
     }
 
-    public static forEachRadius(radius: number, coords: Vector, callback: (x: number, z: number) => boolean | void): boolean {
+    public static forEachAtRadius(radius: number, coords: Vector, callback: (x: number, z: number) => boolean | void): boolean {
         for(let x = -radius; x <= radius; x++) {
             for(let z = -radius; z <= radius; z++) {
                 if(callback(coords.x + x, coords.z + z) == false) {
@@ -71,11 +74,11 @@ class RocketPadding extends MachineBlock implements IItemUseCallback, IDestroyCa
     }
 
     public static breakAll(radius: number, coords: Vector, region: BlockSource, drop: boolean): void {
-        this.forEachRadius(radius, coords, (x, z) => region.destroyBlock(x, coords.y, z, drop));
+        this.forEachAtRadius(radius, coords, (x, z) => region.destroyBlock(x, coords.y, z, drop));
     }
 
     public static isCenter(radius: number, coords: Vector, block: Tile, region: BlockSource): boolean {
-        return this.forEachRadius(radius, coords, (x, z) => {
+        return this.forEachAtRadius(radius, coords, (x, z) => {
             const newBlock = region.getBlock(x, coords.y, z);
             return newBlock.id == block.id && block.data == newBlock.data;
         });

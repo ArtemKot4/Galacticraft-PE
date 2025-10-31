@@ -1,4 +1,4 @@
-class CoalGenerator extends ElectricBlock {
+class CoalGenerator extends ElectricBlock implements IClickCallback {
     public constructor() {
         super("coal_generator", [{
             name: "block.galacticraft.coal_generator",
@@ -14,6 +14,10 @@ class CoalGenerator extends ElectricBlock {
             },
             isValidInput: (item, side, tile) => Recipes.getFuelBurnDuration(item.id, item.data) != 0
         }
+    }
+
+    public onClick(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number): void {
+        Game.message(block.data);
     }
 
     public override getTileEntity(): ElectricTile {
