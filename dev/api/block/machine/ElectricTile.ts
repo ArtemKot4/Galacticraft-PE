@@ -25,7 +25,7 @@ abstract class ElectricTile extends CommonTileEntity implements EnergyTile {
 
     public energyReceive(type: string, amount: number, voltage: number): number {
         const add = Math.min(amount, this.getCapacity() - this.data.energy);
-        this.data.energy += type == Galacticraft.JOULE.name ? add : add / 2;
+        this.data.energy += type == Galacticraft.EnergyTypes.JOULE.name ? add : add / 2;
         return add;
     }
 }

@@ -7,7 +7,7 @@ class ImprovedWire extends Wire {
         }]);
     }
 
-    public override  getWidth(): number {
+    public override getWidth(): number {
         return 2 / 8;
     }
 

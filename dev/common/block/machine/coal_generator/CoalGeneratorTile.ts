@@ -3,7 +3,7 @@ class CoalGeneratorTile extends GeneratorTile {
         energy: 0,
         burning: 0,
         burningMax: 0
-    }
+    };
 
     public data: typeof this.defaultValues;
 

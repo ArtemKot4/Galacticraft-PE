@@ -1,5 +1,5 @@
-class Wire extends WireBase {
-    public override  getWidth(): number {
+class Wire extends BasicWire {
+    public override getWidth(): number {
         return 2 / 10;
     }
 
@@ -8,14 +8,14 @@ class Wire extends WireBase {
     }
 
     public override getEnergyTypes(): EnergyType[] {
-        return [Galacticraft.JOULE];
+        return [Galacticraft.EnergyTypes.JOULE];
     }
     
     public override getMachineGroupCommonName(): string {
         return "galacticraft.machine_energy_connecting";
     }
 
-    public override getMachineConnectingData(): Galacticraft.IWireBoxDescription[] {
+    public override getMachineConnectionData(): Galacticraft.Renderer.IWireBoxDescription[] {
         const width = this.getWidth() / 2;
 
         return [
@@ -39,6 +39,6 @@ class Wire extends WireBase {
                 side: [0, 1],
                 box: [0.5 - width, 0.5 - width, 0.5 + width, 0.5 + width, 0.5 + width, 1]
             }
-        ]
+        ];
     }
 }

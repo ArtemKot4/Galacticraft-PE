@@ -1,7 +1,7 @@
 class CoalGenerator extends ElectricBlock implements IClickCallback {
     public constructor() {
         super("coal_generator", [{
-            name: "block.galacticraft.coal_generator",
+            name: "tile.galacticraft.coal_generator",
             texture: [["machine", 0], ["machine", 0], ["machine", 0], ["coal_generator_gc", 0], ["machine_output", 0], ["machine_output", 0]],
             inCreative: true
         }]);
@@ -9,9 +9,7 @@ class CoalGenerator extends ElectricBlock implements IClickCallback {
 
     public override getStorageInterface(): StorageDescriptor {
         return {
-            slots: {
-                coal_slot: { input: true }
-            },
+            getInputSlots: () => ["coal_slot"],
             isValidInput: (item, side, tile) => Recipes.getFuelBurnDuration(item.id, item.data) != 0
         }
     }

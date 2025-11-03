@@ -11,6 +11,10 @@ class RocketPadding extends MachineBlock implements IItemUseCallback, IDestroyCa
         BlockRenderer.setStaticICRender(this.id, -1, model);
         BlockRenderer.setCustomCollisionAndRaycastShape(this.id, -1, shape);
     }   
+
+    public override getStates(): (string | number)[] {
+        return ["fuel"];
+    }
     /**
      * Radius is indentation of middle by x and z
      */

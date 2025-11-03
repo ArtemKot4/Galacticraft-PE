@@ -5,14 +5,16 @@ translations.ts
 api/Galacticraft.ts
 
 client/ui/lib/Component.tsx
+client/Renderer.ts
 
 api/utils/GalacticraftException.ts
 api/utils/UniqueGen.ts
-api/block/machine/Recipes.ts
 api/block/machine/MachineBlock.ts
 api/block/machine/ElectricBlock.ts
 api/block/machine/ElectricTile.ts
 api/block/machine/GeneratorTile.ts
+api/block/machine/ProcessingTile.ts
+api/block/machine/BasicWire.ts
 
 api/universe/galaxy/IGalaxy.ts
 api/universe/galaxy/Galaxy.ts
@@ -34,6 +36,8 @@ api/rocket/Rocket.ts
 api/rocket/RocketEntity.ts
 api/rocket/RocketEvents.ts
 
+api/RecipeFactory.ts
+
 client/ui/menu/GalacticraftSettings.ts
 
 client/ui/BasicSolarPanelUI.ts
@@ -54,7 +58,13 @@ client/ui/WorkbenchUI.ts
 common/block/machine/coal_generator/CoalGeneratorTile.ts
 common/block/machine/coal_generator/LocalCoalGeneratorTile.ts
 common/block/machine/coal_generator/CoalGenerator.ts
+
+common/block/machine/circuit_fabricator/CircuitFabricatorTile.ts
+common/block/machine/circuit_fabricator/CircuitFabricator.ts
+
 common/block/machine/rocket_padding/RocketPadding.ts
+
+
 common/block/wire/WireBase.ts
 common/block/wire/Wire.ts
 common/block/wire/ImprovedWire.ts

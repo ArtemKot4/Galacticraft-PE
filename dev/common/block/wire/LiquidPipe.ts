@@ -1,4 +1,4 @@
-class LiquidPipe extends WireBase {
+class LiquidPipe extends BasicWire {
     public constructor() {
         super("liquid_pipe", [{
             name: "block.galacticraft.liquid_pipe",
@@ -8,7 +8,7 @@ class LiquidPipe extends WireBase {
     }
 
     public override getEnergyTypes(): EnergyType[] {
-        return [Galacticraft.OXYGEN];
+        return [Galacticraft.EnergyTypes.OXYGEN];
     }
     
     public override getGroup(): ICRender.Group {
@@ -19,7 +19,7 @@ class LiquidPipe extends WireBase {
         return "galacticraft.machine_liquid_connecting";
     }
 
-    public override getMachineConnectingData(): Galacticraft.IWireBoxDescription[] {
+    public override getMachineConnectionData(): Galacticraft.Renderer.IWireBoxDescription[] {
         const width = this.getWidth() / 2;
 
         return [

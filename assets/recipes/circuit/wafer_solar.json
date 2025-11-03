@@ -1,0 +1,8 @@
+{
+	"diamond_slot": {"id": "diamond", "count": 1, "data": 0},
+	"fabricator_slot_1": {"id": "raw_silicon", "count": 1, "data": 0},
+	"fabricator_slot_2": {"id": "raw_silicon", "count": 1, "data": 0},
+	"dust_slot": {"id": "redstone", "count": 1, "data": 0},
+	"plate_slot": {"id": "lapis_lazuli", "count": 1, "data": 0},
+	"result": {"id": "wafer_solar", "count": 1, "data": 0}
+}

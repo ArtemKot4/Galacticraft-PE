@@ -1,4 +1,4 @@
-abstract class WireBase extends BasicBlock {
+abstract class BasicWire extends BasicBlock {
     public render: ICRender.Model;
     public shape: ICRender.CollisionShape;
 
@@ -14,12 +14,10 @@ abstract class WireBase extends BasicBlock {
 
         this.getGroup().add(this.id, -1);
         this.setWireConnecting()
-        this.setMachineConnecting();
+        Galacticraft.Renderer.setMachineConnecting(this.id, this.getMachineConnectionData(), this.render, this.shape, this.getMachineGroupCommonName());
         BlockRenderer.setStaticICRender(this.id, -1, this.render);
         BlockRenderer.setCustomCollisionAndRaycastShape(this.id, -1, this.shape);
     }
-
-    abstract getEnergyTypes(): EnergyType[];
 
     public getWidth(): number {
         return 2 / 8;
@@ -52,18 +50,12 @@ abstract class WireBase extends BasicBlock {
 		ItemModel.getFor(this.id, -1).setHandModel(itemModel);
 		ItemModel.getFor(this.id, -1).setUiModel(itemModel);
     }
-
-    abstract getMachineGroupCommonName(): string;
-    abstract getMachineConnectingData(): Galacticraft.IWireBoxDescription[];
-
-    public setMachineConnecting(): void {
-        for(const box of this.getMachineConnectingData()) {
-            const wireModel = new BlockRenderer.Model(box.box[0], box.box[1], box.box[2], box.box[3], box.box[4], box.box[5], this.id, -1);
-            const condition = ICRender.BLOCK(box.side[0], 0, box.side[1], ICRender.getGroup(this.getMachineGroupCommonName() + "_" + box.data), false);
-
-            this.render.addEntry(wireModel).setCondition(condition);
-            this.shape.addEntry().setCondition(condition).addBox(box.box[0], box.box[1], box.box[2], box.box[3], box.box[4], box.box[5]);
-        }
+    
+    public getMachineGroupCommonName(): string {
+        return "galacticraft.wire";
     }
+
+    abstract getEnergyTypes(): EnergyType[];
+    abstract getMachineConnectionData(): Galacticraft.Renderer.IWireBoxDescription[];
     abstract getGroup(): ICRender.Group;
 }

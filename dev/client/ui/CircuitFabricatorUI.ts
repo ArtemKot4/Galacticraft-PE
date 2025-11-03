@@ -1,177 +1,161 @@
-const CircuitFabricatorUI = new UI.StandartWindow({
+const CircuitFabricatorUI = new UI.StandardWindow({
 	standard: {
 		header: {
 			text: {
-				text: Translation.translate("Circuit Fabricator"),
-			},
+				text: Translation.translate("tile.galacticraft.circuit_fabricator")
+			}
 		},
 		inventory: {
-			standard: true,
+			standard: true
 		},
 		background: {
-			standard: true,
-		},
+			standard: true
+		}
 	},
 	drawing: [
 		{
 			type: "bitmap",
 			x: 355,
 			y: 65,
-			bitmap: "Others.line1_0",
-			scale: 3.8,
+			bitmap: "machine.circuit_fabricator.line1_off",
+			scale: 3.8
 		},
 		{
 			type: "bitmap",
 			x: 436,
 			y: 295,
-			bitmap: "slace_en_0",
-			scale: 3.2,
+			bitmap: "machine.energy_bar_empty",
+			scale: 3.2
 		},
 		{
 			type: "bitmap",
 			x: 425,
 			y: 295,
-			bitmap: "en_noy",
-			scale: 3.2,
+			bitmap: "machine.energy_icon_off",
+			scale: 3.2
 		},
 		{
 			type: "bitmap",
 			x: 568,
 			y: 150,
-			bitmap: "Others.line2_0",
-			scale: 3.8,
+			bitmap: "machine.circuit_fabricator.line2_off",
+			scale: 3.8
 		},
 		{
 			type: "bitmap",
 			x: 720,
 			y: 95,
-			bitmap: "Others.line3_0",
-			scale: 3.8,
+			bitmap: "machine.circuit_fabricator.line3_off",
+			scale: 3.8
 		},
 		{
 			type: "bitmap",
 			x: 565,
 			y: 65,
-			bitmap: "Others.circuitfabri_scale_0",
-			scale: 3.2,
+			bitmap: "machine.circuit_fabricator.heat_scale_empty",
+			scale: 3.2
 		},
 	],
 	elements: {
-		Line1: {
+		line_1: {
 			type: "scale",
 			x: 355,
 			y: 65,
-			bitmap: "Others.line1_1",
+			bitmap: "machine.circuit_fabricator.line1",
 			scale: 3.8,
-			direction: 1,
+			direction: 1
 		},
-		Line2: {
+		line_2: {
 			type: "scale",
 			x: 568,
 			y: 150,
-			bitmap: "Others.line2_1",
+			bitmap: "machine.circuit_fabricator.line2",
 			scale: 3.8,
-			direction: 0,
+			direction: 0
 		},
-		Line3: {
+		line_3: {
 			type: "scale",
 			x: 720,
 			y: 95,
-			bitmap: "Others.line3_1",
+			bitmap: "machine.circuit_fabricator.line3",
 			scale: 3.8,
-			direction: 0,
+			direction: 0
 		},
-		//diamond
-		slot_1: {
-			type: "slot",
-			x: 340,
-			y: 40,
-			size: 60,
-			bitmap: "Others.diamond_slot",
-		},
-		EnergySlot: {
+        energy_slot: {
 			type: "slot",
 			x: 330,
 			y: 290,
 			size: 60,
-			bitmap: "Others.en_slot",
+			bitmap: "machine.energy_slot"
+		},
+		//diamond
+		diamond_slot: {
+			type: "slot",
+			x: 340,
+			y: 40,
+			size: 60,
+			bitmap: "machine.circuit_fabricator.diamond_slot"
 		},
 		//fabricator 1
-		slot_2: {
+		fabricator_slot_1: {
 			type: "slot",
 			x: 515,
 			y: 135,
 			size: 60,
-			bitmap: "Others.fabricator_slot",
+			bitmap: "machine.circuit_fabricator.fabricator_slot"
 		},
 		//fabricator 2
-		slot_3: {
+		fabricator_slot_2: {
 			type: "slot",
 			x: 515,
 			y: 195,
 			size: 60,
-			bitmap: "Others.fabricator_slot",
+			bitmap: "machine.circuit_fabricator.fabricator_slot"
 		},
 		//dust
-		slot_4: {
+		dust_slot: {
 			type: "slot",
 			x: 682,
 			y: 130,
 			size: 60,
-			bitmap: "Others.dust_slot",
+			bitmap: "machine.circuit_fabricator.dust_slot"
 		},
 		//slot up
-		slot_5: {
+		plate_slot: {
 			type: "slot",
 			x: 745,
 			y: 50,
-			size: 60,
+			size: 60
 		},
-		result: {
+		result_slot: {
 			type: "slot",
 			x: 769,
 			y: 278,
-			size: 60,
+			size: 60
 		},
-		Burning: {
+		burning_scale: {
 			type: "scale",
 			x: 565,
 			y: 65,
-			bitmap: "Others.circuitfabri_scale_1",
+			bitmap: "machine.circuit_fabricator.heat_scale_full",
 			scale: 3.2,
-			direction: 0,
-			// clicker: {
-			//   onClick: function () {
-			//     RV && RV.RecipeTypeRegistry.openRecipePage("CircuitFabricator");
-			//   },
-			// },
+			direction: 0
 		},
-
-		ENERGYBar: {
+		energy_bar: {
 			type: "scale",
 			x: 436,
 			y: 295,
-			bitmap: "slace_en_1",
+			bitmap: "machine.energy_bar_full",
 			scale: 3.2,
-			direction: 0,
+			direction: 0
 		},
-
-		Energy: {
+		energy_icon: {
 			type: "scale",
 			x: 425,
 			y: 295,
-			bitmap: "en_yes",
+			bitmap: "machine.energy_icon_on",
 			scale: 3.2,
-			direction: 1,
-		},
-
-		ELECTRIC: {
-			type: "text",
-			x: 563,
-			y: 260,
-			width: 100,
-			height: 30,
-			text: "Status:",
-		},
-	},
+			direction: 1
+		}
+	}
 });

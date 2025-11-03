@@ -10,7 +10,7 @@ const CoalGeneratorUI = new UI.StandartWindow({
 		},
 		background: {
 			standard: true
-		},
+		}
 	},
 	drawing: [
 		{
@@ -26,7 +26,7 @@ const CoalGeneratorUI = new UI.StandartWindow({
 			type: "slot",
 			x: 400,
 			y: 110,
-			bitmap: "coal_slot",
+			bitmap: "machine.coal_generator.slot",
 			size: 70
 		},
 		progress_scale: {

@@ -1,8 +1,0 @@
-{
-  "slot_1": { "id": "diamond", "count": 1, "data": 0 },
-  "slot_2": { "id": "raw_silicon", "count": 1, "data": 0 },
-  "slot_3": { "id": "raw_silicon", "count": 1, "data": 0 },
-  "slot_4": { "id": "redstone", "count": 1, "data": 0 },
-  "slot_5": { "id": "repeater", "count": 1, "data": 0 },
-  "result": { "id": "wafer_advanced", "count": 1, "data": 0 }
-}

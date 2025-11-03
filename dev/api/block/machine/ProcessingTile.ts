@@ -1,0 +1,2 @@
+class ProcessingTile extends ElectricTile {
+}
