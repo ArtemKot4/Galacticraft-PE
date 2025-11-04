@@ -1,4 +1,4 @@
-abstract class RecipeFactory<ContainerType, StorageFormat = { input: ContainerType, output: ItemInstance }> {
+abstract class RecipeFactory<ContainerType, StorageFormat = { input: ContainerType, output: ItemInstance[] }> {
     public static list: Record<string, RecipeFactory<unknown>> = {};
     public storage: StorageFormat[] = [];
 
@@ -28,16 +28,24 @@ abstract class RecipeFactory<ContainerType, StorageFormat = { input: ContainerTy
                 }
                 return pV;
             }, {});
-            const result = object.output || object.result;
-            result.id = IDRegistry.parseID(result.id);
-
+            const result = object.output || [object.result];
+            for(const i in result) {
+                result[i].id = IDRegistry.parseID(result[i].id);
+            }
             for(const i in inputKeys) {
                 inputKeys[i].id = IDRegistry.parseID(inputKeys[i].id);
             }
-
             this.addRecipe(inputKeys, result);
         }
         return this;
+    }
+
+    public getResult(input: ContainerType, index = 0): Nullable<ItemInstance> {
+        return null;
+    }
+
+    public getResults<T>(input: ContainerType): Nullable<ItemInstance[]> {
+        return null;
     }
 
     public static get<T extends RecipeFactory<unknown>>(name: string): Nullable<T> {
@@ -70,7 +78,7 @@ abstract class RecipeFactory<ContainerType, StorageFormat = { input: ContainerTy
 }
 
 class FormedRecipeFactory extends RecipeFactory<Record<string, ItemInstance>> {
-    public getResults(input: Record<string, ItemInstance>): Nullable<ItemInstance> {
+    public getResults(input: Record<string, ItemInstance>): Nullable<ItemInstance[]> {
         for(const i in this.storage) {
             let valid = true;
             for(const k in this.storage[i].input) {
@@ -87,6 +95,14 @@ class FormedRecipeFactory extends RecipeFactory<Record<string, ItemInstance>> {
         return null;
     }
 
+    public getResult(input: Record<string, ItemInstance>, index = 0): Nullable<ItemInstance> {
+        const results = this.getResults(input);
+        if(results != null) {
+            return results[index];
+        }
+        return null;
+    }
+
     public static register(name: string): FormedRecipeFactory {
         if(name in RecipeFactory.list) {
             throw new GalacticraftException(`RecipeFactory of name "${name}" already exists`);
@@ -96,18 +112,18 @@ class FormedRecipeFactory extends RecipeFactory<Record<string, ItemInstance>> {
 }
 
 class UnformedRecipeFactory extends RecipeFactory<ItemInstance[]> {
-    public getResult(input: ItemInstance[]): Nullable<ItemInstance[]> {
-        let output: ItemInstance[] = null;
+    // public getResult(input: ItemInstance[]): Nullable<ItemInstance[]> {
+    //     let output: ItemInstance[] = null;
 
-        for(const i in this.storage) {
-            const recipe = this.storage[i].input;
-            if(input.length != recipe.length) {
-                continue;
-            }
-            //todo: do work
-        }
-        return output;
-    }
+    //     for(const i in this.storage) {
+    //         const recipe = this.storage[i].input;
+    //         if(input.length != recipe.length) {
+    //             continue;
+    //         }
+    //         //todo: do work
+    //     }
+    //     return output;
+    // }
 
     public equals(validInput: ItemInstance[], recipeInput: ItemInstance[]): boolean {
         // for(const i in validInput) {

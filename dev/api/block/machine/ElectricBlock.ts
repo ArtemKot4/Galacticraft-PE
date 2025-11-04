@@ -11,6 +11,27 @@ abstract class ElectricBlock extends MachineBlock {
         ICRender.getGroup("galacticraft.machine_energy_connecting_1").add(this.id, 1);
         ICRender.getGroup("galacticraft.machine_energy_connecting_2").add(this.id, 2);
         ICRender.getGroup("galacticraft.machine_energy_connecting_3").add(this.id, 3);
+        this.addScalesBehaviour();
+    }
+
+    public addScalesBehaviour(): void {
+        const tilePrototype = TileEntity.getPrototype(this.id) as ProcessingTile;
+        if(tilePrototype == null) {
+            return;
+        }
+        const ui = tilePrototype.getScreenByName(null, tilePrototype.container);
+        if(ui == null) {
+            return;
+        }
+        const elements = ui.getContent().elements;
+        if("energy_bar" in elements && "energy_icon" in elements) {
+            const funcLast = tilePrototype.setupWindowContent;
+            tilePrototype.setupWindowContent = function() {
+                this.container.setScale("energy_bar", this.data.energy / this.getCapacity());
+                this.container.setScale("energy_icon", this.data.energy / 1);
+                return funcLast.call(this);
+            }
+        }   
     }
 
     public getStorageInterface(): Nullable<StorageDescriptor> {

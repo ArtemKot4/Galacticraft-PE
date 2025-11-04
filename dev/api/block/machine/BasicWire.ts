@@ -5,16 +5,16 @@ abstract class BasicWire extends BasicBlock {
     public constructor(stringID: string, variationList?: Block.BlockVariation[]) {
         super(stringID, variationList);
         this.getEnergyTypes().forEach(type => EnergyTileRegistry.addEnergyTypeForId(this.id, type));
-        this.doModel();
-    }
-
-    public doModel(): void {
+        
         this.render = new ICRender.Model();
 		this.shape = new ICRender.CollisionShape();
+        this.setModel();
+    }
 
+    public setModel(): void {
         this.getGroup().add(this.id, -1);
-        this.setWireConnecting()
-        Galacticraft.Renderer.setMachineConnecting(this.id, this.getMachineConnectionData(), this.render, this.shape, this.getMachineGroupCommonName());
+        this.addWireConnecting()
+        Galacticraft.Renderer.addMachineConnecting(this.id, this.getMachineConnectionData(), this.render, this.shape, this.getMachineGroupCommonName());
         BlockRenderer.setStaticICRender(this.id, -1, this.render);
         BlockRenderer.setCustomCollisionAndRaycastShape(this.id, -1, this.shape);
     }
@@ -23,7 +23,7 @@ abstract class BasicWire extends BasicBlock {
         return 2 / 8;
     }
 
-    public setWireConnecting(): void {
+    public addWireConnecting(): void {
         const width = this.getWidth() / 2;
 		const boxes = [
 			{ side: [1, 0, 0], box: [0.5 + width, 0.5 - width, 0.5 - width, 1, 0.5 + width, 0.5 + width] },

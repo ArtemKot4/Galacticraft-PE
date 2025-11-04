@@ -52,7 +52,7 @@ const CircuitFabricatorUI = new UI.StandardWindow({
 			type: "bitmap",
 			x: 565,
 			y: 65,
-			bitmap: "machine.circuit_fabricator.heat_scale_empty",
+			bitmap: "machine.circuit_fabricator.heat_scale_0",
 			scale: 3.2
 		},
 	],
@@ -86,7 +86,8 @@ const CircuitFabricatorUI = new UI.StandardWindow({
 			x: 330,
 			y: 290,
 			size: 60,
-			bitmap: "machine.energy_slot"
+			bitmap: "machine.energy_slot",
+            iconScale: 0.9
 		},
 		//diamond
 		diamond_slot: {
@@ -94,7 +95,8 @@ const CircuitFabricatorUI = new UI.StandardWindow({
 			x: 340,
 			y: 40,
 			size: 60,
-			bitmap: "machine.circuit_fabricator.diamond_slot"
+			bitmap: "machine.circuit_fabricator.diamond_slot",
+            iconScale: 0.9
 		},
 		//fabricator 1
 		fabricator_slot_1: {
@@ -102,7 +104,8 @@ const CircuitFabricatorUI = new UI.StandardWindow({
 			x: 515,
 			y: 135,
 			size: 60,
-			bitmap: "machine.circuit_fabricator.fabricator_slot"
+			bitmap: "machine.circuit_fabricator.fabricator_slot",
+            iconScale: 0.9
 		},
 		//fabricator 2
 		fabricator_slot_2: {
@@ -110,7 +113,8 @@ const CircuitFabricatorUI = new UI.StandardWindow({
 			x: 515,
 			y: 195,
 			size: 60,
-			bitmap: "machine.circuit_fabricator.fabricator_slot"
+			bitmap: "machine.circuit_fabricator.fabricator_slot",
+            iconScale: 0.9
 		},
 		//dust
 		dust_slot: {
@@ -118,26 +122,29 @@ const CircuitFabricatorUI = new UI.StandardWindow({
 			x: 682,
 			y: 130,
 			size: 60,
-			bitmap: "machine.circuit_fabricator.dust_slot"
+			bitmap: "machine.circuit_fabricator.dust_slot",
+            iconScale: 0.9
 		},
 		//slot up
 		plate_slot: {
 			type: "slot",
 			x: 745,
 			y: 50,
-			size: 60
+			size: 60,
+            iconScale: 0.9
 		},
 		result_slot: {
 			type: "slot",
 			x: 769,
 			y: 278,
-			size: 60
+			size: 60,
+            iconScale: 0.9
 		},
-		burning_scale: {
+		heating_scale: {
 			type: "scale",
 			x: 565,
 			y: 65,
-			bitmap: "machine.circuit_fabricator.heat_scale_full",
+			bitmap: "machine.circuit_fabricator.heat_scale_2",
 			scale: 3.2,
 			direction: 0
 		},

@@ -285,6 +285,8 @@ declare class ItemStack implements ItemInstance {
     isNativeItem(): boolean;
     getStringID(): string;
     copy(): ItemStack;
+    static equals(stack1: ItemInstance, stack2: ItemInstance): boolean;
+    static contains(stack1: ItemInstance, stack2: ItemInstance): boolean;
 }
 interface IItemHoldCallback {
     onItemHold?(item: ItemInstance, playerUid: number, slotIndex: number): void;
@@ -403,6 +405,12 @@ interface IProjectileHitCallback {
     onProjectileHit(projectile: number, item: ItemStack, target: Callback.ProjectileHitTarget): void;
 }
 interface IBlockSelectionCallback {
+    /**
+     * Method, adds client event for block selection of player
+     * @param block block id and data
+     * @param position position of block
+     * @param vector look vector of player
+     */
     onSelection(block: Tile, position: BlockPosition, vector: Vector): void;
 }
 declare class BasicBlock {
@@ -410,12 +418,17 @@ declare class BasicBlock {
     readonly id: number;
     readonly stringID: string;
     constructor(stringID: string, variationList?: Block.BlockVariation[]);
+    /**
+     * Method declares, can block place rotated by data or not
+     */
     canRotate(): boolean;
-    build(): void;
-    setModel(model: BlockModel | RenderMesh | BlockRenderer.Model | ICRender.Model, data: number): this;
-    setStates(states: ReturnType<typeof this.getStates>): void;
-    getID(): number;
+    /**
+     * Method must list of blockstates which will be registered to block
+     */
     getStates(): (string | number)[];
+    /**
+     * Method must return tags which will be added to block
+     */
     getTags(): string[];
     getDrop?(coords: Callback.ItemUseCoordinates, id: number, data: number, diggingLevel: number, enchant: ToolAPI.EnchantData, item: ItemStack, region: BlockSource): ItemInstanceArray[];
     getDestroyTime?(): number;
@@ -433,7 +446,9 @@ declare class BasicBlock {
     getCreativeGroup?(): string;
     getTileEntity?(): CommonTileEntity;
     isSolid?(): boolean;
-    static destroyWithTile(x: number, y: number, z: number, blockSource: BlockSource): void;
+    static setStates(id: number, states: ReturnType<typeof BasicBlock.prototype.getStates>): void;
+    static setModel(id: number, data: number, model: BlockModel | RenderMesh | BlockRenderer.Model | ICRender.Model): void;
+    static build(block: BasicBlock): void;
 }
 declare class BlockPlant extends BasicBlock implements INeighbourChangeCallback, IPlaceCallback {
     static allowedBlockList: number[];
@@ -502,6 +517,7 @@ declare abstract class LocalTileEntity implements LocalTileEntity {
         network: string[];
         container: string[];
     };
+    sendResponse: <T = {}>(packetName: string, someData: T) => {};
     /**@deprecated
      * Use {@link onLoad} instead
      */

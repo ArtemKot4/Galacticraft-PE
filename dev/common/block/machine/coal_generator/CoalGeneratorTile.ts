@@ -16,14 +16,28 @@ class CoalGeneratorTile extends GeneratorTile {
             return Recipes.getFuelBurnDuration(id, data) != 0;
         });
     }
+    
+    public override onLoad(): void {
+        this.sendEnergyStatus();
+    }
+
+    public override onTick(): void {
+        const capacity = this.getCapacity();
+
+        StorageInterface.checkHoppers(this);
+        this.container.validateSlot("coal_slot");
+        this.container.sendChanges();
+        this.sendEnergyStatus();
+        this.doEnergy();
+        this.doBurning();
+        this.decreaseBurning();
+        this.container.setScale("progress_scale", this.data.energy / capacity);
+        this.container.setText("energy_display", this.data.energy + " / " + capacity + " gJ");   
+    }
 
     public sendEnergyStatus(): void {
         this.networkData.putBoolean("has_energy", this.data.energy > 0);
         this.networkData.sendChanges();
-    }
-    
-    public override onLoad(): void {
-        this.sendEnergyStatus();
     }
 
     public doEnergy(): void {
@@ -47,20 +61,6 @@ class CoalGeneratorTile extends GeneratorTile {
         if(World.getThreadTime() % 60 == 0 && this.isFullEnergy() && this.data.burning > 0) {
             this.data.burning--;
         }
-    }
-
-    public override onTick(): void {
-        const capacity = this.getCapacity();
-
-        StorageInterface.checkHoppers(this);
-        this.container.validateSlot("coal_slot");
-        this.container.sendChanges();
-        this.sendEnergyStatus();
-        this.doEnergy();
-        this.doBurning();
-        this.decreaseBurning();
-        this.container.setScale("progress_scale", this.data.energy / capacity);
-        this.container.setText("energy_display", this.data.energy + " / " + capacity + " gJ");   
     }
     
     public override getLocalTileEntity(): LocalTileEntity {
