@@ -8,7 +8,7 @@ class GeneratorTile extends ElectricTile {
     }
 
     public energyTick(type: string, src: EnergyTileNode): void {
-        const output = Math.min(1, this.data.energy);
+        const output = Math.min(this.data.energy, this.getCapacity());
         this.data.energy += src.add(output) - output;
     }
 

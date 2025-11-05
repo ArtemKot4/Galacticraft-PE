@@ -1,14 +1,17 @@
 class CircuitFabricatorTile extends ProcessingTile {
-    public defaultValues = {
-        energy: 0,
-        progress: 0,
-        active: false
-    };
-    public data: typeof this.defaultValues;
+    public override inputSlots: string[] = [
+        "diamond_slot", "fabricator_slot_1", "fabricator_slot_2", "dust_slot", "plate_slot"
+    ];
 
-    public override setupWindowContent(): void {
-        this.container.sendEvent("update_heating_scale_bitmap", {});
-        this.container.setScale("heating_scale", this.data.progress / this.getProgressMax());
+    public override outputSlots: string[] = [
+        "result_slot"
+    ];
+
+    public override onUpdate(): void {
+        if(World.getThreadTime() % 2 == 0) {
+            this.container.setBinding("progress_scale", "texture", CircuitFabricatorTile.getValidScaleBitmapName(String(this.container.getBinding("progress_scale", "texture"))));
+        }
+        this.container.setScale("progress_scale", this.data.progress / this.getProgressMax());
     }
 
     public override getScreenByName(screenName?: string, container?: ItemContainer): UI.IWindow {
@@ -19,20 +22,12 @@ class CircuitFabricatorTile extends ProcessingTile {
         return RecipeFactory.get<FormedRecipeFactory>("circuit");
     }
 
-    public override getInputSlotNames(): string[] {
-        return [
-            "diamond_slot", "fabricator_slot_1", "fabricator_slot_2", "dust_slot", "plate_slot"
-        ];
+    public static getNewScaleBitmapIndex(index: number): number {
+        return index >= 3 ? 1 : index + 1;
     }
 
-    public override getOutputSlotNames(): string[] {
-        return [
-            "result_slot"
-        ];
-    }
-
-    public override getLocalTileEntity(): LocalTileEntity {
-        return new LocalCircuitFabricatorTile();
+    public static getValidScaleBitmapName(bitmapName: string): string {
+        return "machine.circuit_fabricator.heat_scale_" + this.getNewScaleBitmapIndex(Number(bitmapName[bitmapName.length-1]) || 1); 
     }
 }
 

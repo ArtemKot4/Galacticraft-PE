@@ -2,6 +2,7 @@ namespace BlockList {
     export const IMPROVED_WIRE = new ImprovedWire();
     export const LIQUID_PIPE = new LiquidPipe();
     export const COAL_GENERATOR = new CoalGenerator();
+    export const ELECTRIC_COMPRESSOR = new ElectricCompressor();
     export const CIRCUIT_FABRICATOR = new CircuitFabricator();
     export const ROCKET_PADDING = new RocketPadding();
 

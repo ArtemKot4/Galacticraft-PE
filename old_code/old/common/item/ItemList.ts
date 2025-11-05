@@ -97,8 +97,6 @@ namespace ItemList {
 
     export const COMPRESSED_TITANIUM = new GalacticraftItem("compressed_titanium", { name: "compressed_titanium", meta: 0 });
 
-    export const INGOT_ALUMINUM = new GalacticraftItem("ingot_aluminum_gc", { name: "ingot_aluminum_gc", meta: 0 });
-
     export const INGOT_COPPER = new GalacticraftItem("ingot_copper_gc", { name: "ingot_copper_gc", meta: 0 });
 
     export const INGOT_DESH = new GalacticraftItem("ingot_desh_gc", { name: "ingot_desh", meta: 0 });

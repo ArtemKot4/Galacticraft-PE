@@ -9,6 +9,12 @@ client/Renderer.ts
 
 api/utils/GalacticraftException.ts
 api/utils/UniqueGen.ts
+
+api/block/machine/recipes/IRecipeStorageFormat.ts
+api/block/machine/recipes/RecipeFactory.ts
+api/block/machine/recipes/FormedRecipeFactory.ts
+api/block/machine/recipes/UnformedRecipeFactory.ts
+
 api/block/machine/MachineBlock.ts
 api/block/machine/ElectricBlock.ts
 api/block/machine/ElectricTile.ts
@@ -36,8 +42,6 @@ api/rocket/Rocket.ts
 api/rocket/RocketEntity.ts
 api/rocket/RocketEvents.ts
 
-api/RecipeFactory.ts
-
 client/ui/menu/GalacticraftSettings.ts
 
 client/ui/BasicSolarPanelUI.ts
@@ -61,9 +65,11 @@ common/block/machine/coal_generator/CoalGeneratorTile.ts
 common/block/machine/coal_generator/LocalCoalGeneratorTile.ts
 common/block/machine/coal_generator/CoalGenerator.ts
 
-common/block/machine/circuit_fabricator/LocalCircuitFabricatorTile.ts
 common/block/machine/circuit_fabricator/CircuitFabricatorTile.ts
 common/block/machine/circuit_fabricator/CircuitFabricator.ts
+
+common/block/machine/electric_compressor/ElectricCompressorTile.ts
+common/block/machine/electric_compressor/ElectricCompressor.ts
 
 common/block/machine/rocket_padding/RocketPadding.ts
 

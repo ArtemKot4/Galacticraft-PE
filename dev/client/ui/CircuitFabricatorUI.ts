@@ -140,7 +140,7 @@ const CircuitFabricatorUI = new UI.StandardWindow({
 			size: 60,
             iconScale: 0.9
 		},
-		heating_scale: {
+		progress_scale: {
 			type: "scale",
 			x: 565,
 			y: 65,

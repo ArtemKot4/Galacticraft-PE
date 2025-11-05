@@ -23,15 +23,17 @@ abstract class ElectricBlock extends MachineBlock {
         if(ui == null) {
             return;
         }
-        const elements = ui.getContent().elements;
-        if("energy_bar" in elements && "energy_icon" in elements) {
-            const funcLast = tilePrototype.setupWindowContent;
-            tilePrototype.setupWindowContent = function() {
-                this.container.setScale("energy_bar", this.data.energy / this.getCapacity());
-                this.container.setScale("energy_icon", this.data.energy / 1);
-                return funcLast.call(this);
+        if("onUpdate" in tilePrototype) {
+            const elements = ui.getContent().elements;
+            if("energy_bar" in elements && "energy_icon" in elements) {
+                const funcLast = tilePrototype.onUpdate;
+                tilePrototype.onUpdate = function() {
+                    this.container.setScale("energy_bar", this.data.energy / this.getCapacity());
+                    this.container.setScale("energy_icon", this.data.energy / 1);
+                    return funcLast.call(this);
+                }
             }
-        }   
+        }
     }
 
     public getStorageInterface(): Nullable<StorageDescriptor> {

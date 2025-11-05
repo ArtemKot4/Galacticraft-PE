@@ -3,6 +3,7 @@ abstract class ElectricTile extends CommonTileEntity implements EnergyTile {
 
     public onInit(): void {
         this.setupContainer();
+        this.data.energy = this.data.energy || 0;
     }
 
     public canReceiveEnergy(side: number, type: string): boolean {

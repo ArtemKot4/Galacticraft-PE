@@ -1,4 +1,4 @@
-abstract class RecipeFactory<ContainerType, StorageFormat = { input: ContainerType, output: ItemInstance[] }> {
+abstract class RecipeFactory<ContainerType, StorageFormat = IRecipeStorageFormat<ContainerType>> {
     public static list: Record<string, RecipeFactory<unknown>> = {};
     public storage: StorageFormat[] = [];
 
@@ -31,13 +31,19 @@ abstract class RecipeFactory<ContainerType, StorageFormat = { input: ContainerTy
             const result = object.output || [object.result];
             for(const i in result) {
                 result[i].id = IDRegistry.parseID(result[i].id);
+                result[i].count = result[i].count || 1;
             }
             for(const i in inputKeys) {
                 inputKeys[i].id = IDRegistry.parseID(inputKeys[i].id);
+                inputKeys[i].count = inputKeys[i].count || 1;
             }
             this.addRecipe(inputKeys, result);
         }
         return this;
+    }
+
+    public getObject(input: Record<string, ItemInstance>): StorageFormat {
+        return null;
     }
 
     public getResult(input: ContainerType, index = 0): Nullable<ItemInstance> {
@@ -76,71 +82,3 @@ abstract class RecipeFactory<ContainerType, StorageFormat = { input: ContainerTy
         factory.addRecipesFrom(path);
     }
 }
-
-class FormedRecipeFactory extends RecipeFactory<Record<string, ItemInstance>> {
-    public getResults(input: Record<string, ItemInstance>): Nullable<ItemInstance[]> {
-        for(const i in this.storage) {
-            let valid = true;
-            for(const k in this.storage[i].input) {
-                const validInstance = input[k];
-                const recipeInstance = this.storage[i].input[k];
-                if(validInstance.id != recipeInstance.id || validInstance.count < (recipeInstance.count || 1) || validInstance.data != (recipeInstance.data || 0)) {
-                    valid = false;
-                }
-            }
-            if(valid == true) {
-                return this.storage[i].output;
-            }
-        }
-        return null;
-    }
-
-    public getResult(input: Record<string, ItemInstance>, index = 0): Nullable<ItemInstance> {
-        const results = this.getResults(input);
-        if(results != null) {
-            return results[index];
-        }
-        return null;
-    }
-
-    public static register(name: string): FormedRecipeFactory {
-        if(name in RecipeFactory.list) {
-            throw new GalacticraftException(`RecipeFactory of name "${name}" already exists`);
-        }
-        return (RecipeFactory.list[name] = new FormedRecipeFactory());
-    }
-}
-
-class UnformedRecipeFactory extends RecipeFactory<ItemInstance[]> {
-    // public getResult(input: ItemInstance[]): Nullable<ItemInstance[]> {
-    //     let output: ItemInstance[] = null;
-
-    //     for(const i in this.storage) {
-    //         const recipe = this.storage[i].input;
-    //         if(input.length != recipe.length) {
-    //             continue;
-    //         }
-    //         //todo: do work
-    //     }
-    //     return output;
-    // }
-
-    public equals(validInput: ItemInstance[], recipeInput: ItemInstance[]): boolean {
-        // for(const i in validInput) {
-        //     const validInstance = validInput[i];
-        //     for(const i in recipeInput) {
-        //         const recipeInstance = recipeInput[i];
-        //     }
-        // }
-        return false;
-    }
-
-    public static register(name: string): UnformedRecipeFactory {
-        if(name in RecipeFactory.list) {
-            throw new GalacticraftException(`RecipeFactory of name "${name}" already exists`);
-        }
-        return (RecipeFactory.list[name] = new UnformedRecipeFactory());
-    }
-}
-
-Callback.addCallback("LevelDisplayed", () => Game.message(JSON.stringify(FormedRecipeFactory.get("circuit").storage)));
