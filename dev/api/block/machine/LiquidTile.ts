@@ -1,4 +1,4 @@
-abstract class LiquidTile extends ElectricTile {
+abstract class LiquidTile extends MachineTile {
     /**
      * Value is list of slots
      */

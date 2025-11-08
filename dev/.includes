@@ -19,7 +19,10 @@ api/block/machine/MachineBlock.ts
 api/block/machine/ElectricBlock.ts
 api/block/machine/ProcessingBlock.ts
 
-api/block/machine/ElectricTile.ts
+
+api/block/machine/ElectricMachine.ts
+
+api/block/machine/MachineTile.ts
 api/block/machine/GeneratorTile.ts
 api/block/machine/ProcessingTile.ts
 api/block/machine/LiquidTile.ts

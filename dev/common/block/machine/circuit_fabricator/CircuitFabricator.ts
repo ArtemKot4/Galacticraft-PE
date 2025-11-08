@@ -1,3 +1,4 @@
+@ElectricMachine(EElectricMachineType.RECEIVER)
 class CircuitFabricator extends ProcessingBlock {
 	public constructor() {
 		super("circuit_fabricator", [{

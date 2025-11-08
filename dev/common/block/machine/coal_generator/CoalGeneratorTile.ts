@@ -1,11 +1,10 @@
 class CoalGeneratorTile extends GeneratorTile {
     public defaultValues = {
-        energy: 0,
         burning: 0,
         burningMax: 0
     };
 
-    public data: typeof this.defaultValues;
+    public data: typeof this.defaultValues & { energy: number };
 
     public override getScreenByName(): UI.IWindow {
         return CoalGeneratorUI;

@@ -1,3 +1,4 @@
+@ElectricMachine(EElectricMachineType.RECEIVER)
 class ElectricCompressor extends ProcessingBlock {
     public constructor() {
         super("electric_compressor_gc", [{

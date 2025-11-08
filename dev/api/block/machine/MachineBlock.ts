@@ -12,10 +12,18 @@ class MachineBlock extends BasicBlock {
             ICRender.getGroup("galacticraft.machine_liquid_connecting_2").add(this.id, 2);
             ICRender.getGroup("galacticraft.machine_liquid_connecting_3").add(this.id, 3);
         }
+        const storageInterface = this.getStorageInterface();
+        if(storageInterface != null) {
+            StorageInterface.createInterface(this.id, storageInterface);
+        }      
     }
 
     public override canRotate(): boolean {
         return true;
+    }
+
+    public getStorageInterface(): Nullable<StorageDescriptor> {
+        return null;
     }
 
     public getDescription(): Nullable<string> {

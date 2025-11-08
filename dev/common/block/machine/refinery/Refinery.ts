@@ -1,4 +1,5 @@
-class Refinery extends ElectricBlock {
+@ElectricMachine(EElectricMachineType.RECEIVER)
+class Refinery extends MachineBlock {
     public constructor() {
         super("refinery_gc", [{
             name: "tile.galacticraft.refinery",
@@ -11,7 +12,7 @@ class Refinery extends ElectricBlock {
         return true;
     }
 
-    public override getTileEntity(): ElectricTile {
+    public override getTileEntity(): MachineTile {
         return new RefineryTile();
     }
 }

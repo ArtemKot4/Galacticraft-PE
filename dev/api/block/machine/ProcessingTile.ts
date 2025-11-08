@@ -1,4 +1,4 @@
-abstract class ProcessingTile extends ElectricTile {
+abstract class ProcessingTile extends MachineTile {
     public data: Scriptable & { energy: number, progress: number, active: boolean };
     abstract inputSlots: string[];
     abstract outputSlots: string[];

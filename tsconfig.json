@@ -32,20 +32,20 @@
 	],
 	"include": [],
 	"files": [
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\ChargeItem.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\DependenceHelper.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\DungeonUtility.d.ts",
 		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\main.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\RecipeViewer.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\ChargeItemRegistry.d.ts",
 		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\energy-net.d.ts",
 		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain\\toolchain\\declarations\\core-engine.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\ClassicUI.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\StorageInterface.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\ConnectedTexture.d.ts",
+		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\DungeonUtility.d.ts",
 		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain\\toolchain\\declarations\\android.d.ts",
 		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\ToolLib.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\SoundLib.d.ts"
+		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\DependenceHelper.d.ts",
+		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\SoundLib.d.ts",
+		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\RecipeViewer.d.ts",
+		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\ChargeItem.d.ts",
+		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\StorageInterface.d.ts",
+		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\ChargeItemRegistry.d.ts",
+		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\ConnectedTexture.d.ts",
+		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\ClassicUI.d.ts"
 	],
 	"references": [
 		{

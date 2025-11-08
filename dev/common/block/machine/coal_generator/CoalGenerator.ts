@@ -1,4 +1,5 @@
-class CoalGenerator extends ElectricBlock {
+@ElectricMachine(EElectricMachineType.EXTRACTOR)
+class CoalGenerator extends MachineBlock {
     public constructor() {
         super("coal_generator_gc", [{
             name: "tile.galacticraft.coal_generator",
@@ -14,7 +15,7 @@ class CoalGenerator extends ElectricBlock {
         }
     }
 
-    public override getTileEntity(): ElectricTile {
+    public override getTileEntity(): MachineTile {
         return new CoalGeneratorTile();
     }
 }
