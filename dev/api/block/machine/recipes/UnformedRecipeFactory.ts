@@ -13,6 +13,7 @@ class UnformedRecipeFactory extends RecipeFactory<ItemInstance[]> {
                 const recipeInput = this.storage[i].input;
                 if(inputValues.length != recipeInput.length || !ItemStack.contains(inputValues[k], recipeInput[k])) {
                     valid = false;
+                    break;
                 }
             }
             if(valid == true) {
@@ -29,7 +30,3 @@ class UnformedRecipeFactory extends RecipeFactory<ItemInstance[]> {
         return (RecipeFactory.list[name] = new UnformedRecipeFactory());
     }
 }
-
-Callback.addCallback("LevelDisplayed", () => Game.message(JSON.stringify(FormedRecipeFactory.get("compressor").storage)));
-Callback.addCallback("LevelDisplayed", () => Game.message("\n\n\n\n\n\n\n\n"));
-Callback.addCallback("LevelDisplayed", () => Game.message(JSON.stringify(FormedRecipeFactory.get("circuit").storage)));

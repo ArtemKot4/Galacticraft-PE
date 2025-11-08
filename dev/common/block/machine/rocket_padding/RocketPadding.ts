@@ -1,6 +1,6 @@
-class RocketPadding extends MachineBlock implements IItemUseCallback, IDestroyCallback {
+class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCallback {
     public constructor() {
-        super("rocket_padding", [{
+        super("rocket_padding_gc", [{
             inCreative: true,
             name: "block.galacticraft.rocket_padding",
             texture: [["rocket_padding", 0]]
@@ -13,7 +13,7 @@ class RocketPadding extends MachineBlock implements IItemUseCallback, IDestroyCa
     }   
 
     public override getStates(): (string | number)[] {
-        return ["fuel"];
+        return ["fuel", "rocket_entity"];
     }
     /**
      * Radius is indentation of middle by x and z
@@ -55,8 +55,49 @@ class RocketPadding extends MachineBlock implements IItemUseCallback, IDestroyCa
         return [render, shape];
     } 
 
-    public onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number): void {
-        
+    public onClick(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, playerUid: number): void {
+        const region = BlockSource.getDefaultForActor(playerUid);
+        if(!RocketPadding.isCenter(this.getRadius(), coords, block, region)) {
+            return;
+        }
+        alert("запуск")
+        const rocket = RocketManager.getRocketByItemID(item.id);
+        const playerSneaking = Entity.getSneaking(playerUid);
+        const blockState = region.getExtraBlock(coords.x, coords.y, coords.z);
+        const entityID = blockState.getNamedStates().get("rocket_entity");
+        alert("блокстейт: " + entityID);
+        if(playerSneaking == true) {
+            if(entityID == 0) {
+                alert("нет такой ракеты")
+                return;
+            }
+            const rocketEntity = RocketManager.getRocketEntity(entityID);
+            if(rocketEntity != null) {
+                const playerActor = new PlayerActor(playerUid);
+                playerActor.addItemToInventory(rocket.id, 1, 0, 
+                    new ItemExtraData()
+                    .putInt("rocket.fuel", rocketEntity.fuel)
+                    .putInt("rocket.slot_count", rocketEntity.slotCount), 
+                    true
+                );
+                
+                for(const i in rocketEntity.container.slots) {
+                    const slot = rocketEntity.container.slots[i];
+                    playerActor.addItemToInventory(slot.id, slot.count, slot.data, slot.extra, true);
+                }
+                RocketManager.deleteRocketEntity(entityID);
+                
+                alert("ракета удалена")
+            }
+        } else {
+            if(!rocket) {
+                return;
+            }
+            if(entityID == 0) {
+                alert("ракета добавлена")
+                RocketManager.addRocketEntity(rocket, region.spawnEntity(coords.x + 0.5, coords.y + 1, coords.z + 0.5, rocket.getEntityType()), 0, item.extra != null ? item.extra.getInt("rocket.slot_amount", 0) : 0);
+            }
+        }
     }
 
     public onDestroy(coords: Callback.ItemUseCoordinates, block: Tile, player: number): void {

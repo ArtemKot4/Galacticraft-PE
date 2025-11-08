@@ -1,6 +1,6 @@
-class ElectricCompressor extends ElectricBlock {
+class ElectricCompressor extends ProcessingBlock {
     public constructor() {
-        super("electric_compressor", [{
+        super("electric_compressor_gc", [{
             name: "tile.galacticraft.electric_compressor",
             texture: [["machine_blue", 0], ["machine_blue", 0], ["machine_blue", 0], ["electric_compressor_blue", 0], ["machine_input_blue", 0], ["machine_blue", 0]],
             inCreative: true
@@ -15,7 +15,7 @@ class ElectricCompressor extends ElectricBlock {
         }
     }
 
-    public override getTileEntity(): ElectricTile {
+    public override getTileEntity(): ProcessingTile {
         return new ElectricCompressorTile();
     }
 }

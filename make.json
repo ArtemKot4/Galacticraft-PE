@@ -3,11 +3,11 @@
 	"resources": [
 		{
 			"type": "minecraft_resource_pack",
-			"path": "minecraft_packs/resource"
+			"path": "minecraft_packs/galacticraft_resource"
 		},
 		{
 			"type": "minecraft_behavior_pack",
-			"path": "minecraft_packs/behavior"
+			"path": "minecraft_packs/galacticraft_behavior"
 		},
 		{
 			"path": "assets",

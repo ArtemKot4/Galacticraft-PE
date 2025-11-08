@@ -4,7 +4,7 @@ abstract class BasicWire extends BasicBlock {
 
     public constructor(stringID: string, variationList?: Block.BlockVariation[]) {
         super(stringID, variationList);
-        this.getEnergyTypes().forEach(type => EnergyTileRegistry.addEnergyTypeForId(this.id, type));
+        this.getEnergyTypes().forEach(type => type.registerWire(this.id, 500));
         
         this.render = new ICRender.Model();
 		this.shape = new ICRender.CollisionShape();

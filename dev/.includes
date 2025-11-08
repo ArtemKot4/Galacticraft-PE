@@ -17,9 +17,12 @@ api/block/machine/recipes/UnformedRecipeFactory.ts
 
 api/block/machine/MachineBlock.ts
 api/block/machine/ElectricBlock.ts
+api/block/machine/ProcessingBlock.ts
+
 api/block/machine/ElectricTile.ts
 api/block/machine/GeneratorTile.ts
 api/block/machine/ProcessingTile.ts
+api/block/machine/LiquidTile.ts
 api/block/machine/BasicWire.ts
 
 api/universe/galaxy/IGalaxy.ts
@@ -71,6 +74,9 @@ common/block/machine/circuit_fabricator/CircuitFabricator.ts
 common/block/machine/electric_compressor/ElectricCompressorTile.ts
 common/block/machine/electric_compressor/ElectricCompressor.ts
 
+common/block/machine/refinery/Refinery.ts
+common/block/machine/refinery/RefineryTile.ts
+
 common/block/machine/rocket_padding/RocketPadding.ts
 
 
@@ -80,6 +86,8 @@ common/block/wire/ImprovedWire.ts
 common/block/wire/LiquidPipe.ts
 
 common/block/BlockList.ts
+
+common/rocket/RocketTier1.ts
 
 common/universe/galaxy/milky_way/earth/Earth.ts
 common/universe/galaxy/milky_way/earth/Moon.ts

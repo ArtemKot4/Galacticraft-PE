@@ -286,7 +286,7 @@ class RocketEntity {
 		const pos = Entity.getPosition(entity || this.entity);
 		Game.message(JSON.stringify(pos) + " -> debug");
 
-		const item = this.rocket.getDrop();
+		const item = new ItemStack(this.rocket.id);
 		const extra = new ItemExtraData();
 		extra.putInt("amount", this.fuel);
 		extra.putInt("slotCount", this.slotCount || 0);

@@ -31,8 +31,17 @@ namespace RocketManager {
 	}
 
     export function packRocketPadding(radius: number, coords: Vector, block: Tile, region: BlockSource, ontainer: ItemContainer): void {
-        RocketPadding.breakAll(radius ,coords, region, false);
+        RocketPadding.breakAll(radius, coords, region, false);
         //will be transfering with container
+    }
+
+    export function getRocketByItemID(id: number): Nullable<Rocket> {
+        for(const i in rocketTypes) {
+            if(rocketTypes[i].id == id) {
+                return rocketTypes[i];
+            }
+            return null;
+        }
     }
 
 	Saver.addSavesScope(

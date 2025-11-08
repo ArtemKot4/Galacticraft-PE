@@ -42,17 +42,7 @@ abstract class RecipeFactory<ContainerType, StorageFormat = IRecipeStorageFormat
         return this;
     }
 
-    public getObject(input: Record<string, ItemInstance>): StorageFormat {
-        return null;
-    }
-
-    public getResult(input: ContainerType, index = 0): Nullable<ItemInstance> {
-        return null;
-    }
-
-    public getResults<T>(input: ContainerType): Nullable<ItemInstance[]> {
-        return null;
-    }
+    abstract getObject(input: Record<string, ItemInstance>): StorageFormat;
 
     public static get<T extends RecipeFactory<unknown>>(name: string): Nullable<T> {
         return this.list[name] as T || null;

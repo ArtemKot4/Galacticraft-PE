@@ -5,9 +5,7 @@ interface IRocketTargetContainer {
 }
 
 abstract class Rocket {
-    public getDrop(): ItemInstance {
-        return null;
-    }
+    abstract id: number;
 
     /**
      * Entity type {@link Entity.getTypeName} result

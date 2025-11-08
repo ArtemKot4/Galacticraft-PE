@@ -1,6 +1,6 @@
 class CoalGenerator extends ElectricBlock {
     public constructor() {
-        super("coal_generator", [{
+        super("coal_generator_gc", [{
             name: "tile.galacticraft.coal_generator",
             texture: [["machine", 0], ["machine", 0], ["machine", 0], ["coal_generator_gc", 0], ["machine_output", 0], ["machine", 0]],
             inCreative: true

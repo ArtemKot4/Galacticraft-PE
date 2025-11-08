@@ -1,10 +1,19 @@
 {
-    "format_version": "1.16.100",
+    "format_version": "2",
     "header": {
-        "description": "Космос и новые технологии? Запросто",
-        "name": "Galacticraft behavior",
+        "name": "GalacticraftBehavior",
+        "description": "Behavior to add mobs for galacticraft mod",
         "uuid": "40ac326b-afa5-4df9-b1dd-341cd4eb3b6f",
-        "version": [0, 0, 1]
+        "version": [
+            1,
+            17,
+            200
+        ],
+        "min_engine_version": [
+            1,
+            16,
+            200
+        ]
     },
     "modules": [
         {

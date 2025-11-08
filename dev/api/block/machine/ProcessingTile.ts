@@ -3,22 +3,6 @@ abstract class ProcessingTile extends ElectricTile {
     abstract inputSlots: string[];
     abstract outputSlots: string[];
 
-    public override setupContainer(): void {
-        const factory = this.getFactory();
-
-        if(factory instanceof FormedRecipeFactory) {
-            StorageInterface.setGlobalValidatePolicy(this.container, (name, id) => {
-                return this.outputSlots.includes(name) || factory.storage.some((recipe) => id == recipe.input[name].id);
-            });
-        } else 
-        if(factory instanceof UnformedRecipeFactory) {
-            StorageInterface.setGlobalValidatePolicy(this.container, (name, id) => {
-                return this.outputSlots.includes(name) || factory.storage.some((recipe) => recipe.input.some(instance => instance.id == id));
-            });
-        }
-        this.outputSlots.forEach(name => this.container.setSlotAddTransferPolicy(name, () => 0));
-    }
-
     public override onInit(): void {
         super.onInit();
         this.data.active = this.data.active || false;
@@ -42,7 +26,7 @@ abstract class ProcessingTile extends ElectricTile {
             this.stop();
             return;
         }  
-        if(!this.hasValidResultSlots(object.output)) {
+        if(!this.hasValidOutputSlots(object.output)) {
             return;
         }
         if(this.data.active == false) {
@@ -87,34 +71,35 @@ abstract class ProcessingTile extends ElectricTile {
     }
 
     public decreaseInputSlots(input: ItemInstance[]): void {
-        for(let i in this.inputSlots) {
+        for(const i in this.inputSlots) {
             const slot = this.container.getSlot(this.inputSlots[i]);
             this.container.setSlot(this.inputSlots[i], slot.id, slot.count - ((i in input && input[i].count) || 1), slot.data, slot.extra);
         }
     }
 
-    public hasValidResultSlots(results: ItemInstance[]): boolean {
+    public hasValidOutputSlots(output: ItemInstance[]): boolean {
         for(const i in this.outputSlots) {
-            const resultSlot = this.container.getSlot(this.outputSlots[i]);
-            const resultMaxStack = Item.getMaxStack(resultSlot.id, resultSlot.data);
-            if(!(i in results)) {
-                results[i] = results[Number(i)-1];
+            const outputSlot = this.container.getSlot(this.outputSlots[i]);
+            const resultMaxStack = Item.getMaxStack(outputSlot.id, outputSlot.data);
+            
+            if(!(i in output)) {
+                output[i] = output[Number(i)-1];
             }
-    
-            if(resultSlot.id != 0 && (resultSlot.id != results[i].id || (resultSlot.count + results[i].count > resultMaxStack))) {
+            if(outputSlot.id != 0 && (outputSlot.id != output[i].id || (outputSlot.count + output[i].count > resultMaxStack))) {
                 return false;
             }
         }
         return true;
     }
 
-    public setOutput(results: ItemInstance[]): void {
+    public setOutput(output: ItemInstance[]): void {
         for(const i in this.outputSlots) {
             const slot = this.container.getSlot(this.outputSlots[i]);
-            if(!(i in results)) {
-                results[i] = results[Number(i) - 1];
+            
+            if(!(i in output)) {
+                output[i] = output[Number(i) - 1];
             }
-            this.container.setSlot(this.outputSlots[i], results[i].id, slot.count + results[i].count, slot.data + results[i].data, results[i].extra || slot.extra || null);
+            this.container.setSlot(this.outputSlots[i], output[i].id, slot.count + output[i].count, slot.data + output[i].data, output[i].extra || slot.extra || null);
         }
     }
 

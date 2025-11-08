@@ -1,4 +1,5 @@
 abstract class ElectricTile extends CommonTileEntity implements EnergyTile {
+    public data: Scriptable & { energy: number };
     public setupContainer(): void {}
 
     public onInit(): void {

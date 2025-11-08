@@ -5,6 +5,7 @@ class FormedRecipeFactory extends RecipeFactory<Record<string, ItemInstance>> {
             for(const k in this.storage[i].input) {
                 if(!ItemStack.contains(input[k], this.storage[i].input[k])) {
                     valid = false;
+                    break;
                 }
             }
             if(valid == true) {
@@ -12,22 +13,6 @@ class FormedRecipeFactory extends RecipeFactory<Record<string, ItemInstance>> {
             }
         }
         return null;
-    }
-
-    public getResults(input: Record<string, ItemInstance>): Nullable<ItemInstance[]> {
-        const object = this.getObject(input);
-        if(object == null) {
-            return null;
-        }
-        return object.output;
-    }
-
-    public getResult(input: Record<string, ItemInstance>, index = 0): Nullable<ItemInstance> {
-        const results = this.getResults(input);
-        if(results == null) {
-            return null;
-        }
-        return results[index];
     }
 
     public static register(name: string): FormedRecipeFactory {
