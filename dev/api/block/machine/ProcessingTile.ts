@@ -67,7 +67,7 @@ abstract class ProcessingTile extends MachineTile {
     }
 
     public getProgressMax(): number {
-        return 250;
+        return 220;
     }
 
     public decreaseInputSlots(input: ItemInstance[]): void {

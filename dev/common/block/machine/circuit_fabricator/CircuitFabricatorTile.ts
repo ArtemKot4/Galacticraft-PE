@@ -11,7 +11,6 @@ class CircuitFabricatorTile extends ProcessingTile {
         if(World.getThreadTime() % 2 == 0) {
             this.container.setBinding("progress_scale", "texture", CircuitFabricatorTile.getValidScaleBitmapName(String(this.container.getBinding("progress_scale", "texture"))));
         }
-        this.container.setScale("progress_scale", this.data.progress / this.getProgressMax());
     }
 
     public override getScreenByName(screenName?: string, container?: ItemContainer): UI.IWindow {

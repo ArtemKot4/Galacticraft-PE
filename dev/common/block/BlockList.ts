@@ -4,6 +4,7 @@ namespace BlockList {
     export const COAL_GENERATOR = new CoalGenerator();
     export const ELECTRIC_COMPRESSOR = new ElectricCompressor();
     export const CIRCUIT_FABRICATOR = new CircuitFabricator();
+    export const REFINERY = new Refinery();
     export const ROCKET_PADDING = new RocketPadding();
 
     export const BLOCK_MOON_SAPPHIRE = new BasicBlock("block_moon_sapphire_gc", [{ name: "Sapphire Block", texture: [["block_moon_sapphire", 0]], inCreative: true }]);
