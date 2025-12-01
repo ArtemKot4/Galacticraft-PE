@@ -97,11 +97,11 @@ namespace UI {
             drawing?: UI.DrawingSet;
         }>;
         export type ExtendedWindowNode = WindowNode & {
-            params?: com.zhekasmirnov.innercore.api.mod.ui.types.BindingSet;
-            style?: com.zhekasmirnov.innercore.api.mod.ui.types.BindingSet;
+            params?: UI.BindingSet;
+            style?: UI.BindingSet;
         };
         export type StandardWindowNode = ExtendedWindowNode & { 
-            standard?: com.zhekasmirnov.innercore.api.mod.ui.window.StandardWindowDescriptionTypes.StandardWindowParams;
+            standard?: UI.StandardWindowDescription;
         };
         export type Properties = ElementProperties | WindowProperties | UI.DrawingElements | DivProperties;
         export type FC<T extends Element = Element> = (properties?: T, ...children: T[]) => T;
@@ -156,7 +156,7 @@ namespace UI {
             .setCancelable(true);
         }
 
-        export function getClickFunctionForLink(link: string, onClick?: com.zhekasmirnov.innercore.api.mod.ui.elements.UIClickEvent["onClick" | "onLongClick"]) {
+        export function getClickFunctionForLink(link: string, onClick?: UI.UIClickEvent["onClick" | "onLongClick"]) {
             return function(position: Vector, container: Container | ItemContainer, tileEntity: any, window: IWindow, canvas: android.graphics.Canvas, scale: number) {
                 openLink(link);
                 if(onClick != null) {

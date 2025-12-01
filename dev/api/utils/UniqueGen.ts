@@ -31,7 +31,7 @@ Callback.addCallback("GenerateChunkUniversal", (chunkX: number, chunkZ: number, 
                 veinCounts,
                 minY,
                 maxY,
-                size: MathHelper.randomInt(count[0], count[1]),
+                size: MathHelper.randomNumber(count[0], count[1]),
                 mode: true, 
                 check: data.stone || [VanillaBlockID.stone]
             });

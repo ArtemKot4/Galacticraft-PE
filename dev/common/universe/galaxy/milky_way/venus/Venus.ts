@@ -1,4 +1,6 @@
 class Venus extends Planet {
+    public override hasVanillaWeather = false;
+
     public override getLayers(): Dimensions.TerrainLayerParams[] {
         return [
             {

@@ -35,4 +35,5 @@ interface IAtmosphereProperties {
      * @default false
      */
     hideSkyboxes?(): boolean;
+    hideClouds?(): boolean;
 }

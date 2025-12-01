@@ -2,7 +2,7 @@ interface ILocalizeable {
     getName(): string;
     getLocalizedName(): string;
 }
-declare enum Side {
+declare enum ESide {
     CLIENT = 0,
     SERVER = 1
 }
@@ -52,7 +52,7 @@ declare namespace MathHelper {
     function randomFrom<T>(...elements: T[]): T;
     function randomFromArray<T>(array: T[]): T;
     function radian(gradus: number): number;
-    function randomInt(min: number, max: number): number;
+    function randomNumber(min: number, max: number): number;
     function range(min: number, max: number, number?: number): number[];
 }
 declare namespace TileEntity {
@@ -99,9 +99,11 @@ declare namespace Block {
     function registerSelectionFunctionForID(id: number, func: Callback.BlockSelectionFunction): void;
 }
 declare namespace Item {
+    type ILiquidStorageItemParams = ItemParams & LiquidItemRegistry.ILiquidStorage;
     const holdFunctions: Record<number, Callback.ItemHoldFunction>;
     function registerHoldFunctionForID(id: number, func: Callback.ItemHoldFunction): void;
     function registerHoldFunction(id: string | number, func: Callback.ItemHoldFunction): void;
+    function createLiquidStorageItem(nameID: string, name: string, texture: TextureData, params: ILiquidStorageItemParams, data?: number): void;
 }
 declare namespace World {
     function getDifficulty(): number;
@@ -127,9 +129,34 @@ declare namespace TagRegistry {
     function getDimensionTags(id: number): string[];
 }
 declare namespace IDRegistry {
+    /**
+     * Method to get valid block id: block id or vanilla block id
+     * @param id any block id
+     */
     function parseBlockID(id: string): number;
+    /**
+     * Method to get valid item id: item id or vanilla item id
+     * @param id any item id
+     */
     function parseItemID(id: string): number;
+    /**
+     * Method to get valid block or item id
+     * @param id any id of block or item
+     */
     function parseID(id: string): number;
+}
+declare namespace LiquidItemRegistry {
+    interface ILiquidStorage {
+        capacity: number;
+        liquids: string[];
+    }
+    const storage: Record<string, ILiquidStorage>;
+    function registerLiquidStorage(id: number, data: number, description: ILiquidStorage): void;
+    function getLiquidStorage(id: number, data: number): Nullable<ILiquidStorage>;
+    function getCapacity(id: number, data: number): number;
+    function getLiquids(id: number, data: number): string[];
+    function getCurrentLiquid(extra: Nullable<ItemExtraData>): Nullable<string>;
+    function getCurrentLiquidCapacity(extra: Nullable<ItemExtraData>): number;
 }
 declare namespace RenderHelper {
     function generateMesh(dir: string, model: string, params?: RenderMesh.ImportParams, rotate?: number[]): RenderMesh;
@@ -169,8 +196,8 @@ declare class RenderObject implements Vector {
     z: number;
     thread?: java.lang.Thread;
     animation: Animation.Base;
-    isLoaded: boolean;
-    scale?: number;
+    loaded: boolean;
+    renderScale?: number;
     skin?: string;
     protected threadInited?: boolean;
     constructor(x: number, y: number, z: number);
@@ -193,9 +220,9 @@ declare class RenderObject implements Vector {
     stop(): void;
     start(): void;
     destroy(): void;
-    rotateBy(x: number, y: number, z: number): com.zhekasmirnov.innercore.api.NativeRenderer.Transform;
-    scaleBy(x: number, y: number, z: number): com.zhekasmirnov.innercore.api.NativeRenderer.Transform;
-    translateBy(x: number, y: number, z: number): com.zhekasmirnov.innercore.api.NativeRenderer.Transform;
+    rotate(x: number, y: number, z: number): Render.Transform;
+    scale(x: number, y: number, z: number): Render.Transform;
+    translate(x: number, y: number, z: number): Render.Transform;
     exists(): boolean;
 }
 declare class RenderSide<T extends string | RenderMesh> {
@@ -214,17 +241,20 @@ declare class BlockAnimation {
     constructor(coords: Vector, tile_entity?: TileEntity.TileEntityPrototype);
     load(): void;
     describe(mesh: RenderMesh | RenderSide<string>, texture: string, scale?: number, material?: string): void;
-    rotate(x: number, y: number, z: number): com.zhekasmirnov.innercore.api.NativeRenderer.Transform;
-    scale(x: number, y: number, z: number): com.zhekasmirnov.innercore.api.NativeRenderer.Transform;
+    rotate(x: number, y: number, z: number): Render.Transform;
+    scale(x: number, y: number, z: number): Render.Transform;
     setPos(x: number, y: number, z: number): void;
     refresh(): void;
     destroy(): void;
 }
+/**
+ * Class to create android clickable field, which with click opens keyboard and inputs text.
+ */
 declare class Keyboard {
+    placeholderText: string;
     context: any;
     func: (text: string) => void;
-    default_string: string;
-    constructor(default_string: string);
+    constructor(placeholderText: string);
     getText(func: (text: string) => void): Keyboard;
     open(): void;
 }
@@ -291,9 +321,8 @@ declare class ItemStack implements ItemInstance {
 interface IItemHoldCallback {
     onItemHold?(item: ItemInstance, playerUid: number, slotIndex: number): void;
 }
-type itemTextureAnimated = [texture: string, frames: number | number[], interval: number];
 interface IItemTextureDescription {
-    name: string | itemTextureAnimated;
+    name: string;
     meta: number;
 }
 interface IIconOverrideCallback {
@@ -346,7 +375,11 @@ declare class BasicItem<T extends Item.ItemParams = Item.ItemParams> {
     static setFunctions(instance: (IIconOverrideCallback | INoTargetUseCallback | IItemUsingReleasedCallback | IItemUsingCompleteCallback | IItemUseCallback | INameOverrideCallback | IItemHoldCallback | BasicItem) & {
         id: number;
     }): void;
-    create(params: ItemParams): void;
+    create(params?: ItemParams): void;
+}
+declare const a = 1;
+declare class LiquidStorageItem extends BasicItem {
+    constructor(stringID: string, texture: IItemTextureDescription, params: Item.ILiquidStorageItemParams, data?: number);
 }
 declare enum EDestroyLevel {
     HAND = 0,
@@ -507,11 +540,15 @@ declare function NetworkEvent(target: CommonTileEntity | LocalTileEntity, proper
  */
 declare function ContainerEvent(target: CommonTileEntity | LocalTileEntity, propertyName: string): void;
 declare abstract class LocalTileEntity implements LocalTileEntity {
+    public x: number;
+    public y: number;
+    public z: number;
+    public networkData: SyncedNetworkData;
     events: {
         [packetName: string]: (packetData: any, packetExtra: any) => void;
     };
     containerEvents?: {
-        [eventName: string]: (container: ItemContainer, window: UI.Window | UI.StandartWindow | UI.StandardWindow | UI.TabbedWindow, windowContent: com.zhekasmirnov.innercore.api.mod.ui.window.WindowContent, eventData: any) => void;
+        [eventName: string]: (container: ItemContainer, window: UI.Window | UI.StandartWindow | UI.StandardWindow | UI.TabbedWindow, windowContent: UI.WindowContent, eventData: any) => void;
     };
     eventNames: {
         network: string[];
@@ -606,7 +643,7 @@ declare abstract class CommonTileEntity implements TileEntity {
         [packetName: string]: (packetData: any, packetExtra: any) => void;
     };
     containerEvents?: {
-        [eventName: string]: (container: ItemContainer, window: UI.Window | UI.StandartWindow | UI.StandardWindow | UI.TabbedWindow, windowContent: com.zhekasmirnov.innercore.api.mod.ui.window.WindowContent, eventData: any) => void;
+        [eventName: string]: (packetData: any, connectedClient: NetworkClient) => void;
     };
     eventNames: {
         network: string[];
@@ -747,17 +784,29 @@ declare abstract class Dimension {
     id: number;
     stringId: string;
     static generateChunkFunctions: Record<number, (chunkX: number, chunkZ: number, random: java.util.Random) => void>;
-    static insideDimensionTransferFunctions: Record<number, (playerUid: number, from: number) => void>;
-    static outsideDimensionTransferFunctions: Record<number, (playerUid: number, to: number) => void>;
+    static insideTransferFunctions: Record<number, typeof Dimension.prototype.onInsideEntityTransfer>;
+    static outsideTransferFunctions: Record<number, typeof Dimension.prototype.onOutsideEntityTransfer>;
     dimension: Dimensions.CustomDimension;
     biome: CustomBiome;
     layers: Dimensions.TerrainLayerParams[];
+    hasSkyLight?: boolean;
+    hasBedrockLayer?: boolean;
+    hasMoon?: boolean;
+    hasSun?: boolean;
+    hasVanillaWeather?: boolean;
+    hasStars?: boolean;
+    hasClouds?: boolean;
+    canEvaporatesLiquids?: boolean;
     constructor(id: number, stringId: string, biome?: CustomBiome);
-    hasBedrockLayer(): boolean;
     addLayer(layer: Dimensions.TerrainLayerParams): void;
     getLayers?(): Dimensions.TerrainLayerParams[];
+    getSkyAtmosphereEnabled(): boolean;
     getGenerator(): Dimensions.CustomGenerator;
     getTags(): string[];
+    /**
+     * Number between 0 and 1
+     */
+    getDayTimeInterval?(): number;
     /**Specifies base generator, see CustomGenerator constructor for details. */
     getBase?(): string | number;
     modWorldgenDimension?(): string | number;
@@ -765,7 +814,6 @@ declare abstract class Dimension {
     buildVanillaSurfaces(): boolean;
     generateCaves(): [caves: boolean, underwater_caves: boolean];
     generateVanillaStructures(): boolean;
-    hasSkyLight?(): boolean;
     /** Method places colors in rgb format */
     getSkyColor?(): number[];
     /** Method places colors in rgb format */
@@ -776,9 +824,13 @@ declare abstract class Dimension {
     getFogDistance?(): [start: number, end: number];
     /** Method places colors in rgb format */
     getSunsetColor?(): number[];
+    /**
+     * Number between 0 and 1
+     */
+    getStarBrightness?(): number;
     generateDimensionChunk?(chunkX: number, chunkZ: number, random: java.util.Random): void;
-    insidePlayerDimensionTransfer?(playerUid: number, from: number): void;
-    outsidePlayerDimensionTransfer?(playerUid: number, to: number): void;
+    onInsideEntityTransfer?(entityUid: number, from: number): void;
+    onOutsideEntityTransfer?(entityUid: number, to: number): void;
 }
 /**
  * Enum with names of all callbacks

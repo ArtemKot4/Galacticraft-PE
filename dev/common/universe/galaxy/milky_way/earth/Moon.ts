@@ -1,4 +1,7 @@
 class Moon extends Satellite {
+    public override hasMoon = false;
+    public override hasVanillaWeather = false;
+    
     public override getLayers(): Dimensions.TerrainLayerParams[] {
         return [
             {
@@ -98,6 +101,10 @@ class Moon extends Satellite {
 
     public override getFogColor(): number[] {
         return [0, 0, 0];
+    }
+
+    public override showStarsAlways(): boolean {
+        return true;
     }
 }
 

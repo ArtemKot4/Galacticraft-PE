@@ -10,7 +10,7 @@ abstract class LiquidTile extends MachineTile {
     }
 
     public getLiquidCapacity(): number {
-        return 5000;
+        return 5000; 
     }
 
     public hasFullLiquid(liquidName: string): boolean {

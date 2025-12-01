@@ -25,7 +25,7 @@ declare interface RecipePattern {
 declare interface OldRecipeContents {
     icon: Tile | number;
     description?: string;
-    params?: UI.BindingsSet;
+    params?: UI.BindingSet;
     drawing?: UI.DrawingSet;
     elements: {[key: string]: Partial<UI.UIElement>};
 }
@@ -56,7 +56,7 @@ declare interface RecipeViewerOld {
     putButtonOnNativeGui(screen: string, key: string): void;
 }
 declare interface RecipeContents {
-    params?: UI.BindingsSet,
+    params?: UI.BindingSet,
     drawing?: UI.DrawingSet,
     elements: {[key: string]: Partial<UI.Elements>};
 }
@@ -74,7 +74,7 @@ declare abstract class RecipeType {
     private windowWidth;
     private windowHeight;
     constructor(name: string, icon: Tile | number, content: {
-        params?: UI.BindingsSet;
+        params?: UI.BindingSet;
         drawing?: UI.DrawingElements;
         elements: {
             [key: string]: Partial<UI.UIElement>;
