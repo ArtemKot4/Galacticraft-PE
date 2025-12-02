@@ -1,12 +1,12 @@
 {
-	"format_version": "2",
+	"format_version": 2,
 	"header": {
 		"name": "GalacticraftResource",
 		"description": "Resource pack to describe mobs from galacticraft mod",
-		"uuid": "3de57034-f38d-11ec-b939-0242ac120002",
+		"uuid": "907cebb6-1532-4433-af3e-0eeb1ac6a352",
         "version": [
             1,
-            17,
+            16,
             200
         ],
         "min_engine_version": [
@@ -19,7 +19,7 @@
 		{
 			"description": "Resource pack to describe mobs from galacticraft mod",
 			"type": "resources",
-			"uuid": "718e9edd-6fb4-4e32-b650-c0fb39d7cf03",
+			"uuid": "a1f4b323-a63f-482b-ac31-7a835f66e59d",
 			"version": [
 				1,
 				0,

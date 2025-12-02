@@ -18,17 +18,21 @@ abstract class Galaxy implements ILocalizeable {
         if(!planet.hasOxygen()) {
             TagRegistry.addTagFor("dimensions", planet.id, "no_oxygen", true);
         }
-        if("hideSkyboxes" in planet && planet.hideSkyboxes()) {
-            Dimensions.setShouldRenderMoon(planet.id, false);
-            Dimensions.setShouldRenderSun(planet.id, false);
+
+        if("hasClouds" in planet) {
+            Dimensions.setShouldRenderClouds(planet.id, planet.hasClouds);
         }
-        if("hideClouds" in planet && planet.hideClouds()) {
-            Dimensions.setShouldRenderClouds(planet.id, false);
-        }
-        if("showStarsAlways" in planet && planet.showStarsAlways()) {
-            Dimensions.setShouldRenderStars(planet.id, true);
+        if("hasStars" in planet) {
+            Dimensions.setShouldRenderStars(planet.id, planet.hasStars);
             Dimensions.getDimensionById(planet.id).setStarBrightness(1);
         }
+        if("hasMoon" in planet) {
+            Dimensions.setShouldRenderMoon(planet.id, planet.hasMoon);
+        }
+        if("hasSun" in planet) {
+            Dimensions.setShouldRenderSun(planet.id, planet.hasSun);
+        }
+        
         if("getMusicNameAndPath" in planet) {
             const [name, path] = planet.getMusicNameAndPath();
             SoundLib.Registry.registerSound(name, path);

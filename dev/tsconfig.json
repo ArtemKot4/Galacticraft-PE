@@ -42,6 +42,8 @@
 		"api/rocket/Rocket.ts",
 		"api/rocket/RocketEntity.ts",
 		"api/rocket/RocketEvents.ts",
+		"api/player/GalacticraftPlayer.ts",
+		"api/player/OxygenSystem.ts",
 		"client/ui/menu/GalacticraftSettings.ts",
 		"client/ui/BasicSolarPanelUI.ts",
 		"client/ui/CircuitFabricatorUI.ts",

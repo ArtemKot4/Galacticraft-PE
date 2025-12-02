@@ -1,12 +1,12 @@
 {
-    "format_version": "2",
+    "format_version": 2,
     "header": {
         "name": "GalacticraftBehavior",
         "description": "Behavior to add mobs for galacticraft mod",
-        "uuid": "40ac326b-afa5-4df9-b1dd-341cd4eb3b6f",
+        "uuid": "fe6b6472-17ed-41c0-8839-e7dc16af6352",
         "version": [
             1,
-            17,
+            16,
             200
         ],
         "min_engine_version": [
@@ -17,10 +17,10 @@
     },
     "modules": [
         {
-            "description": "Execute a different command with function command",
+            "description": "Behavior to add mobs for galacticraft mod",
             "type": "data",
-            "uuid": "e123ab08-6409-434b-b05d-95a02ee50c77",
-            "version": [0, 0, 1]
+            "uuid": "b83017aa-8af0-4456-a445-216ff0be52f1",
+            "version": [1, 0, 0]
         }
     ]
 }

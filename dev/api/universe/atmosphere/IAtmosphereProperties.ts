@@ -27,13 +27,8 @@ interface IAtmosphereProperties {
      */
     getSunEnergy(): number;
     getMobIDsWithProbability(): Record<number, string>;
-    /**
-     * @default false
-     */
-    showStarsAlways?(): boolean;
-    /**
-     * @default false
-     */
-    hideSkyboxes?(): boolean;
-    hideClouds?(): boolean;
+    hasStars?: boolean;
+    hasMoon?: boolean;
+    hasSun?: boolean;
+    hasClouds?: boolean;
 }

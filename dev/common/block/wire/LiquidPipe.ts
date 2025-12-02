@@ -43,6 +43,6 @@ class LiquidPipe extends BasicWire {
                 side: [0, 1],
                 box: [0.5 - width, 0.5 - width, 0.5 + width, 0.5 + width, 0.5 + width, 1]
             }
-        ]
+        ];
     }
 }
