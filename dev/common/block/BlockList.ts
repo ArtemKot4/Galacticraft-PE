@@ -10,24 +10,24 @@ namespace BlockList {
     export const BLOCK_MOON_SAPPHIRE = new BasicBlock("block_moon_sapphire_gc", [{ name: "Sapphire Block", texture: [["block_moon_sapphire", 0]], inCreative: true }]);
     export const MOON_CHEESE = new BasicBlock("moon_cheese_gc", [{ name: "block.galacticraft.moon_cheese", texture: [["moon_cheese", 0]], inCreative: true }]);
     export const MOON_SAPPHIRE = new BasicBlock("moon_sapphire_gc", [{ name: "block.galacticraft.moon_sapphire", texture: [["moon_sapphire", 0]], inCreative: true }]);
-    export const VENUS_QUARTZ = new BasicBlock("venus_quartz_gc", [{ name: "block.galacticraft.venus_quartz", texture: [["venus_quartz", 0]], inCreative: true }]);
-    export const DECORATION_DESH = new BasicBlock("decoration_desh_gc", [{ name: "block.galacticraft.decoration_desh", texture: [["Decoration Desh", 0]], inCreative: true }]);
-    export const BLOCK_TIN = new BasicBlock("block_tin_gc", [{ name: "block.galacticraft.block_tin", texture: [["Block Tin", 0]], inCreative: true }]);
-    export const BLOCK_LEAD = new BasicBlock("block_lead_gc", [{ name: "block.galacticraft.block_lead", texture: [["Block Lead", 0]], inCreative: true }]);
-    export const BLOCK_COPPER = new BasicBlock("block_copper_gc", [{ name: "block.galacticraft.block_copper", texture: [["Block Copper", 0]], inCreative: true }]);
-    export const BLOCK_ALUMINUM = new BasicBlock("block_aluminum_gc", [{ name: "block.galacticraft.block_aluminum", texture: [["Block Aluminum", 0]], inCreative: true }]);
-    export const BLOCK_CARVED_IRON_STEEL = new BasicBlock("block_carved_iron_steel_gc", [{ name: "block.galacticraft.block_iron_steel", texture: [["Block Iron Steel", 0]], inCreative: true }]);
-    export const BLOCK_BRONZE = new BasicBlock("block_bronze_gc", [{ name: "block.galacticraft.bronze_block", texture: [["bronze_block", 0]], inCreative: true }]);
+    export const VENUS_QUARTZ = new BasicBlock("venus_quartz_gc", [{ name: "block.galacticraft.venus_quartz", texture: [["ore_quartz_venus", 0]], inCreative: true }]);
+    export const DECORATION_DESH = new BasicBlock("decoration_desh_gc", [{ name: "block.galacticraft.decoration_desh", texture: [["decoration_desh", 0]], inCreative: true }]);
+    export const BLOCK_TIN = new BasicBlock("block_tin_gc", [{ name: "block.galacticraft.block_tin", texture: [["block_tin", 0]], inCreative: true }]);
+    export const BLOCK_LEAD = new BasicBlock("block_lead_gc", [{ name: "block.galacticraft.block_lead", texture: [["block_lead", 0]], inCreative: true }]);
+    export const BLOCK_COPPER = new BasicBlock("block_copper_gc", [{ name: "block.galacticraft.block_copper", texture: [["block_copper", 0]], inCreative: true }]);
+    export const BLOCK_ALUMINUM = new BasicBlock("block_aluminum_gc", [{ name: "block.galacticraft.block_aluminum", texture: [["block_aluminum", 0]], inCreative: true }]);
+    export const BLOCK_CARVED_IRON_STEEL = new BasicBlock("block_carved_iron_steel_gc", [{ name: "block.galacticraft.block_iron_steel", texture: [["block_carved_iron_steel", 0]], inCreative: true }]);
+    export const BLOCK_BRONZE = new BasicBlock("block_bronze_gc", [{ name: "block.galacticraft.bronze_block", texture: [["block_bronze", 0]], inCreative: true }]);
     export const BLOCK_STEEL = new BasicBlock("block_steel_gc", [{ name: "block.galacticraft.block_steel", texture: [["block_steel_sc", 0]], inCreative: true }]);
-    export const BLOCK_TITANIUM = new BasicBlock("block_titanium_gc", [{ name: "block.galacticraft.block_titanium", texture: [["Block Titanium", 0]], inCreative: true }]);
+    export const BLOCK_TITANIUM = new BasicBlock("block_titanium_gc", [{ name: "block.galacticraft.block_titanium", texture: [["block_titanium", 0]], inCreative: true }]);
     export const ORE_COPPER_EARTH = new BasicBlock("ore_copper_earth_gc", [{ name: "block.galacticraft.ore_copper_earth", texture: [["ore_copper_earth", 0]], inCreative: true }]);
     export const ORE_TIN_EARTH = new BasicBlock("ore_tin_earth_gc", [{ name: "block.galacticraft.ore_tin_earth", texture: [["ore_tin_earth", 0]], inCreative: true }]);
     export const ORE_SILICON_EARTH = new BasicBlock("ore_silicon_earth_gc", [{ name: "block.galacticraft.ore_silicon_earth", texture: [["ore_silicon_earth", 0]], inCreative: true }]);
     export const ORE_COPPER_MOON = new BasicBlock("ore_copper_moon_gc", [{ name: "block.galacticraft.ore_copper_moon", texture: [["ore_copper_moon", 0]], inCreative: true }]);
     export const ORE_TIN_MOON = new BasicBlock("ore_tin_moon_gc", [{ name: "block.galacticraft.ore_tin_moon", texture: [["ore_tin_moon", 0]], inCreative: true }]);
     export const DESH = new BasicBlock("desh_gc", [{ name: "block.galacticraft.desh", texture: [["desh", 0]], inCreative: true }]);
-    export const TIN_DECORATION_BLOCK = new BasicBlock("tin_decoration_block", [{ name: "block.galacticraft.deco_block", texture: [["Deco Block", 0]], inCreative: true }]);
-    export const OXYGEN_TILE = new BasicBlock("oxygen_tile", [{ name: "block.galacticraft.oxygen_tile", texture: [["Oxygentile 3", 0]], inCreative: true }]);
+    export const TIN_DECORATION_BLOCK = new BasicBlock("tin_decoration_block", [{ name: "block.galacticraft.deco_block", texture: [["deco_block", 0]], inCreative: true }]);
+    export const OXYGEN_TILE = new BasicBlock("oxygen_tile", [{ name: "block.galacticraft.oxygen_tile", texture: [["oxygen_tile", 0]], inCreative: true }]);
 
     export const BLOCK_IRON_STEEL = new BasicBlock("block_iron_steel_gc", [{
             name: "block.galacticraft.iron_steel",
@@ -47,12 +47,12 @@ namespace BlockList {
         {
             name: "Deco Tin Block",
             texture: [
-                ["Deco Block Up", 0],
-                ["Deco Block Up", 0],
-                ["Deco Block Side", 0],
-                ["Deco Block Side", 0],
-                ["Deco Block Side", 0],
-                ["Deco Block Side", 0],
+                ["deco_block_up", 0],
+                ["deco_block_up", 0],
+                ["deco_block_side", 0],
+                ["deco_block_side", 0],
+                ["deco_block_side", 0],
+                ["deco_block_side", 0],
             ],
             inCreative: true
         }
