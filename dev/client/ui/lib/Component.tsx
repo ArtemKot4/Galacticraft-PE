@@ -28,11 +28,14 @@ namespace UI {
         // "custom"
     ];
     export interface ClickerEvents {
+        //@ts-ignore
         onClick?: (position: Vector, container: UI.Container | ItemContainer, tileEntity: Nullable<TileEntity> | any, window: UI.IWindow, canvas: android.graphics.Canvas, scale: number) => void;
+        //@ts-ignore
         onLongClick?: (position: Vector, container: UI.Container | ItemContainer, tileEntity: Nullable<TileEntity> | any, window: UI.IWindow, canvas: android.graphics.Canvas, scale: number) => void
     }
     export interface CustomEvents {
         onSetup?: (element: UICustomElement) => void,
+        //@ts-ignore
         onDraw?: (element: UICustomElement, cvs: android.graphics.Canvas, scale: number) => void,
         onTouchReleased?: (element: UICustomElement) => void,
         onBindingUpdated?: <T>(element: UICustomElement, name: string, val: T) => void,
@@ -123,7 +126,7 @@ namespace UI {
                 this.name = "PropertiesError";
             }
         }
-
+        //@ts-ignore
         export function getBitmapFromPath(path: string): Nullable<android.graphics.Bitmap> {
             path = path.replace(new RegExp("__dir__", "g"), __dir__);
             try {
@@ -157,6 +160,7 @@ namespace UI {
         }
 
         export function getClickFunctionForLink(link: string, onClick?: UI.UIClickEvent["onClick" | "onLongClick"]) {
+            //@ts-ignore
             return function(position: Vector, container: Container | ItemContainer, tileEntity: any, window: IWindow, canvas: android.graphics.Canvas, scale: number) {
                 openLink(link);
                 if(onClick != null) {

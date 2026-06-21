@@ -29,6 +29,7 @@ namespace Galacticraft {
             if(screenName == "oxygen_bars") {
                 return //...
             }
+            return new UI.Window(); //заглушка
         });
     });
 

@@ -75,6 +75,10 @@
 		"jsx": "react",
 		"jsxFactory": "UI.JSX.parse",
 		"jsxFragmentFactory": "UI.JSX.Fragment",
-		"moduleResolution": "nodenext"
+		
+		"strict": false,
+		"strictNullChecks": false,
+		"ignoreDeprecations": "6.0",
+		"downlevelIteration": false
 	}
 }

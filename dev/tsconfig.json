@@ -1,7 +1,7 @@
 {
 	"extends": "..\\tsconfig.json",
 	"compilerOptions": {
-		"outFile": "F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain\\toolchain\\build\\toolchain_galacticraft_pe-4fca3\\sources\\main.js",
+		"outFile": "C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\toolchain\\build\\galacticraft-fc6ae\\sources\\main.js",
 		"lib": [
 			"esnext"
 		]

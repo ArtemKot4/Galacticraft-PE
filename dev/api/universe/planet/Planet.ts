@@ -1,4 +1,4 @@
-class Planet extends Dimension implements IPlanet {
+class Planet extends BasicDimension implements IPlanet {
     public satellites: number[];
 
     public getName(): string {

@@ -5,7 +5,9 @@ abstract class MachineTile extends CommonTileEntity implements Partial<EnergyTil
         return this.setupContainer();
     }
 
-    public getCapacity?(): number;
+    public getCapacity(): number {
+        return 10000;
+    };
 
     public energyTick?(type: string, node: EnergyTileNode): void;
     public energyReceive?(type: string, amount: number, voltage: number): number;

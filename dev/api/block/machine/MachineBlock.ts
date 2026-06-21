@@ -1,8 +1,8 @@
 class MachineBlock extends BasicBlock {
     public constructor(stringID: string, variationList?: Block.BlockVariation[]) {
         super(stringID, variationList);
-
         const description = this.getDescription();
+
         if(description != null) {
             Galacticraft.ToolTips.registerTipFor(this.id, description);
         }
@@ -13,6 +13,7 @@ class MachineBlock extends BasicBlock {
             ICRender.getGroup("galacticraft.machine_liquid_connecting_3").add(this.id, 3);
         }
         const storageInterface = this.getStorageInterface();
+        
         if(storageInterface != null) {
             StorageInterface.createInterface(this.id, storageInterface);
         }      

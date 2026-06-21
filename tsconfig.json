@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"outDir": "F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain\\toolchain\\build\\toolchain_galacticraft_pe-4fca3\\sources",
+		"outDir": "C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\toolchain\\build\\galacticraft-fc6ae\\sources",
 		"target": "es5",
 		"lib": [
 			"es5",
@@ -10,7 +10,7 @@
 		"module": "none",
 		"skipDefaultLibCheck": true,
 		"composite": true,
-		"downlevelIteration": true,
+		"downlevelIteration": false,
 		"experimentalDecorators": true,
 		"noEmitOnError": true,
 		"stripInternal": true,
@@ -18,7 +18,9 @@
 		"jsx": "react",
 		"jsxFactory": "UI.JSX.parse",
 		"jsxFragmentFactory": "UI.JSX.Fragment",
-		"moduleResolution": "nodenext"
+		"strict": false,
+		"strictNullChecks": false,
+		"ignoreDeprecations": "6.0"
 	},
 	"compileOnSave": false,
 	"exclude": [
@@ -32,24 +34,17 @@
 	],
 	"include": [],
 	"files": [
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\StorageInterface.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\SoundLib.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\RecipeViewer.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain\\toolchain\\declarations\\android.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\ChargeItemRegistry.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\DungeonUtility.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain\\toolchain\\declarations\\core-engine.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\energy-net.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\ClassicUI.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\ConnectedTexture.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\DependenceHelper.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\main.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\ToolLib.d.ts",
-		"F:\\Inner Core Modding\\Inner Core Mod Toolchain\\toolchain_galacticraft_pe\\declarations\\ChargeItem.d.ts"
-	],
-	"references": [
-		{
-			"path": "dev"
-		}
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\ConnectedTexture.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\main.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\ChargeItem.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\energy-net.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\toolchain\\declarations\\core-engine.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\StorageInterface.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\SoundLib.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\ChargeItemRegistry.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\DungeonUtility.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\DependenceHelper.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\ToolLib.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\RecipeViewer.d.ts"
 	]
 }

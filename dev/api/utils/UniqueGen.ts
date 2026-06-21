@@ -11,7 +11,7 @@ const UniqueGen = {
 	generateOre: function(id, data, chunkX, chunkZ, random, params) {
 		for(let i = 0; i < params.veinCounts; i++) {
 			let coords = this.randomCoords(random, chunkX, chunkZ, params.minY, params.maxY);
-			GenerationUtils.generateOre(coords.x, coords.y, coords.z, id, data, params.size, false, random.nextInt());
+			GenerationUtils.generateOre(coords.x, coords.y, coords.z, id, data, params.size, false);
 		}
 	},
 	generateOreInDimension: function(id, data, chunkX, chunkZ, random, params) {
@@ -22,6 +22,7 @@ const UniqueGen = {
 	}
 };
 
+//@ts-ignore
 Callback.addCallback("GenerateChunkUniversal", (chunkX: number, chunkZ: number, random: java.util.Random, dimensionId: number, chunkSeed: number, worldSeed: number, dimensionSeed: number) => {
     const data = Galacticraft.getIPlanetByID(dimensionId).getOreData();
     if(data != null && data.ores != null && data.ores.length > 0) {
