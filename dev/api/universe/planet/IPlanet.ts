@@ -1,4 +1,5 @@
 interface IPlanet extends IAtmosphereProperties, ILocalizeable {
+    hasStars?: boolean;
 	readonly id: number;
 	/**
 	 * Method declaring, can be created station of planet or not.

@@ -62,12 +62,4 @@ class Planet extends BasicDimension implements IPlanet {
     public hasOxygen(): boolean {
         return false;
     }
-
-    public showStarsAlways(): boolean {
-        return false;
-    }
-
-    public hideSkyboxes(): boolean {
-        return false;
-    }
 }

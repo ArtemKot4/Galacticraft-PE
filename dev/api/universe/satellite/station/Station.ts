@@ -1,4 +1,5 @@
 class Station extends Satellite {
+    public hasStars?: boolean = true;
     public owner: number;
     public members: Record<number, IStationMemberPermissions> = {};
 
@@ -26,10 +27,6 @@ class Station extends Satellite {
     
     public override canHasStation(): boolean {
         return false;
-    }
-
-    public override showStarsAlways(): boolean {
-        return true;
     }
 
     public changeOwner(ownerUid: number): void {

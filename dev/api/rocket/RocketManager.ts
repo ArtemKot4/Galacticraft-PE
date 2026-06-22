@@ -30,8 +30,8 @@ namespace RocketManager {
 		delete RocketManager.rockets[entity];
 	}
 
-    export function packRocketPadding(radius: number, coords: Vector, block: Tile, region: BlockSource, ontainer: ItemContainer): void {
-        RocketPadding.breakAll(radius, coords, region, false);
+    export function packRocketPadding(radius: number, coords: Vector, block: Tile, region: BlockSource, container: ItemContainer): void {
+        RocketPadding.breakAll(radius, coords, region);
         //will be transfering with container
     }
 

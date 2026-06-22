@@ -1,19 +1,32 @@
-class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCallback {
+class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCallback, IPlaceCallback {
     public constructor() {
-        super("rocket_padding_gc", [{
-            inCreative: true,
-            name: "block.galacticraft.rocket_padding",
-            texture: [["rocket_padding", 0]]
-        }]);
+        super("rocket_padding_gc", (() => {
+            const variations = [];
 
-        this.getGroup().add(this.id, 0);
-        const [model, shape] = this.getModelByCondition();
-        BlockRenderer.setStaticICRender(this.id, -1, model);
-        BlockRenderer.setCustomCollisionAndRaycastShape(this.id, -1, shape);
+            for(let i = 0; i <= 9; i++) {
+                variations.push({
+                    inCreative: true,
+                    name: "block.galacticraft.rocket_padding",
+                    texture: [["rocket_padding", 0]]
+                });
+            }
+            return variations;
+        })());
+
+        ICRender.getGroup(this.stringID).add(this.id, -1);
+
+        for(let i = 0; i <= 9; i++) {
+            let height = 3 / 16;
+
+            if(i == 5) {
+                height = 5 / 16;
+            }
+            Block.setShape(this.id, 0, 0, 0, 1, height, 1, i);
+        }
     }   
 
-    public override getStates(): (string | number)[] {
-        return ["fuel", "rocket_entity"];
+    public override canRotate(): boolean {
+        return true;
     }
     /**
      * Radius is indentation of middle by x and z
@@ -26,38 +39,10 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
         return [1, 2, 3];
     }
 
-    public getGroup(): ICRender.Group {
-        return ICRender.getGroup("galacticraft.rocket_padding");
-    }
-
-    public getModelByCondition(): [ICRender.Model, ICRender.CollisionShape] {
-        const group = this.getGroup();
-        const modelBottom = new BlockRenderer.Model(0, 0, 0, 1, 3 / 16, 1, this.id, 0);
-        const modelTop = new BlockRenderer.Model(0, 3 / 16, 0, 1, 5 / 16, 1, this.id, 0);
-        const render = new ICRender.Model();
-        const shape = new ICRender.CollisionShape();
-        const condition = ICRender.AND(
-            ICRender.BLOCK(-1, 0, 0, group, false),
-            ICRender.BLOCK(0, 0, -1, group, false),
-            ICRender.BLOCK(0, 0, 1, group, false),
-            ICRender.BLOCK(1, 0, 0, group, false),
-            ICRender.BLOCK(-1, 0, 1, group, false),
-            ICRender.BLOCK(1, 0, -1, group, false),
-            ICRender.BLOCK(1, 0, 1, group, false),
-            ICRender.BLOCK(-1, 0, -1, group, false)
-        );
-        shape.addEntry().addBox(0, 0, 0, 1, 3 / 16, 1);
-        shape.addEntry().setCondition(condition).addBox(0, 3 / 16, 0, 1, 5 / 16, 1);
-        render.addEntry(modelBottom);
-        render.addEntry(modelTop)
-        .setCondition(condition);
-
-        return [render, shape];
-    } 
-
     public onClick(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, playerUid: number): void {
         const region = BlockSource.getDefaultForActor(playerUid);
-        if(!RocketPadding.isCenter(this.getRadius(), coords, block, region)) {
+      
+        if(!RocketPadding.isCenter(this.getRadius(), coords, block.id, region)) {
             return;
         }
         alert("запуск")
@@ -65,7 +50,7 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
         const playerSneaking = Entity.getSneaking(playerUid);
         const blockState = region.getExtraBlock(coords.x, coords.y, coords.z);
         const entityID = blockState.getNamedStates().get("rocket_entity");
-        alert("блокстейт: " + entityID);
+        //alert("блокстейт: " + entityID);
         if(playerSneaking == true) {
             if(entityID == 0) {
                 alert("нет такой ракеты")
@@ -100,17 +85,51 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
         }
     }
 
-    public onDestroy(coords: Callback.ItemUseCoordinates, block: Tile, player: number): void {
-        const region = BlockSource.getDefaultForActor(player);
-        if(RocketPadding.isCenter(this.getRadius(), coords, block, region)) {
-            return RocketPadding.breakAll(this.getRadius(), coords, region, true);
-        }
+    public onDestroy(coords: Callback.ItemUseCoordinates, block: Tile, playerUid: number): void {
+        const region = BlockSource.getDefaultForActor(playerUid);
+        
+        RocketPadding.forEach(this.getRadius(), coords, (x, z) => {
+            const currentCoords = new Vector3(x, coords.y, z);
+
+            if(RocketPadding.isCenter(this.getRadius(), currentCoords, this.id, region)) {
+                RocketPadding.breakAll(this.getRadius(), currentCoords, region, playerUid);
+            }
+        })
     }
 
-    public static forEachAtRadius(radius: number, coords: Vector, callback: (x: number, z: number) => boolean | void): boolean {
+    public onPlace(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number, region: BlockSource): Vector | void {
+        Game.prevent();
+        if(block.id == this.id || region.getBlockID(coords.x, coords.y + 1, coords.z) != 0) {
+            return;
+        }
+        region.setBlock(coords.x, coords.y + 1, coords.z, this.id, 0);
+
+        RocketPadding.forEach(this.getRadius(), new Vector3(coords.x, coords.y + 1, coords.z), (findX, findZ) => {
+            const currentCoords = new Vector3(findX, coords.y + 1, findZ);
+
+            if(region.getBlockID(currentCoords.x, currentCoords.y, currentCoords.z) != this.id) {
+                return;
+            }
+
+            if(RocketPadding.isCenter(this.getRadius(), currentCoords, this.id, region)) {
+                region.setBlock(currentCoords.x, currentCoords.y, currentCoords.z, this.id, 5);
+                let counter = 0;
+
+                RocketPadding.forEach(this.getRadius(), currentCoords, (x, z) => {
+                    ++counter;
+                    if(region.getBlockData(x, currentCoords.y, z) == 0) {
+                        region.setBlock(x, currentCoords.y, z, this.id, counter); 
+                    }
+                });
+                return false;
+            }
+        });
+    }
+
+    public static forEach(radius: number, coords: Vector, action: (x: number, z: number) => boolean | void): boolean {
         for(let x = -radius; x <= radius; x++) {
             for(let z = -radius; z <= radius; z++) {
-                if(callback(coords.x + x, coords.z + z) == false) {
+                if(action(coords.x + x, coords.z + z) == false) {
                     return false;
                 }
             }
@@ -118,14 +137,25 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
         return true;
     }
 
-    public static breakAll(radius: number, coords: Vector, region: BlockSource, drop: boolean): void {
-        this.forEachAtRadius(radius, coords, (x, z) => region.destroyBlock(x, coords.y, z, drop));
+    public static breakAll(radius: number, coords: Vector, region: BlockSource, playerUid?: Nullable<number>): void {
+        this.forEach(radius, coords, (x, z) => {
+            region.destroyBlock(x, coords.y, z, false)
+            if(playerUid != null) {
+                new PlayerActor(playerUid).addItemToInventory(region.getBlockID(x, coords.y, z), 1, 0, null, true);
+            }
+        });
     }
 
-    public static isCenter(radius: number, coords: Vector, block: Tile, region: BlockSource): boolean {
-        return this.forEachAtRadius(radius, coords, (x, z) => {
-            const newBlock = region.getBlock(x, coords.y, z);
-            return newBlock.id == block.id && block.data == newBlock.data;
+    public static isCenter(radius: number, coords: Vector, blockID: number, region: BlockSource): boolean {
+        if(region.getBlockID(coords.x, coords.y, coords.z) == blockID && region.getBlockData(coords.x, coords.y, coords.z) == 5) {
+            return true;
+        }
+
+        return this.forEach(radius, coords, (x, z) => {
+            const block = region.getBlock(x, coords.y, z) as BlockState;
+            if(block.id != blockID || block.data != 0) {
+                return false;
+            }
         });
     }
 }
