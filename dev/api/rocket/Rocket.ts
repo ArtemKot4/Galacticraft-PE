@@ -31,15 +31,11 @@ abstract class Rocket {
         return 1000;
     }
 
-    public getEntity(entity: number, fuel: number, slotCount: number): RocketEntity {
+    public getNewEntity(entity: number, fuel: number, slotCount: number): RocketEntity {
         return new RocketEntity(this, entity, fuel, slotCount);
     }
 
-    public create(entity: number, slotCount: number): void {
-        RocketManager.addRocketEntity(this,  entity, slotCount);
-    }
-
-    public getRocketPadding(): number {
-        return BlockList.ROCKET_PADDING.id;
+    public getRocketPadding(): BasicBlock & { getRadius(): number } {
+        return BlockList.ROCKET_PADDING;
     }
 }

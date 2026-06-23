@@ -2,7 +2,7 @@ class RocketTier1 extends Rocket {
     public id: number = ItemList.ROCKET_TIER_1.id;
     
     public override getEntityType(): string {
-        return "galacticraft:rocket_tier_1<>";
+        return "galacticraft:rocket_tier_1";
     }
 
     public override getTier(): number {

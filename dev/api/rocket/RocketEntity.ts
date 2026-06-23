@@ -3,6 +3,10 @@
  */
 class RocketEntity {
 	/**
+	 * Coords of padding
+	 */
+	public paddingCoords: Vector;
+	/**
 	 * Entity ID of the rocket in the world
 	 */
 
@@ -36,19 +40,19 @@ class RocketEntity {
 	 * Item container of the rocket
 	 */
 
-	public container: ItemContainer;
+	public readonly container: ItemContainer;
 
 	/**
 	 * {@link BlockSource} for the rocket
 	 */
 
-	public blockSource: BlockSource;
+	public readonly blockSource: BlockSource;
 
 	/**
 	 * Start height of the rocket
 	 */
 
-	public startHeight: number;
+	public readonly startHeight: number;
 
 	/**
 	 * Fuel amount
@@ -60,27 +64,35 @@ class RocketEntity {
 	 * Slot count of the rocket
 	 */
 
-	public slotCount: number;
+	public readonly slotCount: number;
 
-	public constructor(public rocket: Rocket, entity: number, fuel: number, slotCount: number) {
+	public constructor(public rocket: Rocket, entity: number, fuel: number, slotCount: number, container?: ItemContainer) {
 		this.entity = entity;
+		const coords = Entity.getPosition(entity);
+		this.paddingCoords = new Vector3(Math.floor(coords.x), Math.floor(coords.y), Math.floor(coords.z));
 		this.slotCount = slotCount;
 		this.launched = false;
 		this.launchPhase = ELaunchPhase.PRE_LAUNCH;
 		this.timer = this.rocket.getTimerMax();
-		this.container = new ItemContainer();
 		this.blockSource = BlockSource.getDefaultForDimension(this.getDimension());
-		this.container.setGlobalSlotSavingEnabled(true);
-		this.container.setClientContainerTypeName("galacticraft.rocket:" + entity);
-
+		
+		if(container == null) {
+			this.container = new ItemContainer();
+			this.container.setGlobalSlotSavingEnabled(true);
+			this.container.setClientContainerTypeName("galacticraft.rocket:" + entity);
+				
+			Network.sendToAllClients("packet.galacticraft.register_rocket_screen_factory", {
+				entity,
+				fuelCapacity: this.rocket.getFuelCapacity(),
+				slotCount: slotCount,
+			});
+		} else {
+			this.container = container;
+		}
 		this.fuel = fuel || 0;
 		this.startHeight = this.getPosition().y;
 
-		Network.sendToAllClients("packet.galacticraft.register_rocket_screen_factory", {
-			entity,
-			fuelCapacity: this.rocket.getFuelCapacity(),
-			slotCount: slotCount,
-		});
+		
 	}
 
 	/**
@@ -136,7 +148,8 @@ class RocketEntity {
 	 */
 
 	public addFuelBy(player: number): boolean {
-		throw new java.lang.UnsupportedOperationException();
+		return false;
+		//throw new java.lang.UnsupportedOperationException();
 	}
 
 	/**
@@ -156,12 +169,14 @@ class RocketEntity {
 	 * Method to get empty slot in rocket inventory
 	 */
 
-	public findEmptySlot(): string {
+	public findEmptySlot(): Nullable<string> {
 		for(let i = 1; i <= this.slotCount; i++) {
-			if(this.container.getSlot(String(i)).isEmpty()) {
+			const slot = this.container.getSlot(String(i));
+			if(slot.isEmpty()) {
 				return String(i);
 			}
 		}
+		return null;
 	}
 
 	/**
@@ -199,6 +214,7 @@ class RocketEntity {
 		}
 
 		if(!this.isValidRider()) {
+			client.send("packet.galacticraft.set_view_perspective", { perspective: 0 });
 			RocketTimer.sendFor(client, -1);
 			return this.cancel(client, "message.galacticraft.rocket_empty", EColor.RED);
 		}
@@ -207,6 +223,23 @@ class RocketEntity {
 		this.timer--;
 	}
 
+	public packRocketPadding(): void {
+		const padding = RocketManager.getRocketByEntity(this.entity).getRocketPadding();
+		const slotName = this.findEmptySlot();
+		const count = RocketPadding.breakAll(padding.getRadius(), this.paddingCoords, this.blockSource, slotName == null ? this.rider : null);
+		
+		if(slotName != null) {
+			this.container.setSlot(slotName, padding.id, count, 0);
+			this.container.validateAll();
+			this.container.sendChanges();
+			alert("площадка упакована в слот номер " + slotName + "")
+		}
+	}
+
+	public returnRiderBack(player: number) {
+		Entity.rideAnimal(this.entity, player);
+		this.rider = player;
+	}
 	/**
 	 * Method to launch rocket with launchPhases
 	 * @param player player unique identifier
@@ -221,44 +254,56 @@ class RocketEntity {
 
 		if(this.launched == false) {
 			this.launched = true;
+			// let starBrightness = 0;
 
 			let body = false;
-			let packedPadding = false;
 
-			const height = this.rocket.getFinalHeight();
+			const finalHeight = this.rocket.getFinalHeight();
 			const self = this;
+			let lastRider = this.rider;
 
 			Updatable.addUpdatable({
 				update() {
+					const pos = self.getPosition();
+
 					if(World.getThreadTime() % 20 == 0) {
+						const client = Network.getClientForPlayer(Number(lastRider));
+						if(self.launchPhase == ELaunchPhase.PRE_LAUNCH) {
+							if(self.countdown(client) == ELaunchPhase.FLY) {
+								self.fly(client, self.rocket.getFlySpeed());
+								self.fuel -= self.rocket.getMinFuelAmount();
+								self.packRocketPadding();
+							};
+							return;
+						}
+						if(self.isValidRider()) {
+							lastRider = self.rider;
+							client.send("packet.galacticraft.setViewPerspective", { perspective: 2 });
+						} else if(lastRider != null) {
+							client.send("packet.galacticraft.setViewPerspective", { perspective: 0 });
+							lastRider = null;
+						}
+					}
+					if(World.getThreadTime() % 10 == 0) {
+						// if(!self.isValidRider() && self.launchPhase == ELaunchPhase.FLY) {
+						// 	self.returnRiderBack(player);
+						// }
+						// if(pos.y >= finalHeight / 4) {
+						// 	starBrightness = Math.min(1, starBrightness += 0.003);
+						// 	//.setStarBrightness(starBrightness);
+						// }
 						if(self.launched == false || self.launchPhase == ELaunchPhase.LANDING) {
 							return (this.remove = true);
 						}
-
-						if(self.launchPhase == ELaunchPhase.PRE_LAUNCH) {
-							self.countdown(client);
-							return;
-						}
-
 						if(self.launchPhase == ELaunchPhase.FLY) {
-							const pos = self.getPosition();
-
-							if(pos.y >= height / 2 && body == false) {
+							if(pos.y >= finalHeight / 2 && body == false) {
 								body = true;
 							}
-
-							if(pos.y >= self.startHeight + 5 && !packedPadding) {
-								//const paddingCoords = self.findRocketPadding();
-								//if (paddingCoords != null) {
-									//RocketManager.packRocketPadding(paddingCoords);
-									packedPadding = true;
-								//}
-							}
-
-							if(pos.y >= height) {
+							if(pos.y >= finalHeight) {
+								//dimension.resetStarBrightness();
+								client.send("packet.galacticraft.setViewPerspective", { perspective: 0 });
 								return self.stop();
 							}
-
 							self.fly(client, self.rocket.getFlySpeed());
 						}
 					}
@@ -288,7 +333,7 @@ class RocketEntity {
 
 		const item = new ItemStack(this.rocket.id);
 		const extra = new ItemExtraData();
-		extra.putInt("amount", this.fuel);
+		extra.putInt("fuelAmount", this.fuel);
 		extra.putInt("slotCount", this.slotCount || 0);
 
 		this.blockSource.spawnDroppedItem(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, item.id, item.count || 1, item.data || 0, extra);
@@ -312,6 +357,10 @@ class RocketEntity {
 		}
 	}
 
+	public static from(rocketEntity: RocketEntity): RocketEntity {
+		return new RocketEntity(rocketEntity.rocket, rocketEntity.entity, rocketEntity.fuel, rocketEntity.slotCount, rocketEntity.container);
+	}
+
 	/**
 	 * Method to build container ui with specified slot count
 	 * @param slotCount number
@@ -327,11 +376,11 @@ class RocketEntity {
 					},
 				},
 				inventory: {
-					standard: true,
+					standard: true
 				},
 				background: {
-					standard: true,
-				},
+					standard: true
+				}
 			},
 			drawing: [],
 			elements: {},
@@ -375,7 +424,7 @@ class RocketEntity {
 	}
 }
 
-Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (data: {entity: number; fuelCapacity: number; slotCount: number}) => {
+Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (data: { entity: number; fuelCapacity: number; slotCount: number }) => {
 	const window = RocketEntity.buildContainerUI(data.slotCount);
 
 	ItemContainer.registerScreenFactory("galacticraft.rocket:" + data.entity, (container, screenName) => {
@@ -389,6 +438,12 @@ Network.addClientPacket("packet.galacticraft.rocket_velocity_set", (data: {entit
 	if(RocketManager.isRocket(data.entity)) {
         Entity.setVelocity(data.entity, 0, data.speed, 0);
     }
+});
+
+Network.addClientPacket("packet.galacticraft.set_view_perspective", (data: { perspective: number }) => {
+	Player.resetViewPerspective();
+	Player.setViewPerspective(data.perspective);
+	//Player.setFov(data.perspective == 2 ? 70 : 120);
 });
 
 Translation.addTranslation("message.galacticraft.not_enough_rocket_fuel", {

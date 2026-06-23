@@ -328,18 +328,19 @@ declare enum EScreenName {
     INVENTORY_SCREEN_POCKET = "inventory_screen_pocket"
 }
 declare class Vector3 {
-    x: number;
-    y: number;
-    z: number;
     static readonly DOWN: Vector3;
     static readonly UP: Vector3;
     static readonly NORTH: Vector3;
     static readonly SOUTH: Vector3;
     static readonly EAST: Vector3;
     static readonly WEST: Vector3;
+    x: number;
+    y: number;
+    z: number;
     constructor(x: number, y: number, z: number);
+    constructor(vector: Vector);
     copy(): Vector3;
-    equals(vector: Vector3): boolean;
+    equals(vector: Vector): boolean;
     add(vector: Vector3): Vector3;
     subtract(vector: Vector3): Vector3;
     multiply(scalar: number): Vector3;
@@ -348,6 +349,7 @@ declare class Vector3 {
     cross(vector: Vector3): Vector3;
     length(): number;
     normalize(): Vector3;
+    static equals(vector1: Vector, vector2: Vector): boolean;
 }
 declare class ItemStack implements ItemInstance {
     id: number;
@@ -467,7 +469,8 @@ interface IDestroyStartCallback {
     onDestroyStart(coords: Callback.ItemUseCoordinates, block: Tile, player: number): void;
 }
 interface IPlaceCallback {
-    onPlace(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number, region: BlockSource): Vector | void;
+    onPlace?(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number, region: BlockSource): Vector | void;
+    place?(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number, region: BlockSource): void;
 }
 interface INeighbourChangeCallback {
     onNeighbourChange(coords: Vector, block: Tile, changedCoords: Vector, region: BlockSource): void;

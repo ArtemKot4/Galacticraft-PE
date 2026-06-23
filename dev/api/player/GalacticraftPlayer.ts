@@ -35,11 +35,11 @@ namespace Galacticraft {
 
     export class PlayerEvents {
         @SubscribeEvent
-        public onServerPlayerLoaded(playerUid: number) {
+        public static onServerPlayerLoaded(playerUid: number) {
             
         }
         @SubscribeEvent
-        public gc_onFrequencyChanged(playerUid: number, previousItem: ItemInstance, currentItem: ItemInstance) {
+        public static gc_onFrequencyChanged(playerUid: number, previousItem: ItemInstance, currentItem: ItemInstance) {
 
         }
     }

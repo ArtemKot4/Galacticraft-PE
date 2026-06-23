@@ -12,7 +12,6 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
             }
             return variations;
         })());
-
         ICRender.getGroup(this.stringID).add(this.id, -1);
 
         for(let i = 0; i <= 9; i++) {
@@ -45,43 +44,23 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
         if(!RocketPadding.isCenter(this.getRadius(), coords, block.id, region)) {
             return;
         }
-        alert("запуск")
-        const rocket = RocketManager.getRocketByItemID(item.id);
-        const playerSneaking = Entity.getSneaking(playerUid);
-        const blockState = region.getExtraBlock(coords.x, coords.y, coords.z);
-        const entityID = blockState.getNamedStates().get("rocket_entity");
-        //alert("блокстейт: " + entityID);
-        if(playerSneaking == true) {
-            if(entityID == 0) {
-                alert("нет такой ракеты")
+        const rocket = RocketManager.findRocketByItemID(item.id);
+
+        if(!rocket) {
+            const rocketEntity = RocketManager.findRocketEntityByPaddingCoords(coords, Entity.getDimension(playerUid));
+            if(rocketEntity == null) {
                 return;
             }
-            const rocketEntity = RocketManager.getRocketEntity(entityID);
-            if(rocketEntity != null) {
-                const playerActor = new PlayerActor(playerUid);
-                playerActor.addItemToInventory(rocket.id, 1, 0, 
-                    new ItemExtraData()
-                    .putInt("rocket.fuel", rocketEntity.fuel)
-                    .putInt("rocket.slot_count", rocketEntity.slotCount), 
-                    true
-                );
-                
-                for(const i in rocketEntity.container.slots) {
-                    const slot = rocketEntity.container.slots[i];
-                    playerActor.addItemToInventory(slot.id, slot.count, slot.data, slot.extra, true);
-                }
-                RocketManager.deleteRocketEntity(entityID);
-                
-                alert("ракета удалена")
-            }
-        } else {
-            if(!rocket) {
+            rocketEntity.destroy();
+        } else if(this.getRocketTiers().includes(rocket.getTier())) {
+            const extra = item.extra || new ItemExtraData();
+            const entityID = region.spawnEntity(coords.x + 0.5, coords.y + 0.3, coords.z + 0.5, rocket.getEntityType());
+            if(entityID == -1) {
+                Network.getClientForPlayer(playerUid).sendMessage(Native.Color.RED + Translation.translate("message.galacticraft.broken_load_of_resources"))
                 return;
             }
-            if(entityID == 0) {
-                alert("ракета добавлена")
-                RocketManager.addRocketEntity(rocket, region.spawnEntity(coords.x + 0.5, coords.y + 1, coords.z + 0.5, rocket.getEntityType()), 0, item.extra != null ? item.extra.getInt("rocket.slot_amount", 0) : 0);
-            }
+            new PlayerUser(playerUid).decreaseCarriedItem(1);
+            RocketManager.addRocketEntity(rocket, entityID, /*extra.getInt("fuelAmount", 0)*/ 1000, 18/*extra.getInt("slotCount", 0)*/);
         }
     }
 
@@ -92,13 +71,16 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
             const currentCoords = new Vector3(x, coords.y, z);
 
             if(RocketPadding.isCenter(this.getRadius(), currentCoords, this.id, region)) {
+                const rocketEntity = RocketManager.findRocketEntityByPaddingCoords(currentCoords, Entity.getDimension(playerUid));
+                if(rocketEntity != null) {
+                    rocketEntity.destroy();
+                }
                 RocketPadding.breakAll(this.getRadius(), currentCoords, region, playerUid);
             }
         })
     }
 
-    public onPlace(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number, region: BlockSource): Vector | void {
-        Game.prevent();
+    public place(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number, region: BlockSource): void {
         if(block.id == this.id || region.getBlockID(coords.x, coords.y + 1, coords.z) != 0) {
             return;
         }
@@ -137,13 +119,16 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
         return true;
     }
 
-    public static breakAll(radius: number, coords: Vector, region: BlockSource, playerUid?: Nullable<number>): void {
+    public static breakAll(radius: number, coords: Vector, region: BlockSource, playerUid?: Nullable<number>): number {
+        let count = 0;
         this.forEach(radius, coords, (x, z) => {
-            region.destroyBlock(x, coords.y, z, false)
+            region.destroyBlock(x, coords.y, z, false);
+            count++;
             if(playerUid != null) {
                 new PlayerActor(playerUid).addItemToInventory(region.getBlockID(x, coords.y, z), 1, 0, null, true);
             }
         });
+        return count;
     }
 
     public static isCenter(radius: number, coords: Vector, blockID: number, region: BlockSource): boolean {
@@ -159,3 +144,8 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
         });
     }
 }
+
+Translation.addTranslation("message.galacticraft.broken_load_of_resources", {
+    en: "Guess, import of resources and behavior was failed. Please, add resources and behavior with yourself.",
+    ru: "Где-то произошла ошибка при импорте ресурсов и поведения. Пожалуйста, добавьте ресурсы и поведение самостоятельно."
+});
