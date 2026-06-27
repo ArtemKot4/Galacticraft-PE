@@ -1,5 +1,7 @@
 @ElectricMachine(EElectricMachineType.RECEIVER)
 class ElectricCompressor extends ProcessingBlock {
+    public static tile = new ElectricCompressorTile();
+
     public constructor() {
         super("electric_compressor_gc", [{
             name: "tile.galacticraft.electric_compressor",
@@ -17,7 +19,7 @@ class ElectricCompressor extends ProcessingBlock {
     }
 
     public override getTileEntity(): ProcessingTile {
-        return new ElectricCompressorTile();
+        return ElectricCompressor.tile;
     }
 }
 

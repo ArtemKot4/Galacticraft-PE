@@ -1,27 +1,20 @@
 class RocketEvents {
-	// @SubscribeEvent
-	// public static onEntityAdded(entity: number) {
-	// 	if(RocketManager.isRocket(entity) && !RocketManager.hasRocketEntity(entity)) {
-	// 		RocketManager.addRocketEntity(RocketManager.getRocketByEntity(entity), entity, 0, 0);
-	// 	}
-	// }
-
 	@SubscribeEvent
-	public static onEntityInteract(entity: number, player: number, coords: Vector): void {
+	public static onEntityInteract(entity: number, playerUid: number, coords: Vector): void {
 		if(RocketManager.isRocketType(entity)) {
 			let rocketEntity = RocketManager.getRocketEntity(entity);
 
 			if(rocketEntity == null) {
 				rocketEntity = RocketManager.addRocketEntity(RocketManager.getRocketByEntity(entity), entity, 0, 0);
 			}
-			if(Entity.getSneaking(player) == true) {
+			if(Entity.getSneaking(playerUid) == true) {
 				Game.prevent();
-				//RocketEntity.registerScreenFactoryOnClientSide(rocketEntity, Network.getClientForPlayer(player));
-				rocketEntity.openContainer(player);
+				rocketEntity.openContainer(playerUid);
 			} else {
-				rocketEntity.rider = player;
-				rocketEntity.sit(player);
-				Network.getClientForPlayer(player).send("packet.galacticraft.set_rocket_view_perspective", [true]);
+				Entity.rideAnimal(entity, playerUid);
+				rocketEntity.rider = playerUid;
+				rocketEntity.sit(playerUid);
+				Network.getClientForPlayer(playerUid).send("packet.galacticraft.set_rocket_view_perspective", [true]);
 			}
 		}
 	}
@@ -35,3 +28,38 @@ class RocketEvents {
 		}
 	}
 }
+
+const ui: UI.Window = (() => {
+	const window = new UI.Window({
+		drawing: [{
+			"type": "background",
+			"color": android.graphics.Color.TRANSPARENT
+		}],
+		elements: {}
+	});
+	const height = UI.getScreenHeight() / 2 - 300;
+	const slotSize = 70;
+	const startPoint = 1000 / 2 - (slotSize * 9);
+	window.setAsGameOverlay(true);
+
+	for(let i = 0; i < 9; i++) {
+		window.content.elements[i] = {
+			type: "slot",
+			x: startPoint + (slotSize * i),
+			y: height,
+			size: slotSize
+		}
+	}
+	return window;
+})();
+
+let isOpened = false;
+Item.registerUseFunctionForID(VanillaItemID.saddle, () => {
+	if(!isOpened) {
+		ui.open();
+		isOpened = true;
+	} else {
+		ui.close();
+		isOpened = false;
+	}
+});

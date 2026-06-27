@@ -1,4 +1,4 @@
-const CircuitFabricatorUI = new UI.StandardWindow({
+const CircuitFabricatorUI = new UI.StandartWindow({
 	standard: {
 		header: {
 			text: {
@@ -54,7 +54,7 @@ const CircuitFabricatorUI = new UI.StandardWindow({
 			y: 65,
 			bitmap: "machine.circuit_fabricator.heat_scale_0",
 			scale: 3.2
-		},
+		}
 	],
 	elements: {
 		line_1: {

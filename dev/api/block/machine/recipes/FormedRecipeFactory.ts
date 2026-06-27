@@ -1,18 +1,25 @@
 class FormedRecipeFactory extends RecipeFactory<Record<string, ItemInstance>> {
-    public getObject(input: Record<string, ItemInstance>): { input: Record<string, ItemInstance>; output: ItemInstance[]; } {
+    public getRecipe(tile: ProcessingTileData): Nullable<{ input: Record<string, ItemInstance>, output: ItemInstance[]; }> {
+        if(this.isRightValues(tile)) {
+            return this.storage[tile.currentRecipeIndex];
+        }
         for(const i in this.storage) {
-            let valid = true;
-            for(const k in this.storage[i].input) {
-                if(!ItemStack.contains(input[k], this.storage[i].input[k])) {
-                    valid = false;
-                    break;
-                }
-            }
-            if(valid == true) {
+            if(this.isRightValues(tile, i)) {
+                tile.currentRecipeIndex = i;
                 return this.storage[i];
             }
         }
         return null;
+    }
+
+    public isRightValues(tile: ProcessingTileData, recipeIndex: string = tile.currentRecipeIndex || "0"): boolean {         
+        for(const inputSlotName of tile.inputSlots) {
+            const slot = tile.getSlot(inputSlotName);
+            if(!ItemStack.contains(slot, this.storage[recipeIndex].input[inputSlotName])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static register(name: string): FormedRecipeFactory {

@@ -464,7 +464,6 @@ class RocketEntity {
 			return;
 		}
 		client.send("packet.galacticraft.register_rocket_screen_factory", data);
-		return;
 	}
 
 	@SubscribeEvent
@@ -472,8 +471,7 @@ class RocketEntity {
 		const client = Network.getClientForPlayer(playerUid);
 
 		RocketManager.forEachRocketEntity((rocketEntity: RocketEntity) => {
-			client.sendMessage(rocketEntity.entityUid + ", " + rocketEntity.rocketType.getFuelCapacity() + ", " + rocketEntity.slotCount);	
-			return RocketEntity.registerScreenFactoryOnClientSide(rocketEntity, client);
+			RocketEntity.registerScreenFactoryOnClientSide(rocketEntity, client);
 		});
 	}
 }

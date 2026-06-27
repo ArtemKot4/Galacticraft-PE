@@ -1,5 +1,7 @@
 @ElectricMachine(EElectricMachineType.RECEIVER)
 class CircuitFabricator extends ProcessingBlock {
+    public static tile = new CircuitFabricatorTile();
+
 	public constructor() {
 		super("circuit_fabricator", [{
             name: "tile.galacticraft.circuit_fabricator",
@@ -15,6 +17,6 @@ class CircuitFabricator extends ProcessingBlock {
     }
 
 	public override getTileEntity(): ProcessingTile {
-		return new CircuitFabricatorTile();
+        return CircuitFabricator.tile;
 	}
 }

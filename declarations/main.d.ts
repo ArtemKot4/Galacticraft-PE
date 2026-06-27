@@ -71,6 +71,7 @@ declare namespace Block {
     interface ISelectionFunction {
         (block: BlockState, blockPosition: Vector, viewVector: Vector): void;
     }
+    const destroyLevelsToInit: Record<number, number>;
     const destroyFunctions: Record<number, Callback.DestroyBlockFunction>;
     const destroyStartFunctions: Record<number, Callback.DestroyBlockFunction>;
     const destroyContinueFunctions: Record<number, Callback.DestroyBlockContinueFunction>;
@@ -372,6 +373,7 @@ declare class ItemStack implements ItemInstance {
     copy(): ItemStack;
     static equals(stack1: ItemInstance, stack2: ItemInstance): boolean;
     static contains(stack1: ItemInstance, stack2: ItemInstance): boolean;
+    static isEmpty(stack: any): boolean;
 }
 interface IItemHoldCallback {
     onItemHold?(item: ItemInstance, playerUid: number, slotIndex: number): void;
@@ -538,6 +540,7 @@ declare class BasicBlock {
     static setStates(id: number, states: ReturnType<typeof BasicBlock.prototype.getStates>): void;
     static setModel(id: number, data: number, model: BlockModel | RenderMesh | BlockRenderer.Model | ICRender.Model): void;
     static build(blockPrototype: BasicBlock): void;
+    private static onLevelDisplayed;
 }
 declare class BlockPlant extends BasicBlock implements INeighbourChangeCallback, IPlaceCallback {
     static allowedBlockList: number[];
@@ -1030,31 +1033,26 @@ declare namespace Callback {
  * The factory of decorators to add callback from function.
  * @example
  * ```ts
-    class Example {
-        \@SubscribeEvent(ECallback.LOCAL_TICK)
-        public static onTick() {
-            Game.message("example")
-        }
-    };
+ * class Example {
+ *     \@SubscribeEvent(ECallback.LOCAL_TICK)
+ *     public static onTick() {
+ *         Game.message("example")
+ *     }
+ * };
  * ```
- * @param event {@link ECallback} enum value
- * @param priority priority
- * @returns decorator
  */
 declare function SubscribeEvent(event: ECallback, priority?: number): MethodDecorator;
 /**
- * Decorator to add callback from function by function name and same function. Format will be "onNameOfCallback". "on" optional.
+ * Decorator to add callback from function by function name and same function.
+ * Format will be "onNameOfCallback". "on" optional.
  * @example
  * ```ts
  * class ExampleDestroyBlock {
-        \@SubscribeEvent
-        public static onDestroyBlock() {
-            Game.message("break block")
-        }
-    }
+ *     \@SubscribeEvent
+ *     public static onDestroyBlock() {
+ *         Game.message("break block")
+ *     }
+ * }
  * ```
- * @param target
- * @param key
- * @param descriptor
  */
 declare function SubscribeEvent(target: unknown, key: string, descriptor: PropertyDescriptor): PropertyDescriptor;

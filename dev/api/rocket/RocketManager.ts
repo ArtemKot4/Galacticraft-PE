@@ -80,7 +80,6 @@ namespace RocketManager {
 			for(const rocketID in savedRocketEntities) {
 				const entity = rocketEntities[rocketID] = RocketEntity.from(savedRocketEntities[rocketID]);
 			}
-			return;
 		},
 		function save() {
 			return rocketEntities;

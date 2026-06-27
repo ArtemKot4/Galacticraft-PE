@@ -1,26 +1,35 @@
 class UnformedRecipeFactory extends RecipeFactory<ItemInstance[]> {
-    public getObject(input: Record<string, ItemInstance>): Nullable<{ input: ItemInstance[]; output: ItemInstance[]; }> {
-        const inputValues = Object.values(input).reduce((pV, cV) => {
-            if(cV.id != 0) {
-                pV.push(cV);
-            }
-            return pV;
-        },[]);
-
+    public getRecipe(tile: ProcessingTileData): Nullable<{ input: ItemInstance[]; output: ItemInstance[]; }> {
+        if(this.isRightValues(tile)) {
+            return this.storage[tile.currentRecipeIndex || "0"];
+        }
         for(const i in this.storage) {
-            let valid = true;
-            for(const k in this.storage[i].input) {
-                const recipeInput = this.storage[i].input;
-                if(inputValues.length != recipeInput.length || !ItemStack.contains(inputValues[k], recipeInput[k])) {
-                    valid = false;
-                    break;
-                }
-            }
-            if(valid == true) {
+            if(this.isRightValues(tile, i)) {
+                tile.currentRecipeIndex = i;
                 return this.storage[i];
             }
         }
         return null;
+    }
+
+    public isRightValues(tile: ProcessingTileData, recipeIndex: string = tile.currentRecipeIndex || "0"): boolean {
+        const recipeInput = this.storage[recipeIndex as unknown as number].input;
+        let index = -1;
+
+        for(const inputSlotName of tile.inputSlots) {
+            const slot = tile.getSlot(inputSlotName);
+            if(slot.id == 0) { //Не знаю почему, но ItemStack.isEmpty всегда выдаёт false
+                continue;
+            }
+            index++;
+            if(!ItemStack.contains(slot, recipeInput[index] || {} as ItemInstance)) {
+                return false;
+            }
+        }
+        if(index != recipeInput.length - 1) {
+            return false;
+        }
+        return true;
     }
 
     public static register(name: string): UnformedRecipeFactory {

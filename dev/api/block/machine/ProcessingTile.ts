@@ -2,6 +2,8 @@ abstract class ProcessingTile extends MachineTile {
     public data: Scriptable & { energy: number, progress: number, active: boolean };
     abstract inputSlots: string[];
     abstract outputSlots: string[];
+    public currentRecipeIndex: string;
+    public currentRecipe: ReturnType<typeof RecipeFactory.prototype.getRecipe>;
 
     public override onInit(): void {
         super.onInit();
@@ -14,92 +16,102 @@ abstract class ProcessingTile extends MachineTile {
         this.container.sendChanges();
         StorageInterface.checkHoppers(this);
         this.container.setScale("progress_scale", this.data.progress / this.getProgressMax());
-        
-        const object = this.getFactory().getObject(this.getInputSlots());
-        this.onUpdate(object);
+        this.onUpdate();
 
-        const recipeEnergy = this.getRecipeEnergy();
-        if(this.data.energy < recipeEnergy) {
+        if(this.data.energy < this.getRecipeEnergy() || this.data.active == false) {
             return;
-        }
-        if(object == null) {
-            this.stop();
-            return;
-        }  
-        if(!this.hasValidOutputSlots(object.output)) {
-            return;
-        }
-        if(this.data.active == false) {
-            this.data.active = true;
         }
         else if(this.data.progress < this.getProgressMax()) {
             this.data.progress++;
         } else {
-            this.recipeComplete(object);
+            this.recipeComplete();
         }
     }
 
-    public recipeComplete(object: IRecipeStorageFormat<unknown>): void {
+    public setActiveIfNeeded(additionalSlotStorage: Record<string, ItemInstance> = {}): void {
+        if(this.validateRecipe(additionalSlotStorage)) {   
+            this.data.active = this.hasValidOutputSlots();
+        }
+    }
+
+    public getSlot(name: string, additionalSlotStorage: Record<string, ItemInstance> = {}) {
+        if(name in additionalSlotStorage) {
+            return new ItemStack(additionalSlotStorage[name]);
+        }
+        return this.container.getSlot(name);
+    }
+
+    /**
+     * @returns recipe is null or not
+     */
+    public validateRecipe(additionalSlotStorage: Record<string, ItemInstance> = {}): boolean {
+        if((this.currentRecipe = this.getFactory().getRecipe({
+            inputSlots: this.inputSlots, currentRecipeIndex: this.currentRecipeIndex, getSlot: (name: string) => this.getSlot(String(name), additionalSlotStorage)
+        })) == null) {
+            this.stop();
+            return false;
+        }
+        return true;
+    }
+
+    public recipeComplete(): void {
         this.data.energy = Math.max(this.data.energy - this.getRecipeEnergy(), 0);
-        this.decreaseInputSlots(Object.values(object.input));
-        this.setOutput(object.output);
+        this.decreaseInputSlots();
+        this.setOutput();
         this.stop();
+        this.setActiveIfNeeded();
     }
 
     public getRecipeEnergy(): number {
         return this.getCapacity() / 3;
     }
 
-    public getSlotsBy(list: string[]): Record<string, ItemInstance> {
-        const slots = {};
-        for(const i in list) {
-            slots[list[i]] = this.container.getSlot(list[i]);
-        }
-        return slots;
-    }
-
-    public getInputSlots(): Record<string, ItemInstance> {
-        return this.getSlotsBy(this.inputSlots);
-    }
-
-    public getOutputSlots(): Record<string, ItemInstance> {
-        return this.getSlotsBy(this.outputSlots);
-    }
-
     public getProgressMax(): number {
         return 220;
     }
 
-    public decreaseInputSlots(input: ItemInstance[]): void {
+    public decreaseInputSlots(): void {
+        let index = -1;
+
         for(const i in this.inputSlots) {
             const slot = this.container.getSlot(this.inputSlots[i]);
-            this.container.setSlot(this.inputSlots[i], slot.id, slot.count - ((i in input && input[i].count) || 1), slot.data, slot.extra);
+            if(slot.isEmpty()) {
+                continue;
+            }
+            index++;
+            const input = this.currentRecipe.input[i] || this.currentRecipe.input[index] || {};
+            this.container.setSlot(this.inputSlots[i], slot.id, slot.count - (input.count || 1), slot.data, slot.extra);
         }
     }
 
-    public hasValidOutputSlots(output: ItemInstance[]): boolean {
-        for(const i in this.outputSlots) {
-            const outputSlot = this.container.getSlot(this.outputSlots[i]);
-            const resultMaxStack = Item.getMaxStack(outputSlot.id, outputSlot.data);
+    public hasValidOutputSlots(): boolean {
+        let validOutputStack = null;
+
+        for(const outputKey in this.outputSlots) {
+            const slot = this.getSlot(this.outputSlots[outputKey]);
+            const outputStack = this.currentRecipe.output[outputKey];
             
-            if(!(i in output)) {
-                output[i] = output[Number(i)-1];
+            if(outputStack != null) {
+                validOutputStack = outputStack;
             }
-            if(outputSlot.id != 0 && (outputSlot.id != output[i].id || (outputSlot.count + output[i].count > resultMaxStack))) {
+            if(!slot.isEmpty() && !ItemStack.contains(slot, validOutputStack)) {
                 return false;
             }
         }
         return true;
     }
 
-    public setOutput(output: ItemInstance[]): void {
-        for(const i in this.outputSlots) {
-            const slot = this.container.getSlot(this.outputSlots[i]);
-            
-            if(!(i in output)) {
-                output[i] = output[Number(i) - 1];
+    public setOutput(): void {
+        let validOutputStack = null;
+        
+        for(const index in this.outputSlots) {
+            const slot = this.container.getSlot(this.outputSlots[index]);
+            const outputStack = this.currentRecipe.output[index] || validOutputStack;
+
+            if(outputStack != null) {
+                validOutputStack = outputStack;
             }
-            this.container.setSlot(this.outputSlots[i], output[i].id, slot.count + output[i].count, slot.data + output[i].data, output[i].extra || slot.extra || null);
+            this.container.setSlot(this.outputSlots[index], validOutputStack.id, slot.count + validOutputStack.count, slot.data + validOutputStack.data, validOutputStack.extra || slot.extra);
         }
     }
 
@@ -108,7 +120,11 @@ abstract class ProcessingTile extends MachineTile {
         this.data.progress = 0;
     }
 
-    public onUpdate(object: Nullable<IRecipeStorageFormat<unknown>>): void {}
+    public onLoad(): void {
+        this.setActiveIfNeeded();
+    }
+
+    public onUpdate(): void {}
 
     abstract getFactory(): RecipeFactory<unknown>;
 }
