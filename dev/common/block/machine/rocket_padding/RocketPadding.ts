@@ -61,7 +61,7 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
                 return;
             }
             new PlayerUser(playerUid).decreaseCarriedItem(1);
-            RocketManager.addRocketEntity(rocket, entityID, /*extra.getInt("fuelAmount", 0)*/ 500, 18/*extra.getInt("slotCount", 0)*/);
+            RocketManager.addRocketEntity(rocket, entityID, extra.getInt("fuelAmount", 0), extra.getInt("slotCount", 0));
         }
     }
 

@@ -101,7 +101,6 @@ class RocketEntity {
 
 		this.container = new ItemContainer();
 		this.container.setGlobalSlotSavingEnabled(true);
-		this.container.setClientContainerTypeName("galacticraft.rocket:" + entityUid);
 		this.fuel = fuel || 0;
 		this.startHeight = Math.floor(this.getPosition().y);
 
@@ -383,7 +382,6 @@ class RocketEntity {
 		rocketEntity.blockSource = BlockSource.getDefaultForDimension(rocketEntity.getDimension());
 		rocketEntity.rocketType = RocketManager.getRocketTypeByEntityTypeName(rocketEntityData.rocketType.entityType);
 		rocketEntity.paddingCoords = new Vector3(rocketEntityData.paddingCoords);
-		rocketEntity.container.setClientContainerTypeName("galacticraft.rocket:" + rocketEntity.entityUid);
 		RocketEntity.registerScreenFactoryOnClientSide(rocketEntity);
 		return rocketEntity;
 	}
@@ -454,19 +452,18 @@ class RocketEntity {
 	 * Method to register screen factory of rocket on client side
 	 * @param client if not defined, screen factory will be registered for all
 	 */
-	public static registerScreenFactoryOnClientSide({ entityUid, slotCount }: RocketEntity, client?: NetworkClient): void {
+	public static registerScreenFactoryOnClientSide({ container, entityUid, slotCount }: RocketEntity, client?: NetworkClient): void {
 		const data = {
 			entityUid,
 			slotCount,
 		};
-
+		container.setClientContainerTypeName("galacticraft.rocket:" + entityUid);
+		
 		if(!client) {
 			Network.sendToAllClients("packet.galacticraft.register_rocket_screen_factory", data);
 			return;
 		}
-		client.sendMessage("отправка одному: " + JSON.stringify(data));
 		client.send("packet.galacticraft.register_rocket_screen_factory", data);
-		client.sendMessage("на клиент должно было отправиться, тест 'одному'")
 		return;
 	}
 
@@ -475,7 +472,6 @@ class RocketEntity {
 		const client = Network.getClientForPlayer(playerUid);
 
 		RocketManager.forEachRocketEntity((rocketEntity: RocketEntity) => {
-			client.sendMessage(JSON.stringify(rocketEntity));		
 			client.sendMessage(rocketEntity.entityUid + ", " + rocketEntity.rocketType.getFuelCapacity() + ", " + rocketEntity.slotCount);	
 			return RocketEntity.registerScreenFactoryOnClientSide(rocketEntity, client);
 		});
@@ -484,7 +480,6 @@ class RocketEntity {
 
 Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (data: { entityUid: number, slotCount: number }) => {
 	const window = RocketEntity.buildContainerUI(data.slotCount);
-	Game.message("я прилетел: " + JSON.stringify(data))
 
 	ItemContainer.registerScreenFactory("galacticraft.rocket:" + data.entityUid, (container, screenName) => {
 		if(screenName == "fuel_storage") {
@@ -493,9 +488,9 @@ Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (d
 	});
 });
 
-Network.addClientPacket("packet.galacticraft.rocket_velocity_set", (data: {entity: number; speed: number}) => {
-	if(RocketManager.isRocketType(data.entity)) {
-        Entity.setVelocity(data.entity, 0, data.speed, 0);
+Network.addClientPacket("packet.galacticraft.rocket_velocity_set", (data: { entityUid: number; speed: number }) => {
+	if(RocketManager.isRocketType(data.entityUid)) {
+        Entity.setVelocity(data.entityUid, 0, data.speed, 0);
     }
 });
 
