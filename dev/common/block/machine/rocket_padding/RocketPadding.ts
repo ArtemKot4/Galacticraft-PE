@@ -5,13 +5,14 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
 
             for(let i = 0; i <= 9; i++) {
                 variations.push({
-                    inCreative: true,
+                    inCreative: false,
                     name: "block.galacticraft.rocket_padding",
                     texture: [["rocket_padding", 0]]
                 });
             }
             return variations;
         })());
+        Item.addToCreative(this.id, 1, 0);
         ICRender.getGroup(this.stringID).add(this.id, -1);
 
         for(let i = 0; i <= 9; i++) {
@@ -23,7 +24,7 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
             Block.setShape(this.id, 0, 0, 0, 1, height, 1, i);
         }
     }   
-
+    
     public override canRotate(): boolean {
         return true;
     }
@@ -52,15 +53,15 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
                 return;
             }
             rocketEntity.destroy();
-        } else if(this.getRocketTiers().includes(rocket.getTier())) {
+        } else if(this.getRocketTiers().includes(rocket.tier)) {
             const extra = item.extra || new ItemExtraData();
-            const entityID = region.spawnEntity(coords.x + 0.5, coords.y + 0.3, coords.z + 0.5, rocket.getEntityType());
+            const entityID = region.spawnEntity(coords.x + 0.5, coords.y + 0.3, coords.z + 0.5, rocket.entityType);
             if(entityID == -1) {
                 Network.getClientForPlayer(playerUid).sendMessage(Native.Color.RED + Translation.translate("message.galacticraft.broken_load_of_resources"))
                 return;
             }
             new PlayerUser(playerUid).decreaseCarriedItem(1);
-            RocketManager.addRocketEntity(rocket, entityID, /*extra.getInt("fuelAmount", 0)*/ 1000, 18/*extra.getInt("slotCount", 0)*/);
+            RocketManager.addRocketEntity(rocket, entityID, /*extra.getInt("fuelAmount", 0)*/ 500, 18/*extra.getInt("slotCount", 0)*/);
         }
     }
 

@@ -4,14 +4,14 @@ interface IRocketTargetContainer {
     planet: string[];
 }
 
-abstract class Rocket {
-    abstract id: number;
-
+abstract class RocketType {
     /**
      * Entity type {@link Entity.getTypeName} result
      */
-    abstract getEntityType(): string;
-    abstract getTier(): number;
+    abstract entityType: string;
+    abstract itemId: number;
+    abstract tier: number;
+
     abstract getFuelCapacity(): number;
     public getTargetList?(): IRocketTargetContainer[];
 
@@ -19,7 +19,7 @@ abstract class Rocket {
         return 10;
     }
 
-    public getFlySpeed(): number {
+    public getFlightSpeed(): number {
         return 1.7;
     }
 
@@ -29,10 +29,6 @@ abstract class Rocket {
 
     public getFinalHeight(): number {
         return 1000;
-    }
-
-    public getNewEntity(entity: number, fuel: number, slotCount: number): RocketEntity {
-        return new RocketEntity(this, entity, fuel, slotCount);
     }
 
     public getRocketPadding(): BasicBlock & { getRadius(): number } {

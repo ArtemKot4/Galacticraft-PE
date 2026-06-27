@@ -1,17 +1,11 @@
-class RocketTier1 extends Rocket {
-    public id: number = ItemList.ROCKET_TIER_1.id;
-    
-    public override getEntityType(): string {
-        return "galacticraft:rocket_tier_1";
-    }
-
-    public override getTier(): number {
-        return 1;
-    }
+class RocketTier1 extends RocketType {
+    public itemId: number = ItemList.ROCKET_TIER_1.id;
+    public override entityType: string = "galacticraft:rocket_tier_1";
+    public override tier: number = 1;
     
     public override getFuelCapacity(): number {
         return 500;
     }
 }
 
-RocketManager.registerRocket(new RocketTier1());
+RocketManager.registerRocketType(new RocketTier1());

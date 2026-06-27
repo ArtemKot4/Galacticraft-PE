@@ -1,16 +1,24 @@
 /**
- * Class, describes behavior of a rocket. Extend to change default behavior
+ * Class, describes behavior of a rocketType. Extend to change default behavior
  */
+
 class RocketEntity {
+	/**
+	 * RocketType which entity is implementing
+	 */
+	public rocketType: RocketType;
+
 	/**
 	 * Coords of padding
 	 */
-	public paddingCoords: Vector;
+
+	protected paddingCoords: Vector3;
+
 	/**
 	 * Entity ID of the rocket in the world
 	 */
 
-	public entity: number;
+	protected entityUid: number;
 
 	/**
 	 * Unique identifier of player who launched rocket
@@ -22,37 +30,37 @@ class RocketEntity {
 	 * Current launch {@link ELaunchPhase phase}
 	 */
 
-	public launchPhase: ELaunchPhase;
+	protected launchPhase: ELaunchPhase;
 
 	/**
 	 * Whether rocket was already launched
 	 */
 
-	public launched: boolean;
+	protected launched: boolean;
 
 	/**
 	 * Number of current countdown
 	 */
 
-	public timer: number;
+	protected timer: number;
 
 	/**
 	 * Item container of the rocket
 	 */
 
-	public readonly container: ItemContainer;
+	protected container: ItemContainer;
 
 	/**
 	 * {@link BlockSource} for the rocket
 	 */
 
-	public readonly blockSource: BlockSource;
+	public blockSource: BlockSource;
 
 	/**
 	 * Start height of the rocket
 	 */
 
-	public readonly startHeight: number;
+	public startHeight: number;
 
 	/**
 	 * Fuel amount
@@ -64,53 +72,63 @@ class RocketEntity {
 	 * Slot count of the rocket
 	 */
 
-	public readonly slotCount: number;
+	protected slotCount: number;
 
-	public constructor(public rocket: Rocket, entity: number, fuel: number, slotCount: number, container?: ItemContainer) {
-		this.entity = entity;
-		const coords = Entity.getPosition(entity);
-		this.paddingCoords = new Vector3(Math.floor(coords.x), Math.floor(coords.y), Math.floor(coords.z));
+	/**
+	 * Method to initialize new rocket with standard data
+	 * @param rocket rocket prototype for entityUid
+	 * @param entityUid rocket entityUid unique identifier after spawn
+	 * @param fuel standard fuel count inside
+	 * @param slotCount count of slots
+	 */
+
+	public init(rocketType: RocketType, entityUid: number, fuel: number, slotCount: number): this {
+		this.rocketType = rocketType;
+		this.entityUid = entityUid;
+		this.fuel = fuel;
 		this.slotCount = slotCount;
+
+		const coords = Entity.getPosition(entityUid);
+		this.blockSource = BlockSource.getDefaultForDimension(this.getDimension());
+		this.paddingCoords = new Vector3(Math.floor(coords.x), Math.floor(coords.y), Math.floor(coords.z));
+
+		if(this.blockSource.getBlockID(this.paddingCoords.x, this.paddingCoords.y, this.paddingCoords.z) != this.rocketType.getRocketPadding().id) {
+			Network.sendServerMessage(Native.Color.RED + Translation.translate("message.galacticraft.padding_positioning_bug_issue"));
+		}
 		this.launched = false;
 		this.launchPhase = ELaunchPhase.PRE_LAUNCH;
-		this.timer = this.rocket.getTimerMax();
-		this.blockSource = BlockSource.getDefaultForDimension(this.getDimension());
-		
-		if(container == null) {
-			this.container = new ItemContainer();
-			this.container.setGlobalSlotSavingEnabled(true);
-			this.container.setClientContainerTypeName("galacticraft.rocket:" + entity);
-				
-			Network.sendToAllClients("packet.galacticraft.register_rocket_screen_factory", {
-				entity,
-				fuelCapacity: this.rocket.getFuelCapacity(),
-				slotCount: slotCount,
-			});
-		} else {
-			this.container = container;
-		}
-		this.fuel = fuel || 0;
-		this.startHeight = this.getPosition().y;
+		this.timer = this.rocketType.getTimerMax();
 
-		
+		this.container = new ItemContainer();
+		this.container.setGlobalSlotSavingEnabled(true);
+		this.container.setClientContainerTypeName("galacticraft.rocket:" + entityUid);
+		this.fuel = fuel || 0;
+		this.startHeight = Math.floor(this.getPosition().y);
+
+		RocketEntity.registerScreenFactoryOnClientSide(this);
+		return this;
+	}
+
+	public getPaddingCoords(): Vector3 {
+		return this.paddingCoords.copy();
 	}
 
 	/**
-	 * Method to get entity position in the world
+	 * Method to get entityUid position in the world
 	 * @returns {@link Vector}
 	 */
 
 	public getPosition(): Vector {
-		const pos = Entity.getPosition(this.entity);
+		const pos = Entity.getPosition(this.entityUid);
 		return { x: pos.x + 0.5, y: pos.y, z: pos.z + 0.5 };
 	}
 
 	/**
-	 * Method to get entity dimension
+	 * Method to get entityUid dimension
 	 */
 
 	public getDimension(): number {
-		return Entity.getDimension(this.entity);
+		return Entity.getDimension(this.entityUid);
 	}
 
 	/**
@@ -129,7 +147,7 @@ class RocketEntity {
 	 */
 
 	public addFuel(amount: number): number {
-		const capacity = this.rocket.getFuelCapacity();
+		const capacity = this.rocketType.getFuelCapacity();
 
 		if(this.fuel < capacity) {
 			const result = Math.min(amount, capacity - this.fuel);
@@ -142,25 +160,14 @@ class RocketEntity {
 	}
 
 	/**
-	 * Method to add fuel by player
-	 * @param player player unique identifier
-	 * @returns boolean, whether fuel was added
-	 */
-
-	public addFuelBy(player: number): boolean {
-		return false;
-		//throw new java.lang.UnsupportedOperationException();
-	}
-
-	/**
 	 * Method to add velocity to the rocket
 	 */
 
-	public fly(client: NetworkClient, speed: number): void {
-		Entity.setVelocity(this.entity, 0, speed, 0);
+	public fly(client: NetworkClient, speed: number = this.rocketType.getFlightSpeed()): void {
+		Entity.setVelocity(this.entityUid, 0, speed, 0);
 		if(client) {
 			client.send("packet.galacticraft.rocket_velocity_set", {
-				entity: this.entity,
+				entityUid: this.entityUid,
 				speed: speed,
 			});
 		}
@@ -183,12 +190,12 @@ class RocketEntity {
 	 * Method to cancel launch
 	 * @param client {@link NetworkClient}
 	 * @param message your message
-	 * @param color {@link EColor color}
+	 * @param color {@link Native.Color color}
 	 */
 
-	public cancel(client: NetworkClient, message: string, color?: EColor): void {
+	public cancel(client: NetworkClient, message: string, color?: Native.Color): void {
 		this.launched = false;
-		this.timer = this.rocket.getTimerMax();
+		this.timer = this.rocketType.getTimerMax();
 
 		if(client != null) {
 			client.sendMessage((color || "") + Translation.translate(message));
@@ -201,7 +208,7 @@ class RocketEntity {
 	 */
 
 	public isValidRider(): boolean {
-		return Entity.getRider(this.entity) == this.rider;
+		return Entity.getRider(this.entityUid) == this.rider;
 	}
 
 	/**
@@ -216,7 +223,7 @@ class RocketEntity {
 		if(!this.isValidRider()) {
 			client.send("packet.galacticraft.set_view_perspective", { perspective: 0 });
 			RocketTimer.sendFor(client, -1);
-			return this.cancel(client, "message.galacticraft.rocket_empty", EColor.RED);
+			return this.cancel(client, "message.galacticraft.rocket_empty", Native.Color.RED);
 		}
 
 		RocketTimer.sendFor(client, this.timer);
@@ -224,7 +231,7 @@ class RocketEntity {
 	}
 
 	public packRocketPadding(): void {
-		const padding = RocketManager.getRocketByEntity(this.entity).getRocketPadding();
+		const padding = RocketManager.getRocketByEntity(this.entityUid).getRocketPadding();
 		const slotName = this.findEmptySlot();
 		const count = RocketPadding.breakAll(padding.getRadius(), this.paddingCoords, this.blockSource, slotName == null ? this.rider : null);
 		
@@ -232,12 +239,11 @@ class RocketEntity {
 			this.container.setSlot(slotName, padding.id, count, 0);
 			this.container.validateAll();
 			this.container.sendChanges();
-			alert("площадка упакована в слот номер " + slotName + "")
 		}
 	}
 
 	public returnRiderBack(player: number) {
-		Entity.rideAnimal(this.entity, player);
+		Entity.rideAnimal(this.entityUid, player);
 		this.rider = player;
 	}
 	/**
@@ -245,53 +251,47 @@ class RocketEntity {
 	 * @param player player unique identifier
 	 */
 
-	public launch(player: number): void {
-		const client = Network.getClientForPlayer(player);
-
-		if(this.fuel < this.rocket.getMinFuelAmount()) {
-			return client.sendMessage(Translation.translate("message.galacticraft.not_enough_rocket_fuel"));
+	public sit(player: number): void {
+		Callback.invokeCallback("Galacticraft:RocketSit", this);
+		if(this.fuel < this.rocketType.getMinFuelAmount()) {
+			return Network.getClientForPlayer(player).sendMessage(Translation.translate("message.galacticraft.not_enough_rocket_fuel"));
 		}
-
 		if(this.launched == false) {
 			this.launched = true;
-			// let starBrightness = 0;
-
 			let body = false;
-
-			const finalHeight = this.rocket.getFinalHeight();
+			const finalHeight = this.rocketType.getFinalHeight();
 			const self = this;
-			let lastRider = this.rider;
+			let changedPerspective = false;
 
 			Updatable.addUpdatable({
 				update() {
+					const client = Network.getClientForPlayer(self.rider);
 					const pos = self.getPosition();
+					const isValidRider = self.isValidRider();
+
+					if(client != null) {
+						if(isValidRider) {
+							if(!changedPerspective) {
+								client.send("packet.galacticraft.set_rocket_view_perspective", { set: changedPerspective = true });
+							}
+						} else if(changedPerspective) {
+							client.send("packet.galacticraft.set_rocket_view_perspective", { set: changedPerspective = false });
+						}
+					}
 
 					if(World.getThreadTime() % 20 == 0) {
-						const client = Network.getClientForPlayer(Number(lastRider));
 						if(self.launchPhase == ELaunchPhase.PRE_LAUNCH) {
 							if(self.countdown(client) == ELaunchPhase.FLY) {
-								self.fly(client, self.rocket.getFlySpeed());
-								self.fuel -= self.rocket.getMinFuelAmount();
+								self.fly(client);
+								self.fuel -= self.rocketType.getMinFuelAmount();
 								self.packRocketPadding();
-							};
+								
+								Callback.invokeCallback("Galacticraft:RocketFlightStarted", this);
+							}
 							return;
-						}
-						if(self.isValidRider()) {
-							lastRider = self.rider;
-							client.send("packet.galacticraft.setViewPerspective", { perspective: 2 });
-						} else if(lastRider != null) {
-							client.send("packet.galacticraft.setViewPerspective", { perspective: 0 });
-							lastRider = null;
 						}
 					}
 					if(World.getThreadTime() % 10 == 0) {
-						// if(!self.isValidRider() && self.launchPhase == ELaunchPhase.FLY) {
-						// 	self.returnRiderBack(player);
-						// }
-						// if(pos.y >= finalHeight / 4) {
-						// 	starBrightness = Math.min(1, starBrightness += 0.003);
-						// 	//.setStarBrightness(starBrightness);
-						// }
 						if(self.launched == false || self.launchPhase == ELaunchPhase.LANDING) {
 							return (this.remove = true);
 						}
@@ -300,11 +300,16 @@ class RocketEntity {
 								body = true;
 							}
 							if(pos.y >= finalHeight) {
-								//dimension.resetStarBrightness();
-								client.send("packet.galacticraft.setViewPerspective", { perspective: 0 });
+								let explode = false;
+								if(!isValidRider) {
+									explode = true;
+									self.blockSource.explode(pos.x, pos.y, pos.z, 0, false);
+									self.destroy();
+								}
+								Callback.invokeCallback("Galacticraft:RocketFlightCompleted", explode ? null : self);
 								return self.stop();
 							}
-							self.fly(client, self.rocket.getFlySpeed());
+							self.fly(client);
 						}
 					}
 				},
@@ -317,8 +322,8 @@ class RocketEntity {
 	 */
 
 	public stop(): void {
-		Entity.setMobile(this.entity, false);
-		this.fuel = Math.max(0, this.fuel - this.rocket.getMinFuelAmount());
+		Entity.setMobile(this.entityUid, false);
+		this.fuel = Math.max(0, this.fuel - this.rocketType.getMinFuelAmount());
 		this.launchPhase = ELaunchPhase.LANDING;
 		//GalaxyMap.openFor(rocket, player);
 	}
@@ -327,20 +332,19 @@ class RocketEntity {
 	 * Method to destroy rocket data and drop container
 	 */
 
-	public destroy(entity?: number): void {
-		const pos = Entity.getPosition(entity || this.entity);
-		Game.message(JSON.stringify(pos) + " -> debug");
+	public destroy(entityUid?: number): void {
+		const pos = Entity.getPosition(entityUid || this.entityUid);
 
-		const item = new ItemStack(this.rocket.id);
+		const item = new ItemStack(this.rocketType.itemId);
 		const extra = new ItemExtraData();
 		extra.putInt("fuelAmount", this.fuel);
 		extra.putInt("slotCount", this.slotCount || 0);
 
 		this.blockSource.spawnDroppedItem(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, item.id, item.count || 1, item.data || 0, extra);
 		this.container.dropAt(this.blockSource, pos.x, pos.y, pos.z);
-		Entity.remove(entity || this.entity);
+		Entity.remove(entityUid || this.entityUid);
 
-		RocketManager.deleteRocketEntity(entity || this.entity);
+		RocketManager.deleteRocketEntity(entityUid || this.entityUid);
 	}
 
 	/**
@@ -351,14 +355,37 @@ class RocketEntity {
 	public openContainer(player: number): void {
 		const client = Network.getClientForPlayer(player);
 		if(client != null) {
-			this.container.setScale("fuel_scale", this.fuel / this.rocket.getFuelCapacity());
+			this.container.setScale("fuel_scale", this.fuel / this.rocketType.getFuelCapacity());
+			this.container.validateAll();
 			this.container.sendChanges();
 			this.container.openFor(client, "fuel_storage");
 		}
 	}
 
-	public static from(rocketEntity: RocketEntity): RocketEntity {
-		return new RocketEntity(rocketEntity.rocket, rocketEntity.entity, rocketEntity.fuel, rocketEntity.slotCount, rocketEntity.container);
+	public getEntityUid(): number {
+		return this.entityUid;
+	}
+
+	public getSlotCount(): number {
+		return this.slotCount;
+	}
+
+	/**
+	 * Method to get instance of RocketEntity by fields from any valid object
+	 * @param rocketEntityData fields of RocketEntity
+	 * @returns RocketEntity
+	 */
+	public static from(rocketEntityData: RocketEntity): RocketEntity {
+		const rocketEntity = new RocketEntity();
+		for(const key in rocketEntityData) {
+			rocketEntity[key] = rocketEntityData[key];
+		}
+		rocketEntity.blockSource = BlockSource.getDefaultForDimension(rocketEntity.getDimension());
+		rocketEntity.rocketType = RocketManager.getRocketTypeByEntityTypeName(rocketEntityData.rocketType.entityType);
+		rocketEntity.paddingCoords = new Vector3(rocketEntityData.paddingCoords);
+		rocketEntity.container.setClientContainerTypeName("galacticraft.rocket:" + rocketEntity.entityUid);
+		RocketEntity.registerScreenFactoryOnClientSide(rocketEntity);
+		return rocketEntity;
 	}
 
 	/**
@@ -422,12 +449,44 @@ class RocketEntity {
 		}
 		return new UI.StandardWindow(content);
 	}
+
+	/**
+	 * Method to register screen factory of rocket on client side
+	 * @param client if not defined, screen factory will be registered for all
+	 */
+	public static registerScreenFactoryOnClientSide({ entityUid, slotCount }: RocketEntity, client?: NetworkClient): void {
+		const data = {
+			entityUid,
+			slotCount,
+		};
+
+		if(!client) {
+			Network.sendToAllClients("packet.galacticraft.register_rocket_screen_factory", data);
+			return;
+		}
+		client.sendMessage("отправка одному: " + JSON.stringify(data));
+		client.send("packet.galacticraft.register_rocket_screen_factory", data);
+		client.sendMessage("на клиент должно было отправиться, тест 'одному'")
+		return;
+	}
+
+	@SubscribeEvent
+	public static onServerPlayerLoaded(playerUid: number) {
+		const client = Network.getClientForPlayer(playerUid);
+
+		RocketManager.forEachRocketEntity((rocketEntity: RocketEntity) => {
+			client.sendMessage(JSON.stringify(rocketEntity));		
+			client.sendMessage(rocketEntity.entityUid + ", " + rocketEntity.rocketType.getFuelCapacity() + ", " + rocketEntity.slotCount);	
+			return RocketEntity.registerScreenFactoryOnClientSide(rocketEntity, client);
+		});
+	}
 }
 
-Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (data: { entity: number; fuelCapacity: number; slotCount: number }) => {
+Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (data: { entityUid: number, slotCount: number }) => {
 	const window = RocketEntity.buildContainerUI(data.slotCount);
+	Game.message("я прилетел: " + JSON.stringify(data))
 
-	ItemContainer.registerScreenFactory("galacticraft.rocket:" + data.entity, (container, screenName) => {
+	ItemContainer.registerScreenFactory("galacticraft.rocket:" + data.entityUid, (container, screenName) => {
 		if(screenName == "fuel_storage") {
 			return window;
 		}
@@ -435,15 +494,18 @@ Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (d
 });
 
 Network.addClientPacket("packet.galacticraft.rocket_velocity_set", (data: {entity: number; speed: number}) => {
-	if(RocketManager.isRocket(data.entity)) {
+	if(RocketManager.isRocketType(data.entity)) {
         Entity.setVelocity(data.entity, 0, data.speed, 0);
     }
 });
 
-Network.addClientPacket("packet.galacticraft.set_view_perspective", (data: { perspective: number }) => {
+Network.addClientPacket("packet.galacticraft.set_rocket_view_perspective", (data: { set: boolean }) => {
+	if(data.set == true) {
+		Player.setViewPerspective(2);
+		return;
+	}
+	Player.setViewPerspective(0);
 	Player.resetViewPerspective();
-	Player.setViewPerspective(data.perspective);
-	//Player.setFov(data.perspective == 2 ? 70 : 120);
 });
 
 Translation.addTranslation("message.galacticraft.not_enough_rocket_fuel", {
@@ -452,7 +514,7 @@ Translation.addTranslation("message.galacticraft.not_enough_rocket_fuel", {
 });
 
 Translation.addTranslation("message.galacticraft.rocket_empty", {
-	en: "Are you escape rocket.",
+	en: "Are you escaped rocket.",
 	ru: "Вы покинули ракету.",
 });
 
@@ -460,3 +522,24 @@ Translation.addTranslation("ui.galacticraft.rocket", {
 	en: "Storage of rocket",
 	ru: "Хранилище ракеты",
 });
+
+Translation.addTranslation("message.galacticraft.padding_positioning_bug_issue", {
+	en: "There was a critical error with determining the position of the rocketType. Please close the game and tell the developer about the problem.",
+	ru: "Возникла критическая ошибка с определением площадки для ракеты. Пожалуйста, закройте игру и доложите разработчику о проблеме."
+});
+
+declare namespace Callback {
+	/**
+	 * Callback for know when rocket started fly
+	 */
+	export function addCallback(name: "Galacticraft:RocketFlightStarted", func: (rocketEntity: RocketEntity) => void);
+	/**
+	 * Callback for know when rocket launch
+	 */
+	export function addCallback(name: "Galacticraft:RocketSit", func: (rocketEntity: RocketEntity) => void);
+	/**
+	 * Callback for know when rocket fly is done
+	 * @param func rocketEntity is null if rocket was exploded
+	 */
+	export function addCallback(name: "Galacticraft:RocketFlightCompleted", func: (rocketEntity: Nullable<RocketEntity>) => void);
+}

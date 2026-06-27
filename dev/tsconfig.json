@@ -39,7 +39,7 @@
 		"api/rocket/ELaunchPhase.ts",
 		"api/rocket/RocketTimer.ts",
 		"api/rocket/RocketManager.ts",
-		"api/rocket/Rocket.ts",
+		"api/rocket/RocketType.ts",
 		"api/rocket/RocketEntity.ts",
 		"api/rocket/RocketEvents.ts",
 		"api/player/GalacticraftPlayer.ts",

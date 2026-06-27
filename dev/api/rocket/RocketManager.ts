@@ -1,54 +1,73 @@
+/**
+ * Namespace for manage rocket system
+ */
+
 namespace RocketManager {
 	export let rocketEntities: Record<string, RocketEntity> = {};
-	export const rocketTypes: Record<string, Rocket> = {};
+	export const rocketTypes: Record<string, RocketType> = {};
 
-	export function isRocket(entity: number): boolean {
-		return Entity.getTypeName(entity) in RocketManager.rocketTypes;
+	export function isRocketType(entityUid: number): boolean {
+		return Entity.getTypeName(entityUid) in RocketManager.rocketTypes;
 	}
 
-	export function addRocketEntity(rocket: Rocket, entity: number, fuel: number, slotCount?: number): RocketEntity {
-		return RocketManager.rocketEntities[String(entity)] = rocket.getNewEntity(entity, fuel, slotCount);
+	export function addRocketEntity(rocketType: RocketType, entityUid: number, fuel: number, slotCount?: number): RocketEntity {
+		const rocketEntity = RocketManager.rocketEntities[String(entityUid)] = new RocketEntity().init(rocketType, entityUid, fuel, slotCount);
+		Callback.invokeCallback("Galacticraft:RocketEntityAdded", rocketEntity);
+		return rocketEntity;
 	}
 
-	export function findRocketEntityByPaddingCoords(paddingCoords: Vector, dimension: number): Nullable<RocketEntity> {
+	export function removeRocketEntity(entityUid: number): void {
+		delete RocketManager.rocketEntities[entityUid];
+		Callback.invokeCallback("Galacticraft:RocketEntityRemoved", entityUid);
+	}
+
+	export function findRocketEntityByPaddingCoords(paddingCoords: Vector, dimensionId: number): Nullable<RocketEntity> {
 		for(const rocketID in rocketEntities) {
-			Game.message("айди ракеты: " + rocketID + ", его тип: " + typeof rocketID + "\nобъект ракеты: " + JSON.stringify(rocketEntities[rocketID]));
-			Game.message("\n..." + JSON.stringify(RocketManager.rocketEntities) + "...");
 			const rocketEntity = getRocketEntity(rocketID);
-			if(rocketEntity.getDimension() == dimension && Vector3.equals(rocketEntity.paddingCoords, paddingCoords)) {
+			if(rocketEntity.getDimension() == dimensionId && Vector3.equals(rocketEntity.getPaddingCoords(), paddingCoords)) {
 				return rocketEntity;
 			}
 		}
 		return null;
 	}
 
-	export function getRocketEntity(entity: string | number): Nullable<RocketEntity> {
-		if(hasRocketEntity(entity)) {
-			const rocketEntity = RocketManager.rocketEntities[String(entity)];
-			return rocketEntity instanceof RocketEntity ? rocketEntity : RocketEntity.from(rocketEntity);
+	export function getRocketTypeByEntityTypeName(entityType: string): Nullable<RocketType> {
+		return RocketManager.rocketTypes[entityType] || null;
+	}
+
+	export function getRocketEntity(entityUid: string | number): Nullable<RocketEntity> {
+		return RocketManager.rocketEntities[String(entityUid)] || null;
+	}
+
+	export function getRocketEntities(): typeof rocketEntities {
+		return rocketEntities;
+	}
+
+	export function forEachRocketEntity(callback: (rocketEntity: RocketEntity) => void): void {
+		for(const rocketID in rocketEntities) {
+			callback(getRocketEntity(rocketID));
 		}
-		return null;
 	}
 
-	export function getRocketByEntity(entity: number): Nullable<Rocket> {
-		return RocketManager.rocketTypes[Entity.getTypeName(entity)] || null;
+	export function getRocketByEntity(entityUid: number): Nullable<RocketType> {
+		return RocketManager.rocketTypes[Entity.getTypeName(entityUid)] || null;
 	}
 
-	export function hasRocketEntity(entity: string | number): boolean {
-		return String(entity) in RocketManager.rocketEntities;
+	export function hasRocketEntity(entityUid: string | number): boolean {
+		return String(entityUid) in RocketManager.rocketEntities;
 	}
 
-	export function registerRocket(rocket: Rocket) {
-		RocketManager.rocketTypes[rocket.getEntityType()] = rocket;
+	export function registerRocketType(rocket: RocketType) {
+		RocketManager.rocketTypes[rocket.entityType] = rocket;
 	}
 
-	export function deleteRocketEntity(entity: number): void {
-		delete RocketManager.rocketEntities[entity];
+	export function deleteRocketEntity(entityUid: number): void {
+		delete RocketManager.rocketEntities[entityUid];
 	}
 
-    export function findRocketByItemID(id: number): Nullable<Rocket> {
+    export function findRocketByItemID(itemId: number): Nullable<RocketType> {
         for(const i in rocketTypes) {
-            if(rocketTypes[i].id == id) {
+            if(rocketTypes[i].itemId == itemId) {
                 return rocketTypes[i];
             }
             return null;
@@ -57,8 +76,11 @@ namespace RocketManager {
 
 	Saver.addSavesScope(
 		"galacticraft.rocketEntities",
-		function read(scope: typeof rocketEntities) {
-			rocketEntities = scope || {};
+		function read(savedRocketEntities: typeof rocketEntities) {
+			for(const rocketID in savedRocketEntities) {
+				const entity = rocketEntities[rocketID] = RocketEntity.from(savedRocketEntities[rocketID]);
+			}
+			return;
 		},
 		function save() {
 			return rocketEntities;
@@ -68,4 +90,9 @@ namespace RocketManager {
 	Callback.addCallback("LevelLeft", () => {
 		rocketEntities = {};
 	});
+}
+
+declare namespace Callback {
+	export function addCallback(name: "Galacticraft:RocketEntityAdded", func: (rocketEntity: RocketEntity) => void);
+	export function addCallback(name: "Galacticraft:RocketEntityRemoved", func: (entity: number) => void);
 }
