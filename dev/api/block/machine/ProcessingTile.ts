@@ -120,6 +120,10 @@ abstract class ProcessingTile extends MachineTile {
         this.data.progress = 0;
     }
 
+    public getCapacity(): number {
+        return 16000;
+    }
+
     public onLoad(): void {
         this.setActiveIfNeeded();
     }

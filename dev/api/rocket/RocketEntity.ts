@@ -392,7 +392,7 @@ class RocketEntity {
 	 * @returns UI.StandardWindow
 	 */
 
-	public static buildContainerUI(slotCount: number): UI.StandardWindow {
+	public static buildContainerUI(slotCount: number): UI.StandartWindow {
 		const content = {
 			standard: {
 				header: {
@@ -445,7 +445,7 @@ class RocketEntity {
 			}
 			content.standard.minHeight = Math.floor(slotCount / maxStringGrid) * slotSize + 10;
 		}
-		return new UI.StandardWindow(content);
+		return new UI.StandartWindow(content);
 	}
 
 	/**

@@ -19,7 +19,7 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
             let height = 3 / 16;
 
             if(i == 5) {
-                height = 5 / 16;
+                height = 4 / 16;
             }
             Block.setShape(this.id, 0, 0, 0, 1, height, 1, i);
         }
@@ -55,7 +55,7 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
             rocketEntity.destroy();
         } else if(this.getRocketTiers().includes(rocket.tier)) {
             const extra = item.extra || new ItemExtraData();
-            const entityID = region.spawnEntity(coords.x + 0.5, coords.y + 0.3, coords.z + 0.5, rocket.entityType);
+            const entityID = region.spawnEntity(coords.x + 0.5, coords.y + 0.2, coords.z + 0.5, rocket.entityType);
             if(entityID == -1) {
                 Network.getClientForPlayer(playerUid).sendMessage(Native.Color.RED + Translation.translate("message.galacticraft.broken_load_of_resources"))
                 return;

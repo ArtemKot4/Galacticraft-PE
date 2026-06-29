@@ -24,3 +24,4 @@ class ElectricCompressor extends ProcessingBlock {
 }
 
 UnformedRecipeFactory.register("compressor").addRecipesFrom(__dir__ + "resources/assets/recipes/compressor");
+//текстуру поменять на обычную нужно, ест 1500 gJ в секунду всегда
