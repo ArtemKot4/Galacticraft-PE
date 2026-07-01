@@ -42,7 +42,7 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
     public onClick(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, playerUid: number): void {
         const region = BlockSource.getDefaultForActor(playerUid);
       
-        if(!RocketPadding.isCenter(this.getRadius(), coords, block.id, region)) {
+        if(!this.isCenter(this.getRadius(), coords, block, region)) {
             return;
         }
         const rocket = RocketManager.findRocketByItemID(item.id);
@@ -61,24 +61,37 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
                 return;
             }
             new PlayerUser(playerUid).decreaseCarriedItem(1);
-            RocketManager.addRocketEntity(rocket, entityID, extra.getInt("fuelAmount", 0), extra.getInt("slotCount", 0));
+            RocketManager.addRocketEntity(rocket, entityID, /*extra.getInt("fuelAmount", 0)*/rocket.getFuelCapacity(), 18 /*extra.getInt("slotCount", 0)*/);
         }
     }
 
+    public destroy(coords: Vector, playerUid: number): void {
+        const rocketEntity = RocketManager.findRocketEntityByPaddingCoords(coords, Entity.getDimension(playerUid));
+        if(rocketEntity != null) {
+            rocketEntity.destroy();
+        }
+        RocketPadding.breakAll(this.getRadius(), coords, BlockSource.getDefaultForActor(playerUid), playerUid);
+    }
+
     public onDestroy(coords: Callback.ItemUseCoordinates, block: Tile, playerUid: number): void {
+        if(this.isCenterBlock(coords, block)) {
+            this.destroy(coords, playerUid);
+            return;
+        }
         const region = BlockSource.getDefaultForActor(playerUid);
-        
         RocketPadding.forEach(this.getRadius(), coords, (x, z) => {
             const currentCoords = new Vector3(x, coords.y, z);
+            const currentBlock = region.getBlock(currentCoords.x, currentCoords.y, currentCoords.z) as BlockState;
 
-            if(RocketPadding.isCenter(this.getRadius(), currentCoords, this.id, region)) {
-                const rocketEntity = RocketManager.findRocketEntityByPaddingCoords(currentCoords, Entity.getDimension(playerUid));
-                if(rocketEntity != null) {
-                    rocketEntity.destroy();
-                }
-                RocketPadding.breakAll(this.getRadius(), currentCoords, region, playerUid);
+            if(this.isCenter(this.getRadius(), currentCoords, currentBlock, region)) {
+                this.destroy(currentCoords, playerUid);
+                return true;
             }
-        })
+        });
+    }
+
+    public isCenterBlock(coords: Vector, block: Tile): boolean {
+        return block.id == this.id && block.data == 5;
     }
 
     public place(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number, region: BlockSource): void {
@@ -89,12 +102,12 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
 
         RocketPadding.forEach(this.getRadius(), new Vector3(coords.x, coords.y + 1, coords.z), (findX, findZ) => {
             const currentCoords = new Vector3(findX, coords.y + 1, findZ);
+            const currentBlock = region.getBlock(currentCoords.x, currentCoords.y, currentCoords.z) as BlockState;
 
-            if(region.getBlockID(currentCoords.x, currentCoords.y, currentCoords.z) != this.id) {
+            if(currentBlock.id != this.id) {
                 return;
             }
-
-            if(RocketPadding.isCenter(this.getRadius(), currentCoords, this.id, region)) {
+            if(this.isCenter(this.getRadius(), currentCoords, currentBlock, region)) {
                 region.setBlock(currentCoords.x, currentCoords.y, currentCoords.z, this.id, 5);
                 let counter = 0;
 
@@ -112,7 +125,7 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
     public static forEach(radius: number, coords: Vector, action: (x: number, z: number) => boolean | void): boolean {
         for(let x = -radius; x <= radius; x++) {
             for(let z = -radius; z <= radius; z++) {
-                if(action(coords.x + x, coords.z + z) == false) {
+                if(action(coords.x + x, coords.z + z) === false) {
                     return false;
                 }
             }
@@ -132,14 +145,18 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
         return count;
     }
 
-    public static isCenter(radius: number, coords: Vector, blockID: number, region: BlockSource): boolean {
-        if(region.getBlockID(coords.x, coords.y, coords.z) == blockID && region.getBlockData(coords.x, coords.y, coords.z) == 5) {
+    public isCenter(radius: number, coords: Vector, block: Tile, region: BlockSource): boolean {
+        if(this.isCenterBlock(coords, block)) {
             return true;
         }
+        let counter = 0;
 
-        return this.forEach(radius, coords, (x, z) => {
+        return RocketPadding.forEach(radius, coords, (x, z) => {
             const block = region.getBlock(x, coords.y, z) as BlockState;
-            if(block.id != blockID || block.data != 0) {
+            if(this.isCenterBlock(new Vector3(x, coords.y, z), block)) {
+                return true;
+            }
+            if(block.id != this.id || (block.data != ++counter && block.data != 0)) {
                 return false;
             }
         });

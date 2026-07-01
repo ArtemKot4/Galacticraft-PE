@@ -17,9 +17,10 @@ class RocketTimer {
                     x: 500 - 20,
                     font: {
                         size: 50,
-                        color: android.graphics.Color.RED
+                        color: android.graphics.Color.RED,
+                        shadow: 0.25
                     },
-                    text: "0"
+                    text: ""
                 }
             }
         });
@@ -34,43 +35,41 @@ class RocketTimer {
             client.send("packet.galacticraft.init_rocket_timer_thread", {
                 timer
             });
-        };
-    };
+        }
+    }
 
-    public static updateText(timer: number) {
-        return RocketTimer.UI.getElements().get("text").setBinding("text", String(timer));
-    };
+    public static updateText(text: string): void {
+        if(RocketTimer.UI.isOpened()) {
+            return RocketTimer.UI.getElements().get("text").setBinding("text", String(text));
+        }
+    }
 
     public static close(): void {
         RocketTimer.UI.close();
-        RocketTimer.inited = false;
-        RocketTimer.value = 0;
-    };
+    }
 
-    public static start(): void {
-        Updatable.addLocalUpdatable({
-            update() {
-                if(RocketTimer.value <= -1) {
-                    RocketTimer.close();
-                    this.remove = true;
-                    return;
-                };
-
-                RocketTimer.updateText(RocketTimer.value);
+    @SubscribeEvent
+    public static onNativeGuiChanged(screenName: string): void {
+        if(screenName == EScreenName.IN_GAME_PLAY_SCREEN) {
+            if(RocketTimer.value != -1 && !RocketTimer.UI.isOpened()) {
+                RocketTimer.UI.open();
             }
-        });
-    };
-};
-
+        } else {
+            RocketTimer.UI.close();
+        }
+    }
+}
 Network.addClientPacket("packet.galacticraft.init_rocket_timer_thread", (data: {
     timer: number
 }) => {
     RocketTimer.value = data.timer;
-
-    if(RocketTimer.inited === false) {
+    if(data.timer == -1) {
+        RocketTimer.updateText("");
+        RocketTimer.close();
+        return;
+    }
+    if(RuntimeData.local.screenName == EScreenName.IN_GAME_PLAY_SCREEN && !RocketTimer.UI.isOpened()) {
         RocketTimer.UI.open();
-        RocketTimer.start();
-    };
-
-    RocketTimer.inited = true;
+    }
+    RocketTimer.updateText(String(data.timer));
 });

@@ -79,7 +79,9 @@ namespace RocketManager {
 		function read(savedRocketEntities: typeof rocketEntities) {
 			for(const rocketID in savedRocketEntities) {
 				const entity = rocketEntities[rocketID] = RocketEntity.from(savedRocketEntities[rocketID]);
+				entity.startTickIfNeed();
 			}
+			return;
 		},
 		function save() {
 			return rocketEntities;

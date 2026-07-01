@@ -2,19 +2,21 @@ class RocketEvents {
 	@SubscribeEvent
 	public static onEntityInteract(entity: number, playerUid: number, coords: Vector): void {
 		if(RocketManager.isRocketType(entity)) {
+			alert("взаимодействие с ракетой")
 			let rocketEntity = RocketManager.getRocketEntity(entity);
 
 			if(rocketEntity == null) {
 				rocketEntity = RocketManager.addRocketEntity(RocketManager.getRocketByEntity(entity), entity, 0, 0);
 			}
 			if(Entity.getSneaking(playerUid) == true) {
-				Game.prevent();
 				rocketEntity.openContainer(playerUid);
 			} else {
-				Entity.rideAnimal(entity, playerUid);
-				rocketEntity.rider = playerUid;
-				rocketEntity.sit(playerUid);
-				Network.getClientForPlayer(playerUid).send("packet.galacticraft.set_rocket_view_perspective", [true]);
+				if(rocketEntity.isTaken()) {
+					alert("Занято.")
+					Game.prevent();
+					return;
+				}
+				rocketEntity.sit(playerUid);	
 			}
 		}
 	}
@@ -24,7 +26,7 @@ class RocketEvents {
 		const rocket = RocketManager.getRocketEntity(entityUid);
 		if(rocket != null) {
 			Game.prevent();
-			rocket.destroy(entityUid);
+			rocket.destroy();
 		}
 	}
 }

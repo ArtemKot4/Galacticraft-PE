@@ -34,17 +34,17 @@
 	],
 	"include": [],
 	"files": [
-		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\StorageInterface.d.ts",
-		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\ChargeItem.d.ts",
-		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\SoundLib.d.ts",
-		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\main.d.ts",
-		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\DependenceHelper.d.ts",
-		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\energy-net.d.ts",
-		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\toolchain\\declarations\\core-engine.d.ts",
-		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\ChargeItemRegistry.d.ts",
-		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\DungeonUtility.d.ts",
 		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\RecipeViewer.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\ToolLib.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\main.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\energy-net.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\ChargeItemRegistry.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\SoundLib.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\ChargeItem.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\StorageInterface.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\DungeonUtility.d.ts",
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\DependenceHelper.d.ts",
 		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\ConnectedTexture.d.ts",
-		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\galacticraft\\declarations\\ToolLib.d.ts"
+		"C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\toolchain\\declarations\\core-engine.d.ts"
 	]
 }
