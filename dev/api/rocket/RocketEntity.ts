@@ -3,7 +3,21 @@
  */
 
 class RocketEntity {
+	/**
+	 * Updatable cannot be added when previous is alive
+	 */
+
+	protected updatableInited: boolean = false;
+	
+	/**
+	 * Need to learn when player inside rocket
+	 */
+
 	protected taken: boolean = false;
+
+	/**
+	 * Data which usings for client side, as data for client packets
+	 */
 
 	protected client = {
 		changedPerspective: false,
@@ -30,7 +44,7 @@ class RocketEntity {
 	 * Valid unique identifier of player inside rocket
 	 */
 
-	public riderUid: number = null;
+	protected riderUid: number = null;
 
 	/**
 	 * Current launch {@link ELaunchPhase phase}
@@ -129,6 +143,14 @@ class RocketEntity {
 	}
 
 	/**
+	 * Method to get rider uid (especially player uid)
+	 */
+
+	public getRiderUid(): Nullable<number> {
+		return this.riderUid;
+	}
+
+	/**
 	 * Method to get celestial of world where rocket is launched
 	 * @returns IPlanet object of the rocket
 	 */
@@ -168,6 +190,7 @@ class RocketEntity {
 			});
 		}
 	}
+
 	/**
 	 * Method to get empty slot in rocket inventory
 	 */
@@ -181,6 +204,10 @@ class RocketEntity {
 		}
 		return null;
 	}
+
+	/**
+	 * Method to get client if {@link riderUid} is not null
+	 */
 
 	public getClient(): NetworkClient {
 		if(this.riderUid == null) {
@@ -196,12 +223,13 @@ class RocketEntity {
 	 * @param color {@link Native.Color color}
 	 */
 
-	public cancel(message: string, color?: Native.Color): void {
-		const client = this.getClient();
+	public cancel(message?: string, color?: Native.Color): void {
 		this.launch = false;
 		this.timer = this.rocketType.getTimerMax();
+		const client = this.getClient();
+		RocketTimer.sendFor(client, -1);
 
-		if(client != null) {
+		if(message != null && client != null) {
 			client.sendMessage((color || "") + Translation.translate(message));
 		}
 		Callback.invokeCallback("Galacticraft:RocketFlightCancelled", this);
@@ -216,6 +244,10 @@ class RocketEntity {
 		return Entity.getRider(this.entityUid) == this.riderUid;
 	}
 
+	/**
+	 * Method to learn when player is sitting inside
+	 */
+
 	public isTaken(): boolean {
 		return this.taken;
 	}
@@ -224,12 +256,13 @@ class RocketEntity {
 	 * Method to do launch countdown
 	 */
 
-	public countdown() {
+	public countdown(): ELaunchPhase {
 		if(this.timer < -1) {
-			return (this.launchPhase = ELaunchPhase.FLY);
+			return this.launchPhase = ELaunchPhase.FLY;
 		}
 		const client = this.getClient();
 		RocketTimer.sendFor(client, this.timer--);
+		return this.launchPhase;
 	}
 
 	public packRocketPadding(): void {
@@ -248,6 +281,7 @@ class RocketEntity {
 	 * Tick works only when player inside rocket or rocket already flying or flight was done
 	 * @returns will updatable be removed or not
 	 */
+
 	public tick(): boolean {
 		const client = this.getClient();
 		const position = this.getPosition();
@@ -259,27 +293,25 @@ class RocketEntity {
 			if(client != null && !this.client.changedPerspective) {
 				client.send("packet.galacticraft.set_rocket_view_perspective", { set: this.client.changedPerspective = true });
 			}
-		} else {
+			this.updateHeightIndicator();
+		}
+		if(isValidRider == false) {
 			if(client != null) {
 				client.send("packet.galacticraft.set_rocket_view_perspective", { set: this.client.changedPerspective = false });
 			}
-			if(this.launchPhase == ELaunchPhase.PRE_LAUNCH) {
-				this.cancel("message.galacticraft.rocket_empty");
-				return true;
-			}
 			RocketTimer.sendFor(client, -1);
+			this.updateHeightIndicator(-1);
 			this.riderUid = null;
 			this.taken = false;
+			if(this.launchPhase == ELaunchPhase.PRE_LAUNCH) {
+				this.cancel("message.galacticraft.rocket_empty");
+			}
+		}
+		if(this.launch == false) {
+			return;
 		}
 		if(World.getThreadTime() % 20 == 0) {
 			if(this.launchPhase == ELaunchPhase.PRE_LAUNCH) {
-				if(this.fuel < this.rocketType.getMinFuelAmount()) {
-					if(!this.client.sendedMessage) {
-						this.getClient().sendMessage(Translation.translate("message.galacticraft.not_enough_rocket_fuel"));
-						this.client.sendedMessage = true;
-					}
-					return;
-				}
 				this.preLaunch();
 				return;
 			}
@@ -296,6 +328,7 @@ class RocketEntity {
 				this.setVelocity();
 			}
 		}
+		return;
 	}
 
 	/**
@@ -307,27 +340,55 @@ class RocketEntity {
 	}
 
 	/**
-	 * Inits updatable when player is sitting
+	 * Method to update height indicator, works only on client side
 	 */
-	public startTickIfNeed(): void {
-		if(this.riderUid != null || this.launch == true) {
-			const self = this;
-			return Updatable.addUpdatable({
-				remove: false,
-				update() { 
-					if(!self.isValid()) {
-						this.remove = true;
-						return;
-					}
-					const value = self.tick();
-					if(typeof value == "boolean") {
-						this.remove = value;
-					}
-					return;
-				}
+
+	public updateHeightIndicator(value: number = this.getPosition().y): void {
+		const client = this.getClient();
+		if(client != null) {
+			return client.send("packet.galacticraft.send_height_indicator", {
+				height: value == -1 ? -1 : value / (this.rocketType.getFinalHeight() - this.startHeight)
 			});
 		}
 	}
+
+	/**
+	 * Inits updatable when rocket is not launched
+	 */
+
+	public loadIfNeed(): void {
+		this.updateHeightIndicator();
+		if(this.launch == true) {
+			return;
+		}
+		if(this.updatableInited == true) {
+			const client = this.getClient();
+			if(client != null) {
+				client.sendMessage(Translation.translate("message.galacticraft.rocket_launch_need_time"));
+			}
+			return;
+		}
+		const self = this;
+		this.updatableInited = true;
+		Updatable.addUpdatable({
+			remove: false,
+			update() { 
+				if(!self.isValid()) {
+					self.updatableInited = !(this.remove = true);
+					return;
+				}
+				const value = self.tick();
+				if(typeof value == "boolean") {
+					self.updatableInited = !(this.remove = value);
+				}
+				return;
+			}
+		});
+	}
+
+	/**
+	 * Method to set velocity and pack padding when rocket is launched, works only when current phase is {@link ELaunchPhase.PRE_LAUNCH}
+	 */
 
 	public preLaunch(): void {
 		if(this.countdown() == ELaunchPhase.FLY) {
@@ -338,6 +399,10 @@ class RocketEntity {
 			Callback.invokeCallback("Galacticraft:RocketFlightStarted", this);
 		}
 	}
+
+	/**
+	 * Works when rocket reach final height, default stops rocket and opens galaxy map 
+	 */
 
 	public onFinalHeight(): void {
 		this.stop();
@@ -365,13 +430,38 @@ class RocketEntity {
 		this.client.changedPerspective = false;
 		this.client.sendedMessage = false;
 		Callback.invokeCallback("Galacticraft:RocketSit", this);
-		Network.getClientForPlayer(playerUid).send("packet.galacticraft.set_rocket_view_perspective", [true]);
-		
-		if(this.launch == false) {
-			this.launch = true;
-			this.startTickIfNeed();
+		const client = this.getClient();
+
+		if(client != null) {
+			client.sendMessage(Translation.translate("message.galacticraft.rider_notification"));
+			client.send("packet.galacticraft.set_rocket_view_perspective", [true]);
 		}
+		this.loadIfNeed();
 		return true;
+	}
+
+	/**
+	 * Method which changing launch state if current phase is {@link ELaunchPhase.PRE_LAUNCH}
+	 */
+
+	public changeLaunch(launch: boolean): void {
+		if(this.launchPhase != ELaunchPhase.PRE_LAUNCH) {
+			this.launch = true;
+			return;
+		}
+		if(this.fuel < this.rocketType.getMinFuelAmount()) {
+			const client = this.getClient();
+			if(client != null &&!this.client.sendedMessage) {
+				client.sendMessage(Translation.translate("message.galacticraft.not_enough_rocket_fuel"));
+				this.client.sendedMessage = true;
+			}
+			return;
+		}
+		if(launch == false) {
+			return this.cancel();
+		}
+		this.launch = launch;
+		this.loadIfNeed();
 	}
 
 	/**
@@ -424,12 +514,28 @@ class RocketEntity {
 		}
 	}
 
+	/**
+	 * Method to get rocket entity uid
+	 */
+
 	public getEntityUid(): number {
 		return this.entityUid;
 	}
 
+	/**
+	 * Method to get slot count
+	 */
+
 	public getSlotCount(): number {
 		return this.slotCount;
+	}
+
+	/**
+	 * Method to get current launch state
+	 */
+
+	public getLaunchState(): boolean {
+		return this.launch;
 	}
 
 	/**
@@ -437,6 +543,7 @@ class RocketEntity {
 	 * @param rocketEntityData fields of RocketEntity
 	 * @returns RocketEntity
 	 */
+
 	public static from(rocketEntityData: RocketEntity): RocketEntity {
 		const rocketEntity = new RocketEntity();
 		for(const key in rocketEntityData) {
@@ -498,11 +605,11 @@ class RocketEntity {
 		if(slotCount != null) {
 			let y = 50 + 40 * 7 + 30;
 
-			for(let i = 1; i <= slotCount; i++) {
-				content.elements[String(i)] = {
+			for(let i = 0; i < slotCount; i++) {
+				content.elements[String(i + 1)] = {
 					type: "slot",
 					size: slotSize,
-					x: 50 + (i % maxStringGrid) * slotSize,
+					x: 50 + (slotSize * (i % maxStringGrid)),
 					y: y + Math.floor(i / maxStringGrid) * slotSize,
 				};
 			}
@@ -539,13 +646,86 @@ class RocketEntity {
 	}
 }
 
+const RocketHeightIndicatorUI = (() => {
+	const window = new UI.Window({
+		location: {
+			x: 0,
+			y: UI.getScreenHeight() / 2 - 321 / 2,
+			width: 30,
+			height: 321
+		},
+		elements: {
+			"indicator": {
+				type: "image",
+				x: 0,
+				y: 0,
+				bitmap: "rocket.overworld_height_indicator",
+				width: 20 * 45 + 70,
+				height: 242 * 45 - 70,
+				clicker: {
+					onLongClick() {
+						Network.sendToServer("packet.galacticraft.open_rocket_container_for", {});
+					}
+				}
+			},
+			"player": {
+				type: "image",
+				x: 85,
+				y: 9000,
+				scale: 80,
+				bitmap: "rocket.player_skin",
+				clicker: {
+					onClick() {
+						Network.sendToServer("packet.galacticraft.launch_rocket", {});
+					}
+				}
+			}
+		}
+	});
+	window.setAsGameOverlay(true);
+	window.setTouchable(true);
+
+	return window;
+})();
+
+Network.addServerPacket("packet.galacticraft.open_rocket_container_for", (client: NetworkClient) => {
+	const playerUid = client.getPlayerUid();
+	const rocketEntity = RocketManager.getRocketEntityByRiderUid(playerUid);
+	if(rocketEntity != null) {
+		rocketEntity.openContainer(playerUid);
+	}
+});
+
+Network.addServerPacket("packet.galacticraft.launch_rocket", (client: NetworkClient) => {
+	const rocketEntity = RocketManager.getRocketEntityByRiderUid(client.getPlayerUid());
+	if(rocketEntity != null) {
+		rocketEntity.changeLaunch(!rocketEntity.getLaunchState());
+	}
+});
+
+Network.addClientPacket("packet.galacticraft.send_height_indicator", (data: { height: number }) => {
+	if(data.height == -1) {
+		RocketHeightIndicatorUI.close();
+		return;
+	}
+	if(!RocketHeightIndicatorUI.isOpened()) {
+		if(RuntimeData.local.screenName == EScreenName.IN_GAME_PLAY_SCREEN) {
+			RocketHeightIndicatorUI.open();
+		}
+	}
+	if(RocketHeightIndicatorUI.isOpened()) {
+		//Game.message("x: " + String(RocketHeightIndicatorUI.content.elements["player"].x) + ", y: " + String(9700 - (data.height * 100) * 80));
+		//RocketHeightIndicatorUI.getElements().get("player").setPosition(RocketHeightIndicatorUI.content.elements["player"].x, 9700 - (data.height * 100) * 80);
+		RocketHeightIndicatorUI.getElements().get("player").setPosition(RocketHeightIndicatorUI.content.elements["player"].x, 10100 - (data.height * 100) * 80);
+		return;
+	}
+});
+
 Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (data: { entityUid: number, slotCount: number }) => {
 	const window = RocketEntity.buildContainerUI(data.slotCount);
 
 	ItemContainer.registerScreenFactory("galacticraft.rocket:" + data.entityUid, (container, screenName) => {
-		if(screenName == "fuel_storage") {
-			return window;
-		}
+		return window;
 	});
 });
 
@@ -584,19 +764,34 @@ Translation.addTranslation("message.galacticraft.padding_positioning_bug_issue",
 	ru: "Возникла критическая ошибка с определением площадки для ракеты. Пожалуйста, закройте игру и доложите разработчику о проблеме."
 });
 
+Translation.addTranslation("message.galacticraft.rider_notification", {
+	en: "Rocket control:\n    1. To launch the rocket, click on the player icon on the height indicator.\n    2. To exit the rocket, press space.\n    3. To check fuel, hold the background of the height indicator.",
+	ru: "Управление ракетой:\n    1. Для взлёта ракеты нажмите на иконку игрока на индикаторе высоты.\n    2. Для выхода из ракеты нажмите пробел.\n    3. Чтобы узнать топливо, удерживайте фон индикатора высоты."
+});
+
+Translation.addTranslation("message.galacticraft.rocket_launch_need_time", {
+	en: "Please, wait a few seconds before the next launch.",
+	ru: "Пожалуйста, подождите несколько секунд перед следующим запуском."
+});
+
 declare namespace Callback {
 	/**
 	 * Callback for know when rocket started fly
 	 */
+	
 	export function addCallback(name: "Galacticraft:RocketFlightStarted", func: (rocketEntity: RocketEntity) => void);
+	
 	/**
 	 * Callback for know when rocket launch
 	 */
+
 	export function addCallback(name: "Galacticraft:RocketSit", func: (rocketEntity: RocketEntity) => void);
+	
 	/**
 	 * Callback for know when rocket fly is done
 	 * @param func rocketEntity is null if rocket was exploded
 	 */
+
 	export function addCallback(name: "Galacticraft:RocketFlightCompleted", func: (rocketEntity: RocketEntity) => void);
 
 	export function addCallback(name: "Galacticraft:RocketFlightCancelled", func: (rocketEntity: RocketEntity) => void);

@@ -28,7 +28,7 @@ abstract class RocketType {
     }
 
     public getFinalHeight(): number {
-        return 1000;
+        return 700;
     }
 
     public getRocketPadding(): BasicBlock & { getRadius(): number } {

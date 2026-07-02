@@ -4,7 +4,7 @@ class RocketTier1 extends RocketType {
     public override tier: number = 1;
     
     public override getFuelCapacity(): number {
-        return 500;
+        return 1200;
     }
 }
 

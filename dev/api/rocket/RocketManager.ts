@@ -39,6 +39,16 @@ namespace RocketManager {
 		return RocketManager.rocketEntities[String(entityUid)] || null;
 	}
 
+	export function getRocketEntityByRiderUid(riderUid: number): Nullable<RocketEntity> {
+		for(const rocketID in rocketEntities) {
+			const rocketEntity = getRocketEntity(rocketID);
+			if(rocketEntity.getRiderUid() == riderUid) {
+				return rocketEntity;
+			}
+		}
+		return null;
+	}
+
 	export function getRocketEntities(): typeof rocketEntities {
 		return rocketEntities;
 	}
@@ -79,7 +89,7 @@ namespace RocketManager {
 		function read(savedRocketEntities: typeof rocketEntities) {
 			for(const rocketID in savedRocketEntities) {
 				const entity = rocketEntities[rocketID] = RocketEntity.from(savedRocketEntities[rocketID]);
-				entity.startTickIfNeed();
+				entity.loadIfNeed();
 			}
 			return;
 		},

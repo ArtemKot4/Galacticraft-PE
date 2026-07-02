@@ -32,7 +32,7 @@ class RocketTimer {
 
     public static sendFor(client: NetworkClient, timer: number) {
         if(client != null) {
-            client.send("packet.galacticraft.init_rocket_timer_thread", {
+            client.send("packet.galacticraft.init_rocket_timer", {
                 timer
             });
         }
@@ -47,21 +47,8 @@ class RocketTimer {
     public static close(): void {
         RocketTimer.UI.close();
     }
-
-    @SubscribeEvent
-    public static onNativeGuiChanged(screenName: string): void {
-        if(screenName == EScreenName.IN_GAME_PLAY_SCREEN) {
-            if(RocketTimer.value != -1 && !RocketTimer.UI.isOpened()) {
-                RocketTimer.UI.open();
-            }
-        } else {
-            RocketTimer.UI.close();
-        }
-    }
 }
-Network.addClientPacket("packet.galacticraft.init_rocket_timer_thread", (data: {
-    timer: number
-}) => {
+Network.addClientPacket("packet.galacticraft.init_rocket_timer", (data: { timer: number }) => {
     RocketTimer.value = data.timer;
     if(data.timer == -1) {
         RocketTimer.updateText("");

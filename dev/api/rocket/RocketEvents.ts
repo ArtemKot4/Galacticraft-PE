@@ -2,7 +2,6 @@ class RocketEvents {
 	@SubscribeEvent
 	public static onEntityInteract(entity: number, playerUid: number, coords: Vector): void {
 		if(RocketManager.isRocketType(entity)) {
-			alert("взаимодействие с ракетой")
 			let rocketEntity = RocketManager.getRocketEntity(entity);
 
 			if(rocketEntity == null) {
@@ -12,7 +11,6 @@ class RocketEvents {
 				rocketEntity.openContainer(playerUid);
 			} else {
 				if(rocketEntity.isTaken()) {
-					alert("Занято.")
 					Game.prevent();
 					return;
 				}
@@ -29,39 +27,16 @@ class RocketEvents {
 			rocket.destroy();
 		}
 	}
+
+	@SubscribeEvent
+    public static onNativeGuiChanged(screenName: string): void {
+        if(screenName == EScreenName.IN_GAME_PLAY_SCREEN) {
+            if(RocketTimer.value != -1 && !RocketTimer.UI.isOpened()) {
+                RocketTimer.UI.open();
+            }
+        } else {
+            RocketTimer.UI.close();
+			RocketHeightIndicatorUI.close();
+        }
+    }
 }
-
-const ui: UI.Window = (() => {
-	const window = new UI.Window({
-		drawing: [{
-			"type": "background",
-			"color": android.graphics.Color.TRANSPARENT
-		}],
-		elements: {}
-	});
-	const height = UI.getScreenHeight() / 2 - 300;
-	const slotSize = 70;
-	const startPoint = 1000 / 2 - (slotSize * 9);
-	window.setAsGameOverlay(true);
-
-	for(let i = 0; i < 9; i++) {
-		window.content.elements[i] = {
-			type: "slot",
-			x: startPoint + (slotSize * i),
-			y: height,
-			size: slotSize
-		}
-	}
-	return window;
-})();
-
-let isOpened = false;
-Item.registerUseFunctionForID(VanillaItemID.saddle, () => {
-	if(!isOpened) {
-		ui.open();
-		isOpened = true;
-	} else {
-		ui.close();
-		isOpened = false;
-	}
-});
