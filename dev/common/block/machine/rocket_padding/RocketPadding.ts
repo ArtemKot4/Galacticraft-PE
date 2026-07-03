@@ -45,15 +45,12 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
         if(!this.isCenter(this.getRadius(), coords, block, region)) {
             return;
         }
-        const rocket = RocketManager.findRocketByItemID(item.id);
+        if(RocketManager.findRocketEntityByPaddingCoords(coords, Entity.getDimension(playerUid)) != null) {
+            return;
+        }
+        const rocket = RocketManager.findRocketTypeByItemID(item.id);
 
-        if(!rocket) {
-            const rocketEntity = RocketManager.findRocketEntityByPaddingCoords(coords, Entity.getDimension(playerUid));
-            if(rocketEntity == null) {
-                return;
-            }
-            rocketEntity.destroy();
-        } else if(this.getRocketTiers().includes(rocket.tier)) {
+        if(rocket != null && this.getRocketTiers().includes(rocket.tier)) {
             const extra = item.extra || new ItemExtraData();
             const entityID = region.spawnEntity(coords.x + 0.5, coords.y + 0.2, coords.z + 0.5, rocket.entityType);
             if(entityID == -1) {

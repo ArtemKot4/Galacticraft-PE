@@ -33,7 +33,7 @@ api/universe/galaxy/Galaxy.ts
 
 api/universe/atmosphere/WeatherEvent.ts
 api/universe/atmosphere/IAtmosphereProperties.ts
-api/universe/planet/IPlanet.ts
+api/universe/planet/CelestialBody.ts
 api/universe/planet/Planet.ts
 
 api/universe/satellite/ISatellite.ts

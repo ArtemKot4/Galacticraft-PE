@@ -5,7 +5,7 @@ class RocketEvents {
 			let rocketEntity = RocketManager.getRocketEntity(entity);
 
 			if(rocketEntity == null) {
-				rocketEntity = RocketManager.addRocketEntity(RocketManager.getRocketByEntity(entity), entity, 0, 0);
+				rocketEntity = RocketManager.addRocketEntity(RocketManager.getRocketTypeByEntity(entity), entity, 0, 0);
 			}
 			if(Entity.getSneaking(playerUid) == true) {
 				rocketEntity.openContainer(playerUid);
@@ -39,4 +39,18 @@ class RocketEvents {
 			RocketHeightIndicatorUI.close();
         }
     }
+
+	@SubscribeEvent
+	public static onLevelLeft() {
+		RocketManager.rocketEntities = {};
+	}
+
+	@SubscribeEvent
+	public static onServerLevelLoaded() {
+		for(const id in RocketManager.rocketEntities) {
+			const entity = RocketManager.rocketEntities[id] = RocketEntity.from(RocketManager.rocketEntities[id]);
+			entity.loadIfNeed();
+			Network.sendServerMessage("Rocket " + entity.getEntityUid() + " is valid" + entity.isValid());
+		}
+	}
 }

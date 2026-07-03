@@ -53,8 +53,8 @@ class Mars extends Planet {
         }
     }
 
-    public override getIcon(): string {
-        return "environment.mars";
+    public override getIconPath(): string {
+        return "environment/mars";
     }
 
     public override getName(): string {

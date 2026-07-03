@@ -1,4 +1,4 @@
-class Planet extends BasicDimension implements IPlanet {
+class Planet extends BasicDimension implements CelestialBody {
     public satellites: number[];
 
     public getName(): string {
@@ -11,7 +11,7 @@ class Planet extends BasicDimension implements IPlanet {
         return "message.galacticraft.unnamed";
     }
 
-    public getIcon(): Nullable<string> {
+    public getIconPath(): Nullable<string> {
         return null;
     }
 

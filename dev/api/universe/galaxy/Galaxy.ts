@@ -1,14 +1,14 @@
 abstract class Galaxy implements ILocalizeable {
     public planets: Set<number> = new Set();
 
-    public addPlanet(planet: IPlanet): this {
-        this.processIPlanet(planet);
+    public addPlanet(planet: CelestialBody): this {
+        this.processCelestialBody(planet);
         this.planets.add(planet.id);
-        Galacticraft.IPlanetData[planet.id] = planet;
+        Galacticraft.CelestialBodies[planet.id] = planet;
         return this;
     }
 
-    protected processIPlanet(planet: IPlanet): void {
+    protected processCelestialBody(planet: CelestialBody): void {
         if(!("satellites" in planet)) {
             planet.satellites = [];
         }
@@ -41,19 +41,36 @@ abstract class Galaxy implements ILocalizeable {
             planet.addSatellite = (satellite: ISatellite) => {
                 satellite.linkedPlanet = planet.id;
                 planet.satellites.push(satellite.id);
-                this.processIPlanet(satellite);
+                this.processCelestialBody(satellite);
 
                 return planet;
             }
         }
-        Galacticraft.IPlanetData[planet.id] = planet;
+        let iconPath: string;
+        if("getIconPath" in planet && (iconPath = planet.getIconPath()) != null) {
+            if(!iconPath.endsWith(".png")) {
+                iconPath += ".png";
+            }
+            const file = new java.io.File(iconPath);
+            if(!file.exists() || !file.isFile()) {
+                iconPath = __dir__ + "resources/assets/" + iconPath;
+                alert("не файл: " + this.getLocalizedName())
+            }
+            const splitedPath = iconPath.split("/");
+            let iconName = splitedPath[splitedPath.length - 1];
+            if(iconName.endsWith(".png")) {
+                iconName = iconName.replace(".png", "");
+            }
+            UI.TextureSource.put("celestial_body." + iconName, android.graphics.BitmapFactory.decodeFile(iconPath));
+        }
+        Galacticraft.CelestialBodies[planet.id] = planet;
     }
 
-    public getPlanet(id: number): Nullable<IPlanet> {
+    public getPlanet(id: number): Nullable<CelestialBody> {
         if(!this.planets.has(id)) {
             throw new GalacticraftException(`Planet by id "${id}" not contains in galaxy "${this.getName()}"`)
         }
-        return Galacticraft.getIPlanetByID(id) || null;
+        return Galacticraft.getCelestialBodyByID(id) || null;
     }
 
     abstract getName(): string;

@@ -1,3 +1,3 @@
-interface ISatellite extends IPlanet {
+interface ISatellite extends CelestialBody {
     linkedPlanet: number;
 }

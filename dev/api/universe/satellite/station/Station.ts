@@ -3,6 +3,10 @@ class Station extends Satellite {
     public owner: number;
     public members: Record<number, IStationMemberPermissions> = {};
 
+    public hasBedrockLayer(): boolean {
+        return true;
+    }
+
     public override getLayers(): Dimensions.TerrainLayerParams[] {
         return [
             {
@@ -21,7 +25,7 @@ class Station extends Satellite {
         ];
     }
 
-    public override getIcon(): string {
+    public override getIconPath(): string {
         return "environment.station";
     }
     

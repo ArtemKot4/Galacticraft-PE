@@ -68,8 +68,8 @@ class Moon extends Satellite {
         return ["spacerace.ogg", __dir__ + "assets/sound/spacerace.ogg"];
     }
 
-    public override getIcon(): string {
-        return "environment.moon";
+    public override getIconPath(): string {
+        return "environment/moon";
     }
 
     public override getName(): string {

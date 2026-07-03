@@ -39,7 +39,7 @@ namespace RocketManager {
 		return RocketManager.rocketEntities[String(entityUid)] || null;
 	}
 
-	export function getRocketEntityByRiderUid(riderUid: number): Nullable<RocketEntity> {
+	export function findRocketEntityByRiderUid(riderUid: number): Nullable<RocketEntity> {
 		for(const rocketID in rocketEntities) {
 			const rocketEntity = getRocketEntity(rocketID);
 			if(rocketEntity.getRiderUid() == riderUid) {
@@ -59,7 +59,7 @@ namespace RocketManager {
 		}
 	}
 
-	export function getRocketByEntity(entityUid: number): Nullable<RocketType> {
+	export function getRocketTypeByEntity(entityUid: number): Nullable<RocketType> {
 		return RocketManager.rocketTypes[Entity.getTypeName(entityUid)] || null;
 	}
 
@@ -75,10 +75,10 @@ namespace RocketManager {
 		delete RocketManager.rocketEntities[entityUid];
 	}
 
-    export function findRocketByItemID(itemId: number): Nullable<RocketType> {
-        for(const i in rocketTypes) {
-            if(rocketTypes[i].itemId == itemId) {
-                return rocketTypes[i];
+    export function findRocketTypeByItemID(itemId: number): Nullable<RocketType> {
+        for(const entityType in rocketTypes) {
+            if(rocketTypes[entityType].itemId == itemId) {
+                return rocketTypes[entityType];
             }
             return null;
         }
@@ -87,20 +87,13 @@ namespace RocketManager {
 	Saver.addSavesScope(
 		"galacticraft.rocketEntities",
 		function read(savedRocketEntities: typeof rocketEntities) {
-			for(const rocketID in savedRocketEntities) {
-				const entity = rocketEntities[rocketID] = RocketEntity.from(savedRocketEntities[rocketID]);
-				entity.loadIfNeed();
-			}
+			rocketEntities = savedRocketEntities;
 			return;
 		},
 		function save() {
 			return rocketEntities;
 		}
 	);
-
-	Callback.addCallback("LevelLeft", () => {
-		rocketEntities = {};
-	});
 }
 
 declare namespace Callback {

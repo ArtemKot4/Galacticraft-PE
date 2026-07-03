@@ -33,7 +33,7 @@ namespace Galacticraft {
         export const OXYGEN = EnergyTypeRegistry.createEnergyType("galacticraft_oxygen", 1);
     }
     
-    export const IPlanetData: Record<number, IPlanet> = {};
+    export const CelestialBodies: Record<number, CelestialBody> = {};
     const galaxies: Record<string, Galaxy> = {};
     let CURRENT_GALAXY = "milky_way";
     let musicAudioSource: AudioSourceClient = null;
@@ -67,8 +67,8 @@ namespace Galacticraft {
         return getGalaxy(CURRENT_GALAXY);
     }
 
-    export function getIPlanetByID(id: number): Nullable<IPlanet> {
-        return IPlanetData[id] || null;
+    export function getCelestialBodyByID(id: number): Nullable<CelestialBody> {
+        return CelestialBodies[id] || null;
     }
 
     export type OreData = {
@@ -84,7 +84,7 @@ namespace Galacticraft {
     });
 
     Callback.addCallback("DimensionLoaded", (currentId, lastId) => {
-        const planet = Galacticraft.getIPlanetByID(currentId);
+        const planet = Galacticraft.getCelestialBodyByID(currentId);
         if("getMusicNameAndPath" in planet) {
             const musicName = planet.getMusicNameAndPath()[0];
             musicAudioSource = new AudioSourceClient(Player.getPosition());

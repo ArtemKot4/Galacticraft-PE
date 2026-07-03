@@ -849,7 +849,7 @@ declare abstract class BasicDimension {
     biome: CustomBiome;
     layers: Dimensions.TerrainLayerParams[];
     hasSkyLight?: boolean;
-    hasBedrockLayer?: boolean;
+    hasBedrockLayer?(): boolean;
     hasMoon?: boolean;
     hasSun?: boolean;
     hasVanillaWeather?: boolean;

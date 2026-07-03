@@ -1,4 +1,4 @@
-class Earth implements IPlanet {
+class Earth implements CelestialBody {
     public id = 0;
     
     public getOreData(): { ores: Galacticraft.OreData[]; stone: number[]; } {
@@ -30,8 +30,8 @@ class Earth implements IPlanet {
         }
     }
 
-    public getIcon(): string {
-        return "environment.earth";
+    public getIconPath(): string {
+        return "environment/earth";
     }
 
     public getName(): string {

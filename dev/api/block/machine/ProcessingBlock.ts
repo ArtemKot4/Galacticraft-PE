@@ -7,7 +7,7 @@ abstract class ProcessingBlock extends MachineBlock {
     public setSlotPolicyToTileEntity(): void {
         const tilePrototype = TileEntity.getPrototype(this.id) as ProcessingTile;
         const factory = tilePrototype.getFactory();
-
+        
         if(tilePrototype != null) {
             if(factory instanceof FormedRecipeFactory) {
                 tilePrototype.setupContainer = this.getSetupContainerFunctionWithPolicy((name, id) => factory.storage.some((recipe) => id == recipe.input[name].id));

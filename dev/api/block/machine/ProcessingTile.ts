@@ -46,7 +46,9 @@ abstract class ProcessingTile extends MachineTile {
      */
     public validateRecipe(additionalSlotStorage: Record<string, ItemInstance> = {}): boolean {
         if((this.currentRecipe = this.getFactory().getRecipe({
-            inputSlots: this.inputSlots, currentRecipeIndex: this.currentRecipeIndex, getSlot: (name: string) => this.getSlot(String(name), additionalSlotStorage)
+            inputSlots: this.inputSlots, 
+            currentRecipeIndex: this.currentRecipeIndex, 
+            getSlot: (name: string) => this.getSlot(String(name), additionalSlotStorage)
         })) == null) {
             this.stop();
             return false;

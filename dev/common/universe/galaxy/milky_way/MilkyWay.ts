@@ -13,5 +13,5 @@ Galacticraft.registerGalaxy(new MilkyWay())
 .addPlanet(new Mars(29, "mars_gc", new CustomBiome("mars_gc")))
 .addPlanet(new Venus(14, "venus_gc", new CustomBiome("venus_gc")))
 
-Galacticraft.getIPlanetByID(EDimension.OVERWORLD)
+Galacticraft.getCelestialBodyByID(EDimension.OVERWORLD)
 .addSatellite(new Moon(28, "moon_gc", new CustomBiome("moon_gc")));
