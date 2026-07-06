@@ -305,7 +305,7 @@ class RocketEntity {
 				this.setPerspective(this.client.changedPerspective = true);
 			}
 			this.updateHeightIndicator();
-			if(position.y >= finalHeight / 3 && this.client.celestialInited == false) {
+			if(position.y >= finalHeight / 2.3 && this.client.celestialInited == false) {
 				this.setShouldRenderCelestialBody(this.client.celestialInited = true);
 				//Network.sendServerMessage("celestial body inited")
 			}
@@ -365,10 +365,9 @@ class RocketEntity {
 			} else iconName = iconName.replace(".png", "");
 			let textureResolution = 16;
 			const iconBitmap = UI.TextureSource.getNullable(iconName);
-			Game.message(iconPath + ", iconName: " + iconName);
 			if(iconBitmap != null) {
 				textureResolution = iconBitmap.getWidth();
-			} else Game.message("текстура: " + iconName + " не найдена")
+			}
 			client.send("packet.galacticraft.set_celestial_renderer", { entityUid: this.entityUid, textureName: iconPath, textureResolution: textureResolution, shouldRender: shouldRender });
 		}
 	}
@@ -399,6 +398,7 @@ class RocketEntity {
 	 */
 
 	public loadIfNeed(): void {
+		//Network.sendServerMessage("Load called")
 		this.updateHeightIndicator();
 		if(this.launched == true) {
 			return;
@@ -467,7 +467,8 @@ class RocketEntity {
 	 */
 
 	public sit(playerUid: number): boolean {
-		if(this.taken) {
+		if(this.taken == true) {
+			//Network.sendServerMessage("taken true")
 			return false;
 		}
 		this.timer = this.rocketType.getTimerMax();
@@ -518,7 +519,6 @@ class RocketEntity {
 			if(client != null && this.client.sendedMessage == false) {
 				client.sendMessage(Translation.translate("message.galacticraft.not_enough_rocket_fuel"));
 				this.client.sendedMessage = true;
-				//Network.sendServerMessage("Недостаточно топлива: " + this.fuel)
 			}
 			this.launched = false;
 		}
@@ -558,7 +558,7 @@ class RocketEntity {
 			const extra = new ItemExtraData();
 			extra.putInt("fuelAmount", this.fuel);
 			extra.putInt("slotCount", this.slotCount || 0);
-			Network.sendServerMessage("my data: " + JSON.stringify(this));
+			//Network.sendServerMessage("my data: " + JSON.stringify(this));
 			this.blockSource.spawnDroppedItem(position.x + 0.5, position.y + 0.5, position.z + 0.5, item.id, item.count || 1, item.data || 0, extra);
 			this.container.dropAt(this.blockSource, position.x, position.y, position.z);
 			this.setPerspective(false);
@@ -801,25 +801,31 @@ Network.addClientPacket("packet.galacticraft.send_height_indicator", (data: { he
 });
 
 
-Network.addClientPacket("packet.galacticraft.set_celestial_renderer", (data: { entityUid: number, textureName: string, textureResolution: number, shouldRender: boolean }) => {
-	Game.message(JSON.stringify(data));
+Network.addClientPacket("packet.galacticraft.set_celestial_renderer", (data: { entityUid: number, textureName: string, textureResolution: number, shouldRender: boolean, size?: number, heightOffset?: number }) => {
+	data.size ??= 100;
+	data.heightOffset ??= -100;
 	const cache = RocketEntity.celestialRenderingCache[data.entityUid] ??= {} as ICelestialRenderingCache;
-	const render = cache.render ??= new ActorRenderer()
+	const render = cache.render = new ActorRenderer()
         .addPart("body")
         .endPart()
-        .addPart("celestial_body", "body")
-        .endPart();
-    cache.attachable ??= new AttachableRender(data.entityUid).setRenderer(render); 
-	const part = render.getPart("celestial_body").clear();
-	if(data.shouldRender == true) {
-		data.textureResolution ??= 16;
-		part
+        .addPart("celestial_body", "body", (() => {
+			const mesh = new RenderMesh();
+			mesh.setNormal(0, 1, 0);
+			mesh.addVertex(-data.size, data.heightOffset, -data.size, 0, 0);
+			mesh.addVertex(data.size, data.heightOffset, -data.size, 1, 0);
+			mesh.addVertex(-data.size, data.heightOffset, data.size, 0, 1);
+			mesh.addVertex(data.size, data.heightOffset, -data.size, 1, 0);
+			mesh.addVertex(-data.size, data.heightOffset, data.size, 0, 1);
+			mesh.addVertex(data.size, data.heightOffset, data.size, 1, 1);
+			return mesh;
+		})())
 		.setTextureSize(data.textureResolution, data.textureResolution)
 		.setTexture(data.textureName)
-		.addBox(-200, 250, -200, 400, 0.1, 400, 0, 0, 0)
-		.endPart();
+        .endPart();
+    cache.attachable = new AttachableRender(data.entityUid).setRenderer(render); 
+	if(data.shouldRender == false) {
+		render.getPart("celestial_body").clear();
 	}
-	Game.message("Создан")
 });
 
 Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (data: { entityUid: number, slotCount: number }) => {
@@ -897,7 +903,6 @@ declare namespace Callback {
 	/**
 	 * Callback for know when rocket launch is cancelled
 	 */
-	
+
 	export function addCallback(name: "Galacticraft:RocketFlightCancelled", func: (rocketEntity: RocketEntity) => void);
 }
-

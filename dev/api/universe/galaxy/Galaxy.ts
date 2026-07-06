@@ -54,7 +54,6 @@ abstract class Galaxy implements ILocalizeable {
             const file = new java.io.File(iconPath);
             if(!file.exists() || !file.isFile()) {
                 iconPath = __dir__ + "resources/assets/" + iconPath;
-                alert("не файл: " + this.getLocalizedName())
             }
             const splitedPath = iconPath.split("/");
             let iconName = splitedPath[splitedPath.length - 1];
