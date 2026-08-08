@@ -48,7 +48,10 @@ const CoalGeneratorUI = new UI.StandartWindow({
 			y: 190,
 			width: 100,
 			height: 30,
-			text: "0/0 gJ"
+			text: "0/0 gJ",
+			font: {
+				color: android.graphics.Color.BLACK
+			}
 		},
 		// status: {
 		// 	type: "text",

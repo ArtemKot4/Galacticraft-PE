@@ -65,7 +65,7 @@ class Moon extends Satellite {
     }
 
     public getMusicNameAndPath(): [name: string, path: string] {
-        return ["spacerace.ogg", __dir__ + "assets/sound/spacerace.ogg"];
+        return ["spacerace", __dir__ + "resources/assets/sounds/spacerace.ogg"];
     }
 
     public override getIconPath(): string {
@@ -114,7 +114,12 @@ Callback.addCallback("ItemUse", (c, i, b, isE, p) => {
             Dimensions.transfer(p, 0);
         }
     }
-    if(i.id == VanillaItemID.bone) {
-        SoundLib.getClient().playSound("spacerace", false, 1, 1)
-    }
+    
 })
+
+// Callback.addCallback("ItemUseLocalServer", (c, i ,b, p) => {
+//     if(i.id == VanillaItemID.bone) {
+//         Game.message("запущено")
+//         return Galacticraft.SOUND_POOL.select("spacerace").at({...c, dimension: Player.getDimension()}).at(Player.get()).play();
+//     }
+// });

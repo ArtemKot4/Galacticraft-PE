@@ -1,5 +1,6 @@
 interface CelestialBody extends IAtmosphereProperties, ILocalizeable {
     hasStars?: boolean;
+    hasVanillaWeather?: boolean;
 	readonly id: number;
 	/**
 	 * Method declaring, can be created station of planet or not.

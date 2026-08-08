@@ -32,10 +32,13 @@ abstract class Galaxy implements ILocalizeable {
         if("hasSun" in planet) {
             Dimensions.setShouldRenderSun(planet.id, planet.hasSun);
         }
+        if("hasVanillaWeather" in planet) {
+            Dimensions.setWeatherSeasons(planet.id, planet.hasVanillaWeather);
+        }
         
         if("getMusicNameAndPath" in planet) {
             const [name, path] = planet.getMusicNameAndPath();
-            SoundLib.Registry.registerSound(name, path);
+            //что-то в будущем
         }
         if(!("addSatellite" in planet)) {
             planet.addSatellite = (satellite: ISatellite) => {
