@@ -55,6 +55,68 @@ declare namespace MathHelper {
     function randomNumber(min: number, max: number): number;
     function range(min: number, max: number, step?: number): number[];
 }
+declare class Vector3 {
+    static readonly DOWN: Vector3;
+    static readonly UP: Vector3;
+    static readonly NORTH: Vector3;
+    static readonly SOUTH: Vector3;
+    static readonly EAST: Vector3;
+    static readonly WEST: Vector3;
+    x: number;
+    y: number;
+    z: number;
+    constructor(x: number, y: number, z: number);
+    constructor(vector: Vector);
+    toString(): string;
+    copy(): Vector3;
+    equals(vector: Vector): boolean;
+    add(vector: Vector3): Vector3;
+    subtract(vector: Vector3): Vector3;
+    multiply(scalar: number): Vector3;
+    divide(scalar: number): Vector3;
+    dot(vector: Vector3): number;
+    cross(vector: Vector3): Vector3;
+    length(): number;
+    normalize(): Vector3;
+    static equals(vector1: Vector, vector2: Vector): boolean;
+    static toString(vector: Vector): string;
+    static fromString(string: string): Vector3;
+}
+declare class ItemStack implements ItemInstance {
+    id: number;
+    count: number;
+    data: number;
+    extra?: ItemExtraData;
+    constructor();
+    constructor(instance: ItemInstance);
+    constructor(id: number | ItemInstance);
+    constructor(id: number, count?: number, data?: number, extra?: ItemExtraData);
+    decrease(count?: number): void;
+    increase(count?: number): void;
+    equals(stack: ItemInstance | ItemStack): boolean;
+    getItemInstance(): ItemInstance;
+    isEmpty(): boolean;
+    clear(): void;
+    getMaxStack(): number;
+    getMaxDamage(): number;
+    isNativeItem(): boolean;
+    getStringID(): string;
+    /**
+     * @param level level of string: `0` is `id` format, `1` is `id:data` format, `2` is `id:data:count` format
+     * @returns
+     */
+    toString(level?: 0 | 1 | 2): string;
+    copy(): ItemStack;
+    static equals(stack1: ItemInstance, stack2: ItemInstance): boolean;
+    static contains(stack1: ItemInstance, stack2: ItemInstance): boolean;
+    static isEmpty(stack: ItemInstance): boolean;
+    /**
+     * @param level level of string: `0` is `id` format, `1` is `id:data` format, `2` is `id:data:count` format
+     * @returns
+     */
+    static toString(stack: ItemInstance, level?: 0 | 1 | 2): string;
+    static fromString(string: string): ItemStack;
+}
 declare namespace TileEntity {
     function buildEvents(prototype: TileEntity.TileEntityPrototype): void;
     function openFor(client: NetworkClient, tile: TileEntity.TileEntityPrototype & {
@@ -108,6 +170,20 @@ declare namespace Item {
     function registerHoldFunctionForID(id: number, func: Callback.ItemHoldFunction): void;
     function registerHoldFunction(id: string | number, func: Callback.ItemHoldFunction): void;
     function createLiquidStorageItem(nameID: string, name: string, texture: TextureData, params: ILiquidStorageItemParams, data?: number): void;
+}
+declare namespace Recipes {
+    const itemsAfterBurn: Record<string, ItemInstance>;
+    const specialFuelBurnDurations: Record<string, number>;
+    function getFuelBurnDurationResult(item: ItemInstance | number): Nullable<ItemInstance>;
+    function registerFuelBurnDurationResult(item: ItemInstance | number, itemResult: ItemInstance | number): void;
+    /**
+     * It can be used by mods, but don't usings inside vanilla furnaces
+     */
+    function getSpecialFuelBurnDuration(id: number, data: number): number;
+    /**
+     * Registers fuel burn duration special: not work with vanilla furnaces
+     */
+    function registerSpecialFuelBurnDuration(id: number, data: number, duration: number): void;
 }
 declare namespace World {
     function getDifficulty(): number;
@@ -189,11 +265,11 @@ declare namespace UI {
     const FontManager: typeof com.artemkot4.fireflies.ui.utils.FontManager;
     namespace FONT_TYPESPACES {
         const MINECRAFT: android.graphics.Typeface;
-        const DEFAULT: android.graphics.Typeface;
-        const DEFAULT_BOLD: android.graphics.Typeface;
-        const MONOSPACE: android.graphics.Typeface;
-        const SANS_SERIF: android.graphics.Typeface;
-        const SERIF: android.graphics.Typeface;
+        const DEFAULT: any;
+        const DEFAULT_BOLD: any;
+        const MONOSPACE: any;
+        const SANS_SERIF: any;
+        const SERIF: any;
     }
 }
 declare namespace RenderHelper {
@@ -327,53 +403,6 @@ declare enum EScreenName {
     SURVIVAL_INVENTORY_SCREEN = "survival_inventory_screen",
     INVENTORY_SCREEN = "inventory_screen",
     INVENTORY_SCREEN_POCKET = "inventory_screen_pocket"
-}
-declare class Vector3 {
-    static readonly DOWN: Vector3;
-    static readonly UP: Vector3;
-    static readonly NORTH: Vector3;
-    static readonly SOUTH: Vector3;
-    static readonly EAST: Vector3;
-    static readonly WEST: Vector3;
-    x: number;
-    y: number;
-    z: number;
-    constructor(x: number, y: number, z: number);
-    constructor(vector: Vector);
-    copy(): Vector3;
-    equals(vector: Vector): boolean;
-    add(vector: Vector3): Vector3;
-    subtract(vector: Vector3): Vector3;
-    multiply(scalar: number): Vector3;
-    divide(scalar: number): Vector3;
-    dot(vector: Vector3): number;
-    cross(vector: Vector3): Vector3;
-    length(): number;
-    normalize(): Vector3;
-    static equals(vector1: Vector, vector2: Vector): boolean;
-}
-declare class ItemStack implements ItemInstance {
-    id: number;
-    count: number;
-    data: number;
-    extra?: ItemExtraData;
-    constructor();
-    constructor(instance: ItemInstance);
-    constructor(id: number, count?: number, data?: number, extra?: ItemExtraData);
-    decrease(count?: number): void;
-    increase(count?: number): void;
-    equals(stack: ItemInstance | ItemStack): boolean;
-    getItemInstance(): ItemInstance;
-    isEmpty(): boolean;
-    clear(): void;
-    getMaxStack(): number;
-    getMaxDamage(): number;
-    isNativeItem(): boolean;
-    getStringID(): string;
-    copy(): ItemStack;
-    static equals(stack1: ItemInstance, stack2: ItemInstance): boolean;
-    static contains(stack1: ItemInstance, stack2: ItemInstance): boolean;
-    static isEmpty(stack: any): boolean;
 }
 interface IItemHoldCallback {
     onItemHold?(item: ItemInstance, playerUid: number, slotIndex: number): void;
@@ -678,6 +707,7 @@ declare abstract class CommonTileEntity implements TileEntity {
     readonly z: number;
     readonly dimension: number;
     readonly blockID: number;
+    readonly blockData: any;
     readonly blockSource: BlockSource;
     readonly networkData: SyncedNetworkData;
     readonly networkEntity: NetworkEntity;
@@ -849,7 +879,6 @@ declare abstract class BasicDimension {
     biome: CustomBiome;
     layers: Dimensions.TerrainLayerParams[];
     hasSkyLight?: boolean;
-    hasBedrockLayer?(): boolean;
     hasMoon?: boolean;
     hasSun?: boolean;
     hasVanillaWeather?: boolean;
@@ -860,6 +889,7 @@ declare abstract class BasicDimension {
     addLayer(layer: Dimensions.TerrainLayerParams): void;
     getLayers?(): Dimensions.TerrainLayerParams[];
     getSkyAtmosphereEnabled(): boolean;
+    hasBedrockLayer(): boolean;
     getGenerator(): Dimensions.CustomGenerator;
     getTags(): string[];
     /**

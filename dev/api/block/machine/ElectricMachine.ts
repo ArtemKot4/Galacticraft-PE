@@ -72,7 +72,7 @@ function ElectricMachine(type: EElectricMachineType) {
                     const elements = ui.getContent().elements;
                     if("energy_bar" in elements && "energy_icon" in elements) {
                         const lastOnUpdate = tilePrototype.onUpdate;
-                        tilePrototype.onUpdate = function() {
+                        tilePrototype.onUpdate = function(this: MachineTile) {
                             this.container.setScale("energy_bar", this.data.energy / this.getCapacity());
                             this.container.setScale("energy_icon", this.data.energy / 1);
                             lastOnUpdate.call(this);
