@@ -32,7 +32,7 @@ const CoalGeneratorUI = new UI.StandartWindow({
 		progress_scale: {
 			type: "scale",
 			x: 490,
-			y: 110,
+			y: 115,
 			scale: 4.2,
 			direction: 0,
 			bitmap: "arrow_bar_scale"
@@ -44,13 +44,14 @@ const CoalGeneratorUI = new UI.StandartWindow({
 		},
 		energy_display: {
 			type: "text",
-			x: 400,
-			y: 190,
+			x: 690,
+			y: 130,
 			width: 100,
 			height: 30,
 			text: "0/0 gJ",
 			font: {
-				color: android.graphics.Color.BLACK
+				color: android.graphics.Color.DKGRAY,
+				typeface: android.graphics.Typeface.create(null, 310, false)
 			}
 		},
 		// status: {

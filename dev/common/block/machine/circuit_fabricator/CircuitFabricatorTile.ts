@@ -7,6 +7,10 @@ class CircuitFabricatorTile extends ProcessingTile {
         "result_slot"
     ];
 
+    public override getRecipeEnergyAmount(): number {
+        return 400;
+    }
+
     public override onUpdate(): void {
         if(World.getThreadTime() % 2 == 0) {
             this.container.setBinding("progress_scale", "texture", CircuitFabricatorTile.getValidScaleBitmapName(String(this.container.getBinding("progress_scale", "texture"))));

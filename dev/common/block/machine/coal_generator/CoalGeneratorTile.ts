@@ -19,7 +19,7 @@ class CoalGeneratorTile extends GeneratorTile {
             if(burningDuration != 0) {
                 this.data.canDecreaseItem = true;
                 this.noupdate = false;
-                return Item.getMaxStack(id, data);
+                return count;
             }
             return 0;
         });
@@ -85,8 +85,8 @@ class CoalGeneratorTile extends GeneratorTile {
     public doEnergy(): void {
         if(this.data.burning > 0) {
             const maxEnergyTick = this.getMaxEnergyTick();
-            if(this.data.energyTick < maxEnergyTick && World.getThreadTime() % 4 == 0) {
-                this.data.energyTick = Math.min(this.data.energyTick + 4, maxEnergyTick);
+            if(this.data.energyTick < maxEnergyTick && World.getThreadTime() % 2 == 0) {
+                this.data.energyTick = Math.min(this.data.energyTick + 1, maxEnergyTick);
             }
             this.data.energy = this.data.energyTick;
             this.data.burning--;
@@ -149,6 +149,6 @@ class CoalGeneratorTile extends GeneratorTile {
 }
 
 Translation.addTranslation("message.galacticraft.heat", {
-    en: "Heat: ",
-    ru: "Нагрев: "
+    en: "Heat machine base: ",
+    ru: "Нагрев корпуса: "
 });

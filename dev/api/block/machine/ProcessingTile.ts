@@ -11,6 +11,10 @@ abstract class ProcessingTile extends MachineTile {
         this.data.progress = this.data.progress || 0;
     }
 
+    public getSpendEnergyAmount(): number {
+        return 5;
+    }
+
     public override onTick(): void {
         this.container.validateAll();
         this.container.sendChanges();
@@ -18,10 +22,17 @@ abstract class ProcessingTile extends MachineTile {
         this.container.setScale("progress_scale", this.data.progress / this.getProgressMax());
         this.onUpdate();
 
-        if(this.data.energy < this.getRecipeEnergy() || this.data.active == false) {
+        if(World.getThreadTime() % 8 == 0) {
+            this.data.energy = Math.max(0, this.data.energy - this.getSpendEnergyAmount());
+        }
+        if(this.data.energy < this.getRecipeEnergyAmount() || this.data.active == false) {
+            this.data.progress = 0;
             return;
         }
-        else if(this.data.progress < this.getProgressMax()) {
+        if(this.data.progress < this.getProgressMax()) {
+            if(World.getThreadTime() % 20 == 0) {
+                this.data.energy = Math.max(0, this.data.energy - this.getRecipeEnergyAmount());
+            }
             this.data.progress++;
         } else {
             this.recipeComplete();
@@ -57,15 +68,14 @@ abstract class ProcessingTile extends MachineTile {
     }
 
     public recipeComplete(): void {
-        this.data.energy = Math.max(this.data.energy - this.getRecipeEnergy(), 0);
         this.decreaseInputSlots();
         this.setOutput();
         this.stop();
         this.setActiveIfNeeded();
     }
 
-    public getRecipeEnergy(): number {
-        return this.getCapacity() / 3;
+    public getRecipeEnergyAmount(): number {
+        return 1500;
     }
 
     public getProgressMax(): number {
