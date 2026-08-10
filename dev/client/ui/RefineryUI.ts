@@ -1,4 +1,4 @@
-const RefineryUI = new UI.StandardWindow({
+const RefineryUI = new UI.StandartWindow({
 	standard: {
 		header: {
 			text: {

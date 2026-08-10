@@ -226,6 +226,10 @@ declare namespace IDRegistry {
     function parseID(id: string): number;
 }
 declare namespace LiquidItemRegistry {
+    /**
+     * in mili buckets
+     */
+    const BUCKET_CAPACITY = 1000;
     interface ILiquidStorage {
         capacity: number;
         liquids: string[];
@@ -538,10 +542,7 @@ declare class BasicBlock {
     readonly id: number;
     readonly stringID: string;
     constructor(stringID: string, variationList?: Block.BlockVariation[]);
-    /**
-     * Method declares, can block place rotated by data or not
-     */
-    canRotate(): boolean;
+    build(): void;
     /**
      * Method must list of blockstates which will be registered to block
      */
@@ -568,8 +569,33 @@ declare class BasicBlock {
     isSolid?(): boolean;
     static setStates(id: number, states: ReturnType<typeof BasicBlock.prototype.getStates>): void;
     static setModel(id: number, data: number, model: BlockModel | RenderMesh | BlockRenderer.Model | ICRender.Model): void;
-    static build(blockPrototype: BasicBlock): void;
+}
+declare class BlockEvents {
+    static applyData(blockPrototype: BasicBlock): void;
     private static onLevelDisplayed;
+}
+declare class RotatableBlock extends BasicBlock {
+    build(): void;
+}
+declare class LiquidBlock extends BasicBlock {
+    name: string;
+    stillTexture: string;
+    flowTexture: string;
+    constructor(stringID: string, name: string, stillTexture: string, flowTexture: string);
+    build(): void;
+    inCreative(): boolean;
+    /**
+     * Make liquid renewable as a water
+     */
+    isRenewable(): boolean;
+    /**
+     * Delay between liquid spreading steps in ticks.
+     * @default 10
+     */
+    getTickDelay(): number;
+    getUiTextures?(): string;
+    getModelTextures?(): string;
+    getBucket?(): Block.LiquidDescriptor["bucket"] | [empty: LiquidRegistry.Bucket2LiquidMapping, full: LiquidRegistry.Bucket2LiquidMapping];
 }
 declare class BlockPlant extends BasicBlock implements INeighbourChangeCallback, IPlaceCallback {
     static allowedBlockList: number[];
@@ -592,7 +618,7 @@ declare abstract class BlockBush extends BlockPlant implements IClickCallback, I
     onRandomTick(x: number, y: number, z: number, id: number, data: number, region: BlockSource): void;
     onClick(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number): void;
 }
-declare class RotatableLog extends BasicBlock implements IPlaceCallback {
+declare class RotatableLog extends RotatableBlock implements IPlaceCallback {
     constructor(id: string, texture?: string);
     onPlace(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number, region: BlockSource): void | Vector;
     getSoundType(): Block.Sound;

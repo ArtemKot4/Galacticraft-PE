@@ -1,4 +1,4 @@
-class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCallback, IPlaceCallback {
+class RocketPadding extends RotatableBlock implements IClickCallback, IDestroyCallback, IPlaceCallback {
     public constructor() {
         super("rocket_padding_gc", (() => {
             const variations = [];
@@ -24,10 +24,7 @@ class RocketPadding extends MachineBlock implements IClickCallback, IDestroyCall
             Block.setShape(this.id, 0, 0, 0, 1, height, 1, i);
         }
     }   
-    
-    public override canRotate(): boolean {
-        return true;
-    }
+
     /**
      * Radius is indentation of middle by x and z
      */

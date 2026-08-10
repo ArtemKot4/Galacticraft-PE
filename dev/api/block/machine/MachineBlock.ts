@@ -1,4 +1,4 @@
-class MachineBlock extends BasicBlock {
+class MachineBlock extends RotatableBlock {
     public constructor(stringID: string, variationList?: Block.BlockVariation[]) {
         super(stringID, variationList);
         const description = this.getDescription();
@@ -17,10 +17,6 @@ class MachineBlock extends BasicBlock {
         if(storageInterface != null) {
             StorageInterface.createInterface(this.id, storageInterface);
         }      
-    }
-
-    public override canRotate(): boolean {
-        return true;
     }
 
     public getStorageInterface(): Nullable<StorageDescriptor> {
