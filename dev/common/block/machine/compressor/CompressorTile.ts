@@ -34,7 +34,6 @@ class CompressorTile extends ProcessingTile {
         if(this.data.energy == 0 && this.data.canSpendFuel == true) {
             BurnManager.burn(this, "energy", "energyMax", false);
             this.data.canSpendFuel = BurnManager.isValidFuel(this);
-            alert("беру топливо")
         }
         return;
     }
