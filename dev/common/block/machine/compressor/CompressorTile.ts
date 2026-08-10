@@ -31,9 +31,16 @@ class CompressorTile extends ProcessingTile {
         super.processTick();
         this.container.setScale("burning_scale", this.data.energy / this.data.energyMax);
         
-        if(this.data.energy == 0 && this.data.canSpendFuel == true) {
-            BurnManager.burn(this, "energy", "energyMax", false);
-            this.data.canSpendFuel = BurnManager.isValidFuel(this);
+        if(this.data.energy == 0) {
+            let hasEnergy = false;
+            if(this.data.canSpendFuel == true) {
+                if(BurnManager.burn(this, "energy", "energyMax", false)) {
+                    hasEnergy = true;
+                }
+                this.data.canSpendFuel = BurnManager.isValidFuel(this);
+            }
+            this.networkData.putBoolean("has_energy", hasEnergy);
+            this.networkData.sendChanges();
         }
         return;
     }
@@ -44,5 +51,9 @@ class CompressorTile extends ProcessingTile {
 
     public override setupContainer(): void {
         BurnManager.addSlotPolicy(this);
+    }
+
+    public override getLocalTileEntity(): LocalTileEntity {
+        return new LocalCoalGeneratorTile();
     }
 }

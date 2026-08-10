@@ -1,5 +1,7 @@
 @ElectricMachine(EElectricMachineType.EXTRACTOR)
 class CoalGenerator extends MachineBlock {
+    public static tile = new CoalGeneratorTile();
+    
     public constructor() {
         super("coal_generator_gc", [{
             name: "tile.galacticraft.coal_generator",
@@ -16,6 +18,6 @@ class CoalGenerator extends MachineBlock {
     }
 
     public override getTileEntity(): MachineTile {
-        return new CoalGeneratorTile();
+        return CoalGenerator.tile;
     }
 }
