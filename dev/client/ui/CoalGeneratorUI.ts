@@ -27,7 +27,8 @@ const CoalGeneratorUI = new UI.StandartWindow({
 			x: 400,
 			y: 110,
 			bitmap: "machine.coal_generator.slot",
-			size: 70
+			size: 70,
+			iconScale: 0.9
 		},
 		progress_scale: {
 			type: "scale",

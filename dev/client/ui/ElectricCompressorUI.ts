@@ -62,61 +62,71 @@ const ElectricCompressorUI = new UI.StandartWindow({
 			x: 530,
 			y: 300,
 			bitmap: "machine.energy_slot",
-			size: 60
+			size: 60,
+			iconScale: 0.9
 		},
 		slot_1: {
 			type: "slot",
 			x: 410,
 			y: 110,
-			size: 60
+			size: 60,
+			iconScale: 0.9
 		},
 		slot_2: {
 			type: "slot",
 			x: 470,
 			y: 110,
-			size: 60
+			size: 60,
+			iconScale: 0.9
 		},
 		slot_3: {
 			type: "slot",
 			x: 530,
 			y: 110,
-			size: 60
+			size: 60,
+			iconScale: 0.9
 		},
 		slot_4: {
 			type: "slot",
 			x: 410,
 			y: 170,
-			size: 60
+			size: 60,
+			iconScale: 0.9
 		},
 		slot_5: {
 			type: "slot",
 			x: 470,
 			y: 170,
-			size: 60
+			size: 60,
+			iconScale: 0.9
 		},
 		slot_6: {
 			type: "slot",
 			x: 530,
 			y: 170,
-			size: 60
+			size: 60,
+			iconScale: 0.9
 		},
 		slot_7: {
 			type: "slot",
 			x: 410,
 			y: 230,
-			size: 60
+			size: 60,
+			iconScale: 0.9
 		},
 		slot_8: {
 			type: "slot",
 			x: 470,
 			y: 230,
-			size: 60
+			size: 60,
+			iconScale: 0.9
 		},
 		slot_9: {
 			type: "slot",
 			x: 530,
 			y: 230,
-			size: 60
+			size: 60,
+			iconScale: 0.9
 		},
 		energy_bar: {
 			type: "scale",
@@ -139,12 +149,14 @@ const ElectricCompressorUI = new UI.StandartWindow({
 			x: 830,
 			y: 221,
 			size: 60,
+			iconScale: 0.9
 		},
 		result_slot_2: {
 			type: "slot",
 			x: 830,
 			y: 161,
 			size: 60,
+			iconScale: 0.9
 		},
 		// Status: {
 		// 	type: "text",

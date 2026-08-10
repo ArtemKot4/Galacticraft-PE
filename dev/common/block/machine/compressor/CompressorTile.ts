@@ -4,7 +4,6 @@ class CompressorTile extends ProcessingTile {
         energyMax: 0,
         canSpendFuel: false
     };
-
     public override data: typeof ProcessingTile.prototype.data & typeof this.defaultValues;
 
     public override inputSlots: string[] = MathHelper.range(1, 10).map(v => "slot_" + v);
@@ -27,8 +26,8 @@ class CompressorTile extends ProcessingTile {
 
     public override spendRecipeEnergy(): void {};
 
-    public override processTick() {
-        super.processTick();
+    public override onUpdate() {
+        super.onUpdate();
         this.container.setScale("burning_scale", this.data.energy / this.data.energyMax);
         
         if(this.data.energy == 0) {
@@ -45,8 +44,11 @@ class CompressorTile extends ProcessingTile {
         return;
     }
     
-    protected override needClearProgress(): boolean {
-        return this.data.energy == 0 || this.data.active == false;
+    public override clearProgressIfWrong(): boolean {
+        if(this.data.energy == 0 || this.data.active == false) {
+            this.data.progress = 0;
+            return true;
+        }
     }
 
     public override setupContainer(): void {

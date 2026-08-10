@@ -15,14 +15,6 @@ abstract class ProcessingTile extends MachineTile {
         return 5;
     }
 
-    protected needClearProgress(): boolean {
-        return this.data.energy < this.getRecipeEnergyAmount() || this.data.active == false
-    }
-
-    protected clearProgress(): void {
-        this.data.progress = 0;
-    }
-
     protected spendRecipeEnergy(): void {
         if(World.getThreadTime() % 20 == 0) {
             this.data.energy = Math.max(0, this.data.energy - this.getRecipeEnergyAmount());
@@ -35,24 +27,31 @@ abstract class ProcessingTile extends MachineTile {
         }
     }
 
+    public clearProgressIfWrong(): boolean {
+        if(this.data.energy < this.getRecipeEnergyAmount() || this.data.active == false) {
+            this.data.progress = 0;
+            return true;
+        }
+        return false;
+    }
+
+    public doProgress(): boolean {
+        if(this.data.progress < this.getProgressMax()) {
+            this.spendRecipeEnergy();
+            this.data.progress++;
+            return true;
+        }
+    }
+
     public override onTick(): void {
         this.container.validateAll();
         this.container.sendChanges();
         StorageInterface.checkHoppers(this);
         this.onUpdate();
-        this.processTick();
 
-        if(this.needClearProgress()) {
-            this.clearProgress();
-            return;
-        }
-        if(this.data.progress < this.getProgressMax()) {
-            this.spendRecipeEnergy();
-            this.data.progress++;
-        } else {
+        if(!this.clearProgressIfWrong() && !this.doProgress()) {
             this.recipeComplete();
         }
-        return;
     }
 
     protected setActiveIfNeeded(additionalSlotStorage: Record<string, ItemInstance> = {}): void {
@@ -158,9 +157,6 @@ abstract class ProcessingTile extends MachineTile {
 
     public onUpdate() {
         this.container.setScale("progress_scale", this.data.progress / this.getProgressMax());
-    }
-
-    public processTick(): void {
         this.spendEnergyCommon();
     }
 
