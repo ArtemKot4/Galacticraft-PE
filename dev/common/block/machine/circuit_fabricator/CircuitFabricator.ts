@@ -3,9 +3,9 @@ class CircuitFabricator extends ProcessingBlock {
     public static tile = new CircuitFabricatorTile();
 
 	public constructor() {
-		super("circuit_fabricator", [{
+		super("circuit_fabricator_gc", [{
             name: "tile.galacticraft.circuit_fabricator",
-            texture: [["machine", 0], ["machine", 0], ["machine", 0], ["circuit_fabricator_gc", 0], ["machine_input", 0], ["machine", 0]],
+            texture: [["machine_gc", 0], ["machine_gc", 0], ["machine_gc", 0], ["circuit_fabricator_gc", 0], ["machine_input_gc", 0], ["machine_gc", 0]],
             inCreative: true
 		}]);
 	}

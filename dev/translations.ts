@@ -19,7 +19,7 @@ Translation.addTranslation("Shield Controller", {
   zh: "能量屏蔽控制器",
 });
 
-Translation.addTranslation("Coal Generator", {
+Translation.addTranslation("tile.galacticraft.coal_generator", {
   ru: "Угольный генератор",
   zh: "煤发电机",
 });
@@ -59,17 +59,17 @@ Translation.addTranslation("Basic Solar Panel", {
   zh: "基本太阳能电池板",
 });
 
-Translation.addTranslation("Compressor", {
+Translation.addTranslation("tile.galacticraft.compressor", {
   ru: "Компрессор",
   zh: "压缩机",
 });
 
-Translation.addTranslation("Fuel Loader", {
+Translation.addTranslation("tile.galacticraft.fuel_loader", {
   ru: "Загрузчик ракетного топлива",
   zh: "火箭燃料装载机",
 });
 
-Translation.addTranslation("Circuit Fabricator", {
+Translation.addTranslation("tile.galacticraft.circuit_fabricator", {
   ru: "Производитель микросхем",
   zh: "芯片制造商",
 });

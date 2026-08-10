@@ -12,8 +12,4 @@ class ElectricCompressorTile extends ProcessingTile {
     public override getFactory(): UnformedRecipeFactory {
         return RecipeFactory.get<UnformedRecipeFactory>("compressor");
     }
-
-    public getCapacity(): number {
-        return 16000;
-    }
 }

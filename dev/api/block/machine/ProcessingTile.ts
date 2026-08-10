@@ -1,5 +1,5 @@
 abstract class ProcessingTile extends MachineTile {
-    public data: Scriptable & { energy: number, progress: number, active: boolean };
+    public data: Scriptable & { energy?: number, progress: number, active: boolean };
     abstract inputSlots: string[];
     abstract outputSlots: string[];
     public currentRecipeIndex: string;
@@ -11,41 +11,57 @@ abstract class ProcessingTile extends MachineTile {
         this.data.progress = this.data.progress || 0;
     }
 
-    public getSpendEnergyAmount(): number {
+    protected getSpendEnergyAmount(): number {
         return 5;
+    }
+
+    protected needClearProgress(): boolean {
+        return this.data.energy < this.getRecipeEnergyAmount() || this.data.active == false
+    }
+
+    protected clearProgress(): void {
+        this.data.progress = 0;
+    }
+
+    protected spendRecipeEnergy(): void {
+        if(World.getThreadTime() % 20 == 0) {
+            this.data.energy = Math.max(0, this.data.energy - this.getRecipeEnergyAmount());
+        }
+    }
+
+    protected spendEnergyCommon(): void {
+        if(World.getThreadTime() % 8 == 0) {
+            this.data.energy = Math.max(0, this.data.energy - this.getSpendEnergyAmount());
+        }
     }
 
     public override onTick(): void {
         this.container.validateAll();
         this.container.sendChanges();
         StorageInterface.checkHoppers(this);
-        this.container.setScale("progress_scale", this.data.progress / this.getProgressMax());
         this.onUpdate();
+        this.processTick();
 
-        if(World.getThreadTime() % 8 == 0) {
-            this.data.energy = Math.max(0, this.data.energy - this.getSpendEnergyAmount());
-        }
-        if(this.data.energy < this.getRecipeEnergyAmount() || this.data.active == false) {
-            this.data.progress = 0;
+        if(this.needClearProgress()) {
+            this.clearProgress();
             return;
         }
         if(this.data.progress < this.getProgressMax()) {
-            if(World.getThreadTime() % 20 == 0) {
-                this.data.energy = Math.max(0, this.data.energy - this.getRecipeEnergyAmount());
-            }
+            this.spendRecipeEnergy();
             this.data.progress++;
         } else {
             this.recipeComplete();
         }
+        return;
     }
 
-    public setActiveIfNeeded(additionalSlotStorage: Record<string, ItemInstance> = {}): void {
+    protected setActiveIfNeeded(additionalSlotStorage: Record<string, ItemInstance> = {}): void {
         if(this.validateRecipe(additionalSlotStorage)) {   
             this.data.active = this.hasValidOutputSlots();
         }
     }
 
-    public getSlot(name: string, additionalSlotStorage: Record<string, ItemInstance> = {}) {
+    protected getSlot(name: string, additionalSlotStorage: Record<string, ItemInstance> = {}) {
         if(name in additionalSlotStorage) {
             return new ItemStack(additionalSlotStorage[name]);
         }
@@ -55,7 +71,7 @@ abstract class ProcessingTile extends MachineTile {
     /**
      * @returns recipe is null or not
      */
-    public validateRecipe(additionalSlotStorage: Record<string, ItemInstance> = {}): boolean {
+    protected validateRecipe(additionalSlotStorage: Record<string, ItemInstance> = {}): boolean {
         if((this.currentRecipe = this.getFactory().getRecipe({
             inputSlots: this.inputSlots, 
             currentRecipeIndex: this.currentRecipeIndex, 
@@ -67,22 +83,22 @@ abstract class ProcessingTile extends MachineTile {
         return true;
     }
 
-    public recipeComplete(): void {
+    protected recipeComplete(): void {
         this.decreaseInputSlots();
         this.setOutput();
         this.stop();
         this.setActiveIfNeeded();
     }
 
-    public getRecipeEnergyAmount(): number {
+    protected getRecipeEnergyAmount(): number {
         return 1500;
     }
 
-    public getProgressMax(): number {
+    protected getProgressMax(): number {
         return 220;
     }
 
-    public decreaseInputSlots(): void {
+    protected decreaseInputSlots(): void {
         let index = -1;
 
         for(const i in this.inputSlots) {
@@ -96,7 +112,7 @@ abstract class ProcessingTile extends MachineTile {
         }
     }
 
-    public hasValidOutputSlots(): boolean {
+    protected hasValidOutputSlots(): boolean {
         let validOutputStack = null;
 
         for(const outputKey in this.outputSlots) {
@@ -113,7 +129,7 @@ abstract class ProcessingTile extends MachineTile {
         return true;
     }
 
-    public setOutput(): void {
+    protected setOutput(): void {
         let validOutputStack = null;
         
         for(const index in this.outputSlots) {
@@ -127,7 +143,7 @@ abstract class ProcessingTile extends MachineTile {
         }
     }
 
-    public stop(): void {
+    protected stop(): void {
         this.data.active = false;
         this.data.progress = 0;
     }
@@ -140,7 +156,13 @@ abstract class ProcessingTile extends MachineTile {
         this.setActiveIfNeeded();
     }
 
-    public onUpdate(): void {}
+    public onUpdate() {
+        this.container.setScale("progress_scale", this.data.progress / this.getProgressMax());
+    }
 
-    abstract getFactory(): RecipeFactory<unknown>;
+    public processTick(): void {
+        this.spendEnergyCommon();
+    }
+
+    public abstract getFactory(): RecipeFactory<unknown>;
 }

@@ -22,7 +22,7 @@ const CoalGeneratorUI = new UI.StandartWindow({
 		}
 	],
 	elements: {
-		coal_slot: {
+		fuel_slot: {
 			type: "slot",
 			x: 400,
 			y: 110,
@@ -50,8 +50,7 @@ const CoalGeneratorUI = new UI.StandartWindow({
 			height: 30,
 			text: "0/0 gJ",
 			font: {
-				color: android.graphics.Color.DKGRAY,
-				typeface: android.graphics.Typeface.create(null, 310, false)
+				color: android.graphics.Color.DKGRAY
 			}
 		},
 		// status: {

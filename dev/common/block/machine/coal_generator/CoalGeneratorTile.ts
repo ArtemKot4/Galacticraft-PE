@@ -1,7 +1,7 @@
 class CoalGeneratorTile extends GeneratorTile {
     public defaultValues = {
         active: false,
-        canDecreaseItem: false,
+        canSpendFuel: false,
         burning: 0,
         burningMax: 0,
         energyTick: 0,
@@ -14,21 +14,13 @@ class CoalGeneratorTile extends GeneratorTile {
     }
 
     public override setupContainer(): void {
-        this.container.setSlotAddTransferPolicy("coal_slot", (container, str, id, count, data) => {
-            const burningDuration = Recipes.getSpecialFuelBurnDuration(id, data);
-            if(burningDuration != 0) {
-                this.data.canDecreaseItem = true;
-                this.noupdate = false;
-                return count;
-            }
-            return 0;
-        });
+        BurnManager.addSlotPolicy(this);
     }
     
     public override onLoad(): void {
         this.showEnergyStatus();
         if(this.canBurn()) {
-            this.burn();
+            BurnManager.burn(this);
         } else this.noupdate = true;
     }
 
@@ -44,14 +36,10 @@ class CoalGeneratorTile extends GeneratorTile {
         StorageInterface.checkHoppers(this);
         this.container.sendChanges();
 
-        if(World.getThreadTime() % 40 == 0) {
-            Game.message(this.noupdate);
+        if(this.data.canSpendFuel == true && this.canBurn()) {
+            this.data.canSpendFuel = !BurnManager.burn(this);
         }
-
-        if(this.data.canDecreaseItem == true && this.canBurn()) {
-            this.data.canDecreaseItem = !this.burn();
-        }
-        if(!this.data.active) return; 
+        if(this.data.active == false) return; 
         if(this.data.heat <= 100) {
             if(this.data.heat == 100) {
                 this.sendEnergyStatus(true);
@@ -89,46 +77,22 @@ class CoalGeneratorTile extends GeneratorTile {
                 this.data.energyTick = Math.min(this.data.energyTick + 1, maxEnergyTick);
             }
             this.data.energy = this.data.energyTick;
-            this.data.burning--;
         }
-    }
-
-    public burn(burningDuration?: number): boolean {
-        const slot = this.container.getSlot("coal_slot");
-        burningDuration ??= Recipes.getSpecialFuelBurnDuration(slot.id, slot.data);
-        
-        if(burningDuration != 0 && this.data.energyTick == 0) {
-            this.data.burning = this.data.burningMax = burningDuration;
-            this.data.active = true;
-            let item = Recipes.getFuelBurnDurationResult(slot.id);
-
-            if(item == null) {
-                item = slot;
-                item.count -= 1;
-            }
-            this.container.setSlot("coal_slot", item.id, item.count, item.data);
-            this.container.validateSlot("coal_slot");
-            return true;
-        }
-        return false;
-    }
-
-    public isValidFuel(): boolean {
-        const slot = this.container.getSlot("coal_slot");
-        return Recipes.getSpecialFuelBurnDuration(slot.id, slot.data) != 0;
     }
 
     public validateActive(): boolean {
-        return this.data.active = this.data.burning > 0 || this.isValidFuel();
+        return this.data.active = this.data.burning > 0 || BurnManager.isValidFuel(this);
     }
 
     public decreaseBurning(): void {
-        if(World.getThreadTime() % 60 != 0) return;
-
         if(this.data.burning > 0) {
             this.data.burning--;
         } else {
-            if(this.data.canDecreaseItem = !(this.data.active = this.burn())) {
+            this.data.active = BurnManager.burn(this, "burning", "burningMax", false);
+            
+            if(this.data.active == true) {
+                this.data.canSpendFuel = false;
+            } else {
                 this.clearData();
                 this.showHeatStatus();
                 this.sendEnergyStatus(false);
