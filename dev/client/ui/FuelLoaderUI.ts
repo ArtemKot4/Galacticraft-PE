@@ -37,14 +37,14 @@ const FuelLoaderUI = new UI.StandartWindow({
         }
     ],
     elements: {
-        canisterFuel: {
+        canister_fuel: {
             type: "slot",
             x: 355,
             y: 120,
             size: 70,
             bitmap: "SPC.SPC_Canister"
         },
-        FuelScale: {
+        fuel_liquid_scale: {
             type: "scale",
             x: 268,
             y: 190,
@@ -52,7 +52,7 @@ const FuelLoaderUI = new UI.StandartWindow({
             scale: 3.8,
             direction: 1
         },
-        EnergySlot: {
+        energy_slot: {
             type: "slot",
             x: 455,
             y: 260,

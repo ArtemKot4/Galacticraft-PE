@@ -120,4 +120,21 @@ namespace BlockList {
     Block.registerDropFunction(MARS_BOTTOM_STONE.id, function(coords, blockID){
         return [[MARS_COBBLESTONE.id, 1, 0]] 
     });   
+
+    class GalacticraftLiquidBlock extends LiquidBlock {
+        public constructor(stringID: string, stillTexture: string, flowTexture: string) {
+            super(stringID, "block.galacticraft." + stringID, stillTexture, flowTexture);
+        }
+        
+        public getBucket(): Block.LiquidDescriptor["bucket"] | [empty: LiquidRegistry.Bucket2LiquidMapping, full: LiquidRegistry.Bucket2LiquidMapping] {
+            return {
+                id: this.stringID + "_bucket_gc",
+                emptyId: VanillaItemID.bucket,
+                texture: { name: this.stringID + "_bucket_gc", meta: 0 }
+            }
+        }
+    }
+
+    export const OIL = new GalacticraftLiquidBlock("oil", "oil_gc_still", "oil_gc_flow");
+    export const FUEL = new GalacticraftLiquidBlock("fuel", "fuel_gc_still", "fuel_gc_flow");
 }

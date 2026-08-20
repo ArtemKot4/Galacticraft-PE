@@ -1,4 +1,8 @@
 @ElectricMachine(EElectricMachineType.RECEIVER)
+@LiquidMachine(
+    { liquidName: "oil", action: "add" }, 
+    { liquidName: "fuel", action: "get" }
+)
 class Refinery extends MachineBlock {
     public constructor() {
         super("refinery_gc", [{

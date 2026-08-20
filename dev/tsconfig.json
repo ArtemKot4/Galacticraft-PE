@@ -22,6 +22,7 @@
 		"api/block/machine/ElectricBlock.ts",
 		"api/block/machine/ProcessingBlock.ts",
 		"api/block/machine/ElectricMachine.ts",
+		"api/block/machine/LiquidMachine.ts",
 		"api/block/machine/MachineTile.ts",
 		"api/block/machine/GeneratorTile.ts",
 		"api/block/machine/ProcessingTile.ts",

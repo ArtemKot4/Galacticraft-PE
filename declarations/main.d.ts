@@ -165,11 +165,11 @@ declare namespace Block {
     function registerSelectionFunctionForID(id: number, func: ISelectionFunction): void;
 }
 declare namespace Item {
-    type ILiquidStorageItemParams = ItemParams & LiquidItemRegistry.ILiquidStorage;
+    type ILiquidStorageItemParams = ItemParams & CanisterLiquidRegistry.ILiquidStorage;
     const holdFunctions: Record<number, Callback.ItemHoldFunction>;
     function registerHoldFunctionForID(id: number, func: Callback.ItemHoldFunction): void;
     function registerHoldFunction(id: string | number, func: Callback.ItemHoldFunction): void;
-    function createLiquidStorageItem(nameID: string, name: string, texture: TextureData, params: ILiquidStorageItemParams, data?: number): void;
+    function createLiquidStorageItem(nameID: string, name: string, texture: TextureData, { category, isTech, liquids, capacity }: ILiquidStorageItemParams, data?: number): void;
 }
 declare namespace Recipes {
     const itemsAfterBurn: Record<string, ItemInstance>;
@@ -225,22 +225,56 @@ declare namespace IDRegistry {
      */
     function parseID(id: string): number;
 }
-declare namespace LiquidItemRegistry {
+declare namespace LiquidRegistry {
     /**
      * in mili buckets
      */
     const BUCKET_CAPACITY = 1000;
+}
+/**
+ * For create item liquid storages that can in one item contain functions for get and give different liquids.
+ * For example: canister -> can contain water, lava -> can be empty -> all that functions in one item
+ */
+declare namespace CanisterLiquidRegistry {
+    /**
+     * @key `liquids` liquid list that can canister contain
+     * @key `capacity` at mili buckets
+     */
     interface ILiquidStorage {
         capacity: number;
         liquids: string[];
     }
     const storage: Record<string, ILiquidStorage>;
-    function registerLiquidStorage(id: number, data: number, description: ILiquidStorage): void;
-    function getLiquidStorage(id: number, data: number): Nullable<ILiquidStorage>;
-    function getCapacity(id: number, data: number): number;
-    function getLiquids(id: number, data: number): string[];
+    /**
+     * Method to register item as canister
+     * @param id item id
+     * @param data item data
+     * @param liquids liquid list that must can canister contain
+     * @param capacity at mili buckets
+     */
+    function createFor(id: number, liquids?: string[], capacity?: number, data?: number): void;
+    /**
+     * @throws error if liquid storage is not exists
+     * @param id item id
+     * @param data item data
+     * @param liquids additional liquid list that must can canister contain
+     */
+    function addLiquidsFor(liquids: string[], id: number, data?: number): void;
+    function hasLiquidStorage(id: number, data?: number): boolean;
+    function getLiquidStorage(id: number, data?: number): Nullable<ILiquidStorage>;
+    function getCapacity(id: number, data?: number): Nullable<number>;
+    /**
+     * @returns `[...liquids]` from {@link ILiquidStorage} if liquid storage was registered, else `[liquid]` from {@link LiquidRegistry.getItemLiquid} (works only if item is full bucket)
+     */
+    function getLiquids(id: number, data?: number): string[];
+    /**
+     * @returns liquid from extra by string key `liquid.name`
+     */
     function getCurrentLiquid(extra: Nullable<ItemExtraData>): Nullable<string>;
-    function getCurrentLiquidCapacity(extra: Nullable<ItemExtraData>): number;
+    /**
+     * @returns liquid amount from extra by int key `liquid.amount`
+     */
+    function getCurrentLiquidAmount(extra: Nullable<ItemExtraData>): Nullable<number>;
 }
 declare namespace com {
     namespace artemkot4 {
@@ -462,14 +496,12 @@ declare class BasicItem<T extends Item.ItemParams = Item.ItemParams> {
     getTags?(): string[];
     isThrowable?(): boolean;
     getFood?(): number;
-    static setFunctions(instance: (IIconOverrideCallback | INoTargetUseCallback | IItemUsingReleasedCallback | IItemUsingCompleteCallback | IItemUseCallback | INameOverrideCallback | IItemHoldCallback | BasicItem) & {
-        id: number;
-    }): void;
     create(params?: ItemParams): void;
 }
-declare const a = 1;
-declare class LiquidStorageItem extends BasicItem {
-    constructor(stringID: string, texture: IItemTextureDescription, params: Item.ILiquidStorageItemParams, data?: number);
+declare class ItemEvents {
+    static applyData(instance: (IIconOverrideCallback | INoTargetUseCallback | IItemUsingReleasedCallback | IItemUsingCompleteCallback | IItemUseCallback | INameOverrideCallback | IItemHoldCallback | BasicItem) & {
+        id: number;
+    }): void;
 }
 declare enum EDestroyLevel {
     HAND = 0,
@@ -539,8 +571,13 @@ interface IBlockSelectionCallback {
 }
 declare class BasicBlock {
     readonly variationList: Block.BlockVariation[];
-    readonly id: number;
-    readonly stringID: string;
+    id: number;
+    readonly stringID?: string;
+    /**
+     *
+     * @param stringID you should transfer string if you don't trying to create new type of block like {@link LiquidBlock} where another system for id
+     * @param variationList
+     */
     constructor(stringID: string, variationList?: Block.BlockVariation[]);
     build(): void;
     /**
@@ -582,6 +619,8 @@ declare class LiquidBlock extends BasicBlock {
     stillTexture: string;
     flowTexture: string;
     constructor(stringID: string, name: string, stillTexture: string, flowTexture: string);
+    getStillStringID(): string;
+    getFlowStringID(): string;
     build(): void;
     inCreative(): boolean;
     /**

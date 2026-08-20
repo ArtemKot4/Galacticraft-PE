@@ -43,7 +43,7 @@ const RefineryUI = new UI.StandartWindow({
 		},
 	],
 	elements: {
-		oil_slot: {
+		oil_liquid_slot: {
 			type: "slot",
 			x: 355,
 			y: 120,
@@ -51,11 +51,11 @@ const RefineryUI = new UI.StandartWindow({
 			bitmap: "machine.canister_slot",
             iconScale: 0.9
 		},
-		oil_scale: {
+		oil_liquid_scale: {
 			type: "scale",
 			x: 268,
 			y: 190,
-			bitmap: "Liquid_oil",
+			bitmap: "machine.oil_scale",
 			scale: 3.8,
 			direction: 1,
 			clicker: {
@@ -64,11 +64,11 @@ const RefineryUI = new UI.StandartWindow({
 				}
 			}
 		},
-		fuel_scale: {
+		fuel_liquid_scale: {
 			type: "scale",
 			x: 769,
 			y: 190,
-			bitmap: "Liquid_fuel",
+			bitmap: "machine.fuel_scale",
 			scale: 3.8,
 			direction: 1,
 			clicker: {
@@ -77,7 +77,7 @@ const RefineryUI = new UI.StandartWindow({
 				}
 			}
 		},
-		fuel_slot: {
+		fuel_liquid_slot: {
 			type: "slot",
 			x: 855,
 			y: 120,
@@ -93,7 +93,7 @@ const RefineryUI = new UI.StandartWindow({
 			scale: 3,
 			direction: 0
 		},
-		energy_scale: {
+		energy_icon: {
 			type: "scale",
 			x: 640,
 			y: 70,
@@ -101,14 +101,14 @@ const RefineryUI = new UI.StandartWindow({
 			scale: 3,
 			direction: 1
 		},
-		energy_display: {
-			type: "text",
-			x: 690,
-			y: 80,
-			width: 100,
-			height: 30,
-			text: "Space Joule"
-		},
+		// energy_display: {
+		// 	type: "text",
+		// 	x: 690,
+		// 	y: 80,
+		// 	width: 100,
+		// 	height: 30,
+		// 	text: "Space Joule"
+		// },
 		energy_slot: {
 			type: "slot",
 			x: 455,

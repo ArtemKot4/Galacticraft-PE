@@ -46,18 +46,17 @@ function ElectricMachine(type: EElectricMachineType) {
                         this.data.energy += src.add(output) - output;
                     }
                 }
-                if("setupContainer" in tilePrototype) {
-                    const lastSetupContainer = tilePrototype.setupContainer;
-            
-                    tilePrototype.setupContainer = function() {
+                if("init" in tilePrototype) {
+                    const lastInit = tilePrototype.init;
+                    tilePrototype.init = function() {
                         this.data.energy = this.data.energy || 0;
-                        lastSetupContainer.call(this);
+                        lastInit.call(this);
                         return;
                     }
                 }
                 
                 tilePrototype.getCapacity = tilePrototype.getCapacity || function() {
-                    return 5000;
+                    return 16000;
                 }
             }
 
@@ -67,15 +66,15 @@ function ElectricMachine(type: EElectricMachineType) {
                 
                 if(ui == null) {
                     return;
-                }
-                if("onUpdate" in tilePrototype) {
+                } 
+                if("tick" in tilePrototype) {
                     const elements = ui.getContent().elements;
                     if("energy_bar" in elements && "energy_icon" in elements) {
-                        const lastOnUpdate = tilePrototype.onUpdate;
-                        tilePrototype.onUpdate = function(this: MachineTile) {
+                        const lastTick = tilePrototype.tick;
+                        tilePrototype.tick = function(this: MachineTile) {
                             this.container.setScale("energy_bar", this.data.energy / this.getCapacity());
                             this.container.setScale("energy_icon", this.data.energy / 1);
-                            lastOnUpdate.call(this);
+                            lastTick.call(this);
                             return;
                         }
                     }
@@ -87,7 +86,5 @@ function ElectricMachine(type: EElectricMachineType) {
 
 enum EElectricMachineType {
     RECEIVER,
-    EXTRACTOR,
-    CONSUMER = RECEIVER,
-    GENERATOR = EXTRACTOR
+    EXTRACTOR
 }
