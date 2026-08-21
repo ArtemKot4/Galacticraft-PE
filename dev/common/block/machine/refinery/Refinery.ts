@@ -12,10 +12,6 @@ class Refinery extends MachineBlock {
         }]);
     }
 
-    public override canHasLiquid(): boolean {
-        return true;
-    }
-
     public override getTileEntity(): MachineTile {
         return new RefineryTile();
     }

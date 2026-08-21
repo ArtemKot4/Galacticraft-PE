@@ -6,12 +6,6 @@ class MachineBlock extends RotatableBlock {
         if(description != null) {
             Galacticraft.ToolTips.registerTipFor(this.id, description);
         }
-        if(this.canHasLiquid()) {
-            ICRender.getGroup("galacticraft.machine_liquid_connecting_0").add(this.id, 0);
-            ICRender.getGroup("galacticraft.machine_liquid_connecting_1").add(this.id, 1);
-            ICRender.getGroup("galacticraft.machine_liquid_connecting_2").add(this.id, 2);
-            ICRender.getGroup("galacticraft.machine_liquid_connecting_3").add(this.id, 3);
-        }
         const storageInterface = this.getStorageInterface();
         
         if(storageInterface != null) {
@@ -25,9 +19,5 @@ class MachineBlock extends RotatableBlock {
 
     public getDescription(): Nullable<string> {
         return null;
-    }
-
-    public canHasLiquid(): boolean {
-        return false;
     }
 }

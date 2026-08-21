@@ -420,13 +420,23 @@ Translation.addTranslation(
   }
 );
 
+Translation.addTranslation("message.galacticraft.canister_liquid_amount", {
+  en: "Amount: ",
+  ru: "Количество: ",
+});
 
-Translation.addTranslation("item.galacticraft.fuel_canister", {
+
+Translation.addTranslation("item.galacticraft.empty_liquid_canister", {
+  en: "Empty canister",
+  ru: "Пустая канистра",
+});
+
+Translation.addTranslation("item.galacticraft.fuel_liquid_canister", {
   en: "Fuel canister",
   ru: "Канистра с ракетным топливом",
 });
 
-Translation.addTranslation("item.galacticraft.oil_canister", {
+Translation.addTranslation("item.galacticraft.oil_liquid_canister", {
   en: "Oil canister",
   ru: "Канистра с нефтью",
   zh: "油罐",
