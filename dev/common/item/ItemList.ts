@@ -4,14 +4,18 @@ namespace ItemList {
             return "item.galacticraft." + this.stringID;
         }
     }
-
     export const ROCKET_TIER_1 = new GalacticraftItem("rocket_tier_1", { name: "rocket_tier_1", meta: 0 }, { stack: 1 });
 
     export const RAW_SILICON = new GalacticraftItem("raw_silicon", { name: "raw_silicon", meta: 0 });
+    
     export const WAFER_BASIC = new GalacticraftItem("wafer_basic", { name: "wafer_basic", meta: 0 }, { stack: 16 });
+    
     export const WAFER_SOLAR = new GalacticraftItem("wafer_solar", { name: "wafer_solar", meta: 0 }, { stack: 16 });
+    
     export const WAFER_ADVANCED = new GalacticraftItem("wafer_advanced", { name: "wafer_advanced", meta: 0 }, { stack: 16 });
+    
     export const INGOT_ALUMINUM = new GalacticraftItem("ingot_aluminum_gc", { name: "ingot_aluminum_gc", meta: 0 });
+    
     export const ALIEN_FLESH = new BasicItem<Item.FoodParams>("alien_flesh",{ name: "alien_flesh", meta: 0 }, { food: 6 });
 
     export const BUGGYBMAT_SIT = new GalacticraftItem("buggymat_sit", { name: "buggymat_sit", meta: 0 });

@@ -114,7 +114,8 @@ const RefineryUI = new UI.StandartWindow({
 			x: 455,
 			y: 260,
 			size: 70,
-			bitmap: "machine.energy_slot"
+			bitmap: "machine.energy_slot",
+			iconScale: 0.9
 		}
 	}
 });

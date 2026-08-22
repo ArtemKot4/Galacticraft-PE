@@ -24,14 +24,14 @@ abstract class RocketType {
     }
 
     public getMinFuelAmount(): number {
-        return 500;
+        return this.getFuelCapacity();
     }
 
     public getFinalHeight(): number {
         return 700;
     }
 
-    public getRocketPadding(): BasicBlock & { getRadius(): number } {
+    public getRocketPadding(): IRocketPadding {
         return BlockList.ROCKET_PADDING;
     }
 }

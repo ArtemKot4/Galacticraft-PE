@@ -32,7 +32,7 @@ class RocketEntity {
 	/**
 	 * RocketType which entity is implementing
 	 */
-	protected rocketType: RocketType;
+	public rocketType: RocketType;
 
 	/**
 	 * Coords of padding
@@ -74,7 +74,7 @@ class RocketEntity {
 	 * Item container of the rocket
 	 */
 
-	protected container: ItemContainer;
+	public container: ItemContainer;
 
 	/**
 	 * {@link BlockSource} for the rocket
@@ -133,6 +133,14 @@ class RocketEntity {
 	}
 
 	/**
+	 * Method to get launch phase
+	 */
+	
+	public getLaunchPhase(): ELaunchPhase {
+		return this.launchPhase;
+	}
+
+	/**
 	 * Method to get entityUid position in the world
 	 * @returns {@link Vector}
 	 */
@@ -180,6 +188,7 @@ class RocketEntity {
 			result = Math.min(amount, capacity - this.fuel);
 			this.fuel = this.fuel + result;
 		}
+		this.container.sendChanges();
 		return result;
 	}
 
@@ -275,7 +284,7 @@ class RocketEntity {
 	public packRocketPadding(): void {
 		const padding = RocketManager.getRocketTypeByEntity(this.entityUid).getRocketPadding();
 		const slotName = this.findEmptySlot();
-		const count = RocketPadding.breakAll(padding.getRadius(), this.paddingCoords, this.blockSource, slotName == null ? this.riderUid : null);
+		const count = RocketPadding.breakAll(padding, this.paddingCoords, this.blockSource, slotName == null ? this.riderUid : null);
 		
 		if(slotName != null) {
 			this.container.setSlot(slotName, padding.id, count, 0);
@@ -506,6 +515,7 @@ class RocketEntity {
 	 */
 
 	public changeLaunch(launched: boolean): void {
+		this.loadIfNeed();
 		//Network.sendServerMessage("Вызван changeLaunch: " + launched)
 		if(this.launchPhase != ELaunchPhase.PRE_LAUNCH) {
 			this.launched = true;
@@ -521,12 +531,12 @@ class RocketEntity {
 				this.client.sendedMessage = true;
 			}
 			this.launched = false;
+			return;
 		}
 		if(launched == false) {
 			//Network.sendServerMessage("Отмена")
 			this.cancel();
 		}
-		this.loadIfNeed();
 	}
 
 	/**
@@ -653,24 +663,24 @@ class RocketEntity {
 		let scaleWidth = 36 * 6.7;
 		let fuelStorageX = (slotSize * maxStringGrid) / 2;
 
-		content.elements["fuel_scale"] = {
-			type: "scale",
-			bitmap: "rocket.fuel_storage_1",
+		const fuel_scale_coords = {
 			x: fuelStorageX - scaleWidth,
 			y: 50,
 			width: scaleWidth,
 			height: 40 * 6.7,
-			direction: 3
-		};
+		}
+
+		content.drawing.push({
+			type: "bitmap",
+			...fuel_scale_coords,
+			bitmap: "rocket.fuel_storage_empty"
+		})
 
 		content.elements["fuel_scale"] = {
 			type: "scale",
-			bitmap: "rocket.fuel_storage_1",
-			x: fuelStorageX,
-			y: 50,
-			width: 36 * 6.7,
-			height: 40 * 6.7,
-			direction: 3
+			...fuel_scale_coords,
+			bitmap: "rocket.fuel_storage_full",
+			direction: 1
 		};
 
 		if(slotCount != null) {

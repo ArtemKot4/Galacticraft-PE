@@ -50,6 +50,7 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                 if(tileEntity == null) {
                     throw new ReferenceError("LiquidMachine does not can contain tile entity prototype");
                 }
+                //const slots: { [slotName: string]: LiquidMachine.slotAction }[] = [];
                 const getSlots = new Set<string>();
                 const addSlots = new Set<string>();
                 const elements = tileEntity.getScreenByName().getContent().elements;
@@ -119,7 +120,9 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
             public completeLiquidCheck(tileEntity: LiquidMachine.TileEntity, descriptor: LiquidMachine.LiquidDescriptor, success: boolean): boolean {
                 if(success == true) {
                     tileEntity.liquidSlotChecks.push(descriptor);
-                } else tileEntity.liquidSlotChecks = tileEntity.liquidSlotChecks.filter((v) => v.slotName != descriptor.slotName);
+                } else {
+                    tileEntity.liquidSlotChecks = tileEntity.liquidSlotChecks.filter((v) => v.slotName != descriptor.slotName);
+                }
                 return success;
             }
 

@@ -1,9 +1,8 @@
-
 const FuelLoaderUI = new UI.StandartWindow({
     standard: {
         header: {
             text: {
-                text: Translation.translate("block.galacticraft.fuel_loader")
+                text: Translation.translate("tile.galacticraft.fuel_loader")
             }
         },
         inventory: {
@@ -18,37 +17,37 @@ const FuelLoaderUI = new UI.StandartWindow({
             type: "bitmap",
             x: 268,
             y: 190,
-            bitmap: "Liquid_null",
+            bitmap: "machine.liquid_scale",
             scale: 3.8,
         },
         {
             type: "bitmap",
             x: 550,
             y: 70,
-            bitmap: "slace_en_0",
+            bitmap: "machine.energy_bar_empty",
             scale: 3,
         },
         {
             type: "bitmap",
             x: 690,
             y: 70,
-            bitmap: "en_noy",
+            bitmap: "machine.energy_icon_off",
             scale: 3,
         }
     ],
     elements: {
-        canister_fuel: {
+        fuel_liquid_slot: {
             type: "slot",
             x: 355,
             y: 120,
             size: 70,
-            bitmap: "SPC.SPC_Canister"
+            bitmap: "machine.canister_slot"
         },
         fuel_liquid_scale: {
             type: "scale",
             x: 268,
             y: 190,
-            bitmap: "Liquid_fuel",
+            bitmap: "machine.fuel_scale",
             scale: 3.8,
             direction: 1
         },
@@ -57,31 +56,31 @@ const FuelLoaderUI = new UI.StandartWindow({
             x: 455,
             y: 260,
             size: 70,
-            bitmap: "Others.en_slot"
+            bitmap: "machine.energy_slot"
         },
-        ENERGYBar: {
+        energy_bar: {
             type: "scale",
             x: 550,
             y: 70,
-            bitmap: "slace_en_1",
+            bitmap: "machine.energy_bar_full",
             scale: 3,
             direction: 0
         },
-        Energy: {
+        energy_icon: {
             type: "scale",
             x: 690,
             y: 70,
-            bitmap: "en_yes",
+            bitmap: "machine.energy_icon_on",
             scale: 3,
             direction: 1
-        },
-        ELECTRIC: {
-            type: "text",
-            x: 565,
-            y: 113,
-            width: 100,
-            height: 30,
-            text: "Space Joule"
-        }
+        }//,
+        // energy_display: {
+        //     type: "text",
+        //     x: 565,
+        //     y: 113,
+        //     width: 100,
+        //     height: 30,
+        //     text: "Space Joule"
+        // }
     }
 });

@@ -6,7 +6,8 @@ namespace BlockList {
     export const ELECTRIC_COMPRESSOR = new ElectricCompressor();
     export const CIRCUIT_FABRICATOR = new CircuitFabricator();
     export const REFINERY = new Refinery();
-    export const ROCKET_PADDING = new RocketPadding();
+    export const ROCKET_PADDING = new RocketPadding("rocket_padding_gc", "rocket_padding");
+    export const FUEL_LOADER = new FuelLoader();
 
     export const BLOCK_MOON_SAPPHIRE = new BasicBlock("block_moon_sapphire_gc", [{ name: "Sapphire Block", texture: [["block_moon_sapphire", 0]], inCreative: true }]);
     export const MOON_CHEESE = new BasicBlock("moon_cheese_gc", [{ name: "block.galacticraft.moon_cheese", texture: [["moon_cheese", 0]], inCreative: true }]);
