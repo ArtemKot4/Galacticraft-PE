@@ -48,7 +48,7 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                 const tileEntity = TileEntity.getPrototype(this.id); 
                 
                 if(tileEntity == null) {
-                    throw new ReferenceError("LiquidMachine does not can contain tile entity prototype");
+                    throw new ReferenceError("LiquidMachine does not can don't contain tile entity prototype");
                 }
                 //const slots: { [slotName: string]: LiquidMachine.slotAction }[] = [];
                 const getSlots = new Set<string>();
@@ -77,8 +77,8 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                         getSlots.add(descriptor.slotName);
                     }
                 }
-                this.injectInit();
-                this.injectTick();
+                this.injectLiquidInit();
+                this.injectLiquidTick();
             }
 
             public addPipesConnecting(): void {
@@ -126,7 +126,7 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                 return success;
             }
 
-            public injectInit(): void {
+            public injectLiquidInit(): void {
                 const tileEntity = TileEntity.getPrototype(this.id) as LiquidMachine.TileEntity;
                 const lastInit = tileEntity.init;
                 const policies = this.policies;
@@ -214,9 +214,6 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                     const itemLiquidCount = CanisterLiquidRegistry.getCurrentLiquidAmount(slot.extra) || 0; //нужно будет Capacity в Amount, иначе не совсем понятно
                     slot.extra ??= new ItemExtraData();
                     capacity = CanisterLiquidRegistry.getCapacity(slot.id);
-                    // if(itemLiquidCount >= capacity) {
-                    //     return false;
-                    // }
                     const canAdd = capacity - itemLiquidCount;
                     let add = 0;
                     if(amount >= canAdd) {
@@ -236,7 +233,7 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                 return false;
             }
 
-            public injectTick() {
+            public injectLiquidTick() {
                 const tileEntity = TileEntity.getPrototype(this.id) as LiquidMachine.TileEntity;
                 const lastTick = tileEntity.tick;
                 const scaleDescriptors = descriptors.filter(descriptor => "scaleName" in descriptor);
@@ -277,13 +274,4 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
             }
         }
     }
-} // разрабатывать мод тяжело, так что буду рад получить именно ваш лайк на репозиторий :)
-
-
-// while(amount < descriptor.liquidCapacity && itemLiquidCount > 0) {
-//     itemLiquidCount = CanisterLiquidRegistry.getCurrentLiquidCapacity(slot.extra);
-
-//     this.liquidStorage.setAmount(descriptor.liquidName, amount + 1);
-//     slot.extra.putInt("liquid.amount", itemLiquidCount - 1);
-//     this.container.setSlot(descriptor.slotName, slot.id, slot.count, slot.data, slot.extra)
-// }
+}

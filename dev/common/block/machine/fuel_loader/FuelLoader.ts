@@ -1,4 +1,4 @@
-@ElectricMachine(EElectricMachineType.RECEIVER)
+@ElectricMachine(ElectricMachine.Type.RECEIVER)
 @LiquidMachine(
     { liquidName: "fuel", action: "add" }, 
 )

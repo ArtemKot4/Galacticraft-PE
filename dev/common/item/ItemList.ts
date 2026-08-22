@@ -1,9 +1,4 @@
 namespace ItemList {
-    class GalacticraftItem extends BasicItem {
-        public override getName(): string {
-            return "item.galacticraft." + this.stringID;
-        }
-    }
     export const ROCKET_TIER_1 = new GalacticraftItem("rocket_tier_1", { name: "rocket_tier_1", meta: 0 }, { stack: 1 });
 
     export const RAW_SILICON = new GalacticraftItem("raw_silicon", { name: "raw_silicon", meta: 0 });
@@ -177,72 +172,13 @@ namespace ItemList {
     
     export const FREQUENCY_MODULE = new GalacticraftItem("frequency_module", { name: "frequency_module", meta: 0 });  
 
-    class Canister extends GalacticraftItem implements IIconOverrideCallback, INameOverrideCallback {
-        public emptyTexture;
-        public emptyName = "item.galacticraft.empty_liquid_canister";
-
-        public getLiquids(): string[] {
-            return ["oil", "fuel"];
-        }
-
-        public constructor() {
-            const texture = { name: "empty_liquid_canister", meta: 0 };
-            super("canister_gc", texture, {
-                isTech: false,
-                stack: 1
-            });
-            this.emptyTexture = texture;
-
-            const liquids = this.getLiquids();
-            CanisterLiquidRegistry.createFor(this.id, liquids);
-
-            for(const liquidName of liquids) {
-                const extra = new ItemExtraData();
-                extra.putString("liquid.name", liquidName);
-                extra.putInt("liquid.amount", 1000);
-                Item.addToCreative(this.id, 1, 0, extra);
-            }
-        }
-
-        public getMeta(amount: number): number {
-            if(amount >= 1000) {
-                return 6;
-            } 
-            if(amount >= 900) {
-                return 5;
-            }
-            if(amount >= 750) {
-                return 4;
-            }
-            if(amount >= 500) {
-                return 3;
-            }
-            if(amount >= 250) {
-                return 2;
-            } 
-            if(amount > 0) {
-                return 1;
-            }
-            return 0;
-        }
-
-        public onIconOverride({ extra }: ItemInstance, isModUi: boolean): void | Item.TextureData {
-            const meta = this.getMeta(CanisterLiquidRegistry.getCurrentLiquidAmount(extra));
-            if(meta == 0) {
-                return this.emptyTexture;
-            }
-            return { name: `${CanisterLiquidRegistry.getCurrentLiquid(extra)}_canister_partial`, meta: meta };
-        }
-
-        public onNameOverride({ id, data, extra }: ItemInstance, translation: string, name: string): void | string {
-            const liquidName = CanisterLiquidRegistry.getCurrentLiquid(extra);
-            const amount = CanisterLiquidRegistry.getCurrentLiquidAmount(extra) || 0;
-            if(!liquidName || amount == 0) {
-                return Translation.translate(this.emptyName);
-            }
-            return Translation.translate(`item.galacticraft.${liquidName}_liquid_canister`) + "\n" + Translation.translate("message.galacticraft.canister_liquid_amount") + amount + " mB";
-        }
-    }
-
     export const CANISTER = new Canister();
+
+    export const BATTERY = new Battery("battery_gc", { name: "battery_gc", meta: 0 });
+
+    export const INFINITE_BATTERY = new Battery("infinity_battery_gc", { name: "battery_gc", meta: 0 }, { type: "infinity" });
+    
+    Item.setGlint(INFINITE_BATTERY.id, true);
+
+    export const ATOMIC_BATTERY_GC = new Battery("atomic_battery_gc", { name: "atomic_battery_gc", meta: 0 }, { type: "atomic" });
 }

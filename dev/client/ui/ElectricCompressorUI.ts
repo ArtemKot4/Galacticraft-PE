@@ -49,15 +49,7 @@ const ElectricCompressorUI = new UI.StandartWindow({
 			//   },
 			// },
 		},
-		// Elect4: {
-		// 	type: "scale",
-		// 	x: 630,
-		// 	y: 150,
-		// 	direction: 1,
-		// 	bitmap: "fire_scale",
-		// 	scale: 4.1,
-		// },
-		energy_slot: {
+		battery_slot_discharge: {
 			type: "slot",
 			x: 530,
 			y: 300,

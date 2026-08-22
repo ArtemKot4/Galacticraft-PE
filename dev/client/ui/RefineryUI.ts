@@ -109,7 +109,7 @@ const RefineryUI = new UI.StandartWindow({
 		// 	height: 30,
 		// 	text: "Space Joule"
 		// },
-		energy_slot: {
+		battery_slot_discharge: {
 			type: "slot",
 			x: 455,
 			y: 260,

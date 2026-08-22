@@ -111,20 +111,6 @@ class RocketPadding extends RotatableBlock implements IRocketPadding, IClickCall
         if(centerCoords != null) {
             this.destroy(centerCoords, playerUid);
         }
-        // if(this.isCenterBlock(coords, block)) {
-        //     this.destroy(coords, playerUid);
-        //     return;
-        // }
-        // const region = BlockSource.getDefaultForActor(playerUid);
-        // RocketPadding.passRadius(this.getRadius(), coords, (x, z) => {
-        //     const currentCoords = new Vector3(x, coords.y, z);
-        //     const currentBlock = region.getBlock(currentCoords.x, currentCoords.y, currentCoords.z) as BlockState;
-
-        //     if(RocketPadding.isCenter(this, this.getRadius(), currentCoords, currentBlock, region)) {
-        //         this.destroy(currentCoords, playerUid);
-        //         return true;
-        //     }
-        // });
     }
 
     public isCenterBlock(coords: Vector, block: Tile): boolean {

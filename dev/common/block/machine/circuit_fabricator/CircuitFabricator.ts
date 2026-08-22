@@ -1,4 +1,4 @@
-@ElectricMachine(EElectricMachineType.RECEIVER)
+@ElectricMachine(ElectricMachine.Type.RECEIVER)
 class CircuitFabricator extends ProcessingBlock {
     public static tile = new CircuitFabricatorTile();
 

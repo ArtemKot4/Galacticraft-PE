@@ -19,7 +19,6 @@ api/block/machine/MachineBlock.ts
 api/block/machine/ElectricBlock.ts
 api/block/machine/ProcessingBlock.ts
 
-
 api/block/machine/ElectricMachine.ts
 api/block/machine/LiquidMachine.ts
 
@@ -28,6 +27,11 @@ api/block/machine/GeneratorTile.ts
 api/block/machine/ProcessingTile.ts
 api/block/machine/LiquidTile.ts
 api/block/machine/BasicWire.ts
+
+api/item/GalacticraftItem.ts
+api/item/Canister.ts
+api/item/Battery.ts
+api/item/OxygenBalloon.ts
 
 api/universe/galaxy/IGalaxy.ts
 api/universe/galaxy/Galaxy.ts

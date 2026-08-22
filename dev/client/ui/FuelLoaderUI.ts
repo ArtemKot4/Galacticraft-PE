@@ -51,7 +51,7 @@ const FuelLoaderUI = new UI.StandartWindow({
             scale: 3.8,
             direction: 1
         },
-        energy_slot: {
+        battery_slot_discharge: {
             type: "slot",
             x: 455,
             y: 260,

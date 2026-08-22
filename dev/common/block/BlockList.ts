@@ -1,4 +1,5 @@
 namespace BlockList {
+    export const ROCKET_PADDING = new RocketPadding("rocket_padding_gc", "rocket_padding");
     export const IMPROVED_WIRE = new ImprovedWire();
     export const LIQUID_PIPE = new LiquidPipe();
     export const COAL_GENERATOR = new CoalGenerator();
@@ -6,10 +7,9 @@ namespace BlockList {
     export const ELECTRIC_COMPRESSOR = new ElectricCompressor();
     export const CIRCUIT_FABRICATOR = new CircuitFabricator();
     export const REFINERY = new Refinery();
-    export const ROCKET_PADDING = new RocketPadding("rocket_padding_gc", "rocket_padding");
     export const FUEL_LOADER = new FuelLoader();
 
-    export const BLOCK_MOON_SAPPHIRE = new BasicBlock("block_moon_sapphire_gc", [{ name: "Sapphire Block", texture: [["block_moon_sapphire", 0]], inCreative: true }]);
+    export const BLOCK_MOON_SAPPHIRE = new BasicBlock("block_moon_sapphire_gc", [{ name: "block.galacticraft.sapphire_block", texture: [["block_moon_sapphire", 0]], inCreative: true }]);
     export const MOON_CHEESE = new BasicBlock("moon_cheese_gc", [{ name: "block.galacticraft.moon_cheese", texture: [["moon_cheese", 0]], inCreative: true }]);
     export const MOON_SAPPHIRE = new BasicBlock("moon_sapphire_gc", [{ name: "block.galacticraft.moon_sapphire", texture: [["moon_sapphire", 0]], inCreative: true }]);
     export const VENUS_QUARTZ = new BasicBlock("venus_quartz_gc", [{ name: "block.galacticraft.venus_quartz", texture: [["ore_quartz_venus", 0]], inCreative: true }]);
@@ -47,7 +47,7 @@ namespace BlockList {
     
     export const CARVED_TIN_DECORATION_BLOCK = new BasicBlock("carved_tin_decoration_block", [
         {
-            name: "Deco Tin Block",
+            name: "block.galacticraft.carved_tin_decoration_block",
             texture: [
                 ["deco_block_up", 0],
                 ["deco_block_up", 0],
@@ -62,7 +62,7 @@ namespace BlockList {
 
     export const ENCLOSED_ALUMINUM_WIRE = new BasicBlock("enclosed_aluminum_wire", [
         {
-            name: "Enclosed Aluminum Wire",
+            name: "block.galacticraft.enclosed_aluminum_wire",
             texture: [["Enclosed Aluminum Wire", 0]],
             inCreative: true,
         }
@@ -72,7 +72,7 @@ namespace BlockList {
     ICRender.getGroup("galacticraft.wire").add(ENCLOSED_ALUMINUM_WIRE.id, -1);
 
     export const ENCLOSED_FLUID_PIPE = new BasicBlock("enclosed_fluid_pipe", [{
-        name: "Enclosed Oxygen Pipe",
+        name: "block.galacticraft.enclosed_fluid_pipe",
         texture: [["Enclosed Fluid Pipe", 0]],
         inCreative: true
     }]);
@@ -81,7 +81,7 @@ namespace BlockList {
     ICRender.getGroup("galacticraft.liquid_pipe").add(ENCLOSED_FLUID_PIPE.id, -1);
 
     export const ENCLOSED_HEAVY_ALUMINUM_WIRE = new BasicBlock("enclosed_heavy_aluminum_wire", [{
-        name: "Enclosed Heavy Aluminum Wire",
+        name: "block.galacticraft.enclosed_heavy_aluminum_wire",
         texture: [["Enclosed Heavy Aluminum Wire", 0]],
         inCreative: true
     }]);

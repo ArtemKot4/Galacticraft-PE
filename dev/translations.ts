@@ -49,12 +49,12 @@ Translation.addTranslation("Spaces Station", {
   zh: "空间站",
 });
 
-Translation.addTranslation("Solar panel", {
+Translation.addTranslation("tile.galacticraft.solar_panel", {
   ru: "Солнечная панель",
   zh: "太阳能板",
 });
 
-Translation.addTranslation("Basic Solar Panel", {
+Translation.addTranslation("tile.galacticraft.basic_solar_panel", {
   ru: "Базовая солнечная панель",
   zh: "基本太阳能电池板",
 });
@@ -79,7 +79,7 @@ Translation.addTranslation("tile.galacticraft.refinery", {
   zh: "离心机",
 });
 
-Translation.addTranslation("Electric compressor", {
+Translation.addTranslation("tile.galacticraft.electric_compressor", {
   ru: "Электрический компрессор",
   zh: "电动压缩机",
 });
@@ -653,17 +653,27 @@ Translation.addTranslation("Thermal helmet", {
   ru: "Теплоизолирующий шлем",
 });
 
-Translation.addTranslation("battery", {
+Translation.addTranslation("item.galacticraft.uncharged_battery", {
+  en: "Uncharged battery",
+  ru: "Разряженная батарейка",
+});
+
+Translation.addTranslation("message.galacticraft.infinity", {
+  en: "Infinity",
+  ru: "Бесконечность",
+});
+
+Translation.addTranslation("item.galacticraft.battery_gc", {
   en: "Battery",
   ru: "Батарейка",
 });
 
-Translation.addTranslation("Infinite battery", {
+Translation.addTranslation("item.galacticraft.infinity_battery_gc", {
   en: "§6Infinite battery",
   ru: "§6Бесконечная батарейка",
 });
 
-Translation.addTranslation("Atomic battery", {
+Translation.addTranslation("item.galacticraft.atomic_battery_gc", {
   en: "§6Atomic battery",
   ru: "§6Атомная батарейка",
 });
