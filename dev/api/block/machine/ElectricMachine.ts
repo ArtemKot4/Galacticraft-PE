@@ -8,7 +8,7 @@ declare namespace ElectricMachine {
 
     interface TileEntity extends MachineTile {
         data: { energy: number }
-        batterySlotChecks: Map<string, batteryAction>
+        batterySlotChecks: Set<string>
         getCapacity(): number;
     }
 
@@ -27,7 +27,6 @@ function ElectricMachine(type: ElectricMachine.Type, ...batterySlotDescriptors: 
         return class extends target {
             public constructor(...args: any[]) {
                 super(...args);
-                EnergyTileRegistry.addEnergyTypeForId(this.id, Galacticraft.EnergyTypes.JOULE);
                 this.setWireConnecting();
 
                 const tileEntity = TileEntity.getPrototype(this.id); 
@@ -41,30 +40,35 @@ function ElectricMachine(type: ElectricMachine.Type, ...batterySlotDescriptors: 
                 if(battery_slot_discharge != null) {
                     batterySlotDescriptors.push({ slotName: "battery_slot_discharge", action: "discharge" });
                 }
-                this.injectElectricInit();
                 this.addEnergyFunctions();
+                EnergyTileRegistry.addEnergyTypeForId(this.id, Galacticraft.EnergyTypes.JOULE);
+                this.injectInitElectricUpdated();
 
                 if(batterySlotDescriptors.length > 0 || (energy_bar != null && energy_icon != null)) {
-                    this.injectElectricTick();
+                    this.injectTickElectricUpdated();
                 }
+            }
+
+            public isValidBatteryForCharge(id: number, amount: number): boolean {
+                if(!ChargeItemRegistry.isValidItem(id, Galacticraft.EnergyTypes.JOULE.name, 0)) {
+                    return false;
+                }
+                return amount < ChargeItemRegistry.getMaxCharge(id, Galacticraft.EnergyTypes.JOULE.name);
+            }
+
+            public isValidBatteryForDischarge(id: number, amount: number): boolean {
+                if(!ChargeItemRegistry.isValidItem(id, Galacticraft.EnergyTypes.JOULE.name, 0)) {
+                    return type != null;
+                }
+                return amount > 0;
             }
 
             public setEnergySlot(tileEntity: ElectricMachine.TileEntity, { slotName, action }: ElectricMachine.BatterySlotDescriptor): void {
                 let policy: ElectricMachine.BatterySlotPolicy;
                 if(action == "charge") {
-                    policy = (id, amount, type) => {
-                        if(!ChargeItemRegistry.isValidItem(id, Galacticraft.EnergyTypes.JOULE.name, 0)) {
-                            return false;
-                        }
-                        return amount < ChargeItemRegistry.getMaxCharge(id, Galacticraft.EnergyTypes.JOULE.name);
-                    }
+                    policy = (id, amount, type) => this.isValidBatteryForCharge(id, amount);
                 } else {
-                    policy = (id, amount, type) => {
-                        if(!ChargeItemRegistry.isValidItem(id, Galacticraft.EnergyTypes.JOULE.name, 0)) {
-                            return type != null;
-                        }
-                        return amount > 0;
-                    }
+                    policy = (id, amount, type) => this.isValidBatteryForDischarge(id, amount);
                 }
 
                 tileEntity.container.setSlotAddTransferPolicy(slotName, (container, str, id, count, data, extra) => {
@@ -73,14 +77,14 @@ function ElectricMachine(type: ElectricMachine.Type, ...batterySlotDescriptors: 
                     }
                     const isBattery = policy(id, ChargeItemRegistry.getEnergyStored(new ItemStack(id, count, data, extra)), extra.getString("battery.special_type") as ElectricMachine.batteryAction);
                     if(isBattery == true) {
-                        tileEntity.batterySlotChecks.set(slotName, action);
+                        tileEntity.batterySlotChecks.add(slotName + ":" + action);
                         return count;
                     }
                     return 0;
                 });
 
                 tileEntity.container.setSlotGetTransferPolicy(slotName, (container, str, id, count) => {
-                    tileEntity.batterySlotChecks.delete(slotName);
+                    tileEntity.batterySlotChecks.delete(slotName + ":" + action);
                     return count;
                 });
             }
@@ -92,7 +96,7 @@ function ElectricMachine(type: ElectricMachine.Type, ...batterySlotDescriptors: 
                 ICRender.getGroup("galacticraft.machine_energy_connecting_3").add(this.id, 3);
             }
 
-            public injectElectricInit(): void {
+            public injectInitElectricUpdated(): void {
                 const tilePrototype = TileEntity.getPrototype(this.id) as ElectricMachine.TileEntity;
                 const lastInit = tilePrototype.init;
                 const block = this;
@@ -101,9 +105,17 @@ function ElectricMachine(type: ElectricMachine.Type, ...batterySlotDescriptors: 
                     this.data.energy = this.data.energy || 0;
 
                     if(batterySlotDescriptors.length > 0) {
-                        this.batterySlotChecks ??= new Map();
-                        for(const batterySlot of batterySlotDescriptors) {
-                            block.setEnergySlot(this, batterySlot);
+                        this.batterySlotChecks ??= new Set();
+                        for(const descriptor of batterySlotDescriptors) {
+                            block.setEnergySlot(this, descriptor);
+                            const slot = this.container.getSlot(descriptor.slotName);
+                            const amount = slot.extra && slot.extra.getInt("energy") || 0;
+                            if(
+                                descriptor.action == "charge" && block.isValidBatteryForCharge(slot.id, amount) ||
+                                descriptor.action == "discharge" && block.isValidBatteryForDischarge(slot.id, amount)
+                            ) {
+                                this.batterySlotChecks.add(descriptor.slotName + ":" + descriptor.action);
+                            }
                         }
                     }
                     lastInit.call(this);
@@ -126,7 +138,7 @@ function ElectricMachine(type: ElectricMachine.Type, ...batterySlotDescriptors: 
                     return false;
                 }
                 const added = ChargeItemRegistry.addEnergyTo(slot, Galacticraft.EnergyTypes.JOULE.name, tileEntity.data.energy >= 100 ? 100 : tileEntity.data.energy, 0);
-                tileEntity.container.setSlot(slotName, slot.id, slot.count, Item.getMaxDamage(slot.id) - (amount + added), slot.extra.putInt("energy", amount + added));
+                tileEntity.container.setSlot(slotName, slot.id, slot.count, Item.getMaxDamage(slot.id) - ((amount + added) / capacity) * 100, slot.extra.putInt("energy", amount + added));
                 tileEntity.data.energy -= added;
             }
 
@@ -158,10 +170,10 @@ function ElectricMachine(type: ElectricMachine.Type, ...batterySlotDescriptors: 
                 let add = amount < 100 ? amount : 100;
                 let added = canAdd < add ? canAdd : add;
                 tileEntity.data.energy += added;
-                tileEntity.container.setSlot(slotName, slot.id, slot.count, Item.getMaxDamage(slot.id) - (amount - added), slot.extra.putInt("energy", amount - added));
+                tileEntity.container.setSlot(slotName, slot.id, slot.count, Item.getMaxDamage(slot.id) - ((amount - added) / capacity) * 100, slot.extra.putInt("energy", amount - added));
             }
 
-            public injectElectricTick(): void {
+            public injectTickElectricUpdated(): void {
                 const block = this;
                 const tilePrototype = TileEntity.getPrototype(this.id) as ElectricMachine.TileEntity;
                 const lastTick = tilePrototype.tick;
@@ -174,16 +186,13 @@ function ElectricMachine(type: ElectricMachine.Type, ...batterySlotDescriptors: 
                     if(this.batterySlotChecks && this.batterySlotChecks.size == 0) {
                         return;
                     }
-                    this.batterySlotChecks.forEach((action, slotName) => {
-                        if(action == "charge") {
-                            if(block.chargeBattery(this, slotName) === true) {
-                                this.batterySlotChecks.delete(slotName);
-                            };
-                        }
-                        else if(action == "discharge") {
-                            if(block.dischargeBattery(this, slotName) === true) {
-                                this.batterySlotChecks.delete(slotName);
-                            }
+                    this.batterySlotChecks.forEach((value) => {
+                        const [slotName, action] = value.split(":", 2);
+                        if(
+                            action == "charge" && block.chargeBattery(this, slotName) === true || 
+                            action == "discharge" && block.dischargeBattery(this, slotName) === true
+                        ) {
+                            this.batterySlotChecks.delete(slotName + ":" + action);
                         }
                         this.container.validateSlot(slotName);
                     });
@@ -192,17 +201,39 @@ function ElectricMachine(type: ElectricMachine.Type, ...batterySlotDescriptors: 
                 }
             }
 
+            public isValidEnergySide(data: number, side: number): boolean {
+                return (
+                    data == 0 && side == 4 ||
+                    data == 1 && side == 5 ||
+                    data == 2 && side == 3 ||
+                    data == 3 && side == 2
+                );
+            }
+
             public addEnergyFunctions(): void {
+                const block = this;
                 const tilePrototype = TileEntity.getPrototype(this.id) as ElectricMachine.TileEntity;
 
-                if(!("energyReceive" in tilePrototype)) {
-                    tilePrototype.canReceiveEnergy = function() {
-                        return type == ElectricMachine.Type.RECEIVER;
+                if(!("canReceiveEnergy" in tilePrototype)) {
+                    if(type == ElectricMachine.Type.RECEIVER) {
+                        tilePrototype.canReceiveEnergy = function(side , type) {
+                            return block.isValidEnergySide(this.blockSource.getBlockData(this.x, this.y, this.z), side);
+                        }
+                    } else {
+                        tilePrototype.canReceiveEnergy = function(this: ElectricMachine.TileEntity) {
+                            return false;
+                        }
                     }
                 }
                 if(!("canExtractEnergy" in tilePrototype)) {
-                    tilePrototype.canExtractEnergy = function() {
-                        return type == ElectricMachine.Type.EXTRACTOR;
+                    if(type == ElectricMachine.Type.EXTRACTOR) {
+                        tilePrototype.canExtractEnergy = function(this: ElectricMachine.TileEntity, side, type) {
+                            return block.isValidEnergySide(this.blockSource.getBlockData(this.x, this.y, this.z), side);
+                        }
+                    } else {
+                        tilePrototype.canExtractEnergy = function() {
+                            return false;
+                        }
                     }
                 }
                 if(type == ElectricMachine.Type.RECEIVER) {
@@ -217,7 +248,7 @@ function ElectricMachine(type: ElectricMachine.Type, ...batterySlotDescriptors: 
                         const output = Math.min(this.data.energy, this.getCapacity());
                         this.data.energy += src.add(output) - output;
                     }
-                }
+                } 
                 
                 tilePrototype.getCapacity = tilePrototype.getCapacity || function() {
                     return 16000;

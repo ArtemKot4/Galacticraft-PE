@@ -1,4 +1,4 @@
-class CoalGeneratorTile extends GeneratorTile {
+class CoalGeneratorTile extends MachineTile {
     public defaultValues = {
         active: false,
         canSpendFuel: false,

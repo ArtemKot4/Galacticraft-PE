@@ -17,12 +17,13 @@ class Canister extends GalacticraftItem implements IIconOverrideCallback, INameO
         const liquids = this.getLiquids();
         const capacity = this.getCapacity();
         CanisterLiquidRegistry.createFor(this.id, liquids);
-        Item.setMaxDamage(this.id, capacity);
+        Item.setMaxDamage(this.id, 100);
         Item.addToCreative(this.id, 1, capacity);
 
         for(const liquidName of liquids) {
             const extra = new ItemExtraData();
             extra.putString("liquid.name", liquidName);
+            extra.putInt("liquid.amount", capacity);
             Item.addToCreative(this.id, 1, 0, extra);
         }
     }
@@ -58,8 +59,11 @@ class Canister extends GalacticraftItem implements IIconOverrideCallback, INameO
     }
 
     public onIconOverride({ id, data, extra }: ItemInstance, isModUi: boolean): void | Item.TextureData {
-        const meta = this.getMeta(Item.getMaxDamage(id) - data);
-        if(!extra || meta == 0) {
+        if(!extra) {
+            return this.emptyTexture;
+        }
+        const meta = this.getMeta(extra.getInt("liquid.amount"));
+        if(meta == 0) {
             return this.emptyTexture;
         }
         return { name: `${CanisterLiquidRegistry.getCurrentLiquid(extra)}_canister_partial`, meta: meta };
@@ -67,10 +71,10 @@ class Canister extends GalacticraftItem implements IIconOverrideCallback, INameO
 
     public onNameOverride({ id, data, extra }: ItemInstance, translation: string, name: string): void | string {
         const liquidName = CanisterLiquidRegistry.getCurrentLiquid(extra);
-        const amount = Item.getMaxDamage(id) - data;
-        if(!liquidName || data == Item.getMaxDamage(id)) {
-            return Native.Color.GRAY + Translation.translate(this.emptyName);
+        const amount = CanisterLiquidRegistry.getCurrentLiquidAmount(extra) || 0;
+        if(!liquidName || amount == 0) {
+            return Translation.translate(this.emptyName);
         }
-        return Translation.translate(`item.galacticraft.${liquidName}_liquid_canister`) + "\n" + Translation.translate("message.galacticraft.canister_liquid_amount") + amount + " mB";
+        return Translation.translate(`item.galacticraft.${liquidName}_liquid_canister`) + "\n" + Native.Color.GRAY + Translation.translate("message.galacticraft.canister_liquid_amount") + amount + " mB";
     }
 }

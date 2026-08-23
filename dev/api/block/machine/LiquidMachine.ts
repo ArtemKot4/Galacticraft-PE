@@ -25,7 +25,7 @@ declare namespace LiquidMachine {
     }
     
     interface TileEntity extends MachineTile {
-        liquidSlotChecks: LiquidDescriptor[]
+        liquidSlotChecks: Map<string, LiquidDescriptor>
     }
 
     interface SlotPolicy {
@@ -44,13 +44,12 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
 
             public constructor(...args: any[]) {
                 super(...args);
-                this.addPipesConnecting();
+                this.setPipesConnecting();
                 const tileEntity = TileEntity.getPrototype(this.id); 
                 
                 if(tileEntity == null) {
                     throw new ReferenceError("LiquidMachine does not can don't contain tile entity prototype");
                 }
-                //const slots: { [slotName: string]: LiquidMachine.slotAction }[] = [];
                 const getSlots = new Set<string>();
                 const addSlots = new Set<string>();
                 const elements = tileEntity.getScreenByName().getContent().elements;
@@ -77,11 +76,11 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                         getSlots.add(descriptor.slotName);
                     }
                 }
-                this.injectLiquidInit();
-                this.injectLiquidTick();
+                this.injectInitLiquidUpdated();
+                this.injectTickLiquidUpdated();
             }
 
-            public addPipesConnecting(): void {
+            public setPipesConnecting(): void {
                 ICRender.getGroup("galacticraft.machine_liquid_connecting_0").add(this.id, 0);
                 ICRender.getGroup("galacticraft.machine_liquid_connecting_1").add(this.id, 1);
                 ICRender.getGroup("galacticraft.machine_liquid_connecting_2").add(this.id, 2);
@@ -105,7 +104,7 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                 if(LiquidRegistry.getFullItem(id, data, liquidName) != null) {
                     return true;
                 }
-                return CanisterLiquidRegistry.getLiquids(id).includes(liquidName) && (Item.getMaxDamage(id) - data < (canCanisterHavePartial && CanisterLiquidRegistry.getCurrentLiquid(extra) == liquidName ? CanisterLiquidRegistry.getCapacity(id) : 1));
+                return CanisterLiquidRegistry.getLiquids(id).includes(liquidName) && (!extra || CanisterLiquidRegistry.getCurrentLiquidAmount(extra) < (canCanisterHavePartial && CanisterLiquidRegistry.getCurrentLiquid(extra) == liquidName ? CanisterLiquidRegistry.getCapacity(id) : 1));
             }
 
             public isValidNotEmpty({ id, data, extra }: ItemInstance, liquidName: string): boolean {
@@ -113,71 +112,38 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                 if(bucket != null && bucket.liquid == liquidName) {
                     return true;
                 }
-                return CanisterLiquidRegistry.getCurrentLiquid(extra) == liquidName && data < Item.getMaxDamage(id);
+                const amount = CanisterLiquidRegistry.getCurrentLiquidAmount(extra);
+                return CanisterLiquidRegistry.getCurrentLiquid(extra) == liquidName && amount > 0;
             }
 
             public completeLiquidCheck(tileEntity: LiquidMachine.TileEntity, descriptor: LiquidMachine.LiquidDescriptor, success: boolean): boolean {
                 if(success == true) {
-                    tileEntity.liquidSlotChecks.push(descriptor);
+                    tileEntity.liquidSlotChecks.set(descriptor.slotName + ":" + descriptor.action, descriptor);
                 } else {
-                    tileEntity.liquidSlotChecks = tileEntity.liquidSlotChecks.filter((v) => v.slotName != descriptor.slotName);
+                    tileEntity.liquidSlotChecks.delete(descriptor.slotName + ":" + descriptor.action)
                 }
                 return success;
-            }
-
-            public injectLiquidInit(): void {
-                const tileEntity = TileEntity.getPrototype(this.id) as LiquidMachine.TileEntity;
-                const lastInit = tileEntity.init;
-                const policies = this.policies;
-                const block = this;
-
-                tileEntity.init = function(this: LiquidMachine.TileEntity) {
-                    this.liquidSlotChecks = [];
-                    lastInit.call(this);
-                    
-                    for(const descriptor of descriptors) {
-                        this.liquidStorage.setLimit(descriptor.liquidName, descriptor.liquidCapacity);
-                        const slot = this.container.getSlot(descriptor.slotName);
-                        if(descriptor.action == "add" && block.isValidNotEmpty(slot, descriptor.liquidName)) {
-                            this.liquidSlotChecks.push(descriptor);
-                        }
-                        else if(descriptor.action == "get" && block.isValidEmpty(slot, descriptor.liquidName)) {
-                            this.liquidSlotChecks.push(descriptor);
-                        }
-                    }
-                    
-                    for(const slotName in policies) {
-                        const lastPolicy = this.container.getAddTransferPolicy(slotName);
-
-                        this.container.setSlotAddTransferPolicy(slotName, (container, str, id, count, data, extra, time) => {
-                            if(lastPolicy != null && lastPolicy(container, str, id, count, data, extra, time) == 0) {
-                                return 0;
-                            }
-                            return policies[slotName](this, { id, count, data, extra }) ? count : 0;
-                        });
-                    }
-                }
             }
 
             public addLiquid(tileEntity: LiquidMachine.TileEntity, descriptor: LiquidMachine.LiquidDescriptor): boolean {
                 const slot = tileEntity.container.getSlot(descriptor.slotName);
                 const amount = tileEntity.liquidStorage.getAmount(descriptor.liquidName);
-                const itemLiquidCount = Item.getMaxDamage(slot.id) - slot.data;
                 
                 if(CanisterLiquidRegistry.getCurrentLiquid(slot.extra) == descriptor.liquidName && amount < descriptor.liquidCapacity) {
+                    const itemLiquidCount = slot.extra.getInt("liquid.amount");
                     const canAdd = descriptor.liquidCapacity - amount;
-                    let setItemAmount = 0;
-                    let setStorageAmount = 0;
+                    let resultItemAmount = 0;
+                    let resultStorageAmount = 0;
 
                     if(canAdd >= itemLiquidCount) {
-                        setStorageAmount = amount + itemLiquidCount;
+                        resultStorageAmount = amount + itemLiquidCount;
                     } else {
-                        setItemAmount = itemLiquidCount - canAdd;
-                        setStorageAmount = amount + canAdd;
+                        resultItemAmount = itemLiquidCount - canAdd;
+                        resultStorageAmount = amount + canAdd;
                     }
-                    slot.data = Item.getMaxDamage(slot.id) - setItemAmount;
-                    tileEntity.container.setSlot(descriptor.slotName, slot.id, slot.count, slot.data, slot.extra);
-                    tileEntity.liquidStorage.setAmount(descriptor.liquidName, setStorageAmount);
+                    slot.extra.putInt("liquid.amount", resultItemAmount);
+                    tileEntity.container.setSlot(descriptor.slotName, slot.id, slot.count, Item.getMaxDamage(slot.id) - (resultItemAmount / CanisterLiquidRegistry.getCapacity(slot.id)) * 100, slot.extra);
+                    tileEntity.liquidStorage.setAmount(descriptor.liquidName, resultStorageAmount);
                     return true;
                 }
                 const bucketCapacity = CanisterLiquidRegistry.getCapacity(slot.id, slot.data);
@@ -212,7 +178,7 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                 else if(CanisterLiquidRegistry.getLiquids(slot.id).includes(descriptor.liquidName)) {
                     slot.extra ??= new ItemExtraData();
                     capacity = CanisterLiquidRegistry.getCapacity(slot.id);
-                    const itemAmount = Item.getMaxDamage(slot.id) - slot.data;
+                    const itemAmount = CanisterLiquidRegistry.getCurrentLiquidAmount(slot.extra);
                     const canAdd = capacity - itemAmount;
                     let add = 0;
                     if(amount >= canAdd) {
@@ -220,18 +186,53 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                     } else {
                         add = amount;   
                     }
+                    const result = itemAmount + add;
                     slot.extra.putString("liquid.name", descriptor.liquidName);
-                    slot.data = (Item.getMaxDamage(slot.id) - itemAmount) - add;
-                    tileEntity.container.setSlot(descriptor.slotName, slot.id, slot.count, slot.data, slot.extra);
+                    slot.extra.putInt("liquid.amount", result);
+                    tileEntity.container.setSlot(descriptor.slotName, slot.id, slot.count, Item.getMaxDamage(slot.id) - (result / capacity) * 100, slot.extra);
                     tileEntity.liquidStorage.setAmount(descriptor.liquidName, amount - add);
-                    return Item.getMaxDamage(slot.id) - slot.data >= capacity;
+                    return result >= capacity;
                 } else {
                     throw new GalacticraftException("LiquidMachine: unknown empty bucket \"" + IDRegistry.getNameByID(slot.id) + "\"");
                 }
                 return false;
             }
 
-            public injectLiquidTick() {
+            public injectInitLiquidUpdated(): void {
+                const tileEntity = TileEntity.getPrototype(this.id) as LiquidMachine.TileEntity;
+                const lastInit = tileEntity.init;
+                const policies = this.policies;
+                const block = this;
+
+                tileEntity.init = function(this: LiquidMachine.TileEntity) {
+                    this.liquidSlotChecks = new Map();
+                    lastInit.call(this);
+                    
+                    for(const descriptor of descriptors) {
+                        this.liquidStorage.setLimit(descriptor.liquidName, descriptor.liquidCapacity);
+                        const slot = this.container.getSlot(descriptor.slotName);
+                        if(
+                            descriptor.action == "add" && block.isValidNotEmpty(slot, descriptor.liquidName) ||
+                            descriptor.action == "get" && block.isValidEmpty(slot, descriptor.liquidName)
+                        ) {
+                            this.liquidSlotChecks.set(descriptor.slotName + ":" + descriptor.action, descriptor);;
+                        }
+                    }
+                    
+                    for(const slotName in policies) {
+                        const lastPolicy = this.container.getAddTransferPolicy(slotName);
+
+                        this.container.setSlotAddTransferPolicy(slotName, (container, str, id, count, data, extra, time) => {
+                            if(lastPolicy != null && lastPolicy(container, str, id, count, data, extra, time) == 0) {
+                                return 0;
+                            }
+                            return policies[slotName](this, { id, count, data, extra }) ? count : 0;
+                        });
+                    }
+                }
+            }
+
+            public injectTickLiquidUpdated() {
                 const tileEntity = TileEntity.getPrototype(this.id) as LiquidMachine.TileEntity;
                 const lastTick = tileEntity.tick;
                 const scaleDescriptors = descriptors.filter(descriptor => "scaleName" in descriptor);
@@ -240,29 +241,22 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                 tileEntity.tick = function(this: LiquidMachine.TileEntity) {
                     lastTick.call(this);
                     
-                    if(this.liquidSlotChecks.length > 0) {
-                        let failed = [];
-                        for(const descriptor of this.liquidSlotChecks) {
+                    if(this.liquidSlotChecks?.size > 0) {
+                        this.liquidSlotChecks.forEach((descriptor, key) => {
                             const slot = this.container.getSlot(descriptor.slotName);
 
                             if((this.data.energy || 0) >= descriptor.requireEnergy) {
                                 this.data.energy -= descriptor.requireEnergy;
 
-                                if(descriptor.action == "add") {
-                                    if(block.isValidNotEmpty(slot, descriptor.liquidName) && !block.addLiquid(this, descriptor)) {
-                                        failed.push(descriptor);
-                                    };
-                                } else {
-                                    if(block.isValidEmpty(slot, descriptor.liquidName) && !block.takeLiquid(this, descriptor)) {
-                                        failed.push(descriptor);
-                                    }
+                                if(
+                                    descriptor.action == "add" && (!block.isValidNotEmpty(slot, descriptor.liquidName) || block.addLiquid(this, descriptor)) ||
+                                    descriptor.action == "get" && (!block.isValidEmpty(slot, descriptor.liquidName) || block.takeLiquid(this, descriptor))
+                                ) {
+                                    this.liquidSlotChecks.delete(key);
                                 }
-                                this.container.validateSlot(descriptor.slotName);
-                            } else {
-                                failed.push(descriptor);
                             }
-                        }
-                        this.liquidSlotChecks = failed;
+                            this.container.validateSlot(descriptor.slotName);
+                        }); 
                     }
 
                     for(const { liquidName, liquidCapacity, scaleName } of scaleDescriptors) {

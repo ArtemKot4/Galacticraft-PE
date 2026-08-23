@@ -17,7 +17,7 @@ class Battery extends GalacticraftItem implements INameOverrideCallback {
             this.batteryParams.canProvideEnergy = true;
             this.batteryParams.maxCharge ??= 15000;
             ChargeItemRegistry.registerItem(this.id, this.batteryParams as IElectricItem, false);
-            Item.setMaxDamage(this.id, this.batteryParams.maxCharge);
+            Item.setMaxDamage(this.id, 100);
             Item.addToCreative(this.id, 1, this.batteryParams.maxCharge, new ItemExtraData().putInt("energy", 0));
             Item.addToCreative(this.id, 1, 0, new ItemExtraData().putInt("energy", this.batteryParams.maxCharge));
         }
@@ -34,10 +34,10 @@ class Battery extends GalacticraftItem implements INameOverrideCallback {
     public onNameOverride(item: ItemInstance, translation: string, name: string): void | string {
         const extra = item.extra || new ItemExtraData();
         const type = extra.getString("battery.special_type") as GalacticraftItem.BatteryParams["type"];
-        if(!type && item.data == ChargeItemRegistry.getMaxCharge(item.id, Galacticraft.EnergyTypes.JOULE.name)) {
+        const amount = extra.getInt("energy");
+        if(!type && amount <= 0) {
             return Translation.translate("item.galacticraft.discharged_battery");
         }
-        const amount = extra.getInt("energy");
         let color = "";
         let header = Translation.translate(name);
         let display: string;
@@ -49,7 +49,7 @@ class Battery extends GalacticraftItem implements INameOverrideCallback {
                 break;
             }
             case "infinity": {
-                color = Native.Color.DARK_PURPLE;
+                color = "§d";
                 display = Translation.translate("message.galacticraft.infinity") + " gJ / T"; 
                 break;
             }
