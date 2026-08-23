@@ -105,7 +105,7 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                 if(LiquidRegistry.getFullItem(id, data, liquidName) != null) {
                     return true;
                 }
-                return CanisterLiquidRegistry.getLiquids(id).includes(liquidName) && (!extra || CanisterLiquidRegistry.getCurrentLiquidAmount(extra) < (canCanisterHavePartial && CanisterLiquidRegistry.getCurrentLiquid(extra) == liquidName ? CanisterLiquidRegistry.getCapacity(id) : 1));
+                return CanisterLiquidRegistry.getLiquids(id).includes(liquidName) && (Item.getMaxDamage(id) - data < (canCanisterHavePartial && CanisterLiquidRegistry.getCurrentLiquid(extra) == liquidName ? CanisterLiquidRegistry.getCapacity(id) : 1));
             }
 
             public isValidNotEmpty({ id, data, extra }: ItemInstance, liquidName: string): boolean {
@@ -113,8 +113,7 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                 if(bucket != null && bucket.liquid == liquidName) {
                     return true;
                 }
-                const amount = CanisterLiquidRegistry.getCurrentLiquidAmount(extra);
-                return CanisterLiquidRegistry.getCurrentLiquid(extra) == liquidName && amount > 0;
+                return CanisterLiquidRegistry.getCurrentLiquid(extra) == liquidName && data < Item.getMaxDamage(id);
             }
 
             public completeLiquidCheck(tileEntity: LiquidMachine.TileEntity, descriptor: LiquidMachine.LiquidDescriptor, success: boolean): boolean {
@@ -163,9 +162,9 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
             public addLiquid(tileEntity: LiquidMachine.TileEntity, descriptor: LiquidMachine.LiquidDescriptor): boolean {
                 const slot = tileEntity.container.getSlot(descriptor.slotName);
                 const amount = tileEntity.liquidStorage.getAmount(descriptor.liquidName);
-                const itemLiquidCount = CanisterLiquidRegistry.getCurrentLiquidAmount(slot.extra);
+                const itemLiquidCount = Item.getMaxDamage(slot.id) - slot.data;
                 
-                if(itemLiquidCount != null && CanisterLiquidRegistry.getCurrentLiquid(slot.extra) == descriptor.liquidName && amount < descriptor.liquidCapacity) {
+                if(CanisterLiquidRegistry.getCurrentLiquid(slot.extra) == descriptor.liquidName && amount < descriptor.liquidCapacity) {
                     const canAdd = descriptor.liquidCapacity - amount;
                     let setItemAmount = 0;
                     let setStorageAmount = 0;
@@ -176,7 +175,7 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                         setItemAmount = itemLiquidCount - canAdd;
                         setStorageAmount = amount + canAdd;
                     }
-                    slot.extra.putInt("liquid.amount", setItemAmount);
+                    slot.data = Item.getMaxDamage(slot.id) - setItemAmount;
                     tileEntity.container.setSlot(descriptor.slotName, slot.id, slot.count, slot.data, slot.extra);
                     tileEntity.liquidStorage.setAmount(descriptor.liquidName, setStorageAmount);
                     return true;
@@ -211,22 +210,21 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                     }
                 } 
                 else if(CanisterLiquidRegistry.getLiquids(slot.id).includes(descriptor.liquidName)) {
-                    const itemLiquidCount = CanisterLiquidRegistry.getCurrentLiquidAmount(slot.extra) || 0; //нужно будет Capacity в Amount, иначе не совсем понятно
                     slot.extra ??= new ItemExtraData();
                     capacity = CanisterLiquidRegistry.getCapacity(slot.id);
-                    const canAdd = capacity - itemLiquidCount;
+                    const itemAmount = Item.getMaxDamage(slot.id) - slot.data;
+                    const canAdd = capacity - itemAmount;
                     let add = 0;
                     if(amount >= canAdd) {
                         add = canAdd;
                     } else {
                         add = amount;   
                     }
-
                     slot.extra.putString("liquid.name", descriptor.liquidName);
-                    slot.extra.putInt("liquid.amount", itemLiquidCount + add);
+                    slot.data = (Item.getMaxDamage(slot.id) - itemAmount) - add;
                     tileEntity.container.setSlot(descriptor.slotName, slot.id, slot.count, slot.data, slot.extra);
                     tileEntity.liquidStorage.setAmount(descriptor.liquidName, amount - add);
-                    return CanisterLiquidRegistry.getCurrentLiquidAmount(slot.extra) >= capacity;
+                    return Item.getMaxDamage(slot.id) - slot.data >= capacity;
                 } else {
                     throw new GalacticraftException("LiquidMachine: unknown empty bucket \"" + IDRegistry.getNameByID(slot.id) + "\"");
                 }
@@ -260,6 +258,8 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                                     }
                                 }
                                 this.container.validateSlot(descriptor.slotName);
+                            } else {
+                                failed.push(descriptor);
                             }
                         }
                         this.liquidSlotChecks = failed;

@@ -653,8 +653,8 @@ Translation.addTranslation("Thermal helmet", {
   ru: "Теплоизолирующий шлем",
 });
 
-Translation.addTranslation("item.galacticraft.uncharged_battery", {
-  en: "Uncharged battery",
+Translation.addTranslation("item.galacticraft.discharged_battery", {
+  en: "Discharged battery",
   ru: "Разряженная батарейка",
 });
 

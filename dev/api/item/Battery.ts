@@ -9,17 +9,17 @@ class Battery extends GalacticraftItem implements INameOverrideCallback {
     }
 
     public applyParams() {
-        this.batteryParams.tier = 0;
-        this.batteryParams.energy = Galacticraft.EnergyTypes.JOULE.name;
-        this.batteryParams.canProvideEnergy = true;
-    
         if("type" in this.batteryParams) {
             Item.addToCreative(this.id, 1, 0 ,new ItemExtraData().putString("battery.special_type", this.batteryParams.type));
         } else {
+            this.batteryParams.tier = 0;
+            this.batteryParams.energy = Galacticraft.EnergyTypes.JOULE.name;
+            this.batteryParams.canProvideEnergy = true;
             this.batteryParams.maxCharge ??= 15000;
             ChargeItemRegistry.registerItem(this.id, this.batteryParams as IElectricItem, false);
-            Item.addToCreative(this.id, 1, 0, new ItemExtraData().putInt("energy", 0));
-            Item.addToCreative(this.id, 1, 0, new ItemExtraData().putInt("energy", ChargeItemRegistry.getMaxCharge(this.id, Galacticraft.EnergyTypes.JOULE.name)));
+            Item.setMaxDamage(this.id, this.batteryParams.maxCharge);
+            Item.addToCreative(this.id, 1, this.batteryParams.maxCharge, new ItemExtraData().putInt("energy", 0));
+            Item.addToCreative(this.id, 1, 0, new ItemExtraData().putInt("energy", this.batteryParams.maxCharge));
         }
     }
 
@@ -32,11 +32,12 @@ class Battery extends GalacticraftItem implements INameOverrideCallback {
     }
 
     public onNameOverride(item: ItemInstance, translation: string, name: string): void | string {
-        if(!item.extra) {
+        const extra = item.extra || new ItemExtraData();
+        const type = extra.getString("battery.special_type") as GalacticraftItem.BatteryParams["type"];
+        if(!type && item.data == ChargeItemRegistry.getMaxCharge(item.id, Galacticraft.EnergyTypes.JOULE.name)) {
             return Translation.translate("item.galacticraft.discharged_battery");
         }
-        const type = item.extra.getString("battery.special_type") as GalacticraftItem.BatteryParams["type"];
-        const amount = item.extra.getInt("energy");
+        const amount = extra.getInt("energy");
         let color = "";
         let header = Translation.translate(name);
         let display: string;
@@ -57,6 +58,5 @@ class Battery extends GalacticraftItem implements INameOverrideCallback {
             }
         }
         return color + header + "\n" + Native.Color.WHITE + display;
-        
     }
 }

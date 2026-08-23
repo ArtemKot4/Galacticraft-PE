@@ -126,7 +126,7 @@ function ElectricMachine(type: ElectricMachine.Type, ...batterySlotDescriptors: 
                     return false;
                 }
                 const added = ChargeItemRegistry.addEnergyTo(slot, Galacticraft.EnergyTypes.JOULE.name, tileEntity.data.energy >= 100 ? 100 : tileEntity.data.energy, 0);
-                tileEntity.container.setSlot(slotName, slot.id, slot.count, slot.data, slot.extra.putInt("energy", added));
+                tileEntity.container.setSlot(slotName, slot.id, slot.count, Item.getMaxDamage(slot.id) - (amount + added), slot.extra.putInt("energy", amount + added));
                 tileEntity.data.energy -= added;
             }
 
@@ -158,7 +158,7 @@ function ElectricMachine(type: ElectricMachine.Type, ...batterySlotDescriptors: 
                 let add = amount < 100 ? amount : 100;
                 let added = canAdd < add ? canAdd : add;
                 tileEntity.data.energy += added;
-                tileEntity.container.setSlot(slotName, slot.id, slot.count, slot.data, slot.extra.putInt("energy", amount - added));
+                tileEntity.container.setSlot(slotName, slot.id, slot.count, Item.getMaxDamage(slot.id) - (amount - added), slot.extra.putInt("energy", amount - added));
             }
 
             public injectElectricTick(): void {
