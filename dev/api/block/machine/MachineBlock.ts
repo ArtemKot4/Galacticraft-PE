@@ -6,15 +6,6 @@ class MachineBlock extends RotatableBlock {
         if(description != null) {
             Galacticraft.ToolTips.registerTipFor(this.id, description);
         }
-        const storageInterface = this.getStorageInterface();
-        
-        if(storageInterface != null) {
-            StorageInterface.createInterface(this.id, storageInterface);
-        }      
-    }
-
-    public getStorageInterface(): Nullable<StorageDescriptor> {
-        return null;
     }
 
     public getDescription(): Nullable<string> {

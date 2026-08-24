@@ -182,6 +182,6 @@ declare namespace StorageInterface {
      * Every 8 ticks checks neigbour hoppers and transfers items.
      * Use it in tick function of TileEntity
     */
-    export function checkHoppers(tile: TileEntity): void;
+    export function checkHoppers(tile: TileEntity): boolean /*rewritten from `void` */;
     export {};
 }

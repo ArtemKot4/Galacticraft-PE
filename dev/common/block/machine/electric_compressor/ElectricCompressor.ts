@@ -9,15 +9,7 @@ class ElectricCompressor extends ProcessingBlock {
             inCreative: true
         }]);
     }
-
-    public override getStorageInterface(): StorageDescriptor {
-        return {
-            slots: {
-                "slot_1^9": { input: true }
-            }
-        }
-    }
-
+    
     public override getTileEntity(): ProcessingTile {
         return ElectricCompressor.tile;
     }

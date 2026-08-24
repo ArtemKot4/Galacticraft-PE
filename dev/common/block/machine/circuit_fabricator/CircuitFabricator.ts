@@ -10,12 +10,6 @@ class CircuitFabricator extends ProcessingBlock {
 		}]);
 	}
 
-    public override getStorageInterface(): StorageDescriptor {
-        return {
-            getInputSlots: () => ["diamond_slot", "fabricator_slot_1", "fabricator_slot_2", "dust_slot", "plate_slot"]
-        }
-    }
-
 	public override getTileEntity(): ProcessingTile {
         return CircuitFabricator.tile;
 	}

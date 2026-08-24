@@ -6,7 +6,6 @@ abstract class ProcessingTile extends MachineTile {
     public currentRecipe: ReturnType<typeof RecipeFactory.prototype.getRecipe>;
 
     public override onInit(): void {
-        super.onInit();
         this.data.active = this.data.active || false;
         this.data.progress = this.data.progress || 0;
     }
@@ -44,10 +43,13 @@ abstract class ProcessingTile extends MachineTile {
     }
 
     public override onTick(): void {
+        const addedItem = StorageInterface.checkHoppers(this);
+        if(addedItem == true) {
+            this.setActiveIfNeeded();
+        }
         this.container.validateAll();
         this.container.sendChanges();
-        StorageInterface.checkHoppers(this);
-        this.onUpdate();
+        this.insideTick(addedItem);
 
         if(!this.clearProgressIfWrong() && !this.doProgress()) {
             this.recipeComplete();
@@ -55,7 +57,7 @@ abstract class ProcessingTile extends MachineTile {
     }
 
     protected setActiveIfNeeded(additionalSlotStorage: Record<string, ItemInstance> = {}): void {
-        if(this.validateRecipe(additionalSlotStorage)) {   
+        if(this.isValidRecipe(additionalSlotStorage)) {   
             this.data.active = this.hasValidOutputSlots();
         }
     }
@@ -70,12 +72,11 @@ abstract class ProcessingTile extends MachineTile {
     /**
      * @returns recipe is null or not
      */
-    protected validateRecipe(additionalSlotStorage: Record<string, ItemInstance> = {}): boolean {
-        if((this.currentRecipe = this.getFactory().getRecipe({
-            inputSlots: this.inputSlots, 
-            currentRecipeIndex: this.currentRecipeIndex, 
-            getSlot: (name: string) => this.getSlot(String(name), additionalSlotStorage)
-        })) == null) {
+    protected isValidRecipe(additionalSlotStorage: Record<string, ItemInstance> = {}): boolean {
+        if((
+            this.currentRecipe = this.getFactory()
+            .getRecipe(this, (name: string) => this.getSlot(name, additionalSlotStorage))) == null
+        ) {
             this.stop();
             return false;
         }
@@ -108,6 +109,7 @@ abstract class ProcessingTile extends MachineTile {
             index++;
             const input = this.currentRecipe.input[i] || this.currentRecipe.input[index] || {};
             this.container.setSlot(this.inputSlots[i], slot.id, slot.count - (input.count || 1), slot.data, slot.extra);
+            this.container.validateSlot(this.inputSlots[i]);
         }
     }
 
@@ -155,7 +157,7 @@ abstract class ProcessingTile extends MachineTile {
         this.setActiveIfNeeded();
     }
 
-    public onUpdate() {
+    public insideTick(addedHopperItem?: boolean) {
         this.container.setScale("progress_scale", this.data.progress / this.getProgressMax());
         this.spendEnergyCommon();
     }

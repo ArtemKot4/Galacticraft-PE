@@ -81,7 +81,7 @@ const CircuitFabricatorUI = new UI.StandartWindow({
 			scale: 3.8,
 			direction: 0
 		},
-        energy_slot: {
+        battery_slot_discharge: {
 			type: "slot",
 			x: 330,
 			y: 290,

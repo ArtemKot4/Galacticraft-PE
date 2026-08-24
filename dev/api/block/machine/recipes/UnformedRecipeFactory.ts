@@ -1,24 +1,24 @@
 class UnformedRecipeFactory extends RecipeFactory<ItemInstance[]> {
-    public getRecipe(tile: ProcessingTileData): Nullable<{ input: ItemInstance[]; output: ItemInstance[]; }> {
-        if(this.isRightValues(tile)) {
-            return this.storage[tile.currentRecipeIndex || "0"];
+    public getRecipe(tileEntity: ProcessingTile, slotGetter: (slotName: string) => ItemStack | ItemContainerSlot): Nullable<{ input: ItemInstance[]; output: ItemInstance[]; }> {
+        if(this.isRightValues(tileEntity, slotGetter)) {
+            return this.storage[tileEntity.currentRecipeIndex];
         }
         for(const i in this.storage) {
-            if(this.isRightValues(tile, i)) {
-                tile.currentRecipeIndex = i;
+            if(this.isRightValues(tileEntity, slotGetter, i)) {
+                tileEntity.currentRecipeIndex = i;
                 return this.storage[i];
             }
         }
         return null;
     }
 
-    public isRightValues(tile: ProcessingTileData, recipeIndex: string = tile.currentRecipeIndex || "0"): boolean {
+    public isRightValues(tileEntity: TileEntity, slotGetter: (slotName: string) => ItemStack | ItemContainerSlot, recipeIndex: string = tileEntity.currentRecipeIndex || "0"): boolean {
         const recipeInput = this.storage[recipeIndex as unknown as number].input;
         let index = -1;
 
-        for(const inputSlotName of tile.inputSlots) {
-            const slot = tile.getSlot(inputSlotName);
-            if(slot.id == 0) { //Не знаю почему, но ItemStack.isEmpty всегда выдаёт false
+        for(const inputSlotName of tileEntity.inputSlots) {
+            const slot = slotGetter(inputSlotName);
+            if(slot.id == 0) {
                 continue;
             }
             index++;

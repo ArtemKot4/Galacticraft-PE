@@ -11,7 +11,8 @@ class CircuitFabricatorTile extends ProcessingTile {
         return 400;
     }
 
-    public override onUpdate(): void {
+    public override insideTick(): void {
+        super.insideTick();
         if(World.getThreadTime() % 2 == 0) {
             this.container.setBinding("progress_scale", "texture", CircuitFabricatorTile.getValidScaleBitmapName(String(this.container.getBinding("progress_scale", "texture"))));
         }

@@ -10,13 +10,6 @@ class CoalGenerator extends MachineBlock {
         }]);
     }
 
-    public override getStorageInterface(): StorageDescriptor {
-        return {
-            getInputSlots: () => ["coal_slot"],
-            isValidInput: (item, side, tile) => Recipes.getFuelBurnDuration(item.id, item.data) != 0
-        }
-    }
-
     public override getTileEntity(): MachineTile {
         return CoalGenerator.tile;
     }

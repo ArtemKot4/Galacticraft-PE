@@ -1,21 +1,21 @@
 class FormedRecipeFactory extends RecipeFactory<Record<string, ItemInstance>> {
-    public getRecipe(tile: ProcessingTileData): Nullable<{ input: Record<string, ItemInstance>, output: ItemInstance[]; }> {
-        if(this.isRightValues(tile)) {
-            return this.storage[tile.currentRecipeIndex];
+    public getRecipe(tileEntity: ProcessingTile, slotGetter: (slotName: string) => ItemStack | ItemContainerSlot): Nullable<{ input: Record<string, ItemInstance>, output: ItemInstance[]; }> {
+        if(this.isRightValues(tileEntity, slotGetter)) {
+            return this.storage[tileEntity.currentRecipeIndex];
         }
         for(const i in this.storage) {
-            if(this.isRightValues(tile, i)) {
-                tile.currentRecipeIndex = i;
+            if(this.isRightValues(tileEntity, slotGetter, i)) {
+                tileEntity.currentRecipeIndex = i;
                 return this.storage[i];
             }
         }
         return null;
     }
 
-    public isRightValues(tile: ProcessingTileData, recipeIndex: string = tile.currentRecipeIndex || "0"): boolean {         
-        for(const inputSlotName of tile.inputSlots) {
-            const slot = tile.getSlot(inputSlotName);
-            if(!ItemStack.contains(slot, this.storage[recipeIndex].input[inputSlotName])) {
+    public isRightValues(tileEntity: ProcessingTile, slotGetter: (slotName: string) => ItemStack | ItemContainerSlot, index: string = tileEntity.currentRecipeIndex): boolean {         
+        for(const inputSlotName of tileEntity.inputSlots) {
+
+            if(!ItemStack.contains(slotGetter(inputSlotName), this.storage[index].input[inputSlotName])) {
                 return false;
             }
         }

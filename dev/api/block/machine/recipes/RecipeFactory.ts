@@ -1,9 +1,3 @@
-interface ProcessingTileData {
-    getSlot: (name: string) => ItemStack | ItemContainerSlot, 
-    inputSlots: string[], 
-    currentRecipeIndex?: string
-}
-
 abstract class RecipeFactory<ContainerType, StorageFormat = IRecipeStorageFormat<ContainerType>> {
     public static list: Record<string, RecipeFactory<unknown>> = {};
     public storage: StorageFormat[] = [];
@@ -48,7 +42,7 @@ abstract class RecipeFactory<ContainerType, StorageFormat = IRecipeStorageFormat
         return this;
     }
 
-    abstract getRecipe(tile: ProcessingTileData): StorageFormat;
+    abstract getRecipe(tileEntity: TileEntity, slotGetter: (name: string) => ItemStack | ItemContainerSlot): StorageFormat;
 
     public static get<T extends RecipeFactory<unknown>>(name: string): Nullable<T> {
         return this.list[name] as T || null;

@@ -21,17 +21,30 @@ namespace BurnManager {
         return false;
     }
 
-    export function isValidFuel(tileEntity: MachineTile, fuelSlotName: string = "fuel_slot"): boolean {
+    export function isValidFuel({ id, data }: ItemInstance): boolean {
+        return Recipes.getSpecialFuelBurnDuration(id, data) != 0;
+    }
+
+    export function isValidFuelSlot(tileEntity: TileEntity.TileEntityPrototype | MachineTile, fuelSlotName: string = "fuel_slot"): boolean {
         const slot = tileEntity.container.getSlot(fuelSlotName);
         return Recipes.getSpecialFuelBurnDuration(slot.id, slot.data) != 0;
     }
+    
+    export type BurnTile = TileEntity & { data: { canSpendFuel: boolean } & Scriptable };
 
-    export function addSlotPolicy(tileEntity: MachineTile, fuelSlotName: string = "fuel_slot"): void {
+    export function validateTile(tileEntity: BurnTile, id: number, data: number): boolean {
+        const burningDuration = Recipes.getSpecialFuelBurnDuration(id, data);
+        if(burningDuration != 0) {
+            tileEntity.data.canSpendFuel = true;
+            tileEntity.noupdate = false;
+            return true;
+        }
+        return false;
+    }
+
+    export function addSlotPolicy(tileEntity: BurnTile, fuelSlotName: string = "fuel_slot"): void {
         tileEntity.container.setSlotAddTransferPolicy(fuelSlotName, (container, str, id, count, data) => {
-            const burningDuration = Recipes.getSpecialFuelBurnDuration(id, data);
-            if(burningDuration != 0) {
-                tileEntity.data.canSpendFuel = true;
-                tileEntity.noupdate = false;
+            if(validateTile(tileEntity, id, data)) {
                 return count;
             }
             return 0;

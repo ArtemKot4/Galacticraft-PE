@@ -26,8 +26,12 @@ class CompressorTile extends ProcessingTile {
 
     public override spendRecipeEnergy(): void {};
 
-    public override onUpdate() {
-        super.onUpdate();
+    public override insideTick(addedHopperItem: boolean) {
+        super.insideTick();
+        if(addedHopperItem == true) {
+            const slot = this.container.getSlot("fuel_slot");
+            BurnManager.validateTile(this, slot.id, slot.data);
+        }
         this.container.setScale("burning_scale", this.data.energy / this.data.energyMax);
         
         if(this.data.energy == 0) {
@@ -36,7 +40,7 @@ class CompressorTile extends ProcessingTile {
                 if(BurnManager.burn(this, "energy", "energyMax", false)) {
                     hasEnergy = true;
                 }
-                this.data.canSpendFuel = BurnManager.isValidFuel(this);
+                this.data.canSpendFuel = BurnManager.isValidFuelSlot(this);
             }
             this.networkData.putBoolean("has_energy", hasEnergy);
             this.networkData.sendChanges();
@@ -51,7 +55,7 @@ class CompressorTile extends ProcessingTile {
         }
     }
 
-    public override setupContainer(): void {
+    public override onInit(): void {
         BurnManager.addSlotPolicy(this);
     }
 

@@ -3,6 +3,7 @@
 translations.ts
 
 api/Galacticraft.ts
+api/StorageInterfaceHelper.ts
 
 client/ui/lib/Component.tsx
 client/Renderer.ts

@@ -8,46 +8,58 @@ abstract class ProcessingBlock extends MachineBlock {
         const tilePrototype = TileEntity.getPrototype(this.id) as ProcessingTile;
         const factory = tilePrototype.getFactory();
         
-        if(tilePrototype != null) {
-            if(factory instanceof FormedRecipeFactory) {
-                tilePrototype.setupContainer = this.getSetupContainerFunctionWithPolicy((name, id) => factory.storage.some((recipe) => id == recipe.input[name].id));
-            }  
-            else if(factory instanceof UnformedRecipeFactory) {
-                tilePrototype.setupContainer = this.getSetupContainerFunctionWithPolicy((name, id) => factory.storage.some((recipe) => recipe.input.some(instance => instance.id == id)));
-            }
+        if(tilePrototype == null) {
+            throw new ReferenceError("Processing Block does not can don't contain tile entity prototype");
+        }
+        let policy: (slotName: string, id: number) => boolean;
+        if(factory instanceof FormedRecipeFactory) {
+            policy = (slotName, id) => factory.storage.some((recipe) => id == recipe.input[slotName].id);
+        }  
+        else if(factory instanceof UnformedRecipeFactory) {
+            policy = (slotName, id) => factory.storage.some((recipe) => recipe.input.some(instance => instance.id == id));
+        }
+        tilePrototype.init = this.getInitFunctionWithPolicy(policy);
+
+        for(const inputSlot of tilePrototype.inputSlots) {
+            StorageInterfaceHelper.addSlotInputPolicyFromContainer(this.id, inputSlot);
+        }
+        for(const outputSlot of tilePrototype.outputSlots) {
+            StorageInterfaceHelper.addSlotOutputPolicyFromContainer(this.id, outputSlot);
         }
     }
 
-    public getSetupContainerFunctionWithPolicy(policyPredicate: (name: string, id: number) => boolean): () => unknown {
+    public getInitFunctionWithPolicy(policyPredicate: (slotName: string, id: number) => boolean): () => unknown {
         const tilePrototype = TileEntity.getPrototype(this.id) as ProcessingTile;
-        const funcLast = tilePrototype.setupContainer;
+        const initLast = tilePrototype.init;
 
         return function(this: ProcessingTile) {
+            this.currentRecipeIndex = "0";
+            const tile = this;
             this.inputSlots.forEach((inputSlotName) => {
-                this.container.setSlotGetTransferPolicy(inputSlotName, (container, name, id, count, data, extra) => {
+                this.container.setSlotGetTransferPolicy(inputSlotName, (container, slotName, id, count, data, extra) => {
                     if(count > 0) {
-                        const resultCount = Math.max(0, this.container.getSlot(inputSlotName).count - count);
+                        const resultCount = Math.max(0, tile.container.getSlot(inputSlotName).count - count);
                         let resultId = id, resultData = data;
 
                         if(resultCount == 0) {
                             resultId = 0;
                             resultData = 0;
                         } 
-                        this.setActiveIfNeeded({ [inputSlotName]: { id: resultId, count: resultCount, data: resultData } });
+                        tile.setActiveIfNeeded({ [inputSlotName]: { id: resultId, count: resultCount, data: resultData } });
                     }
                     return count;
                 });
 
-                this.container.setSlotAddTransferPolicy(inputSlotName, (container, name, id, count, data, extra) => {
-                    const availableCount = policyPredicate(name, id) ? count : 0;
+                this.container.setSlotAddTransferPolicy(inputSlotName, (container, slotName, id, count, data, extra) => {
+                    const availableCount = policyPredicate(inputSlotName, id) ? count : 0;
                     if(availableCount > 0) {
-                        this.setActiveIfNeeded({ [inputSlotName]: new ItemStack(id, count, data, extra) });
+                        tile.setActiveIfNeeded({ [inputSlotName]: new ItemStack(id, count, data, extra) });
                     }
                     return availableCount; 
                 });
             });
             this.outputSlots.forEach(outputSlotName => this.container.setSlotAddTransferPolicy(outputSlotName, () => 0));
-            return funcLast.call(this);
+            return initLast.call(this);
         }
     }
 

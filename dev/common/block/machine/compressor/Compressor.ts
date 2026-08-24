@@ -8,14 +8,6 @@ class Compressor extends ProcessingBlock {
         }]);
     }
 
-    public override getStorageInterface(): StorageDescriptor {
-        return {
-            slots: {
-                "slot_1^9": { input: true }
-            }
-        }
-    }
-
     public override getTileEntity(): ProcessingTile {
         return Compressor.tile;
     }

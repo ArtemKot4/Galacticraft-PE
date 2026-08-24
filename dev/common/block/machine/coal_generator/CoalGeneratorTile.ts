@@ -13,7 +13,7 @@ class CoalGeneratorTile extends MachineTile {
         return CoalGeneratorUI;
     }
 
-    public override setupContainer(): void {
+    public override onInit(): void {
         BurnManager.addSlotPolicy(this);
     }
     
@@ -21,7 +21,9 @@ class CoalGeneratorTile extends MachineTile {
         this.showEnergyStatus();
         if(this.canBurn()) {
             BurnManager.burn(this);
-        } else this.noupdate = true;
+        } else {
+            this.noupdate = true;
+        }
     }
 
     public getCapacity(): number {
@@ -33,7 +35,11 @@ class CoalGeneratorTile extends MachineTile {
     }
 
     public override onTick(): void {
-        StorageInterface.checkHoppers(this);
+        if(StorageInterface.checkHoppers(this) == true) {
+            const slot = this.container.getSlot("fuel_slot");
+            BurnManager.validateTile(this, slot.id, slot.data);
+        }
+        this.container.validateAll();
         this.container.sendChanges();
 
         if(this.data.canSpendFuel == true && this.canBurn()) {
@@ -81,7 +87,7 @@ class CoalGeneratorTile extends MachineTile {
     }
 
     public validateActive(): boolean {
-        return this.data.active = this.data.burning > 0 || BurnManager.isValidFuel(this);
+        return this.data.active = this.data.burning > 0 || BurnManager.isValidFuelSlot(this);
     }
 
     public decreaseBurning(): void {
