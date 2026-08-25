@@ -28,7 +28,7 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                         descriptor.scaleName = descriptor.liquidName + "_liquid_scale";
                     }
                     LiquidMachine.Provider.addLiquidItemPolicy(descriptor, policies);
-                    const data = StorageInterface.data[this.id] || {};
+                    const data = StorageInterface.data[this.id] ??= { slots: {}, classType: StorageInterface.TileEntityInterface };
                     const receiveLiquid = new Set();
                     const transportLiquid = new Set();
 
