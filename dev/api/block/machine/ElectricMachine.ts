@@ -23,6 +23,12 @@ function ElectricMachine(type: ElectricMachine.Type, ...batterySlotDescriptors: 
                 if(batterySlotDescriptors.length > 0 || (energy_bar != null && energy_icon != null)) {
                     ElectricMachine.Provider.injectTick(tilePrototype);
                 }
+                
+                for(const descriptor of batterySlotDescriptors) {
+                    if(descriptor.action == "discharge") {
+                        StorageInterfaceHelper.addSlotInputPolicyFromContainer(this.id, descriptor.slotName);
+                    }
+                }
             }
         } as T;
     }
