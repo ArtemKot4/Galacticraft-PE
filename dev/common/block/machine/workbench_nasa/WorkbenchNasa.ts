@@ -1,4 +1,4 @@
-class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback, IDestroyCallback {
+class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback, IDestroyCallback, IClickCallback {
     public bottomData = 0;
     public topData = 1;
 
@@ -41,6 +41,10 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
         for(const y of [0, data == this.bottomData ? this.topData : -this.topData]) {
             blockSource.destroyBlock(coords.x, coords.y + y, coords.z, y == this.bottomData);
         }
+    }
+
+    public onClick(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number): void {
+        
     }
 
     public getModel(): BlockModel {
