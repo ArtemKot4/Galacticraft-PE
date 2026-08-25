@@ -119,6 +119,6 @@ class CoalGeneratorTile extends MachineTile {
 }
 
 Translation.addTranslation("message.galacticraft.heat", {
-    en: "Heat machine base: ",
+    en: "Heat of machine base: ",
     ru: "Нагрев корпуса: "
 });
