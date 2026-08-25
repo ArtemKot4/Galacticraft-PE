@@ -136,18 +136,11 @@ const ElectricCompressorUI = new UI.StandartWindow({
 			scale: 3,
 			direction: 1,
 		},
-		result_slot_1: {
+		result_slot: {
 			type: "slot",
 			x: 830,
-			y: 221,
-			size: 60,
-			iconScale: 0.9
-		},
-		result_slot_2: {
-			type: "slot",
-			x: 830,
-			y: 161,
-			size: 60,
+			y: 190,
+			size: 70,
 			iconScale: 0.9
 		},
 		// Status: {

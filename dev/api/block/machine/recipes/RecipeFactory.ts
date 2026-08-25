@@ -1,3 +1,10 @@
+interface SimpleItemContainer {
+    getSlot(name: string): ItemContainerSlot | ItemStack;
+	setSlot(name: string, id: number, count: number, data: number): void;
+	setSlot(name: string, id: number, count: number, data: number, extra: Nullable<ItemExtraData>): void;
+    validateSlot?(slotName: string): void;
+}
+
 abstract class RecipeFactory<ContainerType, StorageFormat = IRecipeStorageFormat<ContainerType>> {
     public static list: Record<string, RecipeFactory<unknown>> = {};
     public storage: StorageFormat[] = [];
@@ -40,6 +47,52 @@ abstract class RecipeFactory<ContainerType, StorageFormat = IRecipeStorageFormat
             this.addRecipe(inputKeys, result);
         }
         return this;
+    }
+
+    public hasValidOutputSlots(outputSlots: string[], recipe: ReturnType<typeof RecipeFactory.prototype.getRecipe>, container: SimpleItemContainer): boolean {
+        let validOutputStack = null;
+
+        for(const outputKey in outputSlots) {
+            const slot = container.getSlot(outputSlots[outputKey]);
+            const outputStack = recipe.output[outputKey];
+            
+            if(outputStack != null) {
+                validOutputStack = outputStack;
+            }
+            if(!slot.isEmpty() && !ItemStack.contains(slot, validOutputStack)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public setOutput(outputSlots: string[], recipe: ReturnType<typeof RecipeFactory.prototype.getRecipe>, container: SimpleItemContainer): void {
+        let validOutputStack = null;
+        
+        for(const index in outputSlots) {
+            const slot = container.getSlot(outputSlots[index]);
+            const outputStack = recipe.output[index] || validOutputStack;
+
+            if(outputStack != null) {
+                validOutputStack = outputStack;
+            }
+            container.setSlot(outputSlots[index], validOutputStack.id, slot.count + validOutputStack.count, slot.data + validOutputStack.data, validOutputStack.extra || slot.extra);
+        }
+    }
+
+    public decreaseInputSlots(inputSlots: string[], recipe: ReturnType<typeof RecipeFactory.prototype.getRecipe>, container: SimpleItemContainer): void {
+        let index = -1;
+
+        for(const i in inputSlots) {
+            const slot = container.getSlot(inputSlots[i]);
+            if(slot.isEmpty()) {
+                continue;
+            }
+            index++;
+            const input = recipe.input[i] || recipe.input[index] || {};
+            container.setSlot(inputSlots[i], slot.id, slot.count - (input.count || 1), slot.data, slot.extra);
+            container.validateSlot(inputSlots[i]);
+        }
     }
 
     abstract getRecipe(tileEntity: TileEntity, slotGetter: (name: string) => ItemStack | ItemContainerSlot): StorageFormat;

@@ -12,7 +12,7 @@ class FuelLoader extends MachineBlock implements INeighbourChangeCallback {
                 ["machine_gc", 0], 
                 ["fuel_loader_gc", 0], 
                 ["machine_input_gc", 0], 
-                ["machine_oil_input_gc", 0]
+                ["machine_fuel_input_gc", 0]
             ],
             inCreative: true
         }]);

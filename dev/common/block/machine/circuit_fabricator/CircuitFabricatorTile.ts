@@ -34,5 +34,3 @@ class CircuitFabricatorTile extends ProcessingTile {
         return "machine.circuit_fabricator.heat_scale_" + this.getNewScaleBitmapIndex(Number(bitmapName[bitmapName.length-1]) || 1); 
     }
 }
-
-FormedRecipeFactory.register("circuit").addRecipesFrom(__dir__ + "resources/assets/recipes/circuit");

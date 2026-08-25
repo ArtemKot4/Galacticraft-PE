@@ -42,18 +42,27 @@ class RocketPadding extends RotatableBlock implements IRocketPadding, IClickCall
         return 3 / 16;
     }
 
+    public getRowBlockCount() {
+        return Math.floor(this.getRadius() * 3);
+    }
+
+    public getAreaBlockCount() {
+        return this.getRowBlockCount() * 3;
+    }
+
+    public getCenterBlockData() {
+        return Math.round(this.getAreaBlockCount() / 2);
+    }
+
     /**
      * Passes area by radius - indentation of middle by x and z
      */
 
     public passArea(callback: (data: number, row: number, area: number, center: number) => void): void {
-        const radius = this.getRadius();
-        const row = Math.floor(radius * 3);
-        const area = row * 3;
-        const center = Math.round(area / 2);
+        const area = this.getAreaBlockCount();
 
         for(let data = 0; data <= area; data++) {
-            callback(data, row, area, center);
+            callback(data, this.getRowBlockCount(), area, this.getCenterBlockData());
         }
     }
 
@@ -114,7 +123,7 @@ class RocketPadding extends RotatableBlock implements IRocketPadding, IClickCall
     }
 
     public isCenterBlock(coords: Vector, block: Tile): boolean {
-        return block.id == this.id && block.data == Math.round((this.getRadius() * 3 * 3) / 2);
+        return block.id == this.id && block.data == this.getCenterBlockData();
     }
 
     public place(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number, region: BlockSource): void {

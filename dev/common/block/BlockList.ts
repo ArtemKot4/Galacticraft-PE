@@ -1,5 +1,6 @@
 namespace BlockList {
     export const ROCKET_PADDING = new RocketPadding("rocket_padding_gc", "rocket_padding");
+    export const WORKBENCH_NASA = new WorkbenchNasa();
     export const IMPROVED_WIRE = new ImprovedWire();
     export const LIQUID_PIPE = new LiquidPipe();
     export const COAL_GENERATOR = new CoalGenerator();

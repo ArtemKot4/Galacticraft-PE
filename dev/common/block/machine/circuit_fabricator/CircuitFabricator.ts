@@ -14,3 +14,5 @@ class CircuitFabricator extends ProcessingBlock {
         return CircuitFabricator.tile;
 	}
 }
+
+FormedRecipeFactory.register("circuit").addRecipesFrom(__dir__ + "resources/assets/recipes/circuit");

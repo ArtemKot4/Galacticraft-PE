@@ -126,6 +126,7 @@ const CompressorUI = new UI.StandartWindow({
 			x: 830,
 			y: 190,
 			size: 70,
+			iconScale: 0.9
 		},
 		/*status: {
 			type: "text",

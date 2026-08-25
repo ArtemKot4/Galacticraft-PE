@@ -38,7 +38,6 @@ function LiquidMachine(...descriptors: LiquidMachine.LiquidDescriptor[]) {
                         }
                         addSlots.add(descriptor.slotName);
                         receiveLiquid.add(descriptor.liquidName);
-                        StorageInterfaceHelper.addSlotInputPolicyFromContainer(this.id, descriptor.slotName);
                     } else {
                         if(addSlots.has(descriptor.slotName)) {
                             throw new GalacticraftException(`Cannot add add action for slot "${descriptor.slotName}" with get action`);

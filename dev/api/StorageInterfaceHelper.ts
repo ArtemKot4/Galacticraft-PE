@@ -6,6 +6,9 @@ namespace StorageInterfaceHelper {
 
         if(type == "input") {
             slot.isValid = function({ id, count, data, extra }, side, tileEntity) {
+                if(side != 1) {
+                    return;
+                }
                 const policy = tileEntity.container.getAddTransferPolicy(slotName);
                 if(policy != null) {
                     return (
@@ -17,7 +20,7 @@ namespace StorageInterfaceHelper {
             }
         } else {
             slot.canOutput = function({ id, count, data, extra }, side, tileEntity) {
-                return true;
+                return side == 0;
             }
         }
         return slot;

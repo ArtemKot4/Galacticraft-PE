@@ -1,4 +1,5 @@
-mtllib ./unnamed.mtl
+@ -1,4107 +0,0 @@
+mtllib ./rocket_workbench_top.mtl
 g SubMesh_0
 v -8.742278E-08 -0.01294017 1
 v 0 -0.01294017 0
