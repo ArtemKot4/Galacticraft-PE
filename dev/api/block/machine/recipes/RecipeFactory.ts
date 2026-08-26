@@ -97,6 +97,10 @@ abstract class RecipeFactory<ContainerType, StorageFormat = IRecipeStorageFormat
 
     abstract getRecipe(tileEntity: TileEntity, slotGetter: (name: string) => ItemStack | ItemContainerSlot): StorageFormat;
 
+    public getParseProvider(): RecipeParseProvider<unknown> {
+        return new DefaultRecipeParseProvider();
+    }
+
     public static get<T extends RecipeFactory<unknown>>(name: string): Nullable<T> {
         return this.list[name] as T || null;
     }
@@ -123,5 +127,50 @@ abstract class RecipeFactory<ContainerType, StorageFormat = IRecipeStorageFormat
             Debug.error(`Galacticraft: Unknown factory ${name} for add recipes from path`);
         }
         factory.addRecipesFrom(path);
+    }
+}
+
+abstract class RecipeParseProvider<ParsedObject extends Object> {
+    abstract parse(text: string, dir: string, factory?: RecipeFactory<unknown>): ParsedObject;
+}
+
+interface IDefaultRecipe {
+    recipe_type?: string;
+    input: Record<string, ItemInstance>;
+    output: Record<string, ItemInstance>;
+}
+
+class DefaultRecipeParseProvider<T extends IDefaultRecipe> extends RecipeParseProvider<T> {
+    public constructor(public defaultCount: number = 1, public defaultData: number = 0) {
+        super();
+    }
+    
+    public parseItemInstanceObject({ id, count, data, ...other }: Scriptable): Nullable<ItemInstance> {
+        if(id != null) {
+            return { id: typeof id == "string" ? IDRegistry.parseID(id) : id, count: count || this.defaultCount, data: data || this.defaultData, ...other };
+        }
+        return null;
+    }
+
+    public processKeys(obj: T): T {
+        const input = obj.input || {};
+        const output = obj.output || {};
+
+   
+        return obj;
+    }
+
+    public override parse(text: string, dir: string, factory?: RecipeFactory<unknown>) {
+        const object = JSON.parse(text);
+        // if("recipe_type" in object) {
+        //     factory = RecipeFactory.get(object.recipe_type);
+        //     if(factory == null) {
+        //         throw `Recipe type "${object.recipe_type}" of "${dir}" is not exists. Try import recipe on post loaded callback if you sure recipe type registered`;
+        //     }
+        //     delete object.recipe_type;
+        //     factory.getParseProvider().parse(text, dir);
+        // }
+        
+        return object;
     }
 }

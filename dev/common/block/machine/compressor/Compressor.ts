@@ -13,7 +13,6 @@ class Compressor extends ProcessingBlock {
             ],
             inCreative: true
         }]);
-
         StorageInterfaceHelper.addSlotInputPolicyFromContainer(this.id, "fuel_slot");
     }
 
