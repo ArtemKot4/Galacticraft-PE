@@ -1,18 +1,16 @@
-declare namespace WorkbenchNasaRecipeFactory {
-    interface Schema {
+namespace RecipeModule {
+    export interface WorkbenchNasaSchema {
         inputSlots: string[],
         outputSlots: string[],
         ui: UI.IWindow,
         screenName: string
     }
-}
 
-namespace RecipeModule {
     export class WorkbenchNasaFactory extends RecipeModule.FormedFactory {
-        protected schemas: Map<string, WorkbenchNasaRecipeFactory.Schema> = new Map();
+        protected schemas: Map<string, WorkbenchNasaSchema> = new Map();
         protected uiCache: Record<string, UI.IWindow> = {};
 
-        public override registerRecipe(obj: IDefaultRecipe<Record<string, ItemInstance>, Record<string, ItemInstance>>): this {
+        public override registerRecipe(obj: IDefaultRecipe): this {
             for(const key in obj.input) {
                 if(Array.isArray(obj.input[key])) {
                     let i = 1;
@@ -30,6 +28,14 @@ namespace RecipeModule {
             this.schemas.set(ItemStack.toString(item), { inputSlots, outputSlots, ui, screenName: name });
             this.uiCache[name] = ui;
             return this;
+        }
+
+        public hasSchema(item: ItemInstance): boolean {
+            return this.schemas.has(ItemStack.toString(item));
+        }
+
+        public getSchema(item: ItemInstance): Nullable<WorkbenchNasaSchema> {
+            return this.schemas.get(ItemStack.toString(item)) || null;
         }
 
         public getSchemaUIByScreenName<T extends UI.IWindow>(screenName: string): Nullable<T> {
@@ -66,6 +72,55 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
             ],
             inCreative: false
         }]);
+        this.registerPackets();
+    }
+
+    public giveItemsBack(container: ItemContainer, playerUid: number): void {
+         for(const slotName in container.slots) {
+            const { id, count, data, extra } = container.getSlot(slotName);
+            if(id != 0) {
+                new PlayerActor(playerUid).addItemToInventory(id, count, data, extra, true);
+            }
+        }
+    }
+
+    public findRecipes(schemaName: string): RecipeModule.IDefaultRecipe[] {
+        const factory = RecipeModule.getFactory<RecipeModule.WorkbenchNasaFactory>("workbench_nasa"); 
+        let recipes = [];
+
+        for(const recipe of factory.storage) {
+            if(recipe.schema == schemaName) {
+                recipes.push(recipe);
+            }
+        }
+        return recipes;
+    }
+
+    public registerPackets(): void {
+        Network.addServerPacket("packet.galacticraft.workbench_nasa.open_ui", (client, data) => {
+            const factory = RecipeModule.getFactory<RecipeModule.WorkbenchNasaFactory>("workbench_nasa");
+            const container = new ItemContainer();
+            container.setClientContainerTypeName("galacticraft.workbench_nasa");
+            container.addServerCloseListener((container, client) => {
+                this.giveItemsBack(container, client.getPlayerUid());
+            });
+
+            container.setGlobalAddTransferPolicy((container, slotName, id, count, data, extra, playerUid) => {
+                const schema = factory.getSchema(container.getSlot("schema_validator_slot"));
+                const recipes = this.findRecipes(schema.screenName);
+                if(recipes.some(({ output }) => slotName in output)) {
+                    return 0;
+                }
+                const valid = recipes.some(({ input }) => ItemStack.contains({ id, count, data }, input[slotName] || new ItemStack()));
+                return valid ? count : 0;
+            });
+
+            container.setSlotAddTransferPolicy("schema_validator_slot", (container, str, id, count, data) => {
+                return factory.hasSchema({ id, count, data }) ? count : 0;
+            });
+
+            container.openFor(client, "rocket_tier_1");
+        });
     }
 
     public place(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, playerUid: number, region: BlockSource): void {
@@ -90,7 +145,10 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
         }
 
         ItemContainer.registerScreenFactory("galacticraft.workbench_nasa", (container, screenName) => {
-		    return RecipeModule.getFactory<RecipeModule.WorkbenchNasaFactory>("workbench_nasa").getSchemaUIByScreenName(screenName);
+		    if(screenName == "scheme_validator") {
+                return WorkbenchSchemeValidatorUI;
+            }
+            return RecipeModule.getFactory<RecipeModule.WorkbenchNasaFactory>("workbench_nasa").getSchemaUIByScreenName(screenName);
 	    });
         Network.sendToServer("packet.galacticraft.workbench_nasa.open_ui", {});
     }
@@ -99,21 +157,6 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
         return new BlockModel(__dir__ + "resources/assets/models/block/", "rocket_workbench_top", "rocket_workbench_top", 1);
     }
 }
-
-Network.addServerPacket("packet.galacticraft.workbench_nasa.open_ui", (client, data) => {
-    const container = new ItemContainer();
-    container.setClientContainerTypeName("galacticraft.workbench_nasa");
-    container.addServerCloseListener((container, client) => {
-        for(const slotName in container.slots) {
-            const { id, count, data, extra } = container.getSlot(slotName);
-            if(id != 0) {
-                new PlayerActor(client.getPlayerUid()).addItemToInventory(id, count, data, extra, true);
-            }
-        }
-    });
-
-    container.openFor(client, "rocket_tier_1");
-});
 
 RecipeModule.registerFactory("workbench_nasa", new RecipeModule.WorkbenchNasaFactory())
 .registerRecipesFrom(__dir__ + "resources/assets/recipes/workbench_nasa")

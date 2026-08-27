@@ -3,5 +3,6 @@ declare namespace RecipeModule {
         recipe_type?: string;
         input: InputFormat;
         output: OutputFormat;
+        [key: string]: unknown
     }
 }

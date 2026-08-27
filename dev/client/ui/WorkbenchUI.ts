@@ -22,112 +22,130 @@ const WorkbenchNasaRocketTier1UI = new UI.StandartWindow(
             x: 675, 
             y: 40, 
             size: 50, 
-            bitmap: "rocket.storage_slot"
+            bitmap: "rocket.storage_slot",
+            iconScale: 0.9
         }, 
         chest_2: {
             type: "slot", 
             x: 775, 
             y: 40, 
             size: 50, 
-            bitmap: "rocket.storage_slot"
+            bitmap: "rocket.storage_slot",
+            iconScale: 0.9
         }, 
         chest_3: {
             type: "slot", 
             x: 875, 
             y: 40, 
             size: 50, 
-            bitmap: "rocket.storage_slot"
+            bitmap: "rocket.storage_slot",
+            iconScale: 0.9
         }, 
         nose_cone: {
             type: "slot", 
             x: 550, 
             y: 50, 
-            size: 50
+            size: 50,
+            iconScale: 0.9
         }, 
         plate_1: {
             type: "slot", 
             x: 525, 
             y: 100, 
-            size: 50
+            size: 50,
+            iconScale: 0.9
         }, 
         plate_2: {
             type: "slot", 
             x: 575, 
             y: 100, 
-            size: 50
+            size: 50,
+            iconScale: 0.9
         }, 
         plate_3: {
             type: "slot", 
             x: 525, 
             y: 150, 
-            size: 50
+            size: 50,
+            iconScale: 0.9
         }, 
         plate_4: {
             type: "slot", 
             x: 575, 
             y: 150, 
-            size: 50
+            size: 50,
+            iconScale: 0.9
         }, 
         plate_5: {
             type: "slot", 
             x: 525, 
             y: 200, 
-            size: 50
+            size: 50,
+            iconScale: 0.9
         }, 
         plate_6: {
             type: "slot", 
             x: 575, 
             y: 200, 
-            size: 50
+            size: 50,
+            iconScale: 0.9
         }, 
         plate_7: {
             type: "slot", 
             x: 525, 
             y: 250, 
-            size: 50
+            size: 50,
+            iconScale: 0.9
         }, 
         plate_8: {
             type: "slot", 
             x: 575, 
             y: 250,
-            size: 50
+            size: 50,
+            iconScale: 0.9
         }, 
         fin_1: {
             type: "slot", 
             x: 625, 
             y: 250, 
-            size: 50
+            size: 50,
+            iconScale: 0.9
         }, 
         fin_2: {
             type: "slot", 
             x: 625, 
             y: 300, 
-            size: 50
+            size: 50,
+            iconScale: 0.9
         }, 
         fin_3: {
             type: "slot", 
             x: 475, 
             y: 250, 
-            size: 50
+            size: 50,
+            iconScale: 0.9
         }, 
         fin_4: {
             type: "slot", 
             x: 475, 
             y: 300, 
-            size: 50
+            size: 50,
+            iconScale: 0.9
         }, 
         engine: {
             type: "slot", 
             x: 550, 
             y: 300, 
-            size: 50
+            size: 50,
+            iconScale: 0.9
         }, 
         result_slot: {
             type: "slot", 
             x: 775, 
             y: 240, 
             size: 85, 
-            bitmap: "rocket.result_slot"
+            bitmap: "rocket.result_slot",
+            iconScale: 0.9
         }
     }
 });
@@ -155,11 +173,12 @@ const WorkbenchSchemeValidatorUI = new UI.StandartWindow(
         scale: 4.2
     }],
     elements: {
-        slot1: {
+        schema_validator_slot: {
             type: "slot",
             x: 583,
             y: 169,
-            size: 79
+            size: 79,
+            iconScale: 0.9
         },
         button: {
             type: "button",
