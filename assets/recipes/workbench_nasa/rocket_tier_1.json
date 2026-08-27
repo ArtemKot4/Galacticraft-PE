@@ -1,8 +1,26 @@
 {
     "input": {
-        "slot_0": { "id": "coal", "count": 1, "data": 0 }
+        "nose_cone": { "id": "nose_cone", "count": 1, "data": 0 },
+        "plate": [
+            { "id": "heavy_plating", "count": 1, "data": 0 },
+            { "id": "heavy_plating", "count": 1, "data": 0 },
+            { "id": "heavy_plating", "count": 1, "data": 0 },
+            { "id": "heavy_plating", "count": 1, "data": 0 },
+            { "id": "heavy_plating", "count": 1, "data": 0 },
+            { "id": "heavy_plating", "count": 1, "data": 0 },
+            { "id": "heavy_plating", "count": 1, "data": 0 },
+            { "id": "heavy_plating", "count": 1, "data": 0 }
+        ],
+        "fin": [
+            { "id": "rocket_fins", "count": 1, "data": 0 },
+            { "id": "rocket_fins", "count": 1, "data": 0 },
+            { "id": "rocket_fins", "count": 1, "data": 0 },
+            { "id": "rocket_fins", "count": 1, "data": 0 }
+        ],
+        "engine": { "id": "engine_tier_1", "count": 1, "data": 0 }
     },
     "output": {
-        "result": { "id": "coal", "count": 1, "data": 0 }
-    }
+        "result_slot": { "id": "rocket_tier_1", "count": 1, "data": 0 }
+    },
+    "schema": "rocket_tier_1"
 }

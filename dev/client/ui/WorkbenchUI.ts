@@ -1,4 +1,4 @@
-const WorkbenchNasaUI = new UI.StandartWindow(   
+const WorkbenchNasaRocketTier1UI = new UI.StandartWindow(   
     {
         standard: {
             header: {
@@ -17,106 +17,106 @@ const WorkbenchNasaUI = new UI.StandartWindow(
         }
     ], 
     elements: {
-        slot1: {
-            type: "slot", 
-            x: 550, 
-            y: 50, 
-            size: 50
-        }, 
-        chest_slot_0: {
+        chest_1: {
             type: "slot", 
             x: 675, 
             y: 40, 
             size: 50, 
             bitmap: "rocket.storage_slot"
         }, 
-        chest_slot_1: {
+        chest_2: {
             type: "slot", 
             x: 775, 
             y: 40, 
             size: 50, 
             bitmap: "rocket.storage_slot"
         }, 
-        chest_slot_2: {
+        chest_3: {
             type: "slot", 
             x: 875, 
             y: 40, 
             size: 50, 
             bitmap: "rocket.storage_slot"
         }, 
-        slot2: {
+        nose_cone: {
+            type: "slot", 
+            x: 550, 
+            y: 50, 
+            size: 50
+        }, 
+        plate_1: {
             type: "slot", 
             x: 525, 
             y: 100, 
             size: 50
         }, 
-        slot3: {
+        plate_2: {
             type: "slot", 
             x: 575, 
             y: 100, 
             size: 50
         }, 
-        slot4: {
+        plate_3: {
             type: "slot", 
             x: 525, 
             y: 150, 
             size: 50
         }, 
-        slot5: {
+        plate_4: {
             type: "slot", 
             x: 575, 
             y: 150, 
             size: 50
         }, 
-        slot6: {
+        plate_5: {
             type: "slot", 
             x: 525, 
             y: 200, 
             size: 50
         }, 
-        slot7: {
+        plate_6: {
             type: "slot", 
             x: 575, 
             y: 200, 
             size: 50
         }, 
-        slot8: {
+        plate_7: {
             type: "slot", 
             x: 525, 
             y: 250, 
             size: 50
         }, 
-        slot9: {
+        plate_8: {
             type: "slot", 
             x: 575, 
             y: 250,
             size: 50
         }, 
-        slotuer1: {
+        fin_1: {
             type: "slot", 
             x: 625, 
             y: 250, 
             size: 50
         }, 
-        slotuer2: {
+        fin_2: {
             type: "slot", 
             x: 625, 
             y: 300, 
             size: 50
         }, 
-        slotuel1: {
+        fin_3: {
             type: "slot", 
             x: 475, 
             y: 250, 
             size: 50
         }, 
-        slotuel2: {
+        fin_4: {
             type: "slot", 
             x: 475, 
             y: 300, 
             size: 50
         }, 
-        slot10: {
+        engine: {
             type: "slot", 
             x: 550, 
             y: 300, 
@@ -127,12 +127,12 @@ const WorkbenchNasaUI = new UI.StandartWindow(
             x: 775, 
             y: 240, 
             size: 85, 
-            bitmap: "RocketSlots"
+            bitmap: "rocket.result_slot"
         }
     }
 });
 
-const ManipulatorsUI = new UI.StandartWindow(
+const WorkbenchSchemeValidatorUI = new UI.StandartWindow(
     {
         standard: {
             header: {

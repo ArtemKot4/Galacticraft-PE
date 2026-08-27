@@ -17,7 +17,7 @@ namespace RecipeModule {
             return null;
         }
 
-        public isRightValues(inputSlots: string[], slotGetter: (slotName: string) => ItemStack | ItemContainerSlot, index: string = "0"): boolean {         
+        protected isRightValues(inputSlots: string[], slotGetter: (slotName: string) => ItemStack | ItemContainerSlot, index: string = "0"): boolean {         
             for(const inputSlotName of inputSlots) {
                 if(!ItemStack.contains(slotGetter(inputSlotName), this.storage[index].input[inputSlotName])) {
                     return false;

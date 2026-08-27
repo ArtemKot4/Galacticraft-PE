@@ -1,5 +1,5 @@
 namespace RecipeModule {
-    const factories: Map<string, Factory<unknown>> = new Map();
+    export const factories: Map<string, Factory<unknown>> = new Map();
 
     export function registerFactory<T extends Factory<unknown>>(name: string, factory: T): T {
         factories.set(name, factory);
@@ -57,7 +57,7 @@ namespace RecipeModule {
             return ParseProviders.Default;
         }
 
-        public registerRecipesFrom(path: string): void {
+        public registerRecipesFrom(path: string): this {
             const files = FileTools.GetListOfFiles(path, "");
             const parseProvider = this.getParseProvider();
 
@@ -67,8 +67,20 @@ namespace RecipeModule {
                     this.registerRecipesFrom(path);
                     continue;
                 }
+                const [fileName, format] = String(file.getName()).split(".");
+                if(format != parseProvider.getFileFormat()) {
+                    Logger.debug("RecipeModule: Factory.prototype.registerRecipesFrom", `File cannot be format "${format}" for register recipe from "${path}". Right format is "${parseProvider.getFileFormat()}". Please rename file to "${fileName + "." + format}" or ignore this message if it's not problem.`);
+                    continue;
+                }
                 this.registerRecipe(parseProvider.buildRecipe(parseProvider.parseText(FileTools.ReadText(path), path), path) as StorageFormat);
             }
+            return this;
         }
     }
 }
+
+Callback.addCallback("LevelDisplayed", () => {
+    RecipeModule.factories.forEach((factory, name) => {
+        Game.message(name + " => " + JSON.stringify(factory.storage) + "\n\n");
+    });
+});

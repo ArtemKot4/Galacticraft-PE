@@ -19,7 +19,7 @@ namespace RecipeModule {
             return null;
         }
 
-        public isRightValues(tileEntity: TileEntity, slotGetter: (slotName: string) => ItemStack | ItemContainerSlot, recipeIndex: string = tileEntity.currentRecipeIndex || "0"): boolean {
+        protected isRightValues(tileEntity: TileEntity, slotGetter: (slotName: string) => ItemStack | ItemContainerSlot, recipeIndex: string = tileEntity.currentRecipeIndex || "0"): boolean {
             const recipeInput = this.storage[recipeIndex].input;
             let index = -1;
 

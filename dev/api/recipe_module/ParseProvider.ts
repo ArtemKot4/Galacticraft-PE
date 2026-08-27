@@ -9,6 +9,10 @@ namespace RecipeModule {
             return JSON.parse(text);
         }
 
+        public getFileFormat(): string {
+            return "json";
+        }
+
         abstract buildRecipe(object: Partial<ParsedObject>, path: string): ParsedObject;
     } 
 }

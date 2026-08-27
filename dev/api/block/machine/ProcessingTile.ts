@@ -96,7 +96,7 @@ abstract class ProcessingTile extends MachineTile {
     }
 
     protected getProgressMax(): number {
-        return 170;
+        return 150;
     }
 
     protected stop(): void {

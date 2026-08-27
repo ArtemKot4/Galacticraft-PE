@@ -7,17 +7,34 @@ declare namespace WorkbenchNasaRecipeFactory {
     }
 }
 
-class WorkbenchNasaRecipeFactory extends RecipeModule.FormedFactory {
-    protected schemas: Map<string, WorkbenchNasaRecipeFactory.Schema> = new Map();
-    protected uiCache: Record<string, UI.IWindow> = {};
+namespace RecipeModule {
+    export class WorkbenchNasaFactory extends RecipeModule.FormedFactory {
+        protected schemas: Map<string, WorkbenchNasaRecipeFactory.Schema> = new Map();
+        protected uiCache: Record<string, UI.IWindow> = {};
 
-    public registerSchema(item: ItemInstance, inputSlots: string[], outputSlots: string[], ui: UI.IWindow, screenName: string): void {
-        this.schemas.set(ItemStack.toString(item), { inputSlots, outputSlots, ui, screenName });
-        this.uiCache[screenName] = ui;
-    }
+        public override registerRecipe(obj: IDefaultRecipe<Record<string, ItemInstance>, Record<string, ItemInstance>>): this {
+            for(const key in obj.input) {
+                if(Array.isArray(obj.input[key])) {
+                    let i = 1;
+                    for(const instance of obj.input[key]) {
+                        obj.input[key + "_" + i++] = instance;
+                    }
+                    delete obj.input[key];
+                }
+            }
+            super.registerRecipe(obj);
+            return this;
+        } 
 
-    public getSchemaUIByScreenName<T extends UI.IWindow>(screenName: string): Nullable<T> {
-        return this.uiCache[screenName] as T || null;
+        public registerSchema(name: string, item: ItemInstance, inputSlots: string[], outputSlots: string[], ui: UI.IWindow): this {
+            this.schemas.set(ItemStack.toString(item), { inputSlots, outputSlots, ui, screenName: name });
+            this.uiCache[name] = ui;
+            return this;
+        }
+
+        public getSchemaUIByScreenName<T extends UI.IWindow>(screenName: string): Nullable<T> {
+            return this.uiCache[screenName] as T || null;
+        }
     }
 }
 
@@ -73,8 +90,9 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
         }
 
         ItemContainer.registerScreenFactory("galacticraft.workbench_nasa", (container, screenName) => {
-		    return RecipeModule.getFactory<WorkbenchNasaRecipeFactory>("workbench_nasa").getSchemaUIByScreenName(screenName);
+		    return RecipeModule.getFactory<RecipeModule.WorkbenchNasaFactory>("workbench_nasa").getSchemaUIByScreenName(screenName);
 	    });
+        Network.sendToServer("packet.galacticraft.workbench_nasa.open_ui", {});
     }
 
     public getModel(): BlockModel {
@@ -82,4 +100,28 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
     }
 }
 
-RecipeModule.registerFactory("workbench_nasa", new RecipeModule.FormedFactory()).registerRecipesFrom(__dir__ + "resources/assets/recipes/workbench_nasa");
+Network.addServerPacket("packet.galacticraft.workbench_nasa.open_ui", (client, data) => {
+    const container = new ItemContainer();
+    container.setClientContainerTypeName("galacticraft.workbench_nasa");
+    container.addServerCloseListener((container, client) => {
+        for(const slotName in container.slots) {
+            const { id, count, data, extra } = container.getSlot(slotName);
+            if(id != 0) {
+                new PlayerActor(client.getPlayerUid()).addItemToInventory(id, count, data, extra, true);
+            }
+        }
+    });
+
+    container.openFor(client, "rocket_tier_1");
+});
+
+RecipeModule.registerFactory("workbench_nasa", new RecipeModule.WorkbenchNasaFactory())
+.registerRecipesFrom(__dir__ + "resources/assets/recipes/workbench_nasa")
+.registerSchema("rocket_tier_1", new ItemStack(), 
+[
+    "nose_cone",
+    "plate_1","plate_2","plate_3","plate_4",
+    "plate_5", "plate_6", "plate_7", "plate_8",
+    "fin_1", "fin_2", "fin_3", "fin_4",
+    "engine"
+], ["result_slot"], WorkbenchNasaRocketTier1UI);

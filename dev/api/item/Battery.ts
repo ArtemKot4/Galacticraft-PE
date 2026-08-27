@@ -49,7 +49,7 @@ class Battery extends GalacticraftItem implements INameOverrideCallback {
                 break;
             }
             case "infinity": {
-                color = "§d";
+                color = Native.Color.GREEN;
                 display = Translation.translate("message.galacticraft.infinity") + " gJ / T"; 
                 break;
             }
