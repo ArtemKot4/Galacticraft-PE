@@ -3,7 +3,7 @@ abstract class ProcessingTile extends MachineTile {
     abstract inputSlots: string[];
     abstract outputSlots: string[];
     public currentRecipeIndex: string;
-    public currentRecipe: ReturnType<typeof RecipeFactory.prototype.getRecipe>;
+    public currentRecipe: ReturnType<typeof RecipeModule.Factory.prototype.getRecipe>;
 
     public override onInit(): void {
         this.data.active = this.data.active || false;
@@ -58,7 +58,7 @@ abstract class ProcessingTile extends MachineTile {
 
     protected setActiveIfNeeded(additionalSlotStorage: Record<string, ItemInstance> = {}): void {
         if(this.isValidRecipe(additionalSlotStorage)) {   
-            this.data.active = this.getFactory().hasValidOutputSlots(this.outputSlots, this.currentRecipe, this.container);
+            this.data.active = (this.getFactory().getContainerManager() as RecipeModule.DefaultContainerManager).hasValidOutputSlots(this.outputSlots, this.currentRecipe, this.container);
         }
     }
 
@@ -84,9 +84,9 @@ abstract class ProcessingTile extends MachineTile {
     }
 
     protected recipeComplete(): void {
-        const factory = this.getFactory();
-        factory.decreaseInputSlots(this.outputSlots, this.currentRecipe, this.container);
-        factory.setOutput(this.outputSlots, this.currentRecipe, this.container);
+        const manager = this.getFactory().getContainerManager() as RecipeModule.DefaultContainerManager;
+        manager.decreaseInputSlots(this.inputSlots, this.currentRecipe, this.container);
+        manager.setOutput(this.outputSlots, this.currentRecipe, this.container);
         this.stop();
         this.setActiveIfNeeded();
     }
@@ -96,7 +96,7 @@ abstract class ProcessingTile extends MachineTile {
     }
 
     protected getProgressMax(): number {
-        return 220;
+        return 170;
     }
 
     protected stop(): void {
@@ -117,7 +117,7 @@ abstract class ProcessingTile extends MachineTile {
         this.spendEnergyCommon();
     }
 
-    public abstract getFactory(): RecipeFactory<unknown>;
+    public abstract getFactory(): RecipeModule.Factory<unknown> & RecipeModule.IManageContainer;
 }
 
 /*

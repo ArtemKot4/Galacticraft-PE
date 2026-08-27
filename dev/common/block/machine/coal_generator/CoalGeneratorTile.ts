@@ -19,6 +19,8 @@ class CoalGeneratorTile extends MachineTile {
     
     public override onLoad(): void {
         this.showEnergyStatus();
+        this.sendEnergyStatus();
+        
         if(this.canBurn()) {
             BurnManager.burn(this);
         } else {
@@ -63,7 +65,7 @@ class CoalGeneratorTile extends MachineTile {
         this.container.setText("energy_display", Translation.translate("message.galacticraft.heat") + this.data.heat + "%");
     }
 
-    public sendEnergyStatus(status: boolean): void {
+    public sendEnergyStatus(status?: boolean): void {
         this.networkData.putBoolean("has_energy", status || this.data.energyTick > 0);
         this.networkData.sendChanges();
     }

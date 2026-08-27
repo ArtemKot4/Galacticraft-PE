@@ -1,4 +1,8 @@
 {
-    "slot_0": { "id": "coal", "count": 1, "data": 0 },
-    "result": { "id": "coal", "count": 1, "data": 0 }
+    "input": {
+        "slot_0": { "id": "coal", "count": 1, "data": 0 }
+    },
+    "output": {
+        "result": { "id": "coal", "count": 1, "data": 0 }
+    }
 }

@@ -9,7 +9,7 @@ class ElectricCompressorTile extends ProcessingTile {
         return ElectricCompressorUI;
     }
 
-    public override getFactory(): UnformedRecipeFactory {
-        return RecipeFactory.get<UnformedRecipeFactory>("compressor");
+    public override getFactory(): RecipeModule.UnformedFactory {
+        return RecipeModule.getFactory<RecipeModule.UnformedFactory>("compressor");
     }
 }

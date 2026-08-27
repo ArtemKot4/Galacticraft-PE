@@ -21,4 +21,4 @@ class Compressor extends ProcessingBlock {
     }
 }
 
-UnformedRecipeFactory.register("compressor").addRecipesFrom(__dir__ + "resources/assets/recipes/compressor");
+RecipeModule.registerFactory("compressor", new RecipeModule.UnformedFactory()).registerRecipesFrom(__dir__ + "resources/assets/recipes/compressor");

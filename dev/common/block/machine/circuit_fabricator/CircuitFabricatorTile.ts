@@ -22,8 +22,8 @@ class CircuitFabricatorTile extends ProcessingTile {
         return CircuitFabricatorUI;
     }
 
-    public override getFactory(): FormedRecipeFactory {
-        return RecipeFactory.get<FormedRecipeFactory>("circuit");
+    public override getFactory(): RecipeModule.FormedFactory {
+        return RecipeModule.getFactory<RecipeModule.FormedFactory>("circuit");
     }
 
     public static getNewScaleBitmapIndex(index: number): number {

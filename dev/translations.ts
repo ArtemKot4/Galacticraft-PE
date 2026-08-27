@@ -296,8 +296,8 @@ Translation.addTranslation("Coldgravetite pickaxe", {
   ru: "Железостальная кирка",
 });
 
-Translation.addTranslation("Space Wrench", {
-  ru: "Космический гаечный ключ",
+Translation.addTranslation("item.galacticraft.machine_wrench_gc", {
+  ru: "Гаечный ключ",
   zh: "扳手",
 });
 

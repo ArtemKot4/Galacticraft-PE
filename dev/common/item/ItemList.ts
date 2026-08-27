@@ -181,4 +181,6 @@ namespace ItemList {
     Item.setGlint(INFINITE_BATTERY.id, true);
 
     export const ATOMIC_BATTERY_GC = new Battery("atomic_battery_gc", { name: "atomic_battery_gc", meta: 0 }, { type: "atomic" });
+
+    export const MACHINE_WRENCH = new MachineWrench();
 }

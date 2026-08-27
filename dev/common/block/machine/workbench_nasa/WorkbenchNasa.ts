@@ -7,7 +7,7 @@ declare namespace WorkbenchNasaRecipeFactory {
     }
 }
 
-class WorkbenchNasaRecipeFactory extends FormedRecipeFactory {
+class WorkbenchNasaRecipeFactory extends RecipeModule.FormedFactory {
     protected schemas: Map<string, WorkbenchNasaRecipeFactory.Schema> = new Map();
     protected uiCache: Record<string, UI.IWindow> = {};
 
@@ -21,9 +21,7 @@ class WorkbenchNasaRecipeFactory extends FormedRecipeFactory {
     }
 }
 
-WorkbenchNasaRecipeFactory.register("workbench_nasa");
-
-class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback, IDestroyCallback, IClickCallback {
+class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback, IDestroyCallback {
     public bottomData = 0;
     public topData = 1;
 
@@ -75,7 +73,7 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
         }
 
         ItemContainer.registerScreenFactory("galacticraft.workbench_nasa", (container, screenName) => {
-		    return RecipeFactory.get<WorkbenchNasaRecipeFactory>("workbench_nasa").getSchemaUIByScreenName(screenName);
+		    return RecipeModule.getFactory<WorkbenchNasaRecipeFactory>("workbench_nasa").getSchemaUIByScreenName(screenName);
 	    });
     }
 
@@ -84,4 +82,4 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
     }
 }
 
-FormedRecipeFactory.register("workbench_nasa").addRecipesFrom(__dir__ + "resources/assets/recipes/workbench_nasa");
+RecipeModule.registerFactory("workbench_nasa", new RecipeModule.FormedFactory()).registerRecipesFrom(__dir__ + "resources/assets/recipes/workbench_nasa");

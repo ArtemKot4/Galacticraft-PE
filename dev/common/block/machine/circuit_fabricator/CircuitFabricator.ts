@@ -22,4 +22,4 @@ class CircuitFabricator extends ProcessingBlock {
 	}
 }
 
-FormedRecipeFactory.register("circuit").addRecipesFrom(__dir__ + "resources/assets/recipes/circuit");
+RecipeModule.registerFactory("circuit", new RecipeModule.FormedFactory()).registerRecipesFrom(__dir__ + "resources/assets/recipes/circuit");

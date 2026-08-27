@@ -485,7 +485,7 @@ declare class BasicItem<T extends Item.ItemParams = Item.ItemParams> {
     texture: IItemTextureDescription;
     id: number;
     stringID: string;
-    constructor(stringID: string, texture: IItemTextureDescription, params?: T);
+    constructor(stringID: string, texture?: IItemTextureDescription, params?: T);
     getMaxStack(): number;
     getName(): string;
     getStringID(): string;

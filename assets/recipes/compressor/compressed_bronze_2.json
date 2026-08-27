@@ -1,9 +1,9 @@
 {
     "input": [
-        {"id": "ingot_bronze_gc", "count": 1, "data": 0},
-        {"id": "ingot_bronze_gc", "count": 1, "data": 0}
+        { "id": "ingot_bronze_gc", "count": 1, "data": 0 },
+        { "id": "ingot_bronze_gc", "count": 1, "data": 0 }
     ],
     "output": [
-        {"id": "compressed_bronze", "count": 1, "data": 0}
+        { "id": "compressed_bronze", "count": 1, "data": 0 }
     ]
 }

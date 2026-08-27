@@ -12,10 +12,10 @@ abstract class ProcessingBlock extends MachineBlock {
             throw new ReferenceError("Processing Block does not can don't contain tile entity prototype");
         }
         let policy: (slotName: string, id: number) => boolean;
-        if(factory instanceof FormedRecipeFactory) {
+        if(factory instanceof RecipeModule.FormedFactory) {
             policy = (slotName, id) => factory.storage.some((recipe) => id == recipe.input[slotName].id);
         }  
-        else if(factory instanceof UnformedRecipeFactory) {
+        else if(factory instanceof RecipeModule.UnformedFactory) {
             policy = (slotName, id) => factory.storage.some((recipe) => recipe.input.some(instance => instance.id == id));
         }
         tilePrototype.init = this.getInitFunctionWithPolicy(policy);
