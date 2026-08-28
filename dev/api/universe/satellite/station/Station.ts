@@ -1,9 +1,9 @@
 class Station extends Satellite {
-    public hasStars?: boolean = true;
+    public override hasStars?: boolean = true;
     public owner: number;
     public members: Record<number, IStationMemberPermissions> = {};
 
-    public hasBedrockLayer(): boolean {
+    public override hasBedrockLayer(): boolean {
         return true;
     }
 

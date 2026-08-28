@@ -81,7 +81,7 @@ namespace ElectricMachine {
             }
 
             tileEntity.container.setSlotAddTransferPolicy(slotName, (container, str, id, count, data, extra) => {
-                if(!extra) {
+                if(!extra || container.getSlot(slotName).count + count > Item.getMaxStackSize(id)) {
                     return 0;
                 }
                 const isBattery = policy(id, ChargeItemRegistry.getEnergyStored(new ItemStack(id, count, data, extra)), extra.getString("battery.special_type") as ElectricMachine.batteryAction);

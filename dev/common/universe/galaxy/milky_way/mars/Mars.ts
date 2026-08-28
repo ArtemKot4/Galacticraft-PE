@@ -38,7 +38,7 @@ class Mars extends Planet {
 		];
 	}
 
-    public getOreData(): { ores: Galacticraft.OreData[]; stone: number[]; } {
+    public override getOreData(): { ores: Galacticraft.OreData[]; stone: number[]; } {
         return {
             ores: [
                 {

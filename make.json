@@ -79,6 +79,7 @@
 		"strict": false,
 		"strictNullChecks": false,
 		"ignoreDeprecations": "6.0",
-		"downlevelIteration": false
+		"downlevelIteration": false,
+		"noImplicitOverride": true
 	}
 }

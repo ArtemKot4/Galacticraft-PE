@@ -35,7 +35,7 @@ class Moon extends Satellite {
         ];
     }
 
-    public getOreData(): { ores: Galacticraft.OreData[]; stone: number[]; } {
+    public override getOreData(): { ores: Galacticraft.OreData[]; stone: number[]; } {
         return {
             ores: [
                 {
@@ -64,7 +64,7 @@ class Moon extends Satellite {
         }
     }
 
-    public getMusicNameAndPath(): [name: string, path: string] {
+    public override getMusicNameAndPath(): [name: string, path: string] {
         return ["spacerace", __dir__ + "resources/assets/sounds/spacerace.ogg"];
     }
 

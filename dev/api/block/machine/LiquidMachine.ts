@@ -242,6 +242,9 @@ namespace LiquidMachine {
                         if(lastPolicy != null && lastPolicy.transfer(container, str, id, count, data, extra, playerUid) == 0) {
                             return 0;
                         }
+                        if(container.getSlot(slotName).count + count > Item.getMaxStackSize(id)) {
+                            return 0;
+                        }
                         return policies[slotName](this, { id, count, data, extra }) ? count : 0;
                     });
                 }

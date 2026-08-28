@@ -30,12 +30,18 @@ namespace RecipeModule {
         getContainerManager(): ContainerManager;
     }
 
-    export abstract class Factory<StorageFormat> {
+    export interface ICachedStorage<Input = string[], Output = string[]> {
+        inputSlots: Input,
+        outputSlots: Output,
+        currentRecipeIndex: string
+    }
+
+    export abstract class Factory<StorageFormat, CachedStorage = ICachedStorage> {
         public storage: StorageFormat[] = [];
         
         abstract getRecipe(...args: unknown[]): Nullable<StorageFormat>;
 
-        abstract getRecipe(tileEntity: TileEntity, slotGetter: (name: string) => ItemStack | ItemContainerSlot): Nullable<StorageFormat>;
+        abstract getRecipe(cachedStorage: CachedStorage, slotGetter: (name: string) => ItemStack | ItemContainerSlot): Nullable<StorageFormat>;
 
         public registerRecipe(obj: StorageFormat): this {
             this.storage.push(obj);

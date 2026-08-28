@@ -1,5 +1,5 @@
 abstract class ProcessingTile extends MachineTile {
-    public data: Scriptable & { energy?: number, progress: number, active: boolean };
+    public override data: Scriptable & { energy?: number, progress: number, active: boolean };
     abstract inputSlots: string[];
     abstract outputSlots: string[];
     public currentRecipeIndex: string;
@@ -108,7 +108,7 @@ abstract class ProcessingTile extends MachineTile {
         return 16000;
     }
 
-    public onLoad(): void {
+    public override onLoad(): void {
         this.setActiveIfNeeded();
     }
 

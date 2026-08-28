@@ -91,11 +91,11 @@ namespace BlockList {
     ICRender.getGroup("galacticraft.improved_wire").add(ENCLOSED_HEAVY_ALUMINUM_WIRE.id, -1);
 
     class Space extends BasicBlock {
-        public getLightOpacity(): number {
+        public override getLightOpacity(): number {
             return 15;
         }
 
-        public getDestroyTime(): number {
+        public override getDestroyTime(): number {
             return -1;
         }
 
@@ -128,7 +128,7 @@ namespace BlockList {
             super(stringID, "block.galacticraft." + stringID, stillTexture, flowTexture);
         }
         
-        public getBucket(): Block.LiquidDescriptor["bucket"] | [empty: LiquidRegistry.Bucket2LiquidMapping, full: LiquidRegistry.Bucket2LiquidMapping] {
+        public override getBucket(): Block.LiquidDescriptor["bucket"] | [empty: LiquidRegistry.Bucket2LiquidMapping, full: LiquidRegistry.Bucket2LiquidMapping] {
             return {
                 id: this.stringID + "_bucket_gc",
                 emptyId: VanillaItemID.bucket,

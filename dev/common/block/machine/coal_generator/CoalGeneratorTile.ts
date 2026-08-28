@@ -1,5 +1,5 @@
 class CoalGeneratorTile extends MachineTile {
-    public defaultValues = {
+    public override defaultValues = {
         active: false,
         canSpendFuel: false,
         burning: 0,
@@ -7,7 +7,7 @@ class CoalGeneratorTile extends MachineTile {
         energyTick: 0,
         heat: 0
     };
-    public data: typeof this.defaultValues & { energy: number };
+    public override data: typeof this.defaultValues & { energy: number };
 
     public override getScreenByName(): UI.IWindow {
         return CoalGeneratorUI;

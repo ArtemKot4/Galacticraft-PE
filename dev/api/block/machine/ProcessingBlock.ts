@@ -42,8 +42,7 @@ abstract class ProcessingBlock extends MachineBlock {
                         let resultId = id, resultData = data;
 
                         if(resultCount == 0) {
-                            resultId = 0;
-                            resultData = 0;
+                            resultId = resultData = 0;
                         } 
                         tile.setActiveIfNeeded({ [inputSlotName]: { id: resultId, count: resultCount, data: resultData } });
                     }
@@ -51,6 +50,9 @@ abstract class ProcessingBlock extends MachineBlock {
                 });
 
                 this.container.setSlotAddTransferPolicy(inputSlotName, (container, slotName, id, count, data, extra) => {
+                    if(container.getSlot(inputSlotName).count + count > Item.getMaxStackSize(id)) {
+                        return 0;
+                    }
                     const availableCount = policyPredicate(inputSlotName, id) ? count : 0;
                     if(availableCount > 0) {
                         tile.setActiveIfNeeded({ [inputSlotName]: new ItemStack(id, count, data, extra) });
@@ -63,5 +65,5 @@ abstract class ProcessingBlock extends MachineBlock {
         }
     }
 
-    abstract getTileEntity(): ProcessingTile;
+    abstract override getTileEntity(): ProcessingTile;
 }

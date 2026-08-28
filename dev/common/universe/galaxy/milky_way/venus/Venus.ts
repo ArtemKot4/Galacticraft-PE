@@ -39,7 +39,7 @@ class Venus extends Planet {
         return 61;
     }
 
-    public getMeteoriteProbability(): number {
+    public override getMeteoriteProbability(): number {
         return 10;
     }
 

@@ -78,6 +78,7 @@ client/ui/RefineryUI.ts
 client/ui/WorkbenchUI.ts
 
 common/item/MachineWrench.ts
+common/item/RocketItem.ts
 common/item/ItemList.ts
 
 common/block/machine/BurnManager.ts
@@ -101,10 +102,10 @@ common/block/machine/refinery/RefineryTile.ts
 common/block/machine/fuel_loader/FuelLoaderTile.ts
 common/block/machine/fuel_loader/FuelLoader.ts
 
+common/block/machine/workbench_nasa/WorkbenchNasaFactory.ts
 common/block/machine/workbench_nasa/WorkbenchNasa.ts
 
 common/block/machine/rocket_padding/RocketPadding.ts
-
 
 common/block/wire/WireBase.ts
 common/block/wire/Wire.ts

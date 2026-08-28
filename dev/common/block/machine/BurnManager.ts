@@ -44,6 +44,9 @@ namespace BurnManager {
 
     export function addSlotPolicy(tileEntity: BurnTile, fuelSlotName: string = "fuel_slot"): void {
         tileEntity.container.setSlotAddTransferPolicy(fuelSlotName, (container, str, id, count, data) => {
+            if(container.getSlot(fuelSlotName).count + count > Item.getMaxStackSize(id)) {
+                return 0;
+            }
             if(validateTile(tileEntity, id, data)) {
                 return count;
             }

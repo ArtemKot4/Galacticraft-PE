@@ -1,5 +1,5 @@
 namespace ItemList {
-    export const ROCKET_TIER_1 = new GalacticraftItem("rocket_tier_1", { name: "rocket_tier_1", meta: 0 }, { stack: 1 });
+    export const ROCKET_TIER_1 = new RocketItem("rocket_tier_1", { name: "rocket_tier", meta: 1 }, { stack: 1 });
 
     export const RAW_SILICON = new GalacticraftItem("raw_silicon", { name: "raw_silicon", meta: 0 });
     
@@ -10,22 +10,22 @@ namespace ItemList {
     export const WAFER_ADVANCED = new GalacticraftItem("wafer_advanced", { name: "wafer_advanced", meta: 0 }, { stack: 16 });
     
     export const INGOT_ALUMINUM = new GalacticraftItem("ingot_aluminum_gc", { name: "ingot_aluminum_gc", meta: 0 });
-    
+
     export const ALIEN_FLESH = new BasicItem<Item.FoodParams>("alien_flesh",{ name: "alien_flesh", meta: 0 }, { food: 6 });
 
     export const BUGGYBMAT_SIT = new GalacticraftItem("buggymat_sit", { name: "buggymat_sit", meta: 0 });
 
-    export const ROCKET_FINS = new GalacticraftItem("rocket_fins", { name: "rocket_fins", meta: 0 }, { stack: 4 });
+    export const ROCKET_FINS = new GalacticraftItem("rocket_fins", { name: "rocket_fins", meta: 0 });
 
-    export const NOSE_CONE = new GalacticraftItem("nose_cone", { name: "nose_cone", meta: 0 }, { stack: 4 });
+    export const NOSE_CONE = new GalacticraftItem("nose_cone", { name: "nose_cone", meta: 0 });
 
-    export const ROCKET_FINS_2 = new GalacticraftItem("rocket_fins_t2", { name: "rocket_fins_t2", meta: 0 }, { stack: 4 });
+    export const ROCKET_FINS_2 = new GalacticraftItem("rocket_fins_t2", { name: "rocket_fins_t2", meta: 0 });
 
     export const BUGGYMAT_STORAGE = new GalacticraftItem("buggymat_storage", { name: "buggymat_storage", meta: 0 });
 
     export const ENGINE_TIER_1_BOOSTER = new GalacticraftItem("engine_tier_1_booster", { name: "engine_tier_1_booster", meta: 0 });
 
-    export const ENGINE_TIER_1 = new GalacticraftItem("engine_tier_1", { name: "engine_tier", meta: 1 }, { stack: 1 });
+    export const ENGINE_TIER_1 = new GalacticraftItem("engine_tier_1", { name: "engine_tier", meta: 1 });
 
     export const HEAVY_PLATING = new GalacticraftItem("heavy_plating", { name: "heavy_plating", meta: 0 });
 
@@ -160,9 +160,9 @@ namespace ItemList {
 
     export const SCHEMATIC_BUGGY = new GalacticraftItem("schematic_buggy", { name: "schematic_buggy", meta: 0 });
 
-    export const SCHEMATIC_ROCKET_2 = new GalacticraftItem("schematic_rocket_2", { name: "schematic_rocket", meta: 2 });
+    export const SCHEMATIC_ROCKET_2 = new GalacticraftItem("schematic_rocket_2", { name: "schematic_rocket", meta: 2 }, { stack: 1 });
     
-    export const SCHEMATIC_ROCKET_3 = new GalacticraftItem("schematic_rocket_3", { name: "schematic_rocket", meta: 3 });    
+    export const SCHEMATIC_ROCKET_3 = new GalacticraftItem("schematic_rocket_3", { name: "schematic_rocket", meta: 3 }, { stack: 1 });    
 
     export const OXYGEN_GEAR = new GalacticraftItem("oxygen_gear", { name: "oxygen_gear", meta: 0 });
     
