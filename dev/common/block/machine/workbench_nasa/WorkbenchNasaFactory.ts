@@ -11,7 +11,13 @@ namespace RecipeModule {
     export class WorkbenchNasaFactory extends RecipeModule.FormedFactory<WorkbenchNasaCachedStorage> {
         protected schemas: Map<string, WorkbenchNasaSchema> = new Map();
 
-        public override registerRecipe(obj: IDefaultRecipe): this {
+        public override registerRecipe(obj: IDefaultRecipe, fileName: string): this {
+            if(obj.schema == null) {
+                throw `Recipe${fileName != null ? ` of file "${fileName}" ` : " "}mush have schema`;
+            }
+            if(this.getSchemaByName(obj.schema as string) == null) {
+                throw `Schema "${obj.schema}" is not registered`;
+            }
             for(const key in obj.input) {
                 if(Array.isArray(obj.input[key])) {
                     let i = 1;
@@ -60,9 +66,9 @@ namespace RecipeModule {
 }
 
 RecipeModule.registerFactory("workbench_nasa", new RecipeModule.WorkbenchNasaFactory())
-.registerRecipesFrom(__dir__ + "resources/assets/recipes/workbench_nasa")
 .registerSchema("rocket_tier_1", new ItemStack(), 
 [
     "nose_cone", "plate_1", "plate_2", "plate_3", "plate_4", "plate_5", "plate_6", 
     "plate_7", "plate_8", "fin_1", "fin_2", "fin_3", "fin_4", "engine"
-], ["result_slot"], WorkbenchNasaRocketTier1UI);
+], ["result_slot"], WorkbenchNasaRocketTier1UI)
+.registerRecipesFrom(__dir__ + "resources/assets/recipes/workbench_nasa");

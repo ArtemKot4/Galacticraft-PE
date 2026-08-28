@@ -43,7 +43,7 @@ namespace RecipeModule {
 
         abstract getRecipe(cachedStorage: CachedStorage, slotGetter: (name: string) => ItemStack | ItemContainerSlot): Nullable<StorageFormat>;
 
-        public registerRecipe(obj: StorageFormat): this {
+        public registerRecipe(obj: StorageFormat, fileName?: string): this {
             this.storage.push(obj);
             return this;
         }
@@ -78,7 +78,7 @@ namespace RecipeModule {
                     Logger.debug("RecipeModule: Factory.prototype.registerRecipesFrom", `File cannot be format "${format}" for register recipe from "${path}". Right format is "${parseProvider.getFileFormat()}". Please rename file to "${fileName + "." + format}" or ignore this message if it's not problem.`);
                     continue;
                 }
-                this.registerRecipe(parseProvider.buildRecipe(parseProvider.parseText(FileTools.ReadText(path), path), path) as StorageFormat);
+                this.registerRecipe(parseProvider.buildRecipe(parseProvider.parseText(FileTools.ReadText(path), path), path) as StorageFormat, fileName);
             }
             return this;
         }
