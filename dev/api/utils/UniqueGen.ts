@@ -18,6 +18,8 @@ const UniqueGen = {
 		for(let i = 0; i < params.veinCounts; i++) {
 			let coords = this.randomCoords(random, chunkX, chunkZ, params.minY, params.maxY);
 			GenerationUtils.generateOreCustom(coords.x, coords.y, coords.z, id, data, params.size, params.mode, params.check);
+
+			//Game.message("сгенерировано: " + IDRegistry.getNameByID(block.id) + "  " + Vector3.toString());
 		}
 	}
 };

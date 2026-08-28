@@ -37,7 +37,7 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
         .setModel((() => {
             const mesh = this.getModel().getRenderMesh().clone();
             mesh.scale(0.6, 0.6, 0.6)
-            mesh.translate(0.2, 0, 0.25)
+            mesh.translate(0.2, -0.15, 0.25)
             return mesh;
         })(), "terrain-atlas/machine/rocket_workbench_top.png");
     }
@@ -187,13 +187,18 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
             if(schemaData.chestSlots.has(slotName)) {
                 return count;
             }
-            const currentStack = new ItemStack(id, count > 0 ? Math.max(0, container.getSlot(slotName).count - count) : 0, data, extra);
-        
-            if(schemaData.outputSlots.has(slotName) && !currentStack.isEmpty()) {
+            if(schemaData.outputSlots.has(slotName) && count > 0) {
                 this.completeRecipe(container, lastRecipe, schemaData, playerUid);
                 return 0;
             }
-            this.validateResult(container, slotName, currentStack.count == 0 ? new ItemStack() : currentStack, schemaName, schemaData, lastRecipe);
+            if(count == 0) {
+                this.validateResult(container, slotName, ItemStack.EMPTY, schemaName, schemaData, lastRecipe);
+                return 0;
+            }
+            const currentStack = new ItemStack(id, container.getSlot(slotName).count, data, extra);
+            currentStack.decrease(count);
+            
+            this.validateResult(container, slotName, currentStack, schemaName, schemaData, lastRecipe);
             return count;
         });
 

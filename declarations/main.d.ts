@@ -83,6 +83,7 @@ declare class Vector3 {
     static fromString(string: string): Vector3;
 }
 declare class ItemStack implements ItemInstance {
+    static EMPTY: ItemStack;
     id: number;
     count: number;
     data: number;
@@ -93,7 +94,8 @@ declare class ItemStack implements ItemInstance {
     constructor(id: number, count?: number, data?: number, extra?: ItemExtraData);
     decrease(count?: number): void;
     increase(count?: number): void;
-    equals(stack: ItemInstance | ItemStack): boolean;
+    equals(stack: ItemInstance): boolean;
+    contains(stack: ItemInstance): boolean;
     getItemInstance(): ItemInstance;
     isEmpty(): boolean;
     clear(): void;

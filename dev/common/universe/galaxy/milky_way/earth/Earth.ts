@@ -25,6 +25,13 @@ class Earth implements CelestialBody {
                     maxY: 24,
                     count: [3, 13]
                 },
+                // {
+                //     block: { id: BlockID[BlockList.OIL.getStillStringID()], data: 0 },
+                //     veinCounts: __config__.getFloat("generation.earth.oil") || 3,
+                //     minY: 90,
+                //     maxY: 150,
+                //     count: [7, 30]
+                // }
             ],
             stone: [VanillaBlockID.stone]
         }

@@ -1046,3 +1046,8 @@ Translation.addTranslation("block.galacticraft.workbench_nasa", {
   en: "Workbench NASA",
   ru: "Верстак НАСА"
 });
+
+Translation.addTranslation("block.galacticraft.rocket_padding", {
+  en: "Rocket padding",
+  ru: "Ракетная площадка"
+});
