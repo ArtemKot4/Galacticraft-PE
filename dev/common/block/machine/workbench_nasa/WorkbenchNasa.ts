@@ -1,4 +1,4 @@
-const vanillaContainers = {
+const containersWithSlots = {
     [VanillaBlockID.chest]: 36,
     [VanillaBlockID.barrel]: 36
 }; //нужно будет перенести в Fireflies и переделать в более единый вид
@@ -37,7 +37,7 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
         .setModel((() => {
             const mesh = this.getModel().getRenderMesh().clone();
             mesh.scale(0.6, 0.6, 0.6)
-            mesh.translate(0.2, -0.15, 0.25)
+            mesh.translate(0.2, -0.1, 0.25)
             return mesh;
         })(), "terrain-atlas/machine/rocket_workbench_top.png");
     }
@@ -133,8 +133,8 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
     }
 
     public getSlotCountFromContainer(id: number): number {
-        if(id in vanillaContainers) {
-            return vanillaContainers[id];
+        if(id in containersWithSlots) {
+            return containersWithSlots[id];
         }
         const tilePrototype = TileEntity.getPrototype(id);
         if(tilePrototype != null) {

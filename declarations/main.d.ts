@@ -444,6 +444,21 @@ declare enum EScreenName {
     INVENTORY_SCREEN = "inventory_screen",
     INVENTORY_SCREEN_POCKET = "inventory_screen_pocket"
 }
+declare namespace NetworkHelper {
+    function sendToPlayer(playerUid: number, name: "send_particles", data: {
+        type: number;
+        x: number;
+        y: number;
+        z: number;
+        vx: number;
+        vy: number;
+        vz: number;
+        data?: number;
+    }): void;
+    function sendToPlayer(playerUid: number, name: "send_message", data: {
+        message: string;
+    }): any;
+}
 interface IItemHoldCallback {
     onItemHold?(item: ItemInstance, playerUid: number, slotIndex: number): void;
 }
@@ -572,7 +587,7 @@ interface IBlockSelectionCallback {
     onSelection(block: Tile, position: BlockPosition, vector: Vector): void;
 }
 declare class BasicBlock {
-    readonly variationList: Block.BlockVariation[];
+    variationList: Block.BlockVariation[];
     id: number;
     readonly stringID?: string;
     /**

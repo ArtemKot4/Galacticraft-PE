@@ -1,4 +1,4 @@
-class Wire extends BasicWire {
+abstract class Wire extends BasicWire {
     public override getWidth(): number {
         return 2 / 10;
     }

@@ -1,10 +1,10 @@
 class ImprovedWire extends Wire {
     public constructor() {
-        super("improved_wire_gc", [{
-            name: "block.galacticraft.improved_wire",
-            texture: [["improved_aluminum_wire_gray", 0]],
-            inCreative: true
-        }]);
+        super("improved_wire_gc");
+    }
+
+    public override getBaseTexture(): string {
+        return "improved_aluminum_wire";
     }
 
     public override getWidth(): number {

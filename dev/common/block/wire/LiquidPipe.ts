@@ -1,10 +1,10 @@
 class LiquidPipe extends BasicWire {
     public constructor() {
-        super("liquid_pipe", [{
-            name: "block.galacticraft.liquid_pipe",
-            texture: [["pipe_oxygen_light_gray", 0]],
-            inCreative: true
-        }]);
+        super("liquid_pipe_gc");
+    }
+    
+    protected override getBaseTexture(): string {
+        return "pipe_oxygen";
     }
 
     public override getEnergyTypes(): EnergyType[] {
@@ -17,6 +17,10 @@ class LiquidPipe extends BasicWire {
 
     public override getMachineGroupCommonName(): string {
         return "galacticraft.machine_liquid_connecting";
+    }
+
+    public override getColors(): string[] {
+        return ['gray', 'yellow', 'black', 'blue', 'brown', 'cyan', 'green', 'light_blue', 'light_gray', 'lime', 'magenta', 'orange', 'pink', 'purple', 'red', 'white'];
     }
 
     public override getMachineConnectionData(): Galacticraft.Renderer.IWireBoxDescription[] {
