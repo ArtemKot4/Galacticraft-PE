@@ -1,4 +1,4 @@
-@ElectricMachine(ElectricMachine.Type.EXTRACTOR)
+@ElectricMachine(ElectricMachine.DEFAULT_CONFIGS.GJ(ElectricMachine.Type.EXTRACTOR))
 class CoalGenerator extends MachineBlock {
     public static tile = new CoalGeneratorTile();
     
@@ -17,7 +17,7 @@ class CoalGenerator extends MachineBlock {
         }]);
     }
 
-    public override getTileEntity(): MachineTile {
+    public override getTileEntity(): CommonTileEntity {
         return CoalGenerator.tile;
     }
 }

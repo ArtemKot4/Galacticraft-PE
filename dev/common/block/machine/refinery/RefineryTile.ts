@@ -1,4 +1,4 @@
-class RefineryTile extends MachineTile {
+class RefineryTile extends ElectricMachine.TileEntity {
     public override getScreenByName(screenName?: string, container?: ItemContainer): UI.IWindow {
         return RefineryUI;
     }

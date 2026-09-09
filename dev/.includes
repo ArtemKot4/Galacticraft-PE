@@ -23,7 +23,14 @@ api/block/machine/MachineBlock.ts
 api/block/machine/ElectricBlock.ts
 api/block/machine/ProcessingBlock.ts
 
-api/block/machine/ElectricMachine.ts
+api/block/machine/electric_machine/ElectricMachine.ts
+api/block/machine/electric_machine/Type.ts
+api/block/machine/electric_machine/Config.ts
+api/block/machine/electric_machine/TileEntity.ts
+
+api/block/machine/electric_machine/BatteryManager.ts
+api/block/machine/electric_machine/EnergyBatteryManager.ts
+
 api/block/machine/LiquidMachine.ts
 
 api/block/machine/MachineTile.ts

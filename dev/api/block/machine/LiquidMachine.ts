@@ -90,7 +90,7 @@ namespace LiquidMachine {
         scaleName?: string;
     }
     
-    export interface TileEntity extends MachineTile {
+    export interface TileEntity extends CommonTileEntity {
         liquidSlotChecks: Map<string, LiquidDescriptor>
     }
 
@@ -199,12 +199,7 @@ namespace LiquidMachine {
                 capacity = CanisterLiquidRegistry.getCapacity(slot.id);
                 const itemAmount = CanisterLiquidRegistry.getCurrentLiquidAmount(slot.extra);
                 const canAdd = capacity - itemAmount;
-                let add = 0;
-                if(amount >= canAdd) {
-                    add = canAdd;
-                } else {
-                    add = amount;   
-                }
+                let add = amount >= canAdd ? canAdd : amount;
                 const result = itemAmount + add;
                 slot.extra.putString("liquid.name", descriptor.liquidName);
                 slot.extra.putInt("liquid.amount", result);
@@ -256,7 +251,9 @@ namespace LiquidMachine {
             const scaleDescriptors = descriptors.filter(descriptor => "scaleName" in descriptor);
 
             tilePrototype.tick = function(this: LiquidMachine.TileEntity) {
-                lastTick.call(this);
+                if(lastTick != null) {
+                    lastTick.call(this);
+                }
                 
                 if(this.liquidSlotChecks?.size > 0) {
                     this.liquidSlotChecks.forEach((descriptor, key) => {

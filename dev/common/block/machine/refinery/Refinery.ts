@@ -1,4 +1,4 @@
-@ElectricMachine(ElectricMachine.Type.RECEIVER)
+@ElectricMachine(ElectricMachine.DEFAULT_CONFIGS.GJ(ElectricMachine.Type.RECEIVER))
 @LiquidMachine(
     { liquidName: "oil", action: "add" }, 
     { liquidName: "fuel", action: "get" }
@@ -19,7 +19,7 @@ class Refinery extends MachineBlock {
         }]);
     }
 
-    public override getTileEntity(): MachineTile {
+    public override getTileEntity(): RefineryTile {
         return new RefineryTile();
     }
 }

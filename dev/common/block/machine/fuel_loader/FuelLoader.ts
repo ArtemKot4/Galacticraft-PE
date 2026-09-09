@@ -1,4 +1,4 @@
-@ElectricMachine(ElectricMachine.Type.RECEIVER)
+@ElectricMachine(ElectricMachine.DEFAULT_CONFIGS.GJ(ElectricMachine.Type.RECEIVER))
 @LiquidMachine(
     { liquidName: "fuel", action: "add" }, 
 )
@@ -25,7 +25,7 @@ class FuelLoader extends MachineBlock implements INeighbourChangeCallback {
         }
     }
 
-    public override getTileEntity(): MachineTile {
+    public override getTileEntity(): FuelLoaderTile {
         return new FuelLoaderTile();
     }
 }

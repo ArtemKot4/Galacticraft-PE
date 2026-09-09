@@ -1,4 +1,4 @@
-class FuelLoaderTile extends MachineTile {
+class FuelLoaderTile extends ElectricMachine.TileEntity {
     public override defaultValues = {
         centerPaddingX: 0,
         centerPaddingY: 0,

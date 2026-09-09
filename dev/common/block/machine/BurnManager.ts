@@ -1,5 +1,5 @@
 namespace BurnManager {
-    export function burn(tileEntity: MachineTile, burningKeyName: string = "burning", burningMaxKeyName: string = "burningMax", changeActive: boolean = true, fuelSlotName: string = "fuel_slot", burningDuration?: number): boolean {
+    export function burn(tileEntity: ElectricMachine.TileEntity, burningKeyName: string = "burning", burningMaxKeyName: string = "burningMax", changeActive: boolean = true, fuelSlotName: string = "fuel_slot", burningDuration?: number): boolean {
         const slot = tileEntity.container.getSlot(fuelSlotName);
         burningDuration ??= Recipes.getSpecialFuelBurnDuration(slot.id, slot.data);
         
@@ -25,7 +25,7 @@ namespace BurnManager {
         return Recipes.getSpecialFuelBurnDuration(id, data) != 0;
     }
 
-    export function isValidFuelSlot(tileEntity: TileEntity.TileEntityPrototype | MachineTile, fuelSlotName: string = "fuel_slot"): boolean {
+    export function isValidFuelSlot(tileEntity: TileEntity.TileEntityPrototype, fuelSlotName: string = "fuel_slot"): boolean {
         const slot = tileEntity.container.getSlot(fuelSlotName);
         return Recipes.getSpecialFuelBurnDuration(slot.id, slot.data) != 0;
     }

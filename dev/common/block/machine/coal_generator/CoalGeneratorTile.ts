@@ -1,4 +1,4 @@
-class CoalGeneratorTile extends MachineTile {
+class CoalGeneratorTile extends ElectricMachine.TileEntity {
     public override defaultValues = {
         active: false,
         canSpendFuel: false,
@@ -7,7 +7,7 @@ class CoalGeneratorTile extends MachineTile {
         energyTick: 0,
         heat: 0
     };
-    public override data: typeof this.defaultValues & { energy: number };
+    public override data: typeof this.defaultValues;
 
     public override getScreenByName(): UI.IWindow {
         return CoalGeneratorUI;
@@ -28,7 +28,7 @@ class CoalGeneratorTile extends MachineTile {
         }
     }
 
-    public getCapacity(): number {
+    public override getCapacity(): number {
         return 120;
     }
 
@@ -47,7 +47,9 @@ class CoalGeneratorTile extends MachineTile {
         if(this.data.canSpendFuel == true && this.canBurn()) {
             this.data.canSpendFuel = !BurnManager.burn(this);
         }
-        if(this.data.active == false) return; 
+        if(this.data.active == false) {
+            return;
+        } 
         if(this.data.heat <= 100) {
             if(this.data.heat == 100) {
                 this.sendEnergyStatus(true);
@@ -84,7 +86,7 @@ class CoalGeneratorTile extends MachineTile {
             if(this.data.energyTick < maxEnergyTick && World.getThreadTime() % 2 == 0) {
                 this.data.energyTick = Math.min(this.data.energyTick + 1, maxEnergyTick);
             }
-            this.data.energy = this.data.energyTick;
+            this.setEnergy(this.data.energyTick, Galacticraft.EnergyTypes.JOULE.name);
         }
     }
 
@@ -111,8 +113,8 @@ class CoalGeneratorTile extends MachineTile {
 
     public clearData(): void {
         this.data.heat = 0;
-        this.data.energy = 0;
         this.data.energyTick = 0;
+        this.setEnergy(0, Galacticraft.EnergyTypes.JOULE.name);
     }
     
     public override getLocalTileEntity(): LocalTileEntity {

@@ -23,7 +23,7 @@ class MachineWrench extends GalacticraftItem implements IItemUseCallback {
             return;
         }
         const tileEntity = TileEntity.getTileEntity(coords.x, coords.y, coords.z);
-        if(tileEntity instanceof MachineTile) {
+        if(tileEntity instanceof ElectricMachine.TileEntity) {
             tileEntity.blockSource.setBlock(tileEntity.x, tileEntity.y, tileEntity.z, block.id, this.defineNewData(block.data));
             //alert("перестроено")
             //EnergyGridBuilder.rebuildWireGrid(tileEntity.blockSource, coords.x, coords.y, coords.z); //работает так себе, надо искать более надёжное решение

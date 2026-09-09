@@ -1,4 +1,4 @@
-@ElectricMachine(ElectricMachine.Type.RECEIVER)
+@ElectricMachine(ElectricMachine.DEFAULT_CONFIGS.GJ(ElectricMachine.Type.RECEIVER))
 class CircuitFabricator extends ProcessingBlock {
     public static tile = new CircuitFabricatorTile();
 

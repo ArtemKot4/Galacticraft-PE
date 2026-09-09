@@ -1,4 +1,4 @@
-abstract class ProcessingTile extends MachineTile {
+abstract class ProcessingTile extends CommonTileEntity {
     public override data: Scriptable & { energy?: number, progress: number, active: boolean };
     abstract inputSlots: string[];
     abstract outputSlots: string[];

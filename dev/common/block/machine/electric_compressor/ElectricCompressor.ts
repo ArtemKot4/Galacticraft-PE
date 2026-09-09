@@ -1,4 +1,4 @@
-@ElectricMachine(ElectricMachine.Type.RECEIVER)
+@ElectricMachine(ElectricMachine.DEFAULT_CONFIGS.GJ(ElectricMachine.Type.RECEIVER))
 class ElectricCompressor extends ProcessingBlock {
     public static tile = new ElectricCompressorTile();
 
@@ -21,5 +21,3 @@ class ElectricCompressor extends ProcessingBlock {
         return ElectricCompressor.tile;
     }
 }
-
-//текстуру поменять на обычную нужно, ест 1500 gJ в секунду всегда
