@@ -339,12 +339,6 @@ Translation.addTranslation("Rubber need to isolation wires", {
   zh: "橡胶用于抛光电线",
 });
 
-Translation.addTranslation(
-  "\n§7Electrolevel 0 - don't consumer\nElectrolevel 1 - generator(sJ)\nElectrolevel 2 - storage(sJ)\nElectrolevel 3 - consumer(sJ)\nElectrolevel 4 - gas collector\nElectrolevel 5 - consumer of gas\nElectrolevel 6 - generator(stJ)\nElectrolevel 7 - consumer(stJ)",
-  {
-    ru: "\n§7Электроуровень 0 - не потребитель\nЭлектроуровень 1 - генератор(sJ)\nЭлектроуровень 2 - хранилище(sJ)\nЭлектроуровень 3 - потребитель(sJ)\nЭлектроуровень 4 - сборщик газа\nЭлектроуровень 5 - потребитель газа\nЭлектроуровень 6 - генератор(stJ)\nЭлектроуровень 7 - потребитель(stJ)",
-  }
-);
 Translation.addTranslation("§6Modification Galacticraft has been downloaded!", {
   ru: "§6Мод Galacticraft был успешно загружен!",
   zh: "§6Galacticraft mod已成功下载！",
@@ -1051,3 +1045,18 @@ Translation.addTranslation("block.galacticraft.rocket_padding", {
   en: "Rocket padding",
   ru: "Ракетная площадка"
 });
+
+Translation.addTranslation("tile.galacticraft.oxygen_collector", {
+  en: "Oxygen collector",
+  ru: "Кислородный сборщик"
+});
+
+Translation.addTranslation("item.galacticraft.empty_oxygen_tank", {
+  en: "Empty oxygen tank",
+  ru: "Пустой кислородный баллон"
+});
+
+Translation.addTranslation("item.galacticraft.oxygen_tank", {
+  en: "Oxygen tank",
+  ru: "Кислородный баллон"
+})

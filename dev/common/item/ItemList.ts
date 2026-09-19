@@ -182,5 +182,15 @@ namespace ItemList {
 
     export const ATOMIC_BATTERY_GC = new Battery("atomic_battery_gc", { name: "atomic_battery_gc", meta: 0 }, { type: "atomic" });
 
+    export const OXYGEN_TANK_LIGHT = new OxygenTank("oxygen_tank_light_gc", { name: "oxygen_tank_light_full", meta: 0 }, { maxCharge: 900 });
+
+    export const OXYGEN_TANK_MEDIUM = new OxygenTank("oxygen_tank_medium_gc", { name: "oxygen_tank_med_full", meta: 0 }, { maxCharge: 1800 });
+
+    export const OXYGEN_TANK_HEAVY = new OxygenTank("oxygen_tank_heavy_gc", { name: "oxygen_tank_heavy_full", meta: 0 }, { maxCharge: 2700 });
+
+    export const INFINITE_OXYGEN_TANK = new OxygenTank("infinity_oxygen_tank_gc", { name: "oxygen_tank_heavy_full", meta: 0 }, { type: "infinity" });
+
+    Item.setGlint(INFINITE_OXYGEN_TANK.id, true);
+
     export const MACHINE_WRENCH = new MachineWrench();
 }

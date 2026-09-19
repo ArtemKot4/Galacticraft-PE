@@ -16,21 +16,45 @@ namespace ElectricMachine {
          * @default 16000
          */
         capacity?: number,
-        onTick?(this: ElectricMachine.TileEntity): void;
-        energyReceive?(this: ElectricMachine.TileEntity, type: string, amount: number, voltage: number): number;
-        isValidEnergySide?(this: ElectricMachine.TileEntity, side: number): boolean;
+        onTick?(this: ElectricMachine.ITileEntity): void;
+        energyReceive?(this: ElectricMachine.ITileEntity, type: string, amount: number, voltage: number): number;
+        isValidEnergySide?(this: ElectricMachine.ITileEntity, side: number): boolean;
         setWireConnecting?(this: BasicBlock): void;
     }
 
-    export namespace DEFAULT_CONFIGS {
-        const gjCache = {};
+    export namespace Config {
+        export function assembly(...configPacks: { [energyType: string]: Config }[]): { [energyType: string]: Config } {
+            const resultConfig = {};
 
-        export function GJ(type: ElectricMachine.Type): { [GJ: string]: Config } {
-            return gjCache[type] ??= { // не уверен что кеширование останется в таком виде и насколько оно нужно, пока ключи в целом одинаковы помимо type, поэтому возможно в будущем логика будет дополнена или пересмотрена
-                [Galacticraft.EnergyTypes.JOULE.name]: {
-                    type: type,
-                    batteryManager: DEFAULT_BATTERY_MANAGERS.ENERGY_BATTERY_MANAGER,
-                    energyKey: "energy"
+            for(const configPack of configPacks) {
+                for(const configName in configPack) {
+                    if(configName in resultConfig) {
+                        throw new GalacticraftException(`Unexpected repeat of energy config "${configName}"`);
+                    }
+                    resultConfig[configName] = configPack[configName];
+                }
+            }
+            return resultConfig;
+        }
+
+        export namespace DEFAULTS {
+            export function GJ(type: ElectricMachine.Type): { [GJ: string]: Config } {
+                return { 
+                    [Galacticraft.EnergyTypes.JOULE.name]: {
+                        type: type,
+                        batteryManager: DEFAULT_BATTERY_MANAGERS.ENERGY_BATTERY_MANAGER,
+                        energyKey: "energy"
+                    }
+                }
+            }
+
+            export function OXYGEN(type: ElectricMachine.Type): { [OB: string]: Config } {
+                return {
+                    [Galacticraft.EnergyTypes.OXYGEN.name]: {
+                        type: type,
+                        batteryManager: DEFAULT_BATTERY_MANAGERS.OXYGEN_BATTERY_MANAGER,
+                        energyKey: "oxygen"
+                    }
                 }
             }
         }

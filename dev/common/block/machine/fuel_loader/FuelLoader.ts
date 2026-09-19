@@ -1,4 +1,4 @@
-@ElectricMachine(ElectricMachine.DEFAULT_CONFIGS.GJ(ElectricMachine.Type.RECEIVER))
+@ElectricMachine(ElectricMachine.Config.DEFAULTS.GJ(ElectricMachine.Type.RECEIVER))
 @LiquidMachine(
     { liquidName: "fuel", action: "add" }, 
 )

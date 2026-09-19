@@ -8,12 +8,20 @@ class Battery extends GalacticraftItem implements INameOverrideCallback {
         this.applyParams();
     }
 
+    public getEnergyType(): string {
+        return Galacticraft.EnergyTypes.JOULE.name;
+    }
+
+    public getSpecialTypeKey(): string {
+        return "battery.special_type";
+    }
+
     public applyParams() {
         if("type" in this.batteryParams) {
-            Item.addToCreative(this.id, 1, 0 ,new ItemExtraData().putString("battery.special_type", this.batteryParams.type));
+            Item.addToCreative(this.id, 1, 0 ,new ItemExtraData().putString(this.getSpecialTypeKey(), this.batteryParams.type));
         } else {
             this.batteryParams.tier = 0;
-            this.batteryParams.energy = Galacticraft.EnergyTypes.JOULE.name;
+            this.batteryParams.energy = this.getEnergyType();
             this.batteryParams.canProvideEnergy = true;
             this.batteryParams.maxCharge ??= 15000;
             ChargeItemRegistry.registerItem(this.id, this.batteryParams as IElectricItem, false);
@@ -31,12 +39,16 @@ class Battery extends GalacticraftItem implements INameOverrideCallback {
         return 1;
     }
 
+    public getEmptyName(): string {
+        return "item.galacticraft.discharged_battery";
+    }
+
     public onNameOverride(item: ItemInstance, translation: string, name: string): void | string {
         const extra = item.extra || new ItemExtraData();
-        const type = extra.getString("battery.special_type") as GalacticraftItem.BatteryParams["type"];
+        const type = extra.getString(this.getSpecialTypeKey()) as GalacticraftItem.BatteryParams["type"];
         const amount = extra.getInt("energy");
         if(!type && amount <= 0) {
-            return Translation.translate("item.galacticraft.discharged_battery");
+            return Translation.translate(this.getEmptyName());
         }
         let color = "";
         let header = Translation.translate(name);
@@ -45,16 +57,16 @@ class Battery extends GalacticraftItem implements INameOverrideCallback {
         switch(type) {
             case "atomic": {
                 color = Native.Color.GOLD;
-                display = "10 gJ / T"; 
+                display = "10 / T"; 
                 break;
             }
             case "infinity": {
                 color = Native.Color.GREEN;
-                display = Translation.translate("message.galacticraft.infinity") + " gJ / T"; 
+                display = Translation.translate("message.galacticraft.infinity") + " / T"; 
                 break;
             }
             default: {
-                display = amount + " / " + ChargeItemRegistry.getMaxCharge(item.id, Galacticraft.EnergyTypes.JOULE.name) + " gJ";
+                display = amount + " / " + ChargeItemRegistry.getMaxCharge(item.id, Galacticraft.EnergyTypes.JOULE.name) + " T";
             }
         }
         return color + header + "\n" + Native.Color.WHITE + display;

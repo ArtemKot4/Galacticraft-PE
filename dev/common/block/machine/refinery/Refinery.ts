@@ -1,4 +1,4 @@
-@ElectricMachine(ElectricMachine.DEFAULT_CONFIGS.GJ(ElectricMachine.Type.RECEIVER))
+@ElectricMachine(ElectricMachine.Config.DEFAULTS.GJ(ElectricMachine.Type.RECEIVER))
 @LiquidMachine(
     { liquidName: "oil", action: "add" }, 
     { liquidName: "fuel", action: "get" }
@@ -23,3 +23,4 @@ class Refinery extends MachineBlock {
         return new RefineryTile();
     }
 }
+

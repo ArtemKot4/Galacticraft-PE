@@ -35,7 +35,7 @@ namespace ElectricMachine {
                 if(!extra || container.getSlot(slotName).count + count > Item.getMaxStackSize(id)) {
                     return 0;
                 }
-                const isBattery = policy(id, ChargeItemRegistry.getEnergyStored(new ItemStack(id, count, data, extra)), extra.getString("battery.special_type") as ElectricMachine.batteryAction);
+                const isBattery = policy({ id, count, data, extra }, ChargeItemRegistry.getEnergyStored(new ItemStack(id, count, data, extra)), extra.getString("battery.special_type") as ElectricMachine.batteryAction);
                 if(isBattery == true) {
                     tileEntity.batterySlotChecks.add(slotName + ":" + action + ":" + this.energyType);
                     return count;
@@ -70,6 +70,20 @@ namespace ElectricMachine {
             tileEntity.setEnergy(energy - added, this.energyType);
         }
 
+        public getCountFromSpecialType(type: string, energy: number, capacity: number): number {
+            if(type == "infinity") {
+                return capacity - energy; 
+            }
+            if(type == "atomic") { 
+                return 10;
+            }
+            throw `ElectricMachine: Unknown special type of battery: "${type}"`;
+        }
+
+        public getSpecialTypeKey(): string {
+            return "battery.special_type";
+        }
+
         public discharge(tileEntity: ElectricMachine.ITileEntity, slotName: string): boolean {
             const slot = tileEntity.container.getSlot(slotName);
             if(!slot.extra) {
@@ -80,19 +94,13 @@ namespace ElectricMachine {
             if(energy >= capacity) {
                 return false;
             }
-            const type = slot.extra.getString("battery.special_type") as GalacticraftItem.BatteryParams["type"];
-            if(type != null) {
-                let count;
-                switch(type) {
-                    case "infinity": count = capacity - energy; break;
-                    case "atomic": count = 10; break;
-                    default: throw `ElectricMachine: Unknown special type of battery: "${type}"`;
-                }
-                tileEntity.setEnergy(Math.min(capacity, energy + count), this.energyType);
-                return false;
-            }
             const amount = ChargeItemRegistry.getEnergyStored(slot, this.energyType);
             if(amount == 0) {
+                const type = slot.extra.getString(this.getSpecialTypeKey()) as GalacticraftItem.BatteryParams["type"];
+                if(type != null) {
+                    tileEntity.setEnergy(Math.min(capacity, energy + this.getCountFromSpecialType(type, energy, capacity)), this.energyType);
+                    return false;
+                }
                 return true;
             }
             const canAdd = capacity - energy;
@@ -116,8 +124,8 @@ namespace ElectricMachine {
             const slot = tileEntity.container.getSlot(slotName);
             const amount = slot.extra && slot.extra.getInt("energy") || 0;
             if(
-                action == "charge" && this.isValidItemForCharge(slot.id, amount) ||
-                action == "discharge" && this.isValidItemForDischarge(slot.id, amount)
+                action == "charge" && this.isValidItemForCharge(slot, amount) ||
+                action == "discharge" && this.isValidItemForDischarge(slot, amount)
             ) {
                 tileEntity.batterySlotChecks.add(slotName + ":" + action + ":" + this.energyType);
                 return;

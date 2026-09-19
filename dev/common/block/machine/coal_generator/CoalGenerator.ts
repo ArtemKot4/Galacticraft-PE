@@ -1,4 +1,4 @@
-@ElectricMachine(ElectricMachine.DEFAULT_CONFIGS.GJ(ElectricMachine.Type.EXTRACTOR))
+@ElectricMachine(ElectricMachine.Config.DEFAULTS.GJ(ElectricMachine.Type.EXTRACTOR))
 class CoalGenerator extends MachineBlock {
     public static tile = new CoalGeneratorTile();
     

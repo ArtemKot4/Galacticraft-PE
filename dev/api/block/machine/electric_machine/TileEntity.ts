@@ -1,6 +1,6 @@
 //@ts-ignore
 namespace ElectricMachine {
-    export interface ITileEntity extends Omit<EnergyTile, 'blockSource'> {
+    export interface ITileEntity extends EnergyTile {
         batterySlotChecks?: Set<string>
         getCapacity?(energyType: string): number;
         /**
@@ -8,6 +8,7 @@ namespace ElectricMachine {
          */
         addEnergy?(amount: number, type: string): number;
         setEnergy?(count: number, type: string): void;
+        decreaseEnergy?(amount: number, type: string): void;
         getEnergy?(type: string): number;
     }
 
@@ -16,6 +17,7 @@ namespace ElectricMachine {
         getCapacity?(energyType: string): number;
         addEnergy?(amount: number, type: string): number;
         setEnergy?(count: number, type: string): void;
-        getEnergy?(amount: number, type: string): number;
+        decreaseEnergy?(amount: number, type: string): void;
+        getEnergy?(type: string): number;
     }
 }

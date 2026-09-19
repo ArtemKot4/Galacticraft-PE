@@ -136,6 +136,11 @@ namespace ElectricMachine {
                 return add;
             }
 
+            tilePrototype.decreaseEnergy = function(this: ElectricMachine.ITileEntity, amount, type): void {
+                this.data[configs[type].energyKey] = Math.max(0, this.getEnergy(type) - amount);
+            }
+
+
             tilePrototype.setEnergy = function(this: ElectricMachine.ITileEntity, count, type): void {
                 this.data[configs[type].energyKey] = count;
             }
@@ -151,8 +156,8 @@ namespace ElectricMachine {
 
             config.onTick ??= function() {
                 const energy = this.data[config.energyKey];
-                this.container.setScale("energy_bar", energy / this.getCapacity(energyType));
-                this.container.setScale("energy_icon", energy / 1);
+                this.container.setScale(config.energyKey + "_bar", energy / this.getCapacity(energyType));
+                this.container.setScale(config.energyKey + "_icon", energy / 1);
                 this.container.sendChanges();
             }
             config.isValidEnergySide ??= function(side: number) {
