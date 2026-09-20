@@ -88,7 +88,8 @@ Translation.addTranslation("Machine block", {
     ru: "§6Машинный блок",
 });
 
-Translation.addTranslation("Place blocks 3x3\nfor create rocket padding", {
+Translation.addTranslation("message.galacticraft.rocket_padding_description", {
+    en: "Place blocks 3x3\nfor create rocket padding",
     ru: "Разместите блоки 3х3 \nдля создания стартовой площадки",
     zh: "放置3x3\n块以创建发射台",
 });
@@ -103,7 +104,8 @@ Translation.addTranslation("Padding Rocket", {
     zh: "火箭发射台",
 });
 
-Translation.addTranslation("Electric furnace", {
+Translation.addTranslation("tile.galacticraft.electric_furnace", {
+    en: "Electric furnace",
     ru: "Электрическая печь",
     zh: "电烤箱",
 });
@@ -120,11 +122,6 @@ Translation.addTranslation("Need for programming programm to workbench nasa", {
 Translation.addTranslation("Manipulator programm", {
     ru: "Манипуляторная программа",
     zh: "火箭组装计划",
-});
-
-Translation.addTranslation("Rocketbench machine", {
-    ru: "Ракетосборочный стол",
-    zh: "火箭收集台",
 });
 
 Translation.addTranslation("Status: storage full", {

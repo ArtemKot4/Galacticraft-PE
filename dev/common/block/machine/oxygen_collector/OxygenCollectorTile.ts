@@ -9,6 +9,9 @@ class OxygenCollectorTile extends ElectricMachine.TileEntity {
     }   
 
     public override onLoad(): void {
+        if(this.data.oxygenGenerate == -1) {
+            return;
+        }
         const body = Galacticraft.getCelestialBodyByID(this.dimension);
         if(body != null && body.hasOxygen()) {
             this.data.oxygenGenerate = -1;

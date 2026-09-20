@@ -1,5 +1,6 @@
 namespace BlockList {
     export const ROCKET_PADDING = new RocketPadding("rocket_padding_gc", "rocket_padding");
+    Galacticraft.ToolTips.registerTipFor(ROCKET_PADDING.id, "message.galacticraft.rocket_padding_description");
     export const WORKBENCH_NASA = new WorkbenchNasa();
     export const IMPROVED_WIRE = new ImprovedWire();
     export const LIQUID_PIPE = new LiquidPipe();
@@ -32,80 +33,23 @@ namespace BlockList {
     export const DESH = new BasicBlock("desh_gc", [{ name: "block.galacticraft.desh", texture: [["desh", 0]], inCreative: true }]);
     export const TIN_DECORATION_BLOCK = new BasicBlock("tin_decoration_block", [{ name: "block.galacticraft.deco_block", texture: [["deco_block", 0]], inCreative: true }]);
     export const OXYGEN_TILE = new BasicBlock("oxygen_tile", [{ name: "block.galacticraft.oxygen_tile", texture: [["oxygen_tile", 0]], inCreative: true }]);
+    export const BLOCK_IRON_STEEL = new BasicBlock("block_iron_steel_gc", [{ name: "block.galacticraft.iron_steel", texture: [["Iron Steel Block Side", 0], ["Iron Steel Block 3", 0], ["Iron Steel Block 2", 0], ["Iron Steel Block 2", 0], ["Iron Steel Block 2", 0], ["Iron Steel Block 2", 0]], inCreative: true }]);
+    export const CARVED_TIN_DECORATION_BLOCK = new BasicBlock("carved_tin_decoration_block", [{ name: "block.galacticraft.carved_tin_decoration_block", texture: [["deco_block_up", 0], ["deco_block_up", 0], ["deco_block_side", 0], ["deco_block_side", 0], ["deco_block_side", 0], ["deco_block_side", 0]], inCreative: true }]);
 
-    export const BLOCK_IRON_STEEL = new BasicBlock("block_iron_steel_gc", [{
-            name: "block.galacticraft.iron_steel",
-            texture: [
-                ["Iron Steel Block Side", 0],
-                ["Iron Steel Block 3", 0],
-                ["Iron Steel Block 2", 0],
-                ["Iron Steel Block 2", 0],
-                ["Iron Steel Block 2", 0],
-                ["Iron Steel Block 2", 0],
-            ],
-            inCreative: true
-        }
-    ]);
-    
-    export const CARVED_TIN_DECORATION_BLOCK = new BasicBlock("carved_tin_decoration_block", [
-        {
-            name: "block.galacticraft.carved_tin_decoration_block",
-            texture: [
-                ["deco_block_up", 0],
-                ["deco_block_up", 0],
-                ["deco_block_side", 0],
-                ["deco_block_side", 0],
-                ["deco_block_side", 0],
-                ["deco_block_side", 0],
-            ],
-            inCreative: true
-        }
-    ]);
-
-    export const ENCLOSED_ALUMINUM_WIRE = new BasicBlock("enclosed_aluminum_wire", [
-        {
-            name: "block.galacticraft.enclosed_aluminum_wire",
-            texture: [["Enclosed Aluminum Wire", 0]],
-            inCreative: true,
-        }
-    ]);
-
+    export const ENCLOSED_ALUMINUM_WIRE = new BasicBlock("enclosed_aluminum_wire", [{ name: "block.galacticraft.enclosed_aluminum_wire", texture: [["Enclosed Aluminum Wire", 0]], inCreative: true }]);
     Galacticraft.EnergyTypes.JOULE.registerWire(ENCLOSED_ALUMINUM_WIRE.id, 200);
     ICRender.getGroup("galacticraft.wire").add(ENCLOSED_ALUMINUM_WIRE.id, -1);
 
-    export const ENCLOSED_FLUID_PIPE = new BasicBlock("enclosed_fluid_pipe", [{
-        name: "block.galacticraft.enclosed_fluid_pipe",
-        texture: [["Enclosed Fluid Pipe", 0]],
-        inCreative: true
-    }]);
-
+    export const ENCLOSED_FLUID_PIPE = new BasicBlock("enclosed_fluid_pipe", [{ name: "block.galacticraft.enclosed_fluid_pipe", texture: [["Enclosed Fluid Pipe", 0]], inCreative: true }]);
     Galacticraft.EnergyTypes.JOULE.registerWire(ENCLOSED_FLUID_PIPE.id, 200);
     ICRender.getGroup("galacticraft.liquid_pipe").add(ENCLOSED_FLUID_PIPE.id, -1);
 
-    export const ENCLOSED_HEAVY_ALUMINUM_WIRE = new BasicBlock("enclosed_heavy_aluminum_wire", [{
-        name: "block.galacticraft.enclosed_heavy_aluminum_wire",
-        texture: [["Enclosed Heavy Aluminum Wire", 0]],
-        inCreative: true
-    }]);
-
+    export const ENCLOSED_HEAVY_ALUMINUM_WIRE = new BasicBlock("enclosed_heavy_aluminum_wire", [{ name: "block.galacticraft.enclosed_heavy_aluminum_wire", texture: [["Enclosed Heavy Aluminum Wire", 0]], inCreative: true }]);
     Galacticraft.EnergyTypes.JOULE.registerWire(ENCLOSED_HEAVY_ALUMINUM_WIRE.id, 200);
     ICRender.getGroup("galacticraft.improved_wire").add(ENCLOSED_HEAVY_ALUMINUM_WIRE.id, -1);
 
-    class Space extends BasicBlock {
-        public override getLightOpacity(): number {
-            return 15;
-        }
-
-        public override getDestroyTime(): number {
-            return -1;
-        }
-
-        public constructor() {
-            super("space", [{ name: "Space Air", texture: [["Black", 0]], inCreative: false }]);
-        }
-    }
-
-    export const SPACE = new Space();
+    
+    export const SPACE = new SpaceBlock();
     export const MOON_STONE_TOP = new BasicBlock("moon_stone_top",[{ name: "Lunar Top Side", texture: [["Top Side", 0],["Top", 0],["Top Side", 0],["Top", 0],["Top Side", 0],["Top Side", 0]], inCreative: true }]);
     export const MOON_STONE = new BasicBlock("moon_stone",[{ name: "Lunar Stone", texture: [["Lunar Stone", 0]], inCreative: true }]);
     export const MOON_STONE_MIDDLE = new BasicBlock("moon_stone_middle",[{ name: "Lunar Dirt", texture: [["Middle", 0]], inCreative: true }]);
@@ -123,20 +67,6 @@ namespace BlockList {
     Block.registerDropFunction(MARS_BOTTOM_STONE.id, function(coords, blockID){
         return [[MARS_COBBLESTONE.id, 1, 0]] 
     });   
-
-    class GalacticraftLiquidBlock extends LiquidBlock {
-        public constructor(stringID: string, stillTexture: string, flowTexture: string) {
-            super(stringID, "block.galacticraft." + stringID, stillTexture, flowTexture);
-        }
-        
-        public override getBucket(): Block.LiquidDescriptor["bucket"] | [empty: LiquidRegistry.Bucket2LiquidMapping, full: LiquidRegistry.Bucket2LiquidMapping] {
-            return {
-                id: this.stringID + "_bucket_gc",
-                emptyId: VanillaItemID.bucket,
-                texture: { name: this.stringID + "_bucket_gc", meta: 0 }
-            }
-        }
-    }
 
     export const OIL = new GalacticraftLiquidBlock("oil", "oil_gc_still", "oil_gc_flow");
     export const FUEL = new GalacticraftLiquidBlock("fuel", "fuel_gc_still", "fuel_gc_flow");
