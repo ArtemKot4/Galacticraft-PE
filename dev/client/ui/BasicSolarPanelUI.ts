@@ -6,11 +6,11 @@ const BasicSolarPanelUI = new UI.StandardWindow({
 			},
 		},
 		inventory: {
-			standard: true,
+			standard: true
 		},
 		background: {
-			standard: true,
-		},
+			standard: true
+		}
 	},
 	drawing: [
 		{

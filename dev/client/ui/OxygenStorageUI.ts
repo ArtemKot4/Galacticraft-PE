@@ -1,4 +1,3 @@
-
 const OxygenStorageUI = new UI.StandartWindow(
     {
         standard: {
