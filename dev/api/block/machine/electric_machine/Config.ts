@@ -16,9 +16,32 @@ namespace ElectricMachine {
          * @default 16000
          */
         capacity?: number,
+        /**
+         * Max energy pushed to the network per tick (EXTRACTOR/STORAGE)
+         */
+        maxExtract?: number,
+        /**
+         * Max energy accepted from the network per tick (RECEIVER/STORAGE)
+         */
+        maxReceive?: number,
+        /**
+         * Redstone signal stops the machine (kill-switch) when true
+         * @default true
+         */
+        redstoneControl?: boolean,
+        /**
+         * Ticks to hold the disabled state after a redstone change
+         * @default 10
+         */
+        redstoneCooldown?: number,
         onTick?(this: ElectricMachine.ITileEntity): void;
         energyReceive?(this: ElectricMachine.ITileEntity, type: string, amount: number, voltage: number): number;
         isValidEnergySide?(this: ElectricMachine.ITileEntity, side: number): boolean;
+        /**
+         * Input (receive) side. Defaults to isValidEnergySide (compatibility with
+         * single-sided machines)
+        */
+        isValidEnergyInputSide?(this: ElectricMachine.ITileEntity, side: number): boolean;
         setWireConnecting?(this: BasicBlock): void;
     }
 

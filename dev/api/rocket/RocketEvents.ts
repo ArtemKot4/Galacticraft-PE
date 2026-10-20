@@ -48,9 +48,16 @@ class RocketEvents {
 	@SubscribeEvent
 	public static onServerLevelLoaded() {
 		for(const id in RocketManager.rocketEntities) {
-			const entity = RocketManager.rocketEntities[id] = RocketEntity.from(RocketManager.rocketEntities[id]);
+			const saved = RocketManager.rocketEntities[id];
+			const entity = RocketEntity.from(saved, Number(id));
+
+			if(entity == null) {
+				delete RocketManager.rocketEntities[id];
+				Logger.Log(`RocketEvents: rocket entity "${id}" cannot be restored (unknown type) and was skipped`, "WARNING");
+				continue;
+			}
+			RocketManager.rocketEntities[id] = entity;
 			entity.loadIfNeed();
-			Network.sendServerMessage("Rocket " + entity.getEntityUid() + " is valid" + entity.isValid());
 		}
 	}
 }

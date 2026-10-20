@@ -3,15 +3,17 @@
     { liquidName: "fuel", action: "add" }, 
 )
 class FuelLoader extends MachineBlock implements INeighbourChangeCallback {
+    public static tile = new FuelLoaderTile();
+
     public constructor() {
         super("fuel_loader_gc", [{
             name: "tile.galacticraft.fuel_loader",
             texture: [
-                ["machine_gc", 0], 
-                ["machine_gc", 0], 
-                ["machine_gc", 0], 
-                ["fuel_loader_gc", 0], 
-                ["machine_input_gc", 0], 
+                ["machine_gc", 0],
+                ["machine_gc", 0],
+                ["machine_gc", 0],
+                ["fuel_loader_gc", 0],
+                ["machine_input_gc", 0],
                 ["machine_fuel_input_gc", 0]
             ],
             inCreative: true
@@ -26,6 +28,6 @@ class FuelLoader extends MachineBlock implements INeighbourChangeCallback {
     }
 
     public override getTileEntity(): FuelLoaderTile {
-        return new FuelLoaderTile();
+        return FuelLoader.tile;
     }
 }

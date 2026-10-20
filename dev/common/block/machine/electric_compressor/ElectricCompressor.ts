@@ -6,11 +6,11 @@ class ElectricCompressor extends ProcessingBlock {
         super("electric_compressor_gc", [{
             name: "tile.galacticraft.electric_compressor",
             texture: [
-                ["machine_item_output_gc", 0], 
+                ["machine_item_output_gc", 0],
                 ["machine_item_input_gc", 0],
-                ["machine_gc", 0], 
-                ["electric_compressor_gc", 0], 
-                ["machine_input_gc", 0], 
+                ["machine_gc", 0],
+                ["electric_compressor_gc", 0],
+                ["machine_input_gc", 0],
                 ["machine_gc", 0]
             ],
             inCreative: true

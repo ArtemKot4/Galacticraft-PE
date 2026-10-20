@@ -36,12 +36,16 @@ class FuelLoaderTile extends ElectricMachine.TileEntity {
     }
 
     public transferFuel(): void {
-        this.data.energy -= this.getTransferEnergy();
-
         const rocket = this.getRocketEntity();
         const amount = this.liquidStorage.getAmount("fuel");
-        const add = amount >= 5 ? 5 : amount;
+        // Java: 2 mB per tick
+        const add = amount >= 2 ? 2 : amount;
         const added = rocket.addFuel(add);
+
+        if(added <= 0) {
+            return;
+        }
+        this.data.energy -= this.getTransferEnergy();
         this.liquidStorage.setAmount("fuel", amount - added);
     }
 
@@ -64,6 +68,9 @@ class FuelLoaderTile extends ElectricMachine.TileEntity {
     }
 
     public override onInit(): void {
+        this.data.centerPaddingX ??= 0;
+        this.data.centerPaddingY ??= 0;
+        this.data.centerPaddingZ ??= 0;
         this.validatePadding();
     }
 

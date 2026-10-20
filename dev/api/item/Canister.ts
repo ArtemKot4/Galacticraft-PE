@@ -10,9 +10,9 @@ class Canister extends GalacticraftItem implements IIconOverrideCallback, INameO
         return 1000;
     }
 
-    public constructor() {
-        const texture = { name: "empty_liquid_canister", meta: 0 };
-        super("canister_gc", texture);
+    public constructor(stringID: string = "canister_gc", textureName: string = "empty_liquid_canister") {
+        const texture = { name: textureName, meta: 0 };
+        super(stringID, texture);
         this.emptyTexture = texture;
         const liquids = this.getLiquids();
         const capacity = this.getCapacity();

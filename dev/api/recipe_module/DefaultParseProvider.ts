@@ -8,7 +8,11 @@ namespace RecipeModule {
             if(!("id" in item)) {
                 return null;
             }
-            return { id: typeof item.id == "string" ? IDRegistry.parseID(item.id) : item.id, count: item.count || this.defaultCount, data: item.data || this.defaultData };
+            const count = item.count || this.defaultCount;
+            if(!(count > 0)) {
+                return null;
+            }
+            return { id: typeof item.id == "string" ? IDRegistry.parseID(item.id) : item.id, count: count, data: item.data || this.defaultData };
         }
 
         public processKeys(obj: Object): T {

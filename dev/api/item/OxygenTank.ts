@@ -1,4 +1,8 @@
 class OxygenTank extends Battery {
+    public override getMaxStack(): number {
+        return 1;
+    }
+
     public override getEnergyType(): string {
         return Galacticraft.EnergyTypes.OXYGEN.name;
     }

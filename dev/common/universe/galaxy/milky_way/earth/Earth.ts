@@ -6,24 +6,31 @@ class Earth implements CelestialBody {
             ores: [
                 {
                     block: { id: BlockList.ORE_COPPER_EARTH.id, data: 0 },
-                    veinCounts: __config__.getFloat("generation.earth.copper") || 5,
-                    minY: 2,
-                    maxY: 100,
-                    count: [4, 12]
+                    veinCounts: __config__.getFloat("generation.earth.copper") || 24,
+                    minY: 0,
+                    maxY: 75,
+                    count: [7, 7]
                 },
                 {
                     block: { id: BlockList.ORE_TIN_EARTH.id, data: 0 },
-                    veinCounts: __config__.getFloat("generation.earth.tin") || 5,
-                    minY: 2,
-                    maxY: 100,
-                    count: [4, 12]
+                    veinCounts: __config__.getFloat("generation.earth.tin") || 22,
+                    minY: 0,
+                    maxY: 60,
+                    count: [7, 7]
                 },
                 {
                     block: { id: BlockList.ORE_SILICON_EARTH.id, data: 0 },
-                    veinCounts: __config__.getFloat("generation.earth.copper") || 6,
-                    minY: 2,
-                    maxY: 24,
-                    count: [3, 13]
+                    veinCounts: __config__.getFloat("generation.earth.silicon") || 3,
+                    minY: 0,
+                    maxY: 25,
+                    count: [7, 7]
+                },
+                {
+                    block: { id: BlockList.ORE_ALUMINUM_EARTH.id, data: 0 },
+                    veinCounts: __config__.getFloat("generation.earth.aluminum") || 18,
+                    minY: 0,
+                    maxY: 45,
+                    count: [7, 7]
                 },
                 // {
                 //     block: { id: BlockID[BlockList.OIL.getStillStringID()], data: 0 },
@@ -82,7 +89,7 @@ class Earth implements CelestialBody {
     }
 
     public getSunEnergy(): number {
-        return 70;
+        return 0;
     }
 
     public getMobIDsWithProbability(): Record<number, string> {

@@ -55,6 +55,23 @@
         "sulphuric_acid":6
       }
     },
+    "generation":{
+      "earth":{
+        "copper":24,
+        "tin":22,
+        "silicon":3,
+        "aluminum":18
+      },
+      "moon":{
+        "copper":26,
+        "tin":23,
+        "cheese":14,
+        "sapphire":6
+      },
+      "mars":{
+        "desh":2
+      }
+    },
     "Generation":{
       "Venus":{
         "mountain_venus":true,

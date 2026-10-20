@@ -26,7 +26,7 @@ class Station extends Satellite {
     }
 
     public override getIconPath(): string {
-        return "environment.station";
+        return "environment/space_station";
     }
     
     public override canHasStation(): boolean {

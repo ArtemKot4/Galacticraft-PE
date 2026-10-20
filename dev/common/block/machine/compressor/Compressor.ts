@@ -4,11 +4,11 @@ class Compressor extends ProcessingBlock {
         super("compressor_gc", [{
             name: "tile.galacticraft.compressor",
             texture: [
-                ["machine_item_output_gc", 0], 
+                ["machine_item_output_gc", 0],
                 ["machine_item_input_gc", 0],
-                ["machine_gc", 0], 
-                ["compressor_gc", 0], 
-                ["machine_input_gc", 0], 
+                ["machine_gc", 0],
+                ["compressor_gc", 0],
+                ["machine_gc", 0],
                 ["machine_gc", 0]
             ],
             inCreative: true

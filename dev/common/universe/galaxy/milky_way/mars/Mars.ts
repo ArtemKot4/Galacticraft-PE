@@ -67,7 +67,11 @@ class Mars extends Planet {
 
 
 	public override getGravity(): number {
-		return 38;
+		return 27.5;
+	}
+
+	public override getDayLength(): number {
+		return 24660 / 1200;
 	}
 
 	public override getMeteoriteProbability(): number {
@@ -91,10 +95,10 @@ class Mars extends Planet {
 	}
 
     public override getSkyColor(): number[] {
-        return [910 / 256, 181 / 256, 910 / 256];
+        return [154 / 255, 114 / 255, 66 / 255];
     }
 
     public override getFogColor(): number[] {
-        return [16 + 894, 181 / 256, -255 / 256];
+        return [210 / 255, 120 / 255, 59 / 255];
     }
 }

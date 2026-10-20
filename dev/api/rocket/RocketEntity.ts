@@ -47,6 +47,12 @@ class RocketEntity {
 	protected entityUid: number;
 
 	/**
+	 * Dimension id of the rocket (persisted; entity may be unloaded)
+	 */
+
+	protected dimension: number = null;
+
+	/**
 	 * Valid unique identifier of player inside rocket
 	 */
 
@@ -117,6 +123,7 @@ class RocketEntity {
 		this.slotCount = slotCount;
 
 		const coords = Entity.getPosition(entityUid);
+		this.dimension = Entity.getDimension(entityUid);
 		this.paddingCoords = new Vector3(Math.floor(coords.x), Math.floor(coords.y), Math.floor(coords.z));
 
 		this.container = new ItemContainer();
@@ -154,7 +161,14 @@ class RocketEntity {
 	 */
 
 	public getDimension(): number {
-		return Entity.getDimension(this.entityUid);
+		if(this.dimension != null) {
+			return this.dimension;
+		}
+		try {
+			return Entity.getDimension(this.entityUid);
+		} catch(error) {
+			return 0;
+		}
 	}
 
 	/**
@@ -386,18 +400,30 @@ class RocketEntity {
 	 * @returns rocket is exists in data or not
 	 */
 	public isValid(): boolean {
-		return RocketManager.isRocketType(this.entityUid);
+		try {
+			return RocketManager.isRocketType(this.entityUid);
+		} catch(error) {
+			return false;
+		}
 	}
 
 	/**
 	 * Method to update height indicator, works only on client side
 	 */
 
-	public updateHeightIndicator(value: number = this.getPosition().y): void {
+	public updateHeightIndicator(value: number = null): void {
 		const client = this.getClient();
 		if(client != null) {
+			let height = value;
+			if(height == null) {
+				try {
+					height = this.getPosition().y;
+				} catch(error) {
+					height = -1;
+				}
+			}
 			client.send("packet.galacticraft.send_height_indicator", {
-				height: value == -1 ? -1 : value / (this.rocketType.getFinalHeight() - this.startHeight)
+				height: height == -1 ? -1 : height / (this.rocketType.getFinalHeight() - this.startHeight)
 			});
 		}
 	}
@@ -622,16 +648,61 @@ class RocketEntity {
 	 * @returns RocketEntity
 	 */
 
-	public static from(rocketEntityData: RocketEntity): RocketEntity {
+	public static from(rocketEntityData: RocketEntity, fallbackEntityUid?: number): Nullable<RocketEntity> {
 		const rocketEntity = new RocketEntity();
 		for(const key in rocketEntityData) {
 			rocketEntity[key] = rocketEntityData[key];
 		}
 		rocketEntity.updatableInited = false;
-		rocketEntity.rocketType = RocketManager.getRocketTypeByEntityTypeName(rocketEntityData.rocketType.entityType);
-		rocketEntity.paddingCoords = new Vector3(rocketEntityData.paddingCoords);
+		rocketEntity.entityUid = rocketEntityData.entityUid != null ? rocketEntityData.entityUid : fallbackEntityUid;
+		rocketEntity.rocketType = RocketManager.getRocketTypeByEntityTypeName(rocketEntityData.rocketType ? rocketEntityData.rocketType.entityType : null);
+
+		if(rocketEntity.rocketType == null) {
+			return null;
+		}
+		rocketEntity.fuel = rocketEntityData.fuel || 0;
+		rocketEntity.slotCount = rocketEntityData.slotCount || 0;
+		rocketEntity.riderUid = rocketEntityData.riderUid ?? null;
+		rocketEntity.launched = rocketEntityData.launched || false;
+		rocketEntity.launchPhase = rocketEntityData.launchPhase ?? ELaunchPhase.PRE_LAUNCH;
+		rocketEntity.timer = rocketEntityData.timer ?? null;
+		rocketEntity.startHeight = rocketEntityData.startHeight || 0;
+		rocketEntity.taken = false;
+
+		if(rocketEntity.dimension == null) {
+			try {
+				rocketEntity.dimension = Entity.getDimension(rocketEntity.entityUid);
+			} catch(error) {
+				rocketEntity.dimension = 0;
+			}
+		}
+		const paddingCoords = rocketEntityData.paddingCoords;
+		rocketEntity.paddingCoords = paddingCoords != null ? new Vector3(paddingCoords) : new Vector3(0, 0, 0);
+		rocketEntity.container = RocketEntity.restoreContainer(rocketEntityData.container);
 		RocketEntity.registerScreenFactoryOnClientSide(rocketEntity);
 		return rocketEntity;
+	}
+
+	public static restoreContainer(savedContainer: any): ItemContainer {
+		if(savedContainer != null && typeof savedContainer.getSlot == "function") {
+			return savedContainer;
+		}
+		const container = new ItemContainer();
+		container.setGlobalSlotSavingEnabled(true);
+
+		if(savedContainer != null && typeof savedContainer == "object" && savedContainer.slots != null) {
+			for(const slotName in savedContainer.slots) {
+				const slot = savedContainer.slots[slotName];
+
+				if(slot == null || typeof slot.id != "number") {
+					continue;
+				}
+				try {
+					container.setSlot(slotName, slot.id, slot.count || 0, slot.data || 0, slot.extra ?? null);
+				} catch(error) {}
+			}
+		}
+		return container;
 	}
 
 	/**
@@ -784,9 +855,15 @@ Network.addServerPacket("packet.galacticraft.open_rocket_container_for", (client
 
 Network.addServerPacket("packet.galacticraft.launch_rocket", (client: NetworkClient) => {
 	const rocketEntity = RocketManager.findRocketEntityByRiderUid(client.getPlayerUid());
-	if(rocketEntity != null) {
-		rocketEntity.changeLaunch(!rocketEntity.getLaunchState());
+	if(rocketEntity == null) {
+		return;
 	}
+	const launchRequested = !rocketEntity.getLaunchState();
+
+	if(launchRequested && !rocketEntity.isValidRider()) {
+		return;
+	}
+	rocketEntity.changeLaunch(launchRequested);
 });
 
 Network.addClientPacket("packet.galacticraft.spawn_rocket_particles", (data: { launch: boolean }) => {

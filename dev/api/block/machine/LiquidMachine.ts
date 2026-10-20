@@ -170,13 +170,15 @@ namespace LiquidMachine {
             if(bucketCapacity != null) {
                 const emptyItem = LiquidRegistry.getEmptyItem(slot.id, slot.data);
                 if(emptyItem == null) {
-                    throw new GalacticraftException("LiquidMachine: cannot find empty bucket for: \"" + IDRegistry.getNameByID(slot.id) + "\"");
+                    Logger.Log(`LiquidMachine: cannot find empty bucket for: "${IDRegistry.getNameByID(slot.id)}"`, "WARNING");
+                    return false;
                 }
                 tileEntity.container.setSlot(descriptor.slotName, emptyItem.id, slot.count, emptyItem.data);
                 tileEntity.liquidStorage.setAmount(descriptor.liquidName, Math.min(descriptor.liquidCapacity, amount + bucketCapacity));
                 return true;
             } else {
-                throw new GalacticraftException("LiquidMachine: unknown bucket \"" + IDRegistry.getNameByID(slot.id) + "\"");
+                Logger.Log(`LiquidMachine: unknown bucket "${IDRegistry.getNameByID(slot.id)}"`, "WARNING");
+                return false;
             }
         }
 
@@ -197,7 +199,7 @@ namespace LiquidMachine {
             else if(CanisterLiquidRegistry.getLiquids(slot.id).includes(descriptor.liquidName)) {
                 slot.extra ??= new ItemExtraData();
                 capacity = CanisterLiquidRegistry.getCapacity(slot.id);
-                const itemAmount = CanisterLiquidRegistry.getCurrentLiquidAmount(slot.extra);
+                const itemAmount = Math.min(capacity, Math.max(0, CanisterLiquidRegistry.getCurrentLiquidAmount(slot.extra) || 0));
                 const canAdd = capacity - itemAmount;
                 let add = amount >= canAdd ? canAdd : amount;
                 const result = itemAmount + add;
@@ -207,7 +209,8 @@ namespace LiquidMachine {
                 tileEntity.liquidStorage.setAmount(descriptor.liquidName, amount - add);
                 return result >= capacity;
             } else {
-                throw new GalacticraftException("LiquidMachine: unknown empty bucket \"" + IDRegistry.getNameByID(slot.id) + "\"");
+                Logger.Log(`LiquidMachine: unknown empty bucket "${IDRegistry.getNameByID(slot.id)}"`, "WARNING");
+                return false;
             }
             return false;
         }

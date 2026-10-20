@@ -12,11 +12,16 @@ const WorkbenchNasaRocketTier1UI = new UI.StandartWindow(
             background: {
                 standard: true
             }
-        }, drawing: [{
-            type: "bitmap", x: 725, y: 195, bitmap: "rocket.sign", scale: 3.2
-        }
-    ], 
+        }, drawing: [],
     elements: {
+        rv_button: {
+            type: "button", x: 725, y: 195, bitmap: "rocket.sign", scale: 3.2,
+            clicker: {
+                onClick: function (): void {
+                    RV && RV.RecipeTypeRegistry.openRecipePage("gc_workbench_nasa");
+                }
+            }
+        },
         chest_1: {
             type: "slot", 
             x: 675, 

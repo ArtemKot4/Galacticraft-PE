@@ -32,7 +32,11 @@ namespace RecipeModule {
         }
 
         protected override isRightValues(cachedStorage: WorkbenchNasaCachedStorage, slotGetter: (slotName: string) => ItemStack | ItemContainerSlot, recipeIndex: string = "0"): boolean {         
-            if(this.storage[recipeIndex].schema != cachedStorage.schemaName) {
+            const recipe = this.storage[recipeIndex];
+            if(recipe == null) {
+                return false;
+            }
+            if(recipe.schema != cachedStorage.schemaName) {
                 return false;
             }
             return super.isRightValues(cachedStorage, slotGetter, recipeIndex);
@@ -44,15 +48,30 @@ namespace RecipeModule {
         }
 
         public hasSchemaOfItem(item: ItemInstance): boolean {
-            return this.schemas.values().some((schema) => ItemStack.equals(schema.item, item));
+            for(const schema of this.schemas.values()) {
+                if(ItemStack.equals(schema.item, item)) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public getSchemaByItem(item: ItemInstance): Nullable<WorkbenchNasaSchema> {
-            return this.schemas.values().find((schema) => ItemStack.equals(schema.item, item)) || null;
+            for(const schema of this.schemas.values()) {
+                if(ItemStack.equals(schema.item, item)) {
+                    return schema;
+                }
+            }
+            return null;
         }
 
         public getSchemaWithEntry(item: ItemInstance): [string, WorkbenchNasaSchema] {
-            return this.schemas.entries().find(([_, schema]) => ItemStack.equals(schema.item, item));
+            for(const entry of this.schemas.entries()) {
+                if(ItemStack.equals(entry[1].item, item)) {
+                    return entry;
+                }
+            }
+            return null;
         }
 
         public getSchemaByName(name: string): Nullable<WorkbenchNasaSchema> {

@@ -1,5 +1,8 @@
 class LocalCoalGeneratorTile extends LocalTileEntity {
     public override onTick(): void {
+        if(World.getThreadTime() % 2 != 0) {
+            return;
+        }
         if(this.networkData.getBoolean("has_energy", false) != false) {
             Particles.addParticle(EParticleType.FLAME, 
                 this.x + 0.3,

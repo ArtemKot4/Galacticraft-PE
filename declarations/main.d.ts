@@ -83,7 +83,6 @@ declare class Vector3 {
     static fromString(string: string): Vector3;
 }
 declare class ItemStack implements ItemInstance {
-    static EMPTY: ItemStack;
     id: number;
     count: number;
     data: number;
@@ -130,6 +129,7 @@ declare namespace ToolAPI {
     function isPickaxe(item: number): boolean;
     function isShovel(item: number): boolean;
     function isHoe(item: number): boolean;
+    function getBlockMaterialName(id: number): string;
 }
 declare namespace Block {
     interface ISelectionFunction {
@@ -142,6 +142,7 @@ declare namespace Block {
     const projectileHitFunctions: Record<number, Callback.ProjectileHitFunction>;
     const selectionFunctions: Record<number, ISelectionFunction>;
     function createPlantBlock(nameID: string, defineData: BlockVariation[]): void;
+    function isSolid(id: number): boolean;
     function setEmptyCollisionShape(id: number): void;
     function setSolid(id: number, solid: boolean): void;
     function setRenderAllFaces(id: number, render: boolean): void;
@@ -186,6 +187,7 @@ declare namespace Recipes {
      * Registers fuel burn duration special: not work with vanilla furnaces
      */
     function registerSpecialFuelBurnDuration(id: number, data: number, duration: number): void;
+    function provideRecipeForPlayer(field: any, prefix: string, playerUid: number): Nullable<ItemInstance>;
 }
 declare namespace World {
     function getDifficulty(): number;
@@ -210,6 +212,7 @@ declare namespace TagRegistry {
     function getItemTags(id: number): string[];
     function getDimensionTags(id: number): string[];
 }
+declare const BlockID: { [key: string]: number };
 declare namespace IDRegistry {
     /**
      * Method to get valid block id: block id or vanilla block id
@@ -881,6 +884,11 @@ declare abstract class CommonTileEntity implements TileEntity {
     sendResponse: <T = {}>(packetName: string, someData: T) => {};
     selfDestroy(): void;
     getLocalTileEntity(): LocalTileEntity;
+}
+declare class PlayerActor {
+    constructor(playerUid: number);
+    getUid(): number;
+    addItemToInventory(id: number, count: number, data: number, extra: Nullable<ItemExtraData>, dropRemaining?: boolean): void;
 }
 declare class PlayerUser {
     playerUid: number;

@@ -40,24 +40,31 @@ class Moon extends Satellite {
             ores: [
                 {
                     block: { id: BlockList.ORE_COPPER_MOON.id, data: 0 },
-                    veinCounts: __config__.getFloat("generation.moon.copper") || 5,
-                    minY: 2,
-                    maxY: 65,
-                    count: [3, 10]
+                    veinCounts: __config__.getFloat("generation.moon.copper") || 26,
+                    minY: 0,
+                    maxY: 60,
+                    count: [4, 4]
                 },
                 {
                     block: { id: BlockList.ORE_TIN_MOON.id, data: 0 },
-                    veinCounts: __config__.getFloat("generation.moon.tin") || 5,
-                    minY: 2,
-                    maxY: 65,
-                    count: [3, 10]
+                    veinCounts: __config__.getFloat("generation.moon.tin") || 23,
+                    minY: 0,
+                    maxY: 60,
+                    count: [4, 4]
                 },
                 {
                     block: { id: BlockList.MOON_CHEESE.id, data: 0 },
-                    veinCounts: __config__.getFloat("generation.moon.cheese") || 7,
-                    minY: 2,
-                    maxY: 65,
-                    count: [5, 20]
+                    veinCounts: __config__.getFloat("generation.moon.cheese") || 14,
+                    minY: 0,
+                    maxY: 85,
+                    count: [3, 3]
+                },
+                {
+                    block: { id: BlockList.MOON_SAPPHIRE.id, data: 0 },
+                    veinCounts: __config__.getFloat("generation.moon.sapphire") || 6,
+                    minY: 4,
+                    maxY: 31,
+                    count: [1, 1]
                 }
             ],
             stone: [BlockList.MOON_STONE.id]
@@ -81,7 +88,7 @@ class Moon extends Satellite {
     }
     
     public override getGravity(): number {
-        return 18;
+        return 22.5;
     }
 
     public override getDayLength(): number {
@@ -104,18 +111,6 @@ class Moon extends Satellite {
         return [0, 0, 0];
     }
 }
-
-//debug:
-Callback.addCallback("ItemUse", (c, i, b, isE, p) => {
-    if(i.id == VanillaItemID.stick) {
-        if(Player.getDimension() != 28) {
-            Dimensions.transfer(p, 28);
-        } else {
-            Dimensions.transfer(p, 0);
-        }
-    }
-    
-})
 
 // Callback.addCallback("ItemUseLocalServer", (c, i ,b, p) => {
 //     if(i.id == VanillaItemID.bone) {

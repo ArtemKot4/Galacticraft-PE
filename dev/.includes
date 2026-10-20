@@ -6,10 +6,10 @@ api/Galacticraft.ts
 api/StorageInterfaceHelper.ts
 
 client/ui/lib/Component.tsx
-client/Renderer.ts
 
 api/utils/GalacticraftException.ts
 api/utils/UniqueGen.ts
+api/utils/TileAccess.ts
 
 api/recipe_module/ParseProvider.ts
 api/recipe_module/IDefaultRecipe.ts
@@ -19,10 +19,11 @@ api/recipe_module/Factory.ts
 api/recipe_module/FormedFactory.ts
 api/recipe_module/UnformedFactory.ts
 
+integration/RecipeViewerIntegration.ts
+
 api/block/GalacticraftLiquidBlock.ts
 
 api/block/machine/MachineBlock.ts
-api/block/machine/ElectricBlock.ts
 api/block/machine/ProcessingBlock.ts
 
 api/block/machine/electric_machine/ElectricMachine.ts
@@ -36,10 +37,7 @@ api/block/machine/electric_machine/OxygenBatteryManager.ts
 
 api/block/machine/LiquidMachine.ts
 
-api/block/machine/MachineTile.ts
-api/block/machine/GeneratorTile.ts
 api/block/machine/ProcessingTile.ts
-api/block/machine/LiquidTile.ts
 api/block/machine/BasicWire.ts
 
 api/item/GalacticraftItem.ts
@@ -47,7 +45,6 @@ api/item/Canister.ts
 api/item/Battery.ts
 api/item/OxygenTank.ts
 
-api/universe/galaxy/IGalaxy.ts
 api/universe/galaxy/Galaxy.ts
 
 api/universe/atmosphere/WeatherEvent.ts
@@ -68,7 +65,6 @@ api/rocket/RocketEntity.ts
 api/rocket/RocketEvents.ts
 
 api/player/GalacticraftPlayer.ts
-api/player/OxygenSystem.ts
 
 client/ui/menu/GalacticraftSettings.ts
 
@@ -80,18 +76,20 @@ client/ui/CrashedProbeUI.ts
 client/ui/ElectricCompressorUI.ts
 client/ui/ElectricFurnaceUI.ts
 client/ui/EnergyStorageUI.ts
+client/ui/MagneticTableUI.ts
+client/ui/DeconstructorUI.ts
 client/ui/FuelLoaderUI.ts
 client/ui/GeothermalGeneratorUI.ts
 client/ui/OxygenCollectorUI.ts
 client/ui/OxygenStorageUI.ts
 client/ui/RefineryUI.ts
 client/ui/WorkbenchUI.ts
-client/ui/OxygenCompressorUI.ts
-client/ui/OxygenDecompressorUI.ts
+client/ui/OxygenTanksHud.ts
 
 common/item/MachineWrench.ts
 common/item/RocketItem.ts
 common/item/ItemList.ts
+common/item/core/Tools.ts
 
 common/block/machine/BurnManager.ts
 
@@ -108,27 +106,43 @@ common/block/machine/compressor/Compressor.ts
 common/block/machine/electric_compressor/ElectricCompressorTile.ts
 common/block/machine/electric_compressor/ElectricCompressor.ts
 
-common/block/machine/refinery/Refinery.ts
+common/block/machine/energy_storage/EnergyStorage.ts
+
+common/block/machine/solar/SolarPanel.ts
+
+common/block/machine/electric_furnace/ElectricFurnace.ts
+
+common/block/machine/advanced_compressor/AdvancedCompressor.ts
+
+common/block/machine/magnetic_table/MagneticTable.ts
+
+common/block/machine/deconstructor/Deconstructor.ts
+
 common/block/machine/refinery/RefineryTile.ts
+common/block/machine/refinery/Refinery.ts
 
 common/block/machine/fuel_loader/FuelLoaderTile.ts
 common/block/machine/fuel_loader/FuelLoader.ts
 
-common/block/machine/oxygen_collector/OxygenCollector.ts
 common/block/machine/oxygen_collector/OxygenCollectorTile.ts
+common/block/machine/oxygen_collector/OxygenCollector.ts
 
 common/block/machine/workbench_nasa/WorkbenchNasaFactory.ts
 common/block/machine/workbench_nasa/WorkbenchNasa.ts
 
 common/block/machine/rocket_padding/RocketPadding.ts
 
-common/block/wire/WireBase.ts
 common/block/wire/Wire.ts
+common/block/wire/AluminumWire.ts
 common/block/wire/ImprovedWire.ts
 common/block/wire/LiquidPipe.ts
 
 common/block/SpaceBlock.ts
+common/block/structural/Torches.ts
+common/block/structural/Decoratives.ts
+common/block/structural/Arclamp.ts
 common/block/BlockList.ts
+common/recipes/Recipes.ts
 
 common/rocket/RocketTier1.ts
 
@@ -137,7 +151,5 @@ common/universe/galaxy/milky_way/earth/Moon.ts
 common/universe/galaxy/milky_way/mars/Mars.ts
 common/universe/galaxy/milky_way/venus/VenusRain.ts
 common/universe/galaxy/milky_way/venus/Venus.ts
-common/universe/galaxy/milky_way/asteroids/Asteroids.ts
-common/universe/galaxy/milky_way/earth/station_kot.ts
 
 common/universe/galaxy/milky_way/MilkyWay.ts

@@ -7,6 +7,6 @@
 		"plate_slot": { "id": "lapis_lazuli", "count": 1, "data": 0 }
 	},
 	"output": {
-		"result_slot": { "id": "wafer_solar", "count": 1, "data": 0 }
+		"result_slot": { "id": "wafer_solar", "count": 9, "data": 0 }
 	}
 }
