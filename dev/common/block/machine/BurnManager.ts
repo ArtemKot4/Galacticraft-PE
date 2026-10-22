@@ -78,7 +78,7 @@ namespace BurnManager {
         return Recipes.getSpecialFuelBurnDuration(slot.id, slot.data) != 0;
     }
     
-    export type BurnTile = TileEntity & { data: { canSpendFuel: boolean } & Scriptable };
+    export type BurnTile = TileEntity & { data: { canSpendFuel: boolean } & Scriptable, container: ItemContainer };
 
     export function validateTile(tileEntity: BurnTile, id: number, data: number): boolean {
         const burningDuration = Recipes.getSpecialFuelBurnDuration(id, data);

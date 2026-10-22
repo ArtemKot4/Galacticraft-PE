@@ -1,7 +1,7 @@
 {
-	"extends": "../tsconfig.json",
+	"extends": "..\\tsconfig.json",
 	"compilerOptions": {
-		"outFile": "./main.js",
+		"outFile": "C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\toolchain\\build\\galacticraft-fc6ae\\sources\\main.js",
 		"lib": [
 			"esnext"
 		]
@@ -53,6 +53,7 @@
 		"api/rocket/RocketManager.ts",
 		"api/rocket/RocketType.ts",
 		"api/rocket/RocketEntity.ts",
+		"api/rocket/RocketNetworkPackets.ts",
 		"api/rocket/RocketEvents.ts",
 		"api/player/GalacticraftPlayer.ts",
 		"client/ui/menu/GalacticraftSettings.ts",
@@ -93,12 +94,12 @@
 		"common/block/machine/advanced_compressor/AdvancedCompressor.ts",
 		"common/block/machine/magnetic_table/MagneticTable.ts",
 		"common/block/machine/deconstructor/Deconstructor.ts",
-		"common/block/machine/refinery/Refinery.ts",
 		"common/block/machine/refinery/RefineryTile.ts",
+		"common/block/machine/refinery/Refinery.ts",
 		"common/block/machine/fuel_loader/FuelLoaderTile.ts",
 		"common/block/machine/fuel_loader/FuelLoader.ts",
-		"common/block/machine/oxygen_collector/OxygenCollector.ts",
 		"common/block/machine/oxygen_collector/OxygenCollectorTile.ts",
+		"common/block/machine/oxygen_collector/OxygenCollector.ts",
 		"common/block/machine/workbench_nasa/WorkbenchNasaFactory.ts",
 		"common/block/machine/workbench_nasa/WorkbenchNasa.ts",
 		"common/block/machine/rocket_padding/RocketPadding.ts",

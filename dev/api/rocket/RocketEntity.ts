@@ -214,7 +214,7 @@ class RocketEntity {
 		Entity.setVelocity(this.entityUid, 0, speed, 0);
 		const client = this.getClient();
 		if(client != null) {
-			client.send("packet.galacticraft.rocket_velocity_set", {
+			client.send("packet.galacticraft.set_rocket_velocity", {
 				entityUid: this.entityUid,
 				speed: speed,
 			});
@@ -678,31 +678,9 @@ class RocketEntity {
 		}
 		const paddingCoords = rocketEntityData.paddingCoords;
 		rocketEntity.paddingCoords = paddingCoords != null ? new Vector3(paddingCoords) : new Vector3(0, 0, 0);
-		rocketEntity.container = RocketEntity.restoreContainer(rocketEntityData.container);
+		rocketEntity.container = rocketEntityData.container;
 		RocketEntity.registerScreenFactoryOnClientSide(rocketEntity);
 		return rocketEntity;
-	}
-
-	public static restoreContainer(savedContainer: any): ItemContainer {
-		if(savedContainer != null && typeof savedContainer.getSlot == "function") {
-			return savedContainer;
-		}
-		const container = new ItemContainer();
-		container.setGlobalSlotSavingEnabled(true);
-
-		if(savedContainer != null && typeof savedContainer == "object" && savedContainer.slots != null) {
-			for(const slotName in savedContainer.slots) {
-				const slot = savedContainer.slots[slotName];
-
-				if(slot == null || typeof slot.id != "number") {
-					continue;
-				}
-				try {
-					container.setSlot(slotName, slot.id, slot.count || 0, slot.data || 0, slot.extra ?? null);
-				} catch(error) {}
-			}
-		}
-		return container;
 	}
 
 	/**
@@ -844,99 +822,6 @@ const RocketHeightIndicatorUI = (() => {
 
 	return window;
 })();
-
-Network.addServerPacket("packet.galacticraft.open_rocket_container_for", (client: NetworkClient) => {
-	const playerUid = client.getPlayerUid();
-	const rocketEntity = RocketManager.findRocketEntityByRiderUid(playerUid);
-	if(rocketEntity != null) {
-		rocketEntity.openContainer(playerUid);
-	}
-});
-
-Network.addServerPacket("packet.galacticraft.launch_rocket", (client: NetworkClient) => {
-	const rocketEntity = RocketManager.findRocketEntityByRiderUid(client.getPlayerUid());
-	if(rocketEntity == null) {
-		return;
-	}
-	const launchRequested = !rocketEntity.getLaunchState();
-
-	if(launchRequested && !rocketEntity.isValidRider()) {
-		return;
-	}
-	rocketEntity.changeLaunch(launchRequested);
-});
-
-Network.addClientPacket("packet.galacticraft.spawn_rocket_particles", (data: { launch: boolean }) => {
-
-});
-
-Network.addClientPacket("packet.galacticraft.send_height_indicator", (data: { height: number }) => {
-	if(data.height == -1) {
-		RocketHeightIndicatorUI.close();
-		return;
-	}
-	if(!RocketHeightIndicatorUI.isOpened()) {
-		if(RuntimeData.local.screenName == EScreenName.IN_GAME_PLAY_SCREEN) {
-			RocketHeightIndicatorUI.open();
-		}
-	}
-	if(RocketHeightIndicatorUI.isOpened()) {
-		//Game.message("x: " + String(RocketHeightIndicatorUI.content.elements["player"].x) + ", y: " + String(9700 - (data.height * 100) * 80));
-		//RocketHeightIndicatorUI.getElements().get("player").setPosition(RocketHeightIndicatorUI.content.elements["player"].x, 9700 - (data.height * 100) * 80);
-		RocketHeightIndicatorUI.getElements().get("player").setPosition(RocketHeightIndicatorUI.content.elements["player"].x, 10100 - (data.height * 100) * 80);
-	}
-});
-
-
-Network.addClientPacket("packet.galacticraft.set_celestial_renderer", (data: { entityUid: number, textureName: string, textureResolution: number, shouldRender: boolean, size?: number, heightOffset?: number }) => {
-	data.size ??= 100;
-	data.heightOffset ??= -100;
-	const cache = RocketEntity.celestialRenderingCache[data.entityUid] ??= {} as ICelestialRenderingCache;
-	const render = cache.render = new ActorRenderer()
-        .addPart("body")
-        .endPart()
-        .addPart("celestial_body", "body", (() => {
-			const mesh = new RenderMesh();
-			mesh.setNormal(0, 1, 0);
-			mesh.addVertex(-data.size, data.heightOffset, -data.size, 0, 0);
-			mesh.addVertex(data.size, data.heightOffset, -data.size, 1, 0);
-			mesh.addVertex(-data.size, data.heightOffset, data.size, 0, 1);
-			mesh.addVertex(data.size, data.heightOffset, -data.size, 1, 0);
-			mesh.addVertex(-data.size, data.heightOffset, data.size, 0, 1);
-			mesh.addVertex(data.size, data.heightOffset, data.size, 1, 1);
-			return mesh;
-		})())
-		.setTextureSize(data.textureResolution, data.textureResolution)
-		.setTexture(data.textureName)
-        .endPart();
-    cache.attachable = new AttachableRender(data.entityUid).setRenderer(render); 
-	if(data.shouldRender == false) {
-		render.getPart("celestial_body").clear();
-	}
-});
-
-Network.addClientPacket("packet.galacticraft.register_rocket_screen_factory", (data: { entityUid: number, slotCount: number }) => {
-	const window = RocketEntity.buildContainerUI(data.slotCount);
-
-	ItemContainer.registerScreenFactory("galacticraft.rocket:" + data.entityUid, (container, screenName) => {
-		return window;
-	});
-});
-
-Network.addClientPacket("packet.galacticraft.rocket_velocity_set", (data: { entityUid: number; speed: number }) => {
-	if(RocketManager.isRocketType(data.entityUid)) {
-        Entity.setVelocity(data.entityUid, 0, data.speed, 0);
-    }
-});
-
-Network.addClientPacket("packet.galacticraft.set_rocket_view_perspective", (data: { set: boolean }) => {
-	if(data.set == true) {
-		Player.setViewPerspective(2);
-		return;
-	}
-	Player.setViewPerspective(0);
-	Player.resetViewPerspective();
-});
 
 Translation.addTranslation("message.galacticraft.not_enough_rocket_fuel", {
 	en: "Not enough rocket fuel!",

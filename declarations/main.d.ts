@@ -81,8 +81,11 @@ declare class Vector3 {
     static equals(vector1: Vector, vector2: Vector): boolean;
     static toString(vector: Vector): string;
     static fromString(string: string): Vector3;
+    static isCompatible(vector: Vector): boolean;
+    static inRange(check: Vector, rangeFrom: Vector, rangeTo: Vector): boolean;
 }
 declare class ItemStack implements ItemInstance {
+    static EMPTY: ItemStack;
     id: number;
     count: number;
     data: number;
@@ -117,19 +120,34 @@ declare class ItemStack implements ItemInstance {
      */
     static toString(stack: ItemInstance, level?: 0 | 1 | 2): string;
     static fromString(string: string): ItemStack;
+    static isCompatible(stack: Partial<ItemInstance>): boolean;
+    /**
+     *
+     * @param comparator comparator for sort. You can use default comparators: {@link ItemStack.FILTER_COMPARATORS}
+     * @param stacks stacks to filter
+     */
+    static sort(stacks: ItemInstance[], comparator?: (stack1: ItemInstance, stack2: ItemInstance) => number): ItemStack[];
+}
+declare namespace ItemStack {
+    namespace SortComparators {
+        const ID_GRADATION: (stack1: ItemInstance, stack2: ItemInstance) => number;
+    }
 }
 declare namespace TileEntity {
     function buildEvents(prototype: TileEntity.TileEntityPrototype): void;
     function openFor(client: NetworkClient, tile: TileEntity.TileEntityPrototype & {
         container: ItemContainer;
     }): void;
+    const VanillaContainerSlotDataByID: {
+        54: number;
+        [-203]: number;
+    };
 }
 declare namespace ToolAPI {
     function isAxe(item: number): boolean;
     function isPickaxe(item: number): boolean;
     function isShovel(item: number): boolean;
     function isHoe(item: number): boolean;
-    function getBlockMaterialName(id: number): string;
 }
 declare namespace Block {
     interface ISelectionFunction {
@@ -142,7 +160,6 @@ declare namespace Block {
     const projectileHitFunctions: Record<number, Callback.ProjectileHitFunction>;
     const selectionFunctions: Record<number, ISelectionFunction>;
     function createPlantBlock(nameID: string, defineData: BlockVariation[]): void;
-    function isSolid(id: number): boolean;
     function setEmptyCollisionShape(id: number): void;
     function setSolid(id: number, solid: boolean): void;
     function setRenderAllFaces(id: number, render: boolean): void;
@@ -187,7 +204,6 @@ declare namespace Recipes {
      * Registers fuel burn duration special: not work with vanilla furnaces
      */
     function registerSpecialFuelBurnDuration(id: number, data: number, duration: number): void;
-    function provideRecipeForPlayer(field: any, prefix: string, playerUid: number): Nullable<ItemInstance>;
 }
 declare namespace World {
     function getDifficulty(): number;
@@ -212,7 +228,6 @@ declare namespace TagRegistry {
     function getItemTags(id: number): string[];
     function getDimensionTags(id: number): string[];
 }
-declare const BlockID: { [key: string]: number };
 declare namespace IDRegistry {
     /**
      * Method to get valid block id: block id or vanilla block id
@@ -447,6 +462,95 @@ declare enum EScreenName {
     INVENTORY_SCREEN = "inventory_screen",
     INVENTORY_SCREEN_POCKET = "inventory_screen_pocket"
 }
+interface INetworkClientPacketMethod {
+    (data: Object): void;
+}
+type NetworkClientPacketMethodDescriptor = TypedPropertyDescriptor<INetworkClientPacketMethod>;
+/**
+ * The factory of decorators to add client packet from static method.
+ * @example
+ * ```ts
+ * class ExampleClientParticleManager {
+ *     \@SubscribeEvent("do_particles")
+ *     public static doParticles(data: { ... }) {
+ *         Particles.addParticle(...);
+ *     }
+ * };
+ *
+ * // using
+ * const playerUid = ...;
+ * Network.getClientForPlayer(playerUid).send("do_particles", { ... });
+ * ```
+ */
+declare function NetworkClientPacket(name: string): (target: Object, propertyKey: string | symbol, descriptor: NetworkClientPacketMethodDescriptor) => NetworkClientPacketMethodDescriptor | void;
+/**
+ * Decorator to add client packet from static method by static method name and same static method.
+ * @example
+ * ```ts
+ * class ExampleClientParticleManager {
+ *     \@SubscribeEvent
+ *     public static doParticles(data: { ... }) {
+ *         Particles.addParticle(...);
+ *     }
+ * };
+ *
+ * // using
+ * const playerUid = ...;
+ * Network.getClientForPlayer(playerUid).send("doParticles", { ... });
+ * ```
+ */
+declare function NetworkClientPacket(target: unknown, key?: string, descriptor?: NetworkClientPacketMethodDescriptor): NetworkClientPacketMethodDescriptor;
+interface INetworkServerPacketMethod {
+    (client: NetworkClient, data: Object): void;
+}
+type NetworkServerPacketMethodDescriptor = TypedPropertyDescriptor<INetworkServerPacketMethod>;
+/**
+ * The factory of decorators to add server packet from static method.
+ * @example
+ * ```ts
+ * class ExampleGriefManager {
+ *     \@SubscribeEvent("clear_someone_inventory")
+ *     public static clearSomeoneInventory(senderClient: NetworkClient, data: { ... }) {
+ *         const clients = Network.getConnectedClients();
+ *         for(const i in clients) {
+ *             const client = clients[i];
+ *             if(client != null && client.getPlayerUid() != senderClient.getPlayerUid()) {
+ *                 new PlayerWrapper(client.getPlayerUid()).clearInventory();
+ *             }
+ *         }
+ *     }
+ * };
+ *
+ * // using
+ * Network.sendToServer("clear_someone_inventory", {});
+ * ```
+ */
+declare function NetworkServerPacket(name: string): (target: Object, propertyKey: string | symbol, descriptor: NetworkServerPacketMethodDescriptor) => NetworkServerPacketMethodDescriptor | void;
+/**
+ * Decorator to add server packet from static method by static method name and same static method.
+ * @example
+ * ```ts
+ * class ExampleGriefManager {
+ *     \@SubscribeEvent
+ *     public static clearSomeoneInventory(senderClient: NetworkClient, data: { ... }) {
+ *         const clients = Network.getConnectedClients();
+ *         for(const i in clients) {
+ *             const client = clients[i];
+ *             if(client != null && client.getPlayerUid() != senderClient.getPlayerUid()) {
+ *                 new PlayerWrapper(client.getPlayerUid()).clearInventory();
+ *             }
+ *         }
+ *     }
+ * };
+ *
+ * // using
+ * Network.sendToServer("clearSomeoneInventory", {});
+ * ```
+ */
+declare function NetworkServerPacket(target: unknown, key?: string, descriptor?: NetworkServerPacketMethodDescriptor): NetworkServerPacketMethodDescriptor;
+/**
+ * Will be deleted in future. Don't use if you don't author of library
+ */
 declare namespace NetworkHelper {
     function sendToPlayer(playerUid: number, name: "send_particles", data: {
         type: number;
@@ -712,6 +816,11 @@ declare function NetworkEvent(target: CommonTileEntity | LocalTileEntity, proper
  * @param propertyName Name of method
  */
 declare function ContainerEvent(target: CommonTileEntity | LocalTileEntity, propertyName: string): void;
+declare namespace TileAccess {
+    const MAX_OPEN_DISTANCE = 10;
+    function getPlayerPosition<Player extends number | PlayerActor>(player: Player): Vector;
+    function isPlayerInRange<Player extends number | PlayerActor>(player: Player, coords: Vector, maxDistance?: number): boolean;
+}
 declare abstract class LocalTileEntity implements LocalTileEntity, Vector {
     readonly x: number;
     readonly y: number;
@@ -876,6 +985,7 @@ declare abstract class CommonTileEntity implements TileEntity {
     onTick?(): void;
     getGuiScreen(): Nullable<UI.IWindow>;
     getScreenByName(screenName?: string, container?: ItemContainer): Nullable<UI.IWindow>;
+    getScreenOpenDistance(): number;
     getScreenName(player: number, coords: Vector): string;
     preventUI(id: number, count: number, data: number, coords: Callback.ItemUseCoordinates, player: number, extra: Nullable<ItemExtraData>): boolean;
     onItemClick(id: number, count: number, data: number, coords: Callback.ItemUseCoordinates, player: number, extra: Nullable<ItemExtraData>): boolean;
@@ -885,12 +995,7 @@ declare abstract class CommonTileEntity implements TileEntity {
     selfDestroy(): void;
     getLocalTileEntity(): LocalTileEntity;
 }
-declare class PlayerActor {
-    constructor(playerUid: number);
-    getUid(): number;
-    addItemToInventory(id: number, count: number, data: number, extra: Nullable<ItemExtraData>, dropRemaining?: boolean): void;
-}
-declare class PlayerUser {
+declare class PlayerWrapper {
     playerUid: number;
     readonly actor: PlayerActor;
     constructor(playerUid: number);
@@ -1150,10 +1255,10 @@ declare namespace Callback {
     function addCallback(name: "Selection", func: SelectionFunction, priority?: number): void;
 }
 /**
- * The factory of decorators to add callback from function.
+ * The factory of decorators to add callback from static method.
  * @example
  * ```ts
- * class Example {
+ * class ExampleEvents {
  *     \@SubscribeEvent(ECallback.LOCAL_TICK)
  *     public static onTick() {
  *         Game.message("example")
@@ -1163,11 +1268,11 @@ declare namespace Callback {
  */
 declare function SubscribeEvent(event: ECallback, priority?: number): MethodDecorator;
 /**
- * Decorator to add callback from function by function name and same function.
+ * Decorator to add callback from static method by static method name and same static method.
  * Format will be "onNameOfCallback". "on" optional.
  * @example
  * ```ts
- * class ExampleDestroyBlock {
+ * class ExampleBlockEvents {
  *     \@SubscribeEvent
  *     public static onDestroyBlock() {
  *         Game.message("break block")
@@ -1176,3 +1281,31 @@ declare function SubscribeEvent(event: ECallback, priority?: number): MethodDeco
  * ```
  */
 declare function SubscribeEvent(target: unknown, key: string, descriptor: PropertyDescriptor): PropertyDescriptor;
+/**
+ * Decorator to log your errors instead they be throwed.
+ * @example
+ * ```ts
+ * class ErrorThrower {
+ *     \@ErrorLogger({ customMessage: (error) => error.message })
+ *     public method() {
+ *         throw 'I love throw error for this case';
+ *     }
+ * }
+ * ```
+ * It will print error at logs instead throw
+ */
+declare function ErrorLogger(settings: {
+    customMessage: ((error: Error) => string) | string;
+    /**
+     * @default "error"
+     */
+    prefix?: string;
+    /**
+     * @default false
+     */
+    sendGameMessage?: boolean;
+    /**
+     * @default 20
+     */
+    gameMessageTickRate?: number;
+}): <T extends Function>(target: any, propertyKey: string, descriptor: PropertyDescriptor) => PropertyDescriptor;

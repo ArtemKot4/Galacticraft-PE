@@ -36,7 +36,7 @@ class ElectricFurnaceTile extends ElectricMachine.TileEntity {
         energy: 0,
         progress: 0
     };
-    public override data: typeof this.defaultValues;
+    public override data: typeof this.defaultValues & { disabled: boolean  };
 
     // F1: cache local al rețetei (doar primitive; invalidat prin semnătura inputului, verificată în fiecare tick).
     protected cacheValid = false;
@@ -68,7 +68,7 @@ class ElectricFurnaceTile extends ElectricMachine.TileEntity {
     }
 
     public getInputSlot(): ItemStack {
-        return this.container.getSlot("input_slot");
+        return new ItemStack(this.container.getSlot("input_slot"));
     }
 
     public getFurnaceResult(): Nullable<ItemInstance> {

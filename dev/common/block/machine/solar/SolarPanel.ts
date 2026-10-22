@@ -8,7 +8,7 @@ class SolarPanelTile extends ElectricMachine.TileEntity {
         currentAngle: 77.5,
         targetAngle: 77.5
     };
-    public override data: typeof this.defaultValues;
+    public override data: typeof this.defaultValues & { disabled: boolean };
 
     public override getScreenByName(): UI.IWindow {
         return BasicSolarPanelUI;

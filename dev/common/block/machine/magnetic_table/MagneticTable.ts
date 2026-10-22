@@ -1,3 +1,5 @@
+declare const LiquidItemRegistry: any;
+
 class MagneticTableTile extends CommonTileEntity {
     public override defaultValues = {
         resultId: 0,
@@ -15,10 +17,6 @@ class MagneticTableTile extends CommonTileEntity {
 
     public override getScreenByName(): UI.IWindow {
         return MagneticTableUI;
-    }
-
-    public override getScreenName(player?: PlayerActor, coords?: Vector3): string {
-        return TileAccess.isPlayerInRange(player, coords) ? "main" : null;
     }
 
     public override onInit(): void {
@@ -264,7 +262,10 @@ class MagneticTableTile extends CommonTileEntity {
             const slot = this.container.getSlot(slotName);
 
             if(slot.id != 0 && slot.count > 0) {
-                new PlayerActor(playerUid).addItemToInventory(slot.id, slot.count, slot.data, slot.extra || null, true);
+                // where a playerUid? //new PlayerActor(playerUid).addItemToInventory(slot.id, slot.count, slot.data, slot.extra || null, true);
+                
+                //alternative
+                this.blockSource.spawnDroppedItem(this.x + 0.5, this.y + 1.5, this.z + 0.5, slot.id, slot.count, slot.data, slot.extra || null);
             }
             this.container.setSlot(slotName, 0, 0, 0);
         }

@@ -36,7 +36,7 @@ abstract class BasicWire extends BasicBlock implements IClickCallback {
         const colors = this.getColors();
         const coloredData = colors.findIndex((color) => item.id == VanillaItemID[color + "_dye"]);
         if(coloredData > -1 && block.data != coloredData) {
-            new PlayerUser(playerUid).decreaseCarriedItem(1);
+            new PlayerWrapper(playerUid).decreaseCarriedItem(1);
             BlockSource.getDefaultForActor(playerUid).setBlock(coords.x, coords.y, coords.z, this.id, coloredData);
             NetworkHelper.sendToPlayer(playerUid, "send_particles", { type: EParticleType.CLOUD, x: coords.x + 0.5, y: coords.y + 0.5, z: coords.z + 0.5, vx: 0, vy: 0.01, vz: 0 });
         }

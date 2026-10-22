@@ -6,7 +6,7 @@ class ArclampTile extends CommonTileEntity {
         return null;
     }
 
-    public redstone(params: Callback.RedstoneSignalParams): void {
+    public override redstone(params: Callback.RedstoneSignalParams): void {
         const litId = BlockList.ARCLAMP.id;
         const offId = BlockList.ARCLAMP_OFF.id;
         const currentId = this.blockSource.getBlockID(this.x, this.y, this.z);
@@ -58,6 +58,10 @@ class ArclampOff extends BasicBlock {
 
     public override getLightLevel(): number {
         return 0;
+    }
+
+    public override getDrop(coords: Callback.ItemUseCoordinates, id: number, data: number, diggingLevel: number, enchant: ToolAPI.EnchantData, item: ItemStack, region: BlockSource): ItemInstanceArray[] {
+        return [[BlockList.ARCLAMP.id, 1, 0]];
     }
 
     public override getTileEntity(): CommonTileEntity {

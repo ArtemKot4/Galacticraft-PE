@@ -11,6 +11,15 @@ namespace BlockList {
     export const REFINERY = new Refinery();
     export const OXYGEN_COLLECTOR = new OxygenCollector();
     export const FUEL_LOADER = new FuelLoader();
+    export const ENERGY_STORAGE = new EnergyStorage();
+    export const CLUSTER_STORAGE = new ClusterStorage();
+    export const BASIC_SOLAR = new BasicSolarPanel();
+    export const ADVANCED_SOLAR = new AdvancedSolarPanel();
+    export const ELECTRIC_FURNACE = new ElectricFurnace();
+    export const ARC_FURNACE = new ArcFurnace();
+    export const ADVANCED_COMPRESSOR = new AdvancedCompressor();
+    export const MAGNETIC_TABLE = new MagneticTable();
+    export const DECONSTRUCTOR = new Deconstructor();
 
     export const BLOCK_MOON_SAPPHIRE = new BasicBlock("block_moon_sapphire_gc", [{ name: "block.galacticraft.sapphire_block", texture: [["block_moon_sapphire", 0]], inCreative: true }]);
     export const MOON_CHEESE = new BasicBlock("moon_cheese_gc", [{ name: "block.galacticraft.moon_cheese", texture: [["moon_cheese", 0]], inCreative: true }]);
@@ -49,7 +58,6 @@ namespace BlockList {
     Galacticraft.EnergyTypes.JOULE.registerWire(ENCLOSED_HEAVY_ALUMINUM_WIRE.id, 200);
     ICRender.getGroup("galacticraft.improved_wire").add(ENCLOSED_HEAVY_ALUMINUM_WIRE.id, -1);
 
-    
     export const SPACE = new SpaceBlock();
     export const MOON_STONE_TOP = new BasicBlock("moon_stone_top",[{ name: "Lunar Top Side", texture: [["Top Side", 0],["Top", 0],["Top Side", 0],["Top", 0],["Top Side", 0],["Top Side", 0]], inCreative: true }]);
     export const MOON_STONE = new BasicBlock("moon_stone",[{ name: "Lunar Stone", texture: [["Lunar Stone", 0]], inCreative: true }]);
@@ -117,51 +125,12 @@ namespace BlockList {
     export const GRATING = new BasicBlock("grating", [{ name: "Grating", texture: [["Screen Side", 0]], inCreative: true }]);
     Block.setShape(GRATING.id, 0, 14 / 16, 0, 1, 1, 1, 0);
 
-    export const ENERGY_STORAGE = new EnergyStorage();
-    export const CLUSTER_STORAGE = new ClusterStorage();
-
-    export const BASIC_SOLAR = new BasicSolarPanel();
-    export const ADVANCED_SOLAR = new AdvancedSolarPanel();
-
-    export const ELECTRIC_FURNACE = new ElectricFurnace();
-    export const ARC_FURNACE = new ArcFurnace();
-
-    export const ADVANCED_COMPRESSOR = new AdvancedCompressor();
-
-    export const MAGNETIC_TABLE = new MagneticTable();
-
-    export const DECONSTRUCTOR = new Deconstructor();
-
     export const ALUMINUM_WIRE = new AluminumWire();
     
 
     export const OIL = new GalacticraftLiquidBlock("oil", "oil_gc_still", "oil_gc_flow");
     export const FUEL = new GalacticraftLiquidBlock("fuel", "fuel_gc_still", "fuel_gc_flow");
 
-   export const ARCLAMP = new Arclamp();
+    export const ARCLAMP = new Arclamp();
     export const ARCLAMP_OFF = new ArclampOff();
-    Block.registerDropFunction(ARCLAMP_OFF.id, function() {
-        return [[BlockList.ARCLAMP.id, 1, 0]];
-    });
-
-    for(const key in (BlockList as any)) {
-        const block = (BlockList as any)[key];
-
-        if(block == null || typeof block.stringID != "string") {
-            continue;
-        }
-        if(typeof block.getStillStringID == "function") {
-            const still = block.getStillStringID();
-            const flow = block.getFlowStringID();
-
-            if(BlockID[still] == null) {
-                BlockID[still] = IDRegistry.genBlockID(still);
-            }
-            if(BlockID[flow] == null) {
-                BlockID[flow] = IDRegistry.genBlockID(flow);
-            }
-        } else if(block.id != null && BlockID[block.stringID] == null) {
-            BlockID[block.stringID] = block.id;
-        }
-    }
 }

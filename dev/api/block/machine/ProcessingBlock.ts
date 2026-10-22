@@ -5,7 +5,7 @@ abstract class ProcessingBlock extends MachineBlock {
     }
 
     public setSlotPolicyToTileEntity(): void {
-        const tilePrototype = TileEntity.getPrototype(this.id) as ProcessingTile;
+        const tilePrototype = TileEntity.getPrototype(this.id);
 
         if(tilePrototype == null) {
             throw new ReferenceError("Processing Block does not can don't contain tile entity prototype");
@@ -29,7 +29,7 @@ abstract class ProcessingBlock extends MachineBlock {
     }
 
     public getInitFunctionWithPolicy(policyPredicate: (slotName: string, id: number) => boolean): () => unknown {
-        const tilePrototype = TileEntity.getPrototype(this.id) as ProcessingTile;
+        const tilePrototype = TileEntity.getPrototype(this.id);
         const initLast = tilePrototype.init;
 
         return function(this: ProcessingTile) {
