@@ -73,6 +73,7 @@ namespace RocketManager {
 
 	export function deleteRocketEntity(entityUid: number): void {
 		delete RocketManager.rocketEntities[entityUid];
+		Callback.invokeCallback("Galacticraft:RocketEntityRemoved", entityUid);
 	}
 
     export function findRocketTypeByItemID(itemId: number): Nullable<RocketType> {
@@ -80,8 +81,8 @@ namespace RocketManager {
             if(rocketTypes[entityType].itemId == itemId) {
                 return rocketTypes[entityType];
             }
-            return null;
         }
+        return null;
     }
 
 	Saver.addSavesScope(

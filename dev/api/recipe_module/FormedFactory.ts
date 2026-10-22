@@ -18,8 +18,12 @@ namespace RecipeModule {
         }
 
         protected isRightValues(cachedStorage: CachedStorage, slotGetter: (slotName: string) => ItemStack | ItemContainerSlot, recipeIndex: string = "0"): boolean {         
+            const recipe = this.storage[recipeIndex];
+            if(recipe == null) {
+                return false;
+            }
             for(const inputSlotName of cachedStorage.inputSlots) {
-                if(!ItemStack.contains(slotGetter(inputSlotName), this.storage[recipeIndex].input[inputSlotName])) {
+                if(!ItemStack.contains(slotGetter(inputSlotName), recipe.input[inputSlotName])) {
                     return false;
                 }
             }

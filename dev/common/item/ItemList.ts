@@ -44,9 +44,9 @@ namespace ItemList {
 
     export const FLAG_CANE = new GalacticraftItem("flag_cane", { name: "flag_cane", meta: 0 });
 
-    export const CANISTER_COPPER = new GalacticraftItem("canister_copper", { name: "canister_copper", meta: 0 }, { stack: 16 });
+    export const CANISTER_COPPER = new Canister("canister_copper", "canister_copper");
 
-    export const CANISTER_TIN = new GalacticraftItem("canister_tin", { name: "canister_tin", meta: 0 }, { stack: 16 });
+    export const CANISTER_TIN = new Canister("canister_tin", "canister_tin");
 
     export const IRON_STEEL_CANISTER = new GalacticraftItem("iron_steel_canister", { name: "iron_steel_canister", meta: 0 }, { stack: 16 });
 
@@ -126,35 +126,33 @@ namespace ItemList {
 
     //export const SHARD_IRON = new GalacticraftItem("shard_iron", { name: "shard_iron", meta: 0 });
 
-    export const SHARD_TITANIUM_2 = new GalacticraftItem("shard_titanium", { name: "shard_titanium", meta: 0 });
-
     export const SOLAR_DUST = new GalacticraftItem("solar_dust", { name: "solar_dust", meta: 0 });
 
-    export const BEEF_PATTY_COOKED = new GalacticraftItem("beef_patty_cooked", { name: "beef_patty_cooked", meta: 0 });
+    export const BEEF_PATTY_COOKED = new GalacticraftItem("beef_patty_cooked", { name: "beef_patty_cooked", meta: 0 }, { food: 4 } as any);
     
-    export const FRIED_ALIEN_FLESH = new GalacticraftItem("fried_alien_flesh", { name: "fried_alien_flesh", meta: 0 });
+    export const FRIED_ALIEN_FLESH = new GalacticraftItem("fried_alien_flesh", { name: "fried_alien_flesh", meta: 0 }, { food: 5 } as any);
     
-    export const GRID_GROUND_BEEF = new GalacticraftItem("grid_ground_beef", { name: "grid_ground_beef", meta: 0 });
+    export const GRID_GROUND_BEEF = new GalacticraftItem("grid_ground_beef", { name: "grid_ground_beef", meta: 0 }, { food: 2 } as any);
     
-    export const DEHYDRATED_POTATO = new GalacticraftItem("dehydrated_potato", { name: "dehydrated_potato", meta: 0 });
+    export const DEHYDRATED_POTATO = new GalacticraftItem("dehydrated_potato", { name: "dehydrated_potato", meta: 0 }, { food: 2 } as any);
     
-    export const DEHYDRATED_MELON = new GalacticraftItem("dehydrated_melon", { name: "dehydrated_melon", meta: 0 });
+    export const DEHYDRATED_MELON = new GalacticraftItem("dehydrated_melon", { name: "dehydrated_melon", meta: 0 }, { food: 4 } as any);
     
-    export const DEHYDRATED_CARROT = new GalacticraftItem("dehydrated_carrot", { name: "dehydrated_carrot", meta: 0 });
+    export const DEHYDRATED_CARROT = new GalacticraftItem("dehydrated_carrot", { name: "dehydrated_carrot", meta: 0 }, { food: 8 } as any);
     
-    export const DEHYDRATED_APPLE = new GalacticraftItem("dehydrated_apple", { name: "dehydrated_apple", meta: 0 });
+    export const DEHYDRATED_APPLE = new GalacticraftItem("dehydrated_apple", { name: "dehydrated_apple", meta: 0 }, { food: 8 } as any);
     
-    export const CHEESEBURGER = new GalacticraftItem("cheeseburger", { name: "cheeseburger", meta: 0 });
+    export const CHEESEBURGER = new GalacticraftItem("cheeseburger", { name: "cheeseburger", meta: 0 }, { food: 14 } as any);
     
-    export const CHEESE_SLICE = new GalacticraftItem("cheese_slice", { name: "cheese_slice", meta: 0 });
+    export const CHEESE_SLICE = new GalacticraftItem("cheese_slice", { name: "cheese_slice", meta: 0 }, { food: 2 } as any);
     
-    export const CHEESE_CURD = new GalacticraftItem("cheese_curd", { name: "cheese_curd", meta: 0 });
+    export const CHEESE_CURD = new GalacticraftItem("cheese_curd", { name: "cheese_curd", meta: 0 }, { food: 1 } as any);
     
-    export const CANNED_BEEF = new GalacticraftItem("canned_beef", { name: "canned_beef", meta: 0 });
+    export const CANNED_BEEF = new GalacticraftItem("canned_beef", { name: "canned_beef", meta: 0 }, { food: 8 } as any);
     
-    export const BURGER_BUN = new GalacticraftItem("burger_bun", { name: "burger_bun", meta: 0 });
+    export const BURGER_BUN = new GalacticraftItem("burger_bun", { name: "burger_bun", meta: 0 }, { food: 4 } as any);
     
-    export const BEEF_PATTY_RAW = new GalacticraftItem("beef_patty_raw", { name: "beef_patty_raw", meta: 0 });
+    export const BEEF_PATTY_RAW = new GalacticraftItem("beef_patty_raw", { name: "beef_patty_raw", meta: 0 }, { food: 2 } as any);
 
     export const RADIOISOTOPE_CORE = new GalacticraftItem("radioisotope_core", { name: "radioisotope_core", meta: 0 });
 
@@ -172,7 +170,7 @@ namespace ItemList {
     
     export const FREQUENCY_MODULE = new GalacticraftItem("frequency_module", { name: "frequency_module", meta: 0 });  
 
-    export const CANISTER = new Canister();
+    export const CANISTER = new Canister("canister_gc", "empty_liquid_canister");
 
     export const BATTERY = new Battery("battery_gc", { name: "battery_gc", meta: 0 });
 
@@ -193,4 +191,22 @@ namespace ItemList {
     Item.setGlint(INFINITE_OXYGEN_TANK.id, true);
 
     export const MACHINE_WRENCH = new MachineWrench();
+
+    export const STEEL_PICKAXE = new GalacticraftItem("steel_pickaxe", { name: "steel_pickaxe", meta: 0 }, { stack: 1, isTech: true });
+
+    export const STEEL_AXE = new GalacticraftItem("steel_axe", { name: "steel_axe", meta: 0 }, { stack: 1, isTech: true });
+
+    export const STEEL_HOE = new GalacticraftItem("steel_hoe", { name: "steel_hoe", meta: 0 }, { stack: 1, isTech: true });
+
+    export const STEEL_SHOVEL = new GalacticraftItem("steel_shovel", { name: "steel_shovel", meta: 0 }, { stack: 1, isTech: true });
+
+    export const STEEL_SWORD = new GalacticraftItem("steel_sword", { name: "steel_sword", meta: 0 }, { stack: 1, isTech: true });
+
+    export const SENSOR_LENS = new GalacticraftItem("sensor_lens", { name: "sensor_lens", meta: 0 });
+
+    export const KEY = new GalacticraftItem("key", { name: "dungeon_key_t1", meta: 0 }, { stack: 1 });
+
+    export const STEEL_POLE = new GalacticraftItem("steel_pole", { name: "steel_pole", meta: 0 });
+
+    export const COMPRESSED_DESH = new GalacticraftItem("compressed_desh", { name: "compressed_desh", meta: 0 });
 }

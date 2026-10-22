@@ -11,17 +11,26 @@ namespace ElectricMachine {
         }
         
         public isValidItemForCharge(item: ItemInstance, amount: number): boolean {
-            if(!ChargeItemRegistry.isValidItem(item.id, this.energyType, 0)) {
+            if(!ChargeItemRegistry.isValidItem(item.id, this.energyType, 3)) {
                 return false;
             }
             return amount < ChargeItemRegistry.getMaxCharge(item.id, this.energyType);
         }
 
         public isValidItemForDischarge(item: ItemInstance, amount: number): boolean {
-            if(ChargeItemRegistry.isValidItem(item.id, this.energyType, 0)) {
+            if(ChargeItemRegistry.isValidItem(item.id, this.energyType, 3)) {
                 return amount > 0;
             }
             return item.extra && item.extra.getString("battery.special_type") != null;
+        }
+
+        public sameBatteryData(a?: Nullable<ItemExtraData>, b?: Nullable<ItemExtraData>): boolean {
+            const aAmount = a ? a.getInt("energy") : 0;
+            const bAmount = b ? b.getInt("energy") : 0;
+            const aType = a ? a.getString("battery.special_type") : null;
+            const bType = b ? b.getString("battery.special_type") : null;
+
+            return aAmount == bAmount && aType == bType;
         }
 
         public setSlotPolicy(tileEntity: ElectricMachine.ITileEntity, slotName: string, action: ElectricMachine.batteryAction): void {
@@ -32,13 +41,18 @@ namespace ElectricMachine {
                 policy = (item, amount, type) => this.isValidItemForDischarge(item, amount);
             }
             tileEntity.container.setSlotAddTransferPolicy(slotName, (container, str, id, count, data, extra) => {
-                if(!extra || container.getSlot(slotName).count + count > Item.getMaxStackSize(id)) {
+                const current = container.getSlot(slotName);
+
+                if(current.count >= 1) {
                     return 0;
                 }
-                const isBattery = policy({ id, count, data, extra }, ChargeItemRegistry.getEnergyStored(new ItemStack(id, count, data, extra)), extra.getString("battery.special_type") as ElectricMachine.batteryAction);
+                if(current.id == id && current.count > 0 && !this.sameBatteryData(current.extra, extra)) {
+                    return 0;
+                }
+                const isBattery = policy({ id, count, data, extra }, ChargeItemRegistry.getEnergyStored(new ItemStack(id, count, data, extra || null)), extra ? extra.getString("battery.special_type") as ElectricMachine.batteryAction : null);
                 if(isBattery == true) {
                     tileEntity.batterySlotChecks.add(slotName + ":" + action + ":" + this.energyType);
-                    return count;
+                    return Math.min(count, 1);
                 }
                 return 0;
             });
@@ -49,15 +63,25 @@ namespace ElectricMachine {
             });
         }
 
+        public getChargeRate(tileEntity: ElectricMachine.ITileEntity): number {
+            const rate = typeof (tileEntity as any).getBatteryChargeRate == "function" ? (tileEntity as any).getBatteryChargeRate() : 200;
+
+            return isFinite(rate) && rate > 0 ? rate : 200;
+        }
+
         public charge(tileEntity: ElectricMachine.ITileEntity, slotName: string): boolean {
             const slot = tileEntity.container.getSlot(slotName);
-            if(!ChargeItemRegistry.isValidItem(slot.id, this.energyType, 0) || !slot.extra) {
+            if(!ChargeItemRegistry.isValidItem(slot.id, this.energyType, 3)) {
                 return true;
+            }
+            if(!slot.extra) {
+                slot.extra = new ItemExtraData();
+                tileEntity.container.setSlot(slotName, slot.id, slot.count, slot.data, slot.extra);
             }
             const amount = ChargeItemRegistry.getEnergyStored(slot, this.energyType);
             const capacity = ChargeItemRegistry.getMaxCharge(slot.id, this.energyType); 
 
-            if(amount >= capacity) {
+            if(!isFinite(amount) || !(capacity > 0) || amount >= capacity) {
                 return true;
             }
             const energy = tileEntity.getEnergy(this.energyType);
@@ -65,7 +89,10 @@ namespace ElectricMachine {
             if(energy <= 0) {
                 return false;
             }
-            const added = ChargeItemRegistry.addEnergyTo(slot, this.energyType,  energy >= 100 ? 100 : energy, 0);
+            const chargeRate = this.getChargeRate(tileEntity);
+            const addCount = Math.min(energy >= chargeRate ? chargeRate : energy, capacity - amount);
+            const added = ChargeItemRegistry.addEnergyTo(slot, this.energyType, addCount, 3);
+
             tileEntity.container.setSlot(slotName, slot.id, slot.count, Item.getMaxDamage(slot.id) - ((amount + added) / capacity) * 100, slot.extra.putInt("energy", amount + added));
             tileEntity.setEnergy(energy - added, this.energyType);
         }
@@ -77,7 +104,8 @@ namespace ElectricMachine {
             if(type == "atomic") { 
                 return 10;
             }
-            throw `ElectricMachine: Unknown special type of battery: "${type}"`;
+            Logger.Log(`ElectricMachine: unknown special type of battery: "${type}"`, "WARNING");
+            return 0;
         }
 
         public getSpecialTypeKey(): string {
@@ -86,28 +114,43 @@ namespace ElectricMachine {
 
         public discharge(tileEntity: ElectricMachine.ITileEntity, slotName: string): boolean {
             const slot = tileEntity.container.getSlot(slotName);
-            if(!slot.extra) {
+            const specialType = slot.extra ? slot.extra.getString(this.getSpecialTypeKey()) : null;
+            if(!ChargeItemRegistry.isValidItem(slot.id, this.energyType, 3) && specialType == null) {
                 return true;
+            }
+            if(!slot.extra) {
+                slot.extra = new ItemExtraData();
+                tileEntity.container.setSlot(slotName, slot.id, slot.count, slot.data, slot.extra);
             }
             const energy = tileEntity.getEnergy(this.energyType);
             const capacity = tileEntity.getCapacity(this.energyType);
             if(energy >= capacity) {
                 return false;
             }
-            const amount = ChargeItemRegistry.getEnergyStored(slot, this.energyType);
+            let amount = ChargeItemRegistry.getEnergyStored(slot, this.energyType);
+            if(!isFinite(amount)) {
+                amount = 0;
+            }
             if(amount == 0) {
                 const type = slot.extra.getString(this.getSpecialTypeKey()) as GalacticraftItem.BatteryParams["type"];
                 if(type != null) {
+                    tileEntity.data.poweredByTier = type == "infinity" ? 3 : (type == "atomic" ? 2 : 0);
                     tileEntity.setEnergy(Math.min(capacity, energy + this.getCountFromSpecialType(type, energy, capacity)), this.energyType);
                     return false;
                 }
                 return true;
             }
+            const batteryData = ChargeItemRegistry.getItemData(slot.id);
+            const batteryCapacity = ChargeItemRegistry.getMaxCharge(slot.id, this.energyType);
+            if(!(batteryCapacity > 0)) {
+                return true;
+            }
+            tileEntity.data.poweredByTier = batteryData ? batteryData.tier : 0;
             const canAdd = capacity - energy;
-            let add = amount < 100 ? amount : 100;
+            let add = amount < 200 ? amount : 200;
             let added = canAdd < add ? canAdd : add;
             tileEntity.addEnergy(added, this.energyType);
-            tileEntity.container.setSlot(slotName, slot.id, slot.count, Item.getMaxDamage(slot.id) - ((amount - added) / capacity) * 100, slot.extra.putInt("energy", amount - added));
+            tileEntity.container.setSlot(slotName, slot.id, slot.count, Item.getMaxDamage(slot.id) - ((amount - added) / batteryCapacity) * 100, slot.extra.putInt("energy", amount - added));
         }
 
         public applyFromSlot(tileEntity: ElectricMachine.ITileEntity, slotName: string, action: ElectricMachine.batteryAction): boolean | void {

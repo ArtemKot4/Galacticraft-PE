@@ -154,8 +154,8 @@ class RocketPadding extends RotatableBlock implements IRocketPadding, IClickCall
         });
     }
 
-    public static findCenter(rocketPadding: IRocketPadding, coords: Vector, region: BlockSource): Vector {
-        if(RocketPadding.isCenter(rocketPadding, coords, region.getBlock(coords.x, coords.y, coords.z), region)) {
+    public static findCenter(rocketPadding: IRocketPadding, coords: Vector, region: BlockSource): Nullable<Vector> {
+        if(rocketPadding.isCenterBlock(coords, region.getBlock(coords.x, coords.y, coords.z) as Tile)) {
             return coords;
         }
         let foundCoords: Nullable<Vector> = null;
@@ -164,9 +164,9 @@ class RocketPadding extends RotatableBlock implements IRocketPadding, IClickCall
             const currentCoords = new Vector3(x, coords.y, z);
             const currentBlock = region.getBlock(currentCoords.x, currentCoords.y, currentCoords.z) as BlockState;
 
-            if(RocketPadding.isCenter(rocketPadding, currentCoords, currentBlock, region)) {
+            if(rocketPadding.isCenterBlock(currentCoords, currentBlock)) {
                 foundCoords = currentCoords;
-                return true;
+                return false;
             }
         });
         return foundCoords;
@@ -192,10 +192,18 @@ class RocketPadding extends RotatableBlock implements IRocketPadding, IClickCall
     public static breakAll(rocketPadding: IRocketPadding, coords: Vector, region: BlockSource, playerUid?: Nullable<number>): number {
         let count = 0;
         this.passRadius(rocketPadding, coords, (x, z) => {
+            const id = region.getBlockID(x, coords.y, z);
+            if(id != rocketPadding.id) {
+                return;
+            }
+            const data = region.getBlockData(x, coords.y, z);
             region.destroyBlock(x, coords.y, z, false);
+            if(region.getBlockID(x, coords.y, z) == rocketPadding.id) {
+                return;
+            }
             count++;
             if(playerUid != null) {
-                new PlayerActor(playerUid).addItemToInventory(region.getBlockID(x, coords.y, z), 1, 0, null, true);
+                new PlayerActor(playerUid).addItemToInventory(id, 1, data, null);
             }
         });
         return count;

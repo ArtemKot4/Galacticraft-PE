@@ -8,6 +8,6 @@
         { "id": "compressed_bronze", "count": 1, "data": 0 }
     ],
     "output": [
-        { "id": "heavy_plating", "count": 1, "data": 0 }
+        { "id": "heavy_plating", "count": 2, "data": 0 }
     ]
 }

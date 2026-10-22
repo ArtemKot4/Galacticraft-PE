@@ -35,23 +35,33 @@ namespace StorageInterfaceHelper {
     }
 
     Callback.addCallback("PostLoaded", () => {
+        // Returns boolean (extract succeeded) instead of the library's void.
         StorageInterface.checkHoppers = function(tileEntity) {
             if(World.getThreadTime() % 8 > 0) {
                 return false;
             }
             const storage = StorageInterface.getInterface(tileEntity);
+            let addedItem = false;
+
             for(let side = 1; side < 6; side++) {
                 const dir = StorageInterface.getRelativeCoords(tileEntity, side);
                 const block = tileEntity.blockSource.getBlock(dir.x, dir.y, dir.z);
                 if(block.id == 154 && block.data == side + Math.pow(-1, side)) {
                     const hopper = StorageInterface.getStorage(tileEntity.blockSource, dir.x, dir.y, dir.z);
-                    return StorageInterface.extractItemsFromStorage(storage, hopper, side, 1) > 0;
+                    
+                    if(StorageInterface.extractItemsFromStorage(storage, hopper, side, 1) > 0) {
+                        addedItem = true;
+                    }
                 }
             }
             if(tileEntity.blockSource.getBlockId(tileEntity.x, tileEntity.y - 1, tileEntity.z) == 154) {
                 const hopper = StorageInterface.getStorage(tileEntity.blockSource, tileEntity.x, tileEntity.y - 1, tileEntity.z);
-                return StorageInterface.extractItemsFromStorage(hopper, storage, 0, 1) > 0;
+                // check more hoppers 
+                const extracted = StorageInterface.extractItemsFromStorage(hopper, storage, 1, 1);
+
+                return addedItem || extracted > 0;
             }
+            return addedItem;
         }
     });
 }

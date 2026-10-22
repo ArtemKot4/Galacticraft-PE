@@ -15,15 +15,15 @@ const CompressorUI = new UI.StandartWindow({
 	drawing: [
 		{
 			type: "bitmap",
-			x: 590,
-			y: 150,
+			x: 600,
+			y: 159,
 			bitmap: "machine.compressor.progress_scale_empty",
-			scale: 4.2
+			scale: 3.3
 		},
 		{
 			type: "bitmap",
-			x: 630,
-			y: 150,
+			x: 608,
+			y: 128,
 			bitmap: "machine.fire_scale_empty",
 			scale: 4.1
 		}
@@ -31,21 +31,21 @@ const CompressorUI = new UI.StandartWindow({
 	elements: {
 		progress_scale: {
 			type: "scale",
-			x: 590,
-			y: 150,
+			x: 600,
+			y: 159,
 			direction: 0,
 			bitmap: "machine.compressor.progress_scale_full",
-			scale: 4.2,
-			//   clicker: {
-			//     onClick: function () {
-			//       RV && RV.RecipeTypeRegistry.openRecipePage("Compressor");
-			//     },
-			//   },
+			scale: 3.3,
+			clicker: {
+				onClick: function (): void {
+					RV && RV.RecipeTypeRegistry.openRecipePage("gc_compressor");
+				}
+			},
 		},
 		burning_scale: {
 			type: "scale",
-			x: 630,
-			y: 150,
+			x: 608,
+			y: 128,
 			direction: 1,
 			bitmap: "machine.fire_scale_full",
 			scale: 4.1
@@ -124,7 +124,7 @@ const CompressorUI = new UI.StandartWindow({
 		result_slot: {
 			type: "slot",
 			x: 830,
-			y: 190,
+			y: 165,
 			size: 70,
 			iconScale: 0.9
 		},

@@ -146,7 +146,12 @@ const CircuitFabricatorUI = new UI.StandartWindow({
 			y: 65,
 			bitmap: "machine.circuit_fabricator.heat_scale_2",
 			scale: 3.2,
-			direction: 0
+			direction: 0,
+			clicker: {
+				onClick: function (): void {
+					RV && RV.RecipeTypeRegistry.openRecipePage("gc_circuit_fabricator");
+				}
+			}
 		},
 		energy_bar: {
 			type: "scale",

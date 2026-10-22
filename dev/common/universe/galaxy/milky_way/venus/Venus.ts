@@ -32,11 +32,11 @@ class Venus extends Planet {
     }
 
     public override getDayLength(): number {
-        return 10;
+        return 600;
     }
 
     public override getGravity(): number {
-        return 61;
+        return 53.1;
     }
 
     public override getMeteoriteProbability(): number {
@@ -64,10 +64,10 @@ class Venus extends Planet {
     }
 
     public override getSkyColor(): number[] {
-        return [894 / 256, 345 / 256, 0 / 256];
+        return [1, 207 / 255, 81 / 255];
     }
 
     public override getFogColor(): number[] {
-        return [894 / 256, 345 / 256, 0 / 256];
+        return [203 / 255, 147 / 255, 0];
     }
 }

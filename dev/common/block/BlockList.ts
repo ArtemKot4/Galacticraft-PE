@@ -28,6 +28,7 @@ namespace BlockList {
     export const ORE_COPPER_EARTH = new BasicBlock("ore_copper_earth_gc", [{ name: "block.galacticraft.ore_copper_earth", texture: [["ore_copper_earth", 0]], inCreative: true }]);
     export const ORE_TIN_EARTH = new BasicBlock("ore_tin_earth_gc", [{ name: "block.galacticraft.ore_tin_earth", texture: [["ore_tin_earth", 0]], inCreative: true }]);
     export const ORE_SILICON_EARTH = new BasicBlock("ore_silicon_earth_gc", [{ name: "block.galacticraft.ore_silicon_earth", texture: [["ore_silicon_earth", 0]], inCreative: true }]);
+    export const ORE_ALUMINUM_EARTH = new BasicBlock("ore_aluminum_earth_gc", [{ name: "block.galacticraft.ore_aluminum_earth", texture: [["ore_aluminum_earth", 0]], inCreative: true }]);
     export const ORE_COPPER_MOON = new BasicBlock("ore_copper_moon_gc", [{ name: "block.galacticraft.ore_copper_moon", texture: [["ore_copper_moon", 0]], inCreative: true }]);
     export const ORE_TIN_MOON = new BasicBlock("ore_tin_moon_gc", [{ name: "block.galacticraft.ore_tin_moon", texture: [["ore_tin_moon", 0]], inCreative: true }]);
     export const DESH = new BasicBlock("desh_gc", [{ name: "block.galacticraft.desh", texture: [["desh", 0]], inCreative: true }]);
@@ -67,7 +68,100 @@ namespace BlockList {
     Block.registerDropFunction(MARS_BOTTOM_STONE.id, function(coords, blockID){
         return [[MARS_COBBLESTONE.id, 1, 0]] 
     });   
+    Block.registerDropFunction(ORE_SILICON_EARTH.id, function() {
+        return [[ItemList.RAW_SILICON.id, 1, 0]];
+    });
+
+    export const UNLIT_TORCH = new UnlitTorch();
+    export const UNLIT_TORCH_LIT = new UnlitTorchLit();
+    export const GLOWSTONE_TORCH = new GlowstoneTorch();
+
+    Block.registerClickFunction(UNLIT_TORCH.id, function(coords, item, block, player) {
+        if(item.id == VanillaItemID.flint_and_steel) {
+            BlockSource.getDefaultForActor(player).setBlock(coords.x, coords.y, coords.z, UNLIT_TORCH_LIT.id, 0);
+        }
+    });
+
+    export const BLOCK_METEORIC_IRON = new BasicBlock("block_meteoric_iron_gc", [{ name: "Solid Meteoric Iron", texture: [["block_meteoric_iron", 0]], inCreative: true }]);
+    export const BLOCK_SILICON = new BasicBlock("block_silicon_gc", [{ name: "Silicon Block", texture: [["block_silicon", 0]], inCreative: true }]);
+    export const PANEL_LIGHTING = new PanelLighting();
+    export const SPACE_GLASS_VANILLA = new SpaceGlass("space_glass_vanilla", "Space Glass", "space_glass_vanilla", 0.3);
+    export const SPACE_GLASS_CLEAR = new SpaceGlass("space_glass_clear", "Clear Space Glass", "space_glass_clear", 0.3);
+    export const SPACE_GLASS_STRONG = new SpaceGlass("space_glass_strong", "Strong Space Glass", "space_glass_strong", 4);
+    export const FALLEN_METEOR = new FallenMeteor();
+
+    Block.registerDropFunction(FALLEN_METEOR.id, function(coords, blockID){
+        return [[ItemList.METEORIC_IRON_RAW.id, 1, 0]];
+    });
+
+    export const MOON_DUNGEON_BRICK = new BasicBlock("moon_dungeon_brick", [{ name: "Moon Dungeon Brick", texture: [["moon_brick", 0]], inCreative: true }]);
+
+    export const SLAB_GC_HALF = new BasicBlock("slab_gc_half", [
+        { name: "Tin Slab 1", texture: [["deco_block", 0]], inCreative: true },
+        { name: "Tin Slab 2", texture: [["deco_block_side", 0]], inCreative: true },
+        { name: "Moon Stone Slab", texture: [["Lunar Stone", 0]], inCreative: true },
+        { name: "Moon Brick Slab", texture: [["moon_brick", 0]], inCreative: true }
+    ]);
+
+    export const SLAB_GC_DOUBLE = new BasicBlock("slab_gc_double", [
+        { name: "Tin Slab 1", texture: [["deco_block", 0]], inCreative: false },
+        { name: "Tin Slab 2", texture: [["deco_block_side", 0]], inCreative: false },
+        { name: "Moon Stone Slab", texture: [["Lunar Stone", 0]], inCreative: false },
+        { name: "Moon Brick Slab", texture: [["moon_brick", 0]], inCreative: false }
+    ]);
+
+    for(let data = 0; data <= 3; data++) {
+        Block.setShape(SLAB_GC_HALF.id, 0, 0, 0, 1, 0.5, 1, data);
+    }
+
+    export const GRATING = new BasicBlock("grating", [{ name: "Grating", texture: [["Screen Side", 0]], inCreative: true }]);
+    Block.setShape(GRATING.id, 0, 14 / 16, 0, 1, 1, 1, 0);
+
+    export const ENERGY_STORAGE = new EnergyStorage();
+    export const CLUSTER_STORAGE = new ClusterStorage();
+
+    export const BASIC_SOLAR = new BasicSolarPanel();
+    export const ADVANCED_SOLAR = new AdvancedSolarPanel();
+
+    export const ELECTRIC_FURNACE = new ElectricFurnace();
+    export const ARC_FURNACE = new ArcFurnace();
+
+    export const ADVANCED_COMPRESSOR = new AdvancedCompressor();
+
+    export const MAGNETIC_TABLE = new MagneticTable();
+
+    export const DECONSTRUCTOR = new Deconstructor();
+
+    export const ALUMINUM_WIRE = new AluminumWire();
+    
 
     export const OIL = new GalacticraftLiquidBlock("oil", "oil_gc_still", "oil_gc_flow");
     export const FUEL = new GalacticraftLiquidBlock("fuel", "fuel_gc_still", "fuel_gc_flow");
+
+   export const ARCLAMP = new Arclamp();
+    export const ARCLAMP_OFF = new ArclampOff();
+    Block.registerDropFunction(ARCLAMP_OFF.id, function() {
+        return [[BlockList.ARCLAMP.id, 1, 0]];
+    });
+
+    for(const key in (BlockList as any)) {
+        const block = (BlockList as any)[key];
+
+        if(block == null || typeof block.stringID != "string") {
+            continue;
+        }
+        if(typeof block.getStillStringID == "function") {
+            const still = block.getStillStringID();
+            const flow = block.getFlowStringID();
+
+            if(BlockID[still] == null) {
+                BlockID[still] = IDRegistry.genBlockID(still);
+            }
+            if(BlockID[flow] == null) {
+                BlockID[flow] = IDRegistry.genBlockID(flow);
+            }
+        } else if(block.id != null && BlockID[block.stringID] == null) {
+            BlockID[block.stringID] = block.id;
+        }
+    }
 }

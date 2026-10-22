@@ -1,117 +1,90 @@
-const ElectricFurnaceUI = new UI.StandartWindow({
-	standard: {
-		header: {
-			text: {
-				text: Translation.translate("Electric furnace"),
-			},
-		},
-		inventory: {
-			standard: true,
-		},
-		background: {
-			standard: true,
-		},
-	},
-	drawing: [
-		//     {
-		//     type: "bitmap",
-		//     x: 402,
-		//     y: 45,
-		//     scale: 3.4,
-		//   bitmap:
-		//         "generators.coalscale1"
 
-		//     },
-		{
-			type: "bitmap",
-			x: 550,
-			y: 110,
-			bitmap: "arrow_bar_1",
-			scale: 4.2,
-		},
-		{
-			type: "bitmap",
-			x: 430,
-			y: 140,
-			bitmap: "slace_en_0",
-			scale: 3,
-		},
-		{
-			type: "bitmap",
-			x: 415,
-			y: 140,
-			bitmap: "en_noy",
-			scale: 3,
-		},
-	],
-	elements: {
-		input: {
+function createGalacticraftFurnaceUI(titleKey: string, showSecondOutput: boolean = true): UI.IWindow {
+	const elements: Record<string, any> = {
+		battery_slot_discharge: {
 			type: "slot",
-			x: 460,
-			y: 110,
-			bitmap: "coalslot",
+			x: 340,
+			y: 190,
+			size: 60,
+			bitmap: "machine.energy_slot",
+		},
+		input_slot: {
+			type: "slot",
+			x: 430,
+			y: 90,
 			size: 70,
 		},
-
-		ENERGYBar: {
-			type: "scale",
-			x: 430,
-			y: 140,
-			bitmap: "slace_en_1",
-			scale: 3,
-			direction: 0,
-		},
-		Energy: {
-			type: "scale",
-			x: 415,
-			y: 140,
-			bitmap: "en_yes",
-			scale: 3,
-			direction: 1,
-		},
-		result: {
+		result_slot: {
 			type: "slot",
-			x: 610,
-			y: 110,
-			bitmap: "coalslot",
+			x: 650,
+			y: 90,
 			size: 70,
 		},
 		progress_scale: {
 			type: "scale",
-			x: 550,
-			y: 110,
+			x: 540,
+			y: 100,
 			scale: 4.2,
 			direction: 0,
 			bitmap: "arrow_bar_scale",
-			// clicker: {
-			//     onClick: function() {
-			//         RV && RV.RecipeTypeRegistry.openRecipePage("generator 2");
-			//     }
-			// }
+			clicker: {
+				onClick: function (): void {
+					RV && RV.RecipeTypeRegistry.openRecipePage("furnace");
+				}
+			}
 		},
-		ELECTRIC: {
-			type: "text",
-			x: 400,
-			y: 190,
-			width: 100,
-			height: 30,
-			text: "Energy type is not defined",
+		energy_bar: {
+			type: "scale",
+			x: 350,
+			y: 270,
+			bitmap: "machine.energy_bar_full",
+			scale: 3,
+			direction: 0,
 		},
-		Status: {
-			type: "text",
-			x: 400,
-			y: 220,
-			width: 100,
-			height: 30,
-			text: "Status: energy is not defined",
+	};
+
+	if(showSecondOutput) {
+		elements["result_slot_2"] = {
+			type: "slot",
+			x: 730,
+			y: 90,
+			size: 70,
+		};
+	}
+
+	return new UI.StandartWindow({
+		standard: {
+			header: {
+				text: {
+					text: Translation.translate(titleKey),
+				},
+			},
+			inventory: {
+				standard: true,
+			},
+			background: {
+				standard: true,
+			},
 		},
-		// FiringStatus: {
-		//     type: "text",
-		//     x: 545,
-		//     y: 55,
-		//     width: 100,
-		//     height: 30,
-		//     text: "Burning: %"
-		// },
-	},
-});
+		drawing: [
+			{
+				type: "bitmap",
+				x: 540,
+				y: 100,
+				bitmap: "arrow_bar_1",
+				scale: 4.2,
+			},
+			{
+				type: "bitmap",
+				x: 350,
+				y: 270,
+				bitmap: "machine.energy_bar_empty",
+				scale: 3,
+			},
+		],
+		elements: elements,
+	});
+}
+
+const ElectricFurnaceUI = createGalacticraftFurnaceUI("tile.galacticraft.electric_furnace", false);
+const ArcFurnaceUI = createGalacticraftFurnaceUI("tile.galacticraft.arc_furnace", true);

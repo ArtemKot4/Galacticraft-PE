@@ -6,11 +6,11 @@ abstract class ProcessingBlock extends MachineBlock {
 
     public setSlotPolicyToTileEntity(): void {
         const tilePrototype = TileEntity.getPrototype(this.id) as ProcessingTile;
-        const factory = tilePrototype.getFactory();
-        
+
         if(tilePrototype == null) {
             throw new ReferenceError("Processing Block does not can don't contain tile entity prototype");
         }
+        const factory = tilePrototype.getFactory();
         let policy: (slotName: string, id: number) => boolean;
         if(factory instanceof RecipeModule.FormedFactory) {
             policy = (slotName, id) => factory.storage.some((recipe) => id == recipe.input[slotName].id);
@@ -60,7 +60,15 @@ abstract class ProcessingBlock extends MachineBlock {
                     return availableCount; 
                 });
             });
-            this.outputSlots.forEach(outputSlotName => this.container.setSlotAddTransferPolicy(outputSlotName, () => 0));
+            this.outputSlots.forEach(outputSlotName => {
+                this.container.setSlotGetTransferPolicy(outputSlotName, (container, slotName, id, count) => {
+                    if(count > 0) {
+                        tile.setActiveIfNeeded();
+                    }
+                    return count;
+                });
+                this.container.setSlotAddTransferPolicy(outputSlotName, () => 0);
+            });
             return initLast.call(this);
         }
     }

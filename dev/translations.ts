@@ -20,6 +20,7 @@ Translation.addTranslation("Shield Controller", {
 });
 
 Translation.addTranslation("tile.galacticraft.coal_generator", {
+    en: "Coal Generator",
     ru: "Угольный генератор",
     zh: "煤发电机",
 });
@@ -50,36 +51,43 @@ Translation.addTranslation("Spaces Station", {
 });
 
 Translation.addTranslation("tile.galacticraft.solar_panel", {
+    en: "Solar Panel",
     ru: "Солнечная панель",
     zh: "太阳能板",
 });
 
 Translation.addTranslation("tile.galacticraft.basic_solar_panel", {
+    en: "Basic Solar Panel",
     ru: "Базовая солнечная панель",
     zh: "基本太阳能电池板",
 });
 
 Translation.addTranslation("tile.galacticraft.compressor", {
+    en: "Compressor",
     ru: "Компрессор",
     zh: "压缩机",
 });
 
 Translation.addTranslation("tile.galacticraft.fuel_loader", {
+    en: "Fuel Loader",
     ru: "Загрузчик ракетного топлива",
     zh: "火箭燃料装载机",
 });
 
 Translation.addTranslation("tile.galacticraft.circuit_fabricator", {
+    en: "Circuit Fabricator",
     ru: "Производитель микросхем",
     zh: "芯片制造商",
 });
 
 Translation.addTranslation("tile.galacticraft.refinery", {
+    en: "Refinery",
     ru: "Центрифуга",
     zh: "离心机",
 });
 
 Translation.addTranslation("tile.galacticraft.electric_compressor", {
+    en: "Electric Compressor",
     ru: "Электрический компрессор",
     zh: "电动压缩机",
 });
@@ -104,12 +112,6 @@ Translation.addTranslation("Padding Rocket", {
     zh: "火箭发射台",
 });
 
-Translation.addTranslation("tile.galacticraft.electric_furnace", {
-    en: "Electric furnace",
-    ru: "Электрическая печь",
-    zh: "电烤箱",
-});
-
 Translation.addTranslation("Can be found on Venus, hot and scalding", {
     ru: "Встречается на Венере,очень горячий и обжигающий",
     zh: "在金星上发现，非常热和烫伤",
@@ -117,11 +119,6 @@ Translation.addTranslation("Can be found on Venus, hot and scalding", {
 
 Translation.addTranslation("Need for programming programm to workbench nasa", {
     ru: "Используется для программирования особой программы ракетосборочного стола",
-});
-
-Translation.addTranslation("Manipulator programm", {
-    ru: "Манипуляторная программа",
-    zh: "火箭组装计划",
 });
 
 Translation.addTranslation("Status: storage full", {
@@ -562,10 +559,6 @@ Translation.addTranslation("Lunar Tin Ore", {
 
 Translation.addTranslation("Lunar Copper Ore", {
     ru: "Лунная медная руда",
-});
-
-Translation.addTranslation("Lunar Sapphire", {
-    ru: "Лунная сапфирная руда",
 });
 
 Translation.addTranslation("Ore Tin", {
@@ -1060,3 +1053,407 @@ Translation.addTranslation("item.galacticraft.oxygen_tank", {
     en: "Oxygen tank",
     ru: "Кислородный баллон"
 })
+
+// --- P3 ---
+
+Translation.addTranslation("item.galacticraft.steel_pickaxe", {
+    en: "Steel Pickaxe",
+    ru: "Стальная кирка"
+});
+
+Translation.addTranslation("item.galacticraft.steel_axe", {
+    en: "Steel Axe",
+    ru: "Стальной топор"
+});
+
+Translation.addTranslation("item.galacticraft.steel_hoe", {
+    en: "Steel Hoe",
+    ru: "Стальная мотыга"
+});
+
+Translation.addTranslation("item.galacticraft.steel_shovel", {
+    en: "Steel Shovel",
+    ru: "Стальная лопата"
+});
+
+Translation.addTranslation("item.galacticraft.steel_sword", {
+    en: "Steel Sword",
+    ru: "Стальной меч"
+});
+
+Translation.addTranslation("item.galacticraft.sensor_lens", {
+    en: "Sensor Lens",
+    ru: "Сенсорная линза"
+});
+
+Translation.addTranslation("item.galacticraft.key", {
+    en: "Key",
+    ru: "Ключ"
+});
+
+Translation.addTranslation("item.galacticraft.steel_pole", {
+    en: "Steel Pole",
+    ru: "Стальной столб"
+});
+
+Translation.addTranslation("item.galacticraft.compressed_desh", {
+    en: "Compressed Desh",
+    ru: "Сжатый деш"
+});
+
+// --- P4 ---
+
+Translation.addTranslation("tile.galacticraft.energy_storage", {
+    en: "Energy Storage Module",
+    ru: "Модуль хранения энергии"
+});
+
+Translation.addTranslation("tile.galacticraft.cluster_storage", {
+    en: "Energy Storage Cluster",
+    ru: "Кластер хранения энергии"
+});
+
+Translation.addTranslation("tile.galacticraft.basic_solar", {
+    en: "Basic Solar Panel",
+    ru: "Базовая солнечная панель"
+});
+
+Translation.addTranslation("tile.galacticraft.advanced_solar", {
+    en: "Advanced Solar Panel",
+    ru: "Улучшенная солнечная панель"
+});
+
+Translation.addTranslation("tile.galacticraft.electric_furnace", {
+    en: "Electric Furnace",
+    ru: "Электрическая печь",
+    zh: "电烤箱"
+});
+
+Translation.addTranslation("tile.galacticraft.arc_furnace", {
+    en: "Electric Arc Furnace",
+    ru: "Электродуговая печь"
+});
+
+Translation.addTranslation("tile.galacticraft.advanced_compressor", {
+    en: "Advanced Compressor",
+    ru: "Улучшенный компрессор"
+});
+
+Translation.addTranslation("tile.galacticraft.magnetic_table", {
+    en: "Magnetic Crafting Table",
+    ru: "Магнитный верстак"
+});
+
+Translation.addTranslation("tile.galacticraft.deconstructor", {
+    en: "Deconstructor",
+    ru: "Деконструктор"
+});
+
+// --- F2 (P10): nume literale P2/P3 + armuri + caption (chei pe literal, en/ru) ---
+
+Translation.addTranslation("Unlit Torch", {
+    en: "Unlit Torch",
+    ru: "Погасший факел"
+});
+
+Translation.addTranslation("Lit Torch", {
+    en: "Lit Torch",
+    ru: "Горящий факел"
+});
+
+Translation.addTranslation("Glowstone Torch", {
+    en: "Glowstone Torch",
+    ru: "Факел из светокамня"
+});
+
+Translation.addTranslation("Panel Lighting (Square)", {
+    en: "Panel Lighting (Square)",
+    ru: "Панельное освещение (квадрат)"
+});
+
+Translation.addTranslation("Panel Lighting (Spots)", {
+    en: "Panel Lighting (Spots)",
+    ru: "Панельное освещение (точки)"
+});
+
+Translation.addTranslation("Panel Lighting (Linear)", {
+    en: "Panel Lighting (Linear)",
+    ru: "Панельное освещение (линейное)"
+});
+
+Translation.addTranslation("Panel Lighting (SF)", {
+    en: "Panel Lighting (SF)",
+    ru: "Панельное освещение (SF)"
+});
+
+Translation.addTranslation("Panel Lighting (SF Diagonal)", {
+    en: "Panel Lighting (SF Diagonal)",
+    ru: "Панельное освещение (SF диагональ)"
+});
+
+Translation.addTranslation("Space Glass", {
+    en: "Space Glass",
+    ru: "Космическое стекло"
+});
+
+Translation.addTranslation("Clear Space Glass", {
+    en: "Clear Space Glass",
+    ru: "Прозрачное космическое стекло"
+});
+
+Translation.addTranslation("Strong Space Glass", {
+    en: "Strong Space Glass",
+    ru: "Прочное космическое стекло"
+});
+
+Translation.addTranslation("Fallen Meteor", {
+    en: "Fallen Meteor",
+    ru: "Упавший метеорит"
+});
+
+Translation.addTranslation("Solid Meteoric Iron", {
+    en: "Solid Meteoric Iron",
+    ru: "Блок метеоритного железа"
+});
+
+Translation.addTranslation("Silicon Block", {
+    en: "Silicon Block",
+    ru: "Кремниевый блок"
+});
+
+Translation.addTranslation("Moon Dungeon Brick", {
+    en: "Moon Dungeon Brick",
+    ru: "Лунный кирпич подземелья"
+});
+
+Translation.addTranslation("Grating", {
+    en: "Grating",
+    ru: "Решётка"
+});
+
+Translation.addTranslation("Tin Slab 1", {
+    en: "Tin Slab 1",
+    ru: "Оловянная плита 1"
+});
+
+Translation.addTranslation("Tin Slab 2", {
+    en: "Tin Slab 2",
+    ru: "Оловянная плита 2"
+});
+
+Translation.addTranslation("Moon Stone Slab", {
+    en: "Moon Stone Slab",
+    ru: "Лунная каменная плита"
+});
+
+Translation.addTranslation("Moon Brick Slab", {
+    en: "Moon Brick Slab",
+    ru: "Лунная кирпичная плита"
+});
+
+Translation.addTranslation("Steel Helmet", {
+    en: "Steel Helmet",
+    ru: "Стальной шлем"
+});
+
+Translation.addTranslation("Steel Chestplate", {
+    en: "Steel Chestplate",
+    ru: "Стальной нагрудник"
+});
+
+Translation.addTranslation("Steel Leggings", {
+    en: "Steel Leggings",
+    ru: "Стальные поножи"
+});
+
+Translation.addTranslation("Steel Boots", {
+    en: "Steel Boots",
+    ru: "Стальные ботинки"
+});
+
+Translation.addTranslation("Sensor Glasses", {
+    en: "Sensor Glasses",
+    ru: "Сенсорные очки"
+});
+
+Translation.addTranslation("Manipulator programm", {
+    en: "Manipulator programm",
+    ru: "Программа манипулятора",
+    zh: "火箭组装计划"
+});
+
+// ;) items
+
+Translation.addTranslation("item.galacticraft.raw_silicon", { en: "Raw Silicon", ru: "Необработанный кремний" });
+Translation.addTranslation("item.galacticraft.wafer_basic", { en: "Basic Wafer", ru: "Базовый чип" });
+Translation.addTranslation("item.galacticraft.wafer_solar", { en: "Solar Wafer", ru: "Солнечный чип" });
+Translation.addTranslation("item.galacticraft.wafer_advanced", { en: "Advanced Wafer", ru: "Улучшенный чип" });
+Translation.addTranslation("item.galacticraft.ingot_aluminum_gc", { en: "Aluminum Ingot", ru: "Алюминиевый слиток" });
+Translation.addTranslation("item.galacticraft.buggymat_sit", { en: "Buggy Seat", ru: "Сиденье багги" });
+Translation.addTranslation("item.galacticraft.rocket_fins", { en: "Rocket Fins", ru: "Ракетные стабилизаторы" });
+Translation.addTranslation("item.galacticraft.nose_cone", { en: "Nose Cone", ru: "Носовой обтекатель" });
+Translation.addTranslation("item.galacticraft.rocket_fins_t2", { en: "Heavy Rocket Fins", ru: "Тяжёлые стабилизаторы" });
+Translation.addTranslation("item.galacticraft.buggymat_storage", { en: "Buggy Storage", ru: "Багажник багги" });
+Translation.addTranslation("item.galacticraft.engine_tier_1_booster", { en: "Booster Engine", ru: "Ускоритель" });
+Translation.addTranslation("item.galacticraft.engine_tier_1", { en: "Rocket Engine", ru: "Ракетный двигатель" });
+Translation.addTranslation("item.galacticraft.heavy_plating", { en: "Heavy-Duty Plate", ru: "Тяжёлая обшивка" });
+Translation.addTranslation("item.galacticraft.buggymat_wheel", { en: "Buggy Wheel", ru: "Колесо багги" });
+Translation.addTranslation("item.galacticraft.air_fan", { en: "Air Fan", ru: "Воздушный вентилятор" });
+Translation.addTranslation("item.galacticraft.air_vent", { en: "Air Vent", ru: "Воздушный клапан" });
+Translation.addTranslation("item.galacticraft.thermal_controller", { en: "Thermal Controller", ru: "Терморегулятор" });
+Translation.addTranslation("item.galacticraft.canvas", { en: "Canvas", ru: "Парусина" });
+Translation.addTranslation("item.galacticraft.solar_module_0", { en: "Basic Solar Module", ru: "Базовый солнечный модуль" });
+Translation.addTranslation("item.galacticraft.solar_module_1", { en: "Advanced Solar Module", ru: "Улучшенный солнечный модуль" });
+Translation.addTranslation("item.galacticraft.flag_cane", { en: "Flag Cane", ru: "Древко флага" });
+Translation.addTranslation("item.galacticraft.canister_copper", { en: "Copper Canister", ru: "Медная канистра" });
+Translation.addTranslation("item.galacticraft.canister_tin", { en: "Tin Canister", ru: "Оловянная канистра" });
+Translation.addTranslation("item.galacticraft.iron_steel_canister", { en: "Iron-Steel Canister", ru: "Железно-стальная канистра" });
+Translation.addTranslation("item.galacticraft.reinforced_plate_t2", { en: "Reinforced Plate T2", ru: "Укреплённая пластина T2" });
+Translation.addTranslation("item.galacticraft.reinforced_plate_t3", { en: "Reinforced Plate T3", ru: "Укреплённая пластина T3" });
+Translation.addTranslation("item.galacticraft.carbon_fragments", { en: "Carbon Fragments", ru: "Углеродные фрагменты" });
+Translation.addTranslation("item.galacticraft.emerald_shard", { en: "Emerald Shard", ru: "Изумрудный осколок" });
+Translation.addTranslation("item.galacticraft.desh_plate", { en: "Desh Plate", ru: "Пластина деша" });
+Translation.addTranslation("item.galacticraft.desh_stick", { en: "Desh Stick", ru: "Стержень деша" });
+Translation.addTranslation("item.galacticraft.dust_titanium", { en: "Titanium Dust", ru: "Титановая пыль" });
+Translation.addTranslation("item.galacticraft.lunar_sapphire", { en: "Lunar Sapphire", ru: "Лунный сапфир" });
+Translation.addTranslation("item.galacticraft.meteoric_iron_raw", { en: "Raw Meteoric Iron", ru: "Необработанное метеоритное железо" });
+Translation.addTranslation("item.galacticraft.raw_desh", { en: "Raw Desh", ru: "Необработанный деш" });
+Translation.addTranslation("item.galacticraft.iron_steel_dust", { en: "Iron-Steel Dust", ru: "Железно-стальная пыль" });
+Translation.addTranslation("item.galacticraft.compressed_aluminum", { en: "Compressed Aluminum", ru: "Сжатый алюминий" });
+Translation.addTranslation("item.galacticraft.compressed_lead", { en: "Compressed Lead", ru: "Сжатый свинец" });
+Translation.addTranslation("item.galacticraft.ingot_bronze", { en: "Bronze Ingot", ru: "Бронзовый слиток" });
+Translation.addTranslation("item.galacticraft.compressed_bronze", { en: "Compressed Bronze", ru: "Сжатая бронза" });
+Translation.addTranslation("item.galacticraft.compressed_copper", { en: "Compressed Copper", ru: "Сжатая медь" });
+Translation.addTranslation("item.galacticraft.compressed_iron", { en: "Compressed Iron", ru: "Сжатое железо" });
+Translation.addTranslation("item.galacticraft.compressed_iron_steel", { en: "Compressed Iron-Steel", ru: "Сжатая железо-сталь" });
+Translation.addTranslation("item.galacticraft.compressed_meteoric_iron", { en: "Compressed Meteoric Iron", ru: "Сжатое метеоритное железо" });
+Translation.addTranslation("item.galacticraft.compressed_steel", { en: "Compressed Steel", ru: "Сжатая сталь" });
+Translation.addTranslation("item.galacticraft.compressed_tin", { en: "Compressed Tin", ru: "Сжатое олово" });
+Translation.addTranslation("item.galacticraft.compressed_titanium", { en: "Compressed Titanium", ru: "Сжатый титан" });
+Translation.addTranslation("item.galacticraft.ingot_copper_gc", { en: "Copper Ingot", ru: "Медный слиток" });
+Translation.addTranslation("item.galacticraft.ingot_desh_gc", { en: "Desh Ingot", ru: "Слиток деша" });
+Translation.addTranslation("item.galacticraft.ingot_lead_gc", { en: "Lead Ingot", ru: "Свинцовый слиток" });
+Translation.addTranslation("item.galacticraft.ingot_tin_gc", { en: "Tin Ingot", ru: "Оловянный слиток" });
+Translation.addTranslation("item.galacticraft.ingot_titanium_gc", { en: "Titanium Ingot", ru: "Титановый слиток" });
+Translation.addTranslation("item.galacticraft.shard_tin", { en: "Tin Shard", ru: "Осколок олова" });
+Translation.addTranslation("item.galacticraft.shard_copper", { en: "Copper Shard", ru: "Осколок меди" });
+Translation.addTranslation("item.galacticraft.shard_aluminum", { en: "Aluminum Shard", ru: "Осколок алюминия" });
+Translation.addTranslation("item.galacticraft.shard_iron_steel", { en: "Iron-Steel Shard", ru: "Осколок железо-стали" });
+Translation.addTranslation("item.galacticraft.shard_meteoric_iron", { en: "Meteoric Iron Shard", ru: "Осколок метеоритного железа" });
+Translation.addTranslation("item.galacticraft.shard_titanium", { en: "Titanium Shard", ru: "Осколок титана" });
+Translation.addTranslation("item.galacticraft.ingot_iron_steel", { en: "Iron-Steel Ingot", ru: "Слиток железо-стали" });
+Translation.addTranslation("item.galacticraft.ingot_steel", { en: "Steel Ingot", ru: "Стальной слиток" });
+Translation.addTranslation("item.galacticraft.ingot_meteoric_iron", { en: "Meteoric Iron Ingot", ru: "Слиток метеоритного железа" });
+Translation.addTranslation("item.galacticraft.shard_steel", { en: "Steel Shard", ru: "Осколок стали" });
+Translation.addTranslation("item.galacticraft.shard_iron", { en: "Iron Shard", ru: "Осколок железа" });
+Translation.addTranslation("item.galacticraft.solar_dust", { en: "Solar Dust", ru: "Солнечная пыль" });
+Translation.addTranslation("item.galacticraft.beef_patty_cooked", { en: "Cooked Beef Patty", ru: "Готовый бифштекс" });
+Translation.addTranslation("item.galacticraft.fried_alien_flesh", { en: "Fried Alien Flesh", ru: "Жареная плоть пришельца" });
+Translation.addTranslation("item.galacticraft.grid_ground_beef", { en: "Ground Beef", ru: "Говяжий фарш" });
+Translation.addTranslation("item.galacticraft.dehydrated_potato", { en: "Dehydrated Potato", ru: "Сушёный картофель" });
+Translation.addTranslation("item.galacticraft.dehydrated_melon", { en: "Dehydrated Melon", ru: "Сушёный арбуз" });
+Translation.addTranslation("item.galacticraft.dehydrated_carrot", { en: "Dehydrated Carrot", ru: "Сушёная морковь" });
+Translation.addTranslation("item.galacticraft.dehydrated_apple", { en: "Dehydrated Apple", ru: "Сушёное яблоко" });
+Translation.addTranslation("item.galacticraft.cheeseburger", { en: "Cheeseburger", ru: "Чизбургер" });
+Translation.addTranslation("item.galacticraft.cheese_slice", { en: "Cheese Slice", ru: "Ломтик сыра" });
+Translation.addTranslation("item.galacticraft.cheese_curd", { en: "Cheese Curd", ru: "Сырная масса" });
+Translation.addTranslation("item.galacticraft.canned_beef", { en: "Canned Beef", ru: "Мясные консервы" });
+Translation.addTranslation("item.galacticraft.burger_bun", { en: "Burger Bun", ru: "Булочка для бургера" });
+Translation.addTranslation("item.galacticraft.beef_patty_raw", { en: "Raw Beef Patty", ru: "Сырой бифштекс" });
+Translation.addTranslation("item.galacticraft.radioisotope_core", { en: "Radioisotope Core", ru: "Радиоизотопное ядро" });
+Translation.addTranslation("item.galacticraft.schematic_buggy", { en: "Moon Buggy Schematic", ru: "Схема лунного багги" });
+Translation.addTranslation("item.galacticraft.schematic_rocket_2", { en: "Tier 2 Rocket Schematic", ru: "Схема ракеты T2" });
+Translation.addTranslation("item.galacticraft.schematic_rocket_3", { en: "Tier 3 Rocket Schematic", ru: "Схема ракеты T3" });
+Translation.addTranslation("item.galacticraft.oxygen_gear", { en: "Oxygen Gear", ru: "Кислородное снаряжение" });
+Translation.addTranslation("item.galacticraft.oxygen_mask", { en: "Oxygen Mask", ru: "Кислородная маска" });
+Translation.addTranslation("item.galacticraft.oxygen_concentrator", { en: "Oxygen Concentrator", ru: "Кислородный концентратор" });
+Translation.addTranslation("item.galacticraft.frequency_module", { en: "Frequency Module", ru: "Модуль частоты" });
+
+Translation.addTranslation("item.alien_flesh", { en: "Alien Flesh", ru: "Плоть пришельца" });
+Translation.addTranslation("block.galacticraft.rocket_padding_gc", { en: "Rocket Launch Pad", ru: "Стартовая площадка" });
+
+// blocks
+
+Translation.addTranslation("block.galacticraft.sapphire_block", { en: "Block of Sapphire", ru: "Блок сапфира" });
+Translation.addTranslation("block.galacticraft.moon_cheese", { en: "Moon Cheese", ru: "Лунный сыр" });
+Translation.addTranslation("block.galacticraft.moon_sapphire", { en: "Sapphire Ore", ru: "Сапфировая руда" });
+Translation.addTranslation("block.galacticraft.venus_quartz", { en: "Venus Quartz Ore", ru: "Венерианская кварцевая руда" });
+Translation.addTranslation("block.galacticraft.decoration_desh", { en: "Desh Decoration Block", ru: "Декоративный блок деша" });
+Translation.addTranslation("block.galacticraft.block_tin", { en: "Block of Tin", ru: "Оловянный блок" });
+Translation.addTranslation("block.galacticraft.block_lead", { en: "Lead Block", ru: "Свинцовый блок" });
+Translation.addTranslation("block.galacticraft.block_copper", { en: "Copper Block", ru: "Медный блок" });
+Translation.addTranslation("block.galacticraft.block_aluminum", { en: "Aluminum Block", ru: "Алюминиевый блок" });
+Translation.addTranslation("block.galacticraft.block_iron_steel", { en: "Iron-Steel Block", ru: "Блок железо-стали" });
+Translation.addTranslation("block.galacticraft.bronze_block", { en: "Bronze Block", ru: "Бронзовый блок" });
+Translation.addTranslation("block.galacticraft.block_steel", { en: "Steel Block", ru: "Стальной блок" });
+Translation.addTranslation("block.galacticraft.block_titanium", { en: "Titanium Block", ru: "Титановый блок" });
+Translation.addTranslation("block.galacticraft.ore_copper_earth", { en: "Copper Ore", ru: "Медная руда" });
+Translation.addTranslation("block.galacticraft.ore_tin_earth", { en: "Tin Ore", ru: "Оловянная руда" });
+Translation.addTranslation("block.galacticraft.ore_silicon_earth", { en: "Silicon Ore", ru: "Кремниевая руда" });
+Translation.addTranslation("block.galacticraft.ore_aluminum_earth", { en: "Aluminum Ore", ru: "Алюминиевая руда" });
+Translation.addTranslation("block.galacticraft.ore_copper_moon", { en: "Lunar Copper Ore", ru: "Лунная медная руда" });
+Translation.addTranslation("block.galacticraft.ore_tin_moon", { en: "Lunar Tin Ore", ru: "Лунная оловянная руда" });
+Translation.addTranslation("block.galacticraft.desh", { en: "Block of Desh", ru: "Блок деша" });
+Translation.addTranslation("block.galacticraft.deco_block", { en: "Tin Decoration Block", ru: "Декоративный блок олова" });
+Translation.addTranslation("block.galacticraft.oxygen_tile", { en: "Oxygen Tile", ru: "Кислородная плитка" });
+Translation.addTranslation("block.galacticraft.iron_steel", { en: "Iron-Steel Block", ru: "Блок железо-стали" });
+Translation.addTranslation("block.galacticraft.carved_tin_decoration_block", { en: "Carved Tin Block", ru: "Резной оловянный блок" });
+Translation.addTranslation("block.galacticraft.enclosed_aluminum_wire", { en: "Enclosed Aluminum Wire", ru: "Изолированный алюминиевый провод" });
+Translation.addTranslation("block.galacticraft.enclosed_fluid_pipe", { en: "Enclosed Fluid Pipe", ru: "Изолированная жидкостная труба" });
+Translation.addTranslation("block.galacticraft.enclosed_heavy_aluminum_wire", { en: "Enclosed Heavy Aluminum Wire", ru: "Изолированный тяжёлый алюминиевый провод" });
+Translation.addTranslation("block.galacticraft.mars_top_stone", { en: "Martian Surface Rock", ru: "Марсианская поверхностная порода" });
+Translation.addTranslation("block.galacticraft.mars_middle_stone", { en: "Martian Sub-surface Rock", ru: "Марсианская подземная порода" });
+Translation.addTranslation("block.galacticraft.mars_cobblestone", { en: "Martian Cobblestone", ru: "Марсианский булыжник" });
+Translation.addTranslation("block.galacticraft.dense_ice", { en: "Dense Ice", ru: "Плотный лёд" });
+
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_gray", { en: "Aluminum Wire (Gray)", ru: "Алюминиевый провод (серый)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_yellow", { en: "Aluminum Wire (Yellow)", ru: "Алюминиевый провод (жёлтый)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_black", { en: "Aluminum Wire (Black)", ru: "Алюминиевый провод (чёрный)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_blue", { en: "Aluminum Wire (Blue)", ru: "Алюминиевый провод (синий)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_brown", { en: "Aluminum Wire (Brown)", ru: "Алюминиевый провод (коричневый)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_cyan", { en: "Aluminum Wire (Cyan)", ru: "Алюминиевый провод (голубой)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_green", { en: "Aluminum Wire (Green)", ru: "Алюминиевый провод (зелёный)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_light_blue", { en: "Aluminum Wire (Light Blue)", ru: "Алюминиевый провод (светло-синий)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_light_gray", { en: "Aluminum Wire (Light Gray)", ru: "Алюминиевый провод (светло-серый)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_lime", { en: "Aluminum Wire (Lime)", ru: "Алюминиевый провод (лаймовый)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_magenta", { en: "Aluminum Wire (Magenta)", ru: "Алюминиевый провод (пурпурный)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_orange", { en: "Aluminum Wire (Orange)", ru: "Алюминиевый провод (оранжевый)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_pink", { en: "Aluminum Wire (Pink)", ru: "Алюминиевый провод (розовый)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_purple", { en: "Aluminum Wire (Purple)", ru: "Алюминиевый провод (фиолетовый)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_red", { en: "Aluminum Wire (Red)", ru: "Алюминиевый провод (красный)" });
+Translation.addTranslation("block.galacticraft.aluminum_wire_gc_white", { en: "Aluminum Wire (White)", ru: "Алюминиевый провод (белый)" });
+
+Translation.addTranslation("block.galacticraft.improved_wire_gc_gray", { en: "Heavy Aluminum Wire (Gray)", ru: "Тяжёлый алюминиевый провод (серый)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_yellow", { en: "Heavy Aluminum Wire (Yellow)", ru: "Тяжёлый алюминиевый провод (жёлтый)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_black", { en: "Heavy Aluminum Wire (Black)", ru: "Тяжёлый алюминиевый провод (чёрный)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_blue", { en: "Heavy Aluminum Wire (Blue)", ru: "Тяжёлый алюминиевый провод (синий)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_brown", { en: "Heavy Aluminum Wire (Brown)", ru: "Тяжёлый алюминиевый провод (коричневый)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_cyan", { en: "Heavy Aluminum Wire (Cyan)", ru: "Тяжёлый алюминиевый провод (голубой)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_green", { en: "Heavy Aluminum Wire (Green)", ru: "Тяжёлый алюминиевый провод (зелёный)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_light_blue", { en: "Heavy Aluminum Wire (Light Blue)", ru: "Тяжёлый алюминиевый провод (светло-синий)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_light_gray", { en: "Heavy Aluminum Wire (Light Gray)", ru: "Тяжёлый алюминиевый провод (светло-серый)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_lime", { en: "Heavy Aluminum Wire (Lime)", ru: "Тяжёлый алюминиевый провод (лаймовый)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_magenta", { en: "Heavy Aluminum Wire (Magenta)", ru: "Тяжёлый алюминиевый провод (пурпурный)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_orange", { en: "Heavy Aluminum Wire (Orange)", ru: "Тяжёлый алюминиевый провод (оранжевый)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_pink", { en: "Heavy Aluminum Wire (Pink)", ru: "Тяжёлый алюминиевый провод (розовый)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_purple", { en: "Heavy Aluminum Wire (Purple)", ru: "Тяжёлый алюминиевый провод (фиолетовый)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_red", { en: "Heavy Aluminum Wire (Red)", ru: "Тяжёлый алюминиевый провод (красный)" });
+Translation.addTranslation("block.galacticraft.improved_wire_gc_white", { en: "Heavy Aluminum Wire (White)", ru: "Тяжёлый алюминиевый провод (белый)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_gray", { en: "Fluid Pipe (Gray)", ru: "Жидкостная труба (серая)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_yellow", { en: "Fluid Pipe (Yellow)", ru: "Жидкостная труба (жёлтая)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_black", { en: "Fluid Pipe (Black)", ru: "Жидкостная труба (чёрная)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_blue", { en: "Fluid Pipe (Blue)", ru: "Жидкостная труба (синяя)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_brown", { en: "Fluid Pipe (Brown)", ru: "Жидкостная труба (коричневая)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_cyan", { en: "Fluid Pipe (Cyan)", ru: "Жидкостная труба (голубая)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_green", { en: "Fluid Pipe (Green)", ru: "Жидкостная труба (зелёная)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_light_blue", { en: "Fluid Pipe (Light Blue)", ru: "Жидкостная труба (светло-синяя)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_light_gray", { en: "Fluid Pipe (Light Gray)", ru: "Жидкостная труба (светло-серая)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_lime", { en: "Fluid Pipe (Lime)", ru: "Жидкостная труба (лаймовая)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_magenta", { en: "Fluid Pipe (Magenta)", ru: "Жидкостная труба (пурпурная)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_orange", { en: "Fluid Pipe (Orange)", ru: "Жидкостная труба (оранжевая)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_pink", { en: "Fluid Pipe (Pink)", ru: "Жидкостная труба (розовая)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_purple", { en: "Fluid Pipe (Purple)", ru: "Жидкостная труба (фиолетовая)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_red", { en: "Fluid Pipe (Red)", ru: "Жидкостная труба (красная)" });
+Translation.addTranslation("block.galacticraft.liquid_pipe_gc_white", { en: "Fluid Pipe (White)", ru: "Жидкостная труба (белая)" });
+
+Translation.addTranslation("tile.galacticraft.arclamp", { en: "Arc Lamp", ru: "Дуговая лампа" });

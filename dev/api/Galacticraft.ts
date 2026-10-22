@@ -10,8 +10,9 @@ namespace Galacticraft {
          * @param tip text of tip
          */
         export function registerTipFor(id: number, tip: string) {
+            const previous = Item.nameOverrideFunctions != null ? Item.nameOverrideFunctions[id] : null;
             Item.registerNameOverrideFunction(id, (item, translation, name) => {
-                const expression = item.id in Item.nameOverrideFunctions ? Item.nameOverrideFunctions[item.id](item, translation, name) : Translation.translate(name);
+                const expression = previous != null ? previous(item, translation, name) : Translation.translate(name);
                 return (
                     expression + "\n" + Native.Color.GRAY + (
                         Translation.translate(Entity.getSneaking(Player.getLocal()) == true ? tip : "message.galacticraft.tip_on_sneaking") 
@@ -76,15 +77,6 @@ namespace Galacticraft {
         veinCounts: number; 
         count: [number, number]
     }
-
-    Callback.addCallback("DimensionLoaded", (currentId, lastId) => {
-        const planet = Galacticraft.getCelestialBodyByID(currentId);
-        if("getMusicNameAndPath" in planet) {
-            const musicName = planet.getMusicNameAndPath()[0];
-            Game.message(JSON.stringify(musicName));
-            
-        }
-    });
 
     export namespace Renderer {
         export interface IWireBoxDescription {

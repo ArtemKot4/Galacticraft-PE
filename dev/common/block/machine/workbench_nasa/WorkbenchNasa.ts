@@ -7,6 +7,19 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
     public bottomData = 0;
     public topData = 1;
 
+    private static openEntries: { container: ItemContainer, recipe: RecipeModule.IDefaultRecipe, client: NetworkClient, playerUid: number, returned: boolean }[] = [];
+
+    public static returnOpenContainers(): void {
+        for(const entry of [...WorkbenchNasa.openEntries]) {
+            if(entry.returned) {
+                continue;
+            }
+            entry.returned = true;
+            BlockList.WORKBENCH_NASA.giveItemsBack(entry.container, entry.recipe, entry.playerUid);
+            entry.container.closeFor(entry.client);
+        }
+    }
+
     public constructor() {
         super("workbench_nasa", [{
             name: "block.galacticraft.workbench_nasa",
@@ -37,7 +50,7 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
         .setModel((() => {
             const mesh = this.getModel().getRenderMesh().clone();
             mesh.scale(0.6, 0.6, 0.6)
-            mesh.translate(0.2, -0.1, 0.25)
+            mesh.translate(0.23, 0.02, 0.22)
             return mesh;
         })(), "terrain-atlas/machine/rocket_workbench_top.png");
     }
@@ -59,6 +72,7 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
         for(const y of [0, data == this.bottomData ? this.topData : -this.topData]) {
             blockSource.destroyBlock(coords.x, coords.y + y, coords.z, y == this.bottomData);
         }
+        WorkbenchNasa.returnOpenContainers();
     }
 
     public giveItemsBack(container: ItemContainer, recipe: RecipeModule.IDefaultRecipe, playerUid: number): void {
@@ -116,8 +130,10 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
         schemaData.chestSlots.forEach((slotName) => {
             const slot = container.getSlot(slotName);
             slotCount += this.getSlotCountFromContainer(slot.id);
-            container.setSlot(slotName, slot.id, slot.count - 1, slot.data, slot.extra);
-            container.validateSlot(slotName);
+            if(slot.id != 0 && slot.count > 0) {
+                container.setSlot(slotName, slot.id, slot.count - 1, slot.data, slot.extra);
+                container.validateSlot(slotName);
+            }
         });
         for(const outputSlotName in recipe.output) {
             const outputItem = recipe.output[outputSlotName];
@@ -192,7 +208,7 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
                 return 0;
             }
             if(count == 0) {
-                this.validateResult(container, slotName, ItemStack.EMPTY, schemaName, schemaData, lastRecipe);
+                this.validateResult(container, slotName, new ItemStack(0, 0, 0), schemaName, schemaData, lastRecipe);
                 return 0;
             }
             const currentStack = new ItemStack(id, container.getSlot(slotName).count, data, extra);
@@ -215,14 +231,41 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
 
     public registerPackets(): void {
         Network.addServerPacket("packet.galacticraft.workbench_nasa.open_ui", (client, data) => {
+            const playerUid = client.getPlayerUid();
+            if(data == null || typeof data.x != "number" || typeof data.y != "number" || typeof data.z != "number") {
+                return;
+            }
+            const coords = { x: data.x, y: data.y, z: data.z };
+            if(!TileAccess.isPlayerInRange(playerUid, coords)) {
+                return;
+            }
+            const region = BlockSource.getDefaultForActor(playerUid);
+            if(region == null) {
+                return;
+            }
+            const block = region.getBlock(coords.x, coords.y, coords.z);
+            if(block == null || block.id != BlockList.WORKBENCH_NASA.id) {
+                return;
+            }
             const container = new ItemContainer();
             const recipe = { input: {}, output: {} } as RecipeModule.IDefaultRecipe;
+            const entry = { container: container, recipe: recipe, client: client, playerUid: playerUid, returned: false };
+            WorkbenchNasa.openEntries.push(entry);
             container.setClientContainerTypeName("galacticraft.workbench_nasa");
             container.addServerCloseListener((container, client) => {
-                this.giveItemsBack(container, recipe, client.getPlayerUid());
+                if(!entry.returned) {
+                    entry.returned = true;
+                    this.giveItemsBack(container, recipe, client.getPlayerUid());
+                }
+                const index = WorkbenchNasa.openEntries.indexOf(entry);
+                if(index >= 0) {
+                    WorkbenchNasa.openEntries.splice(index, 1);
+                }
             });
             this.setPolicies(container, recipe);
             container.openFor(client, "rocket_tier_1");
+            container.markAllSlotsDirty();
+            container.sendChanges();
         });
     }
 
@@ -238,6 +281,10 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
             }
             return RecipeModule.getFactory<RecipeModule.WorkbenchNasaFactory>("workbench_nasa").getSchemaUIByScreenName(screenName);
 	    });
-        Network.sendToServer("packet.galacticraft.workbench_nasa.open_ui", {});
+        Network.sendToServer("packet.galacticraft.workbench_nasa.open_ui", { x: coords.x, y: coords.y, z: coords.z });
     }
 }
+
+Callback.addCallback("ServerLevelLeft", function() {
+    WorkbenchNasa.returnOpenContainers();
+});

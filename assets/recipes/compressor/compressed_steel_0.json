@@ -1,7 +1,7 @@
 {
     "input": [
-        { "id": "ingot_steel_gc", "count": 1, "data": 0 },
-        { "id": "ingot_steel_gc", "count": 1, "data": 0 }
+        { "id": "ingot_steel", "count": 1, "data": 0 },
+        { "id": "ingot_steel", "count": 1, "data": 0 }
     ],
     "output": [
         { "id": "compressed_steel", "count": 1, "data": 0 }

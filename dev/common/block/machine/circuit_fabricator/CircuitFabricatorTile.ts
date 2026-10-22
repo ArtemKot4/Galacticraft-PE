@@ -11,6 +11,10 @@ class CircuitFabricatorTile extends ProcessingTile {
         return 400;
     }
 
+    public override getProgressMax(): number {
+        return Math.floor(300 * 2 / (1 + this.getPowerTier()));
+    }
+
     public override insideTick(): void {
         super.insideTick();
         if(World.getThreadTime() % 2 == 0) {

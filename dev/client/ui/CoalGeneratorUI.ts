@@ -36,12 +36,12 @@ const CoalGeneratorUI = new UI.StandartWindow({
 			y: 115,
 			scale: 4.2,
 			direction: 0,
-			bitmap: "arrow_bar_scale"
-			// clicker: {
-			// 	onClick: function () {
-			// 		RV && RV.RecipeTypeRegistry.openRecipePage("generator 2");
-			// 	}
-			// }
+			bitmap: "arrow_bar_scale",
+			clicker: {
+				onClick: function (): void {
+					RV && RV.RecipeTypeRegistry.openRecipePage("fuel");
+				}
+			}
 		},
 		energy_display: {
 			type: "text",

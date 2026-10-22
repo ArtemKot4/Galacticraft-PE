@@ -1,8 +1,9 @@
-const ElectricCompressorUI = new UI.StandartWindow({
+function createGalacticraftCompressorUI(titleKey: string): UI.IWindow {
+	return new UI.StandartWindow({
 	standard: {
 		header: {
 			text: {
-				text: Translation.translate("tile.galacticraft.electric_compressor"),
+				text: Translation.translate(titleKey),
 			}
 		},
 		inventory: {
@@ -15,21 +16,21 @@ const ElectricCompressorUI = new UI.StandartWindow({
 	drawing: [
 		{
 			type: "bitmap",
-			x: 590,
-			y: 150,
+			x: 600,
+			y: 159,
 			bitmap: "machine.compressor.progress_scale_empty",
-			scale: 4.2,
+			scale: 3.3,
 		},
 		{
 			type: "bitmap",
-			x: 346,
+			x: 380,
 			y: 320,
 			bitmap: "machine.energy_bar_empty",
 			scale: 3,
 		},
 		{
 			type: "bitmap",
-			x: 335,
+			x: 368,
 			y: 320,
 			bitmap: "machine.energy_icon_off",
 			scale: 3,
@@ -38,21 +39,21 @@ const ElectricCompressorUI = new UI.StandartWindow({
 	elements: {
 		progress_scale: {
 			type: "scale",
-			x: 590,
-			y: 150,
+			x: 600,
+			y: 159,
 			direction: 0,
 			bitmap: "machine.compressor.progress_scale_full",
-			scale: 4.2,
-			// clicker: {
-			//   onClick: function () {
-			//     RV && RV.RecipeTypeRegistry.openRecipePage("Compressor");
-			//   },
-			// },
+			scale: 3.3,
+			clicker: {
+				onClick: function (): void {
+					RV && RV.RecipeTypeRegistry.openRecipePage("gc_compressor");
+				}
+			},
 		},
 		battery_slot_discharge: {
 			type: "slot",
-			x: 530,
-			y: 300,
+			x: 660,
+			y: 260,
 			bitmap: "machine.energy_slot",
 			size: 60,
 			iconScale: 0.9
@@ -122,7 +123,7 @@ const ElectricCompressorUI = new UI.StandartWindow({
 		},
 		energy_bar: {
 			type: "scale",
-			x: 346,
+			x: 380,
 			y: 320,
 			bitmap: "machine.energy_bar_full",
 			scale: 3,
@@ -130,7 +131,7 @@ const ElectricCompressorUI = new UI.StandartWindow({
 		},
 		energy_icon: {
 			type: "scale",
-			x: 335,
+			x: 368,
 			y: 320,
 			bitmap: "machine.energy_icon_on",
 			scale: 3,
@@ -138,8 +139,15 @@ const ElectricCompressorUI = new UI.StandartWindow({
 		},
 		result_slot: {
 			type: "slot",
-			x: 830,
-			y: 190,
+			x: 805,
+			y: 130,
+			size: 70,
+			iconScale: 0.9
+		},
+		result_slot_2: {
+			type: "slot",
+			x: 805,
+			y: 200,
 			size: 70,
 			iconScale: 0.9
 		},
@@ -152,4 +160,8 @@ const ElectricCompressorUI = new UI.StandartWindow({
 		// 	text: "Статус: ",
 		// },
 	}
-});
+	});
+}
+
+const ElectricCompressorUI = createGalacticraftCompressorUI("tile.galacticraft.electric_compressor");
+const AdvancedCompressorUI = createGalacticraftCompressorUI("tile.galacticraft.advanced_compressor");

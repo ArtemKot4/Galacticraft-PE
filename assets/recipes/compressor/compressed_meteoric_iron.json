@@ -1,7 +1,6 @@
 {
     "input": [
-        { "id": "ingot_meteoric_iron_gc", "count": 1, "data": 0 },
-        { "id": "ingot_meteoric_iron_gc", "count": 1, "data": 0 }
+        { "id": "ingot_meteoric_iron", "count": 1, "data": 0 }
     ],
     "output": [
         { "id": "compressed_meteoric_iron", "count": 1, "data": 0 }

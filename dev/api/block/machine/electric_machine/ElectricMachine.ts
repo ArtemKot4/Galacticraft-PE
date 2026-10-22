@@ -21,6 +21,7 @@ function ElectricMachine(configs: { [energyType: string]: ElectricMachine.Config
                     }
                 }
                 ElectricMachine.Provider.addEnergyFunctions(tilePrototype, configs);
+                ElectricMachine.Provider.injectRedstone(tilePrototype, configs);
                 ElectricMachine.Provider.injectInit(tilePrototype, configs);
                 ElectricMachine.Provider.injectTick(tilePrototype, configs);
             }
@@ -38,6 +39,9 @@ namespace ElectricMachine {
                 for(const energyType in configs) {
                     const config = configs[energyType];
                     this.data[config.energyKey] ??= 0;
+                    this.data.disabled ??= false;
+                    this.data.disableCooldown ??= 0;
+                    this.data.poweredByTier ??= 1;
                     if(Object.keys(config.batteryDescriptors).length > 0) {
                         for(const slotName in config.batteryDescriptors) {
                             const action = config.batteryDescriptors[slotName];
@@ -45,6 +49,13 @@ namespace ElectricMachine {
                             config.batteryManager.validateCache(this, slotName, action);
                         }
                     }
+                }
+                if(this.openListenerRegistered != true) {
+                    this.openListenerRegistered = true;
+                    this.container.addServerOpenListener(function(container) {
+                        container.markAllSlotsDirty();
+                        container.sendChanges();
+                    });
                 }
                 lastInit.call(this);
                 return;
@@ -55,6 +66,12 @@ namespace ElectricMachine {
             const lastTick = tilePrototype.tick;
 
             tilePrototype.tick = function(this: ElectricMachine.ITileEntity) {
+                if(this.data.disableCooldown > 0) {
+                    this.data.disableCooldown--;
+                }
+                if(this.data.disabled == true) {
+                    return;
+                }
                 if(lastTick != null) {
                     lastTick.call(this);
                 }
@@ -75,11 +92,29 @@ namespace ElectricMachine {
             }
         }
 
+        export function injectRedstone(tilePrototype: ElectricMachine.ITileEntity, configs: { [energyType: string]: ElectricMachine.Config }): void {
+            const redstoneConfigs = Object.keys(configs).filter((energyType) => configs[energyType].redstoneControl);
+
+            if(redstoneConfigs.length == 0) {
+                return;
+            }
+            const cooldown = Math.max(...redstoneConfigs.map((energyType) => configs[energyType].redstoneCooldown));
+
+            tilePrototype.redstone = function(this: ElectricMachine.ITileEntity, params: Callback.RedstoneSignalParams) {
+                this.data.disabled = params.power > 0;
+                this.data.disableCooldown = this.data.disabled ? cooldown : 0;
+            }
+
+            tilePrototype.isDisabled = function(this: ElectricMachine.ITileEntity): boolean {
+                return this.data.disabled == true;
+            }
+        }
+
         export function addEnergyFunctions(tilePrototype: ElectricMachine.ITileEntity, configs: { [energyType: string]: ElectricMachine.Config }): void {
             tilePrototype.canReceiveEnergy = function(side , type) {
                 if(type in configs) {
                     const config = configs[type];
-                    return config.type == ElectricMachine.Type.RECEIVER && config.isValidEnergySide.call(this, side);
+                    return (config.type == ElectricMachine.Type.RECEIVER || config.type == ElectricMachine.Type.STORAGE) && config.isValidEnergyInputSide.call(this, side);
                 }
                 return false;
             }
@@ -87,34 +122,50 @@ namespace ElectricMachine {
             tilePrototype.canExtractEnergy = function(side, type) {
                 if(type in configs) {
                     const config = configs[type];
-                    return config.type == ElectricMachine.Type.EXTRACTOR && config.isValidEnergySide.call(this, side);
+                    return (config.type == ElectricMachine.Type.EXTRACTOR || config.type == ElectricMachine.Type.STORAGE) && config.isValidEnergySide.call(this, side);
+                }
+                return false;
+            }
+
+            tilePrototype.canEmitEnergy = function(side, type) {
+                if(type in configs) {
+                    const config = configs[type];
+                    return (config.type == ElectricMachine.Type.EXTRACTOR || config.type == ElectricMachine.Type.STORAGE) && config.isValidEnergySide.call(this, side);
                 }
                 return false;
             }
 
             tilePrototype.energyReceive = function(this: ElectricMachine.ITileEntity, type: string, amount: number, voltage: number): number {
+                if(this.data.disabled == true) {
+                    return 0;
+                }
                 if(type in configs) {
                     const config = configs[type];
-                    if(config.type != ElectricMachine.Type.RECEIVER) {
+                    if(config.type == ElectricMachine.Type.EXTRACTOR) {
                         return 0;
                     }
                     if("energyReceive" in config) {
                         return config.energyReceive.call(this, type, amount, voltage);
                     }
-                    const add = Math.min(amount, this.getCapacity(type) - this.data[config.energyKey]);
+                    const accepted = config.maxReceive != null ? Math.min(amount, config.maxReceive) : amount;
+                    const add = Math.min(accepted, this.getCapacity(type) - this.data[config.energyKey]);
                     this.addEnergy(add, type);
-                    return add;
+                    // ES-011: nu propaga valori negative/NaN in energy-net (add pre-clamp).
+                    return add > 0 ? add : 0;
                 }
                 return 0;
             }
 
             tilePrototype.energyTick = function(this: ElectricMachine.ITileEntity, type: string, src: EnergyTileNode) {
-                if(!(type in configs)) {
+                if(this.data.disabled == true || !(type in configs)) {
                     return;
                 }
                 const config = configs[type];
-                if(config.type == ElectricMachine.Type.EXTRACTOR) {
-                    const output = Math.min(this.data[config.energyKey], this.getCapacity(type));
+                if(config.type == ElectricMachine.Type.EXTRACTOR || config.type == ElectricMachine.Type.STORAGE) {
+                    let output = Math.min(this.data[config.energyKey], this.getCapacity(type));
+                    if(config.maxExtract != null) {
+                        output = Math.min(output, config.maxExtract);
+                    }
                     this.addEnergy(src.add(output) - output, type);
                 }
             } 
@@ -123,41 +174,79 @@ namespace ElectricMachine {
                 return energyType in configs ? configs[energyType].capacity : 0;
             }
 
-            tilePrototype.addEnergy = function(this: ElectricMachine.ITileEntity, amount, type): number {
-                const capacity = this.getCapacity(type);
-                const energy = this.data[configs[type].energyKey];
-                if((energy + amount) <= capacity) {
-                    this.data[configs[type].energyKey] = energy + amount;
-                    return amount;
+            tilePrototype.getEnergyStorage = function(this: ElectricMachine.ITileEntity): number {
+                let storage = 0;
+                for(const type in configs) {
+                    storage += this.getCapacity(type);
                 }
-                const canAdd = capacity - energy;
-                const add = amount <= canAdd ? amount : canAdd;
-                this.data[configs[type].energyKey] += add;
-                return add;
+                return storage;
+            }
+
+            tilePrototype.rebuildGrid = function(this: ElectricMachine.ITileEntity): void {
+                if(this.energyNode == null) {
+                    return;
+                }
+                this.energyNode.resetConnections();
+                EnergyGridBuilder.buildGridForTile(this);
+            };
+
+            tilePrototype.addEnergy = function(this: ElectricMachine.ITileEntity, amount, type): number {
+                if(!isFinite(amount)) {
+                    return 0;
+                }
+                const capacity = this.getCapacity(type);
+                const energy = this.data[configs[type].energyKey] || 0;
+                const next = Math.max(0, Math.min(capacity, energy + amount));
+                this.data[configs[type].energyKey] = next;
+                return next - energy;
             }
 
             tilePrototype.decreaseEnergy = function(this: ElectricMachine.ITileEntity, amount, type): void {
+                if(!isFinite(amount)) {
+                    return;
+                }
                 this.data[configs[type].energyKey] = Math.max(0, this.getEnergy(type) - amount);
             }
 
 
             tilePrototype.setEnergy = function(this: ElectricMachine.ITileEntity, count, type): void {
-                this.data[configs[type].energyKey] = count;
+                if(!isFinite(count)) {
+                    count = 0;
+                }
+                this.data[configs[type].energyKey] = Math.max(0, Math.min(count, this.getCapacity(type)));
             }
 
             tilePrototype.getEnergy = function(this: ElectricMachine.ITileEntity, type): number {
                 return this.data[configs[type] && configs[type].energyKey] || 0;
+            }
+
+            tilePrototype.getPowerTier = function(this: ElectricMachine.ITileEntity): number {
+                return this.data.poweredByTier || 1;
             }
         }
 
         export function setConfigDefaults(config: ElectricMachine.Config, energyType: string, tilePrototype: ElectricMachine.ITileEntity): void {
             config.capacity ??= 16000;
             config.batteryDescriptors ??= {};
+            config.redstoneControl ??= true;
+            config.redstoneCooldown ??= 10;
+
+            const screen = tilePrototype.getScreenByName();
+            const content = screen != null ? screen.getContent() : null;
 
             config.onTick ??= function() {
                 const energy = this.data[config.energyKey];
-                this.container.setScale(config.energyKey + "_bar", energy / this.getCapacity(energyType));
-                this.container.setScale(config.energyKey + "_icon", energy / 1);
+                const ratio = energy / this.getCapacity(energyType);
+                this.bindingCache ??= {};
+                if(this.bindingCache[config.energyKey] != ratio) {
+                    this.bindingCache[config.energyKey] = ratio;
+                    if(content != null && config.energyKey + "_bar" in content.elements) {
+                        this.container.setScale(config.energyKey + "_bar", ratio);
+                    }
+                    if(content != null && config.energyKey + "_icon" in content.elements) {
+                        this.container.setScale(config.energyKey + "_icon", energy);
+                    }
+                }
                 this.container.sendChanges();
             }
             config.isValidEnergySide ??= function(side: number) {
@@ -169,6 +258,7 @@ namespace ElectricMachine {
                     data == 3 && side == 2
                 );
             }
+            config.isValidEnergyInputSide ??= config.isValidEnergySide;
             config.setWireConnecting ??= function() {
                 ICRender.getGroup("galacticraft.machine_energy_connecting_0").add(this.id, 0);
                 ICRender.getGroup("galacticraft.machine_energy_connecting_1").add(this.id, 1);
@@ -179,14 +269,10 @@ namespace ElectricMachine {
             config.batteryManager.energyType ??= energyType;
             const defaultSlots = config.batteryManager.getDefaultContainerSlots();
             
-            if(defaultSlots != null) {
-                const ui = tilePrototype.getScreenByName();
-                if(ui != null) {
-                    const content = ui.getContent();
-                    for(const slotName in defaultSlots) {
-                        if(slotName in content.elements) {
-                            config.batteryDescriptors[slotName] = defaultSlots[slotName];
-                        }
+            if(defaultSlots != null && content != null) {
+                for(const slotName in defaultSlots) {
+                    if(slotName in content.elements) {
+                        config.batteryDescriptors[slotName] = defaultSlots[slotName];
                     }
                 }
             }

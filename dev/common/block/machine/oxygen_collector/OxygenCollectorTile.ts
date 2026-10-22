@@ -8,27 +8,53 @@ class OxygenCollectorTile extends ElectricMachine.TileEntity {
         return OxygenCollectorUI;
     }   
 
+    public override onInit(): void {
+        StorageInterfaceHelper.addSlotInputPolicyFromContainer(this.blockID, "battery_slot_discharge");
+    }
+
     public override onLoad(): void {
-        if(this.data.oxygenGenerate == -1) {
-            return;
-        }
         const body = Galacticraft.getCelestialBodyByID(this.dimension);
-        if(body != null && body.hasOxygen()) {
+        if(body != null && !body.hasOxygen()) {
             this.data.oxygenGenerate = -1;
+        } else {
+            this.data.oxygenGenerate = 93;
         }
     }
 
+    public countNearbyPlants(): number {
+        let plants = 0;
+        const minY = Math.max(0, this.y - 5);
+        const maxY = Math.min(255, this.y + 5);
+        for(let x = this.x - 5; x <= this.x + 5; x++) {
+            for(let z = this.z - 5; z <= this.z + 5; z++) {
+                for(let y = minY; y <= maxY; y++) {
+                    const blockID = this.blockSource.getBlockID(x, y, z);
+                    if(blockID == 0) {
+                        continue;
+                    }
+                    const name = IDRegistry.getNameByID(blockID) || "";
+                    if(name.includes("leaves") || name == "wheat" || name == "carrots" || name == "potatoes" || name == "beetroots") {
+                        plants += 0.75;
+                    }
+                }
+            }
+        }
+        return Math.floor(plants);
+    }
+
     public override onTick(): void {
-        if(this.data.oxygenGenerate != 0) {
-            this.decreaseEnergy(15, Galacticraft.EnergyTypes.JOULE.name);
-        }
-        if(this.getEnergy(Galacticraft.EnergyTypes.JOULE.name) < 15 || World.getThreadTime() % 20 != 0) {
+        if(this.getEnergy(Galacticraft.EnergyTypes.JOULE.name) < 100) {
             return;
         }
-        if(this.data.oxygenGenerate == -1) {
-            this.addEnergy(180, Galacticraft.EnergyTypes.OXYGEN.name);
+        if(World.getThreadTime() % 10 != 0) {
             return;
         }
-        this.addEnergy(this.data.oxygenGenerate, Galacticraft.EnergyTypes.OXYGEN.name);
+        const amount = this.data.oxygenGenerate == -1 ? this.countNearbyPlants() : this.data.oxygenGenerate;
+
+        if(amount <= 0) {
+            return;
+        }
+        this.decreaseEnergy(100, Galacticraft.EnergyTypes.JOULE.name);
+        this.addEnergy(amount, Galacticraft.EnergyTypes.OXYGEN.name);
     }
 }

@@ -20,27 +20,41 @@ class CompressorTile extends ProcessingTile {
         return RecipeModule.getFactory<RecipeModule.UnformedFactory>("compressor");
     }
 
+    public override getProgressMax(): number {
+        return 200;
+    }
+
     public override spendEnergyCommon(): void {
+        if(this.data.active != true) {
+            return;
+        }
         this.data.energy = Math.max(0, this.data.energy - 1);
     }
 
     public override spendRecipeEnergy(): void {};
 
+    // C19 (P1): taxa de 75/tick din ProcessingTile.doProgress e modelul mașinilor electrice (F2);
+    // basicul consumă combustibilul doar prin spendEnergyCommon (−1/tick) — paritate Java (1 tick/op).
+    public override getRecipeEnergyPerTick(): number {
+        return 0;
+    }
+
     public override insideTick(addedHopperItem: boolean) {
         super.insideTick();
         if(addedHopperItem == true) {
             const slot = this.container.getSlot("fuel_slot");
-            BurnManager.validateTile(this, slot.id, slot.data);
+            BurnManager.validateTileVanilla(this, slot.id, slot.data);
         }
-        this.container.setScale("burning_scale", this.data.energy / this.data.energyMax);
+        // C28: gard pentru 0/0 (energyMax=0 înainte de prima aprindere) — altfel binding NaN.
+        this.container.setScale("burning_scale", this.data.energyMax > 0 ? this.data.energy / this.data.energyMax : 0);
         
         if(this.data.energy == 0) {
             let hasEnergy = false;
-            if(this.data.canSpendFuel == true) {
-                if(BurnManager.burn(this, "energy", "energyMax", false)) {
+            if(this.data.canSpendFuel == true && this.data.active == true) {
+                if(BurnManager.burnVanilla(this)) {
                     hasEnergy = true;
                 }
-                this.data.canSpendFuel = BurnManager.isValidFuelSlot(this);
+                this.data.canSpendFuel = BurnManager.getVanillaFuelBurnDuration(this.container.getSlot("fuel_slot").id, this.container.getSlot("fuel_slot").data) > 0;
             }
             this.networkData.putBoolean("has_energy", hasEnergy);
             this.networkData.sendChanges();
@@ -56,10 +70,19 @@ class CompressorTile extends ProcessingTile {
     }
 
     public override onInit(): void {
-        BurnManager.addSlotPolicy(this);
+        super.onInit();
+        this.data.energy ??= 0;
+        this.data.energyMax ??= 0;
+        this.data.canSpendFuel ??= false;
+        BurnManager.addSlotPolicyVanilla(this);
+        this.networkData.addVerifier("has_energy", function(key, value) {
+            return (typeof value == "boolean") ? value : null;
+        });
     }
 
-    public override getLocalTileEntity(): LocalTileEntity {
-        return new LocalCoalGeneratorTile();
+    public override onLoad(): void {
+        super.onLoad();
+        this.networkData.putBoolean("has_energy", this.data.energy > 0);
+        this.networkData.sendChanges();
     }
 }

@@ -1,97 +1,120 @@
-const BasicSolarPanelUI = new UI.StandardWindow({
-	standard: {
-		header: {
-			text: {
-				text: Translation.translate("Solar panel"),
+function createGalacticraftSolarPanelUI(titleKey: string): UI.IWindow {
+	return new UI.StandardWindow({
+		standard: {
+			header: {
+				text: {
+					text: Translation.translate(titleKey),
+				},
+			},
+			inventory: {
+				standard: true,
+			},
+			background: {
+				standard: true,
 			},
 		},
-		inventory: {
-			standard: true
+		drawing: [
+			{
+				type: "bitmap",
+				x: 126,
+				y: 62,
+				bitmap: "generators.sunscale_0",
+				scale: 4.5,
+			},
+			{
+				type: "bitmap",
+				x: 234,
+				y: 66,
+				bitmap: "machine.energy_icon_off",
+				scale: 4.5,
+			},
+			{
+				type: "bitmap",
+				x: 333,
+				y: 57,
+				bitmap: "machine.energy_bar_empty",
+				scale: 4.5,
+			},
+		],
+		elements: {
+			sunscale: {
+				type: "scale",
+				x: 126,
+				y: 62,
+				scale: 4.5,
+				bitmap: "generators.sunscale_1",
+				direction: 1,
+			},
+			energy_icon: {
+				type: "scale",
+				x: 234,
+				y: 66,
+				bitmap: "machine.energy_icon_on",
+				scale: 4.5,
+				direction: 1,
+			},
+			energy_bar: {
+				type: "scale",
+				x: 333,
+				y: 57,
+				bitmap: "machine.energy_bar_full",
+				scale: 4.5,
+				direction: 0,
+			},
+			status_display: {
+				type: "text",
+				x: 180,
+				y: 182,
+				width: 480,
+				height: 45,
+				font: {
+					size: 30,
+				},
+				text: "",
+			},
+			generating_display: {
+				type: "text",
+				x: 180,
+				y: 227,
+				width: 480,
+				height: 45,
+				font: {
+					size: 30,
+				},
+				text: "",
+			},
+			boost_display: {
+				type: "text",
+				x: 180,
+				y: 272,
+				width: 480,
+				height: 45,
+				font: {
+					size: 30,
+				},
+				text: "",
+			},
+			energy_display: {
+				type: "text",
+				x: 180,
+				y: 317,
+				width: 480,
+				height: 45,
+				font: {
+					size: 30,
+				},
+				text: "",
+			},
+			battery_slot_charge: {
+				type: "slot",
+				x: 638,
+				y: 65,
+				size: 75,
+				bitmap: "machine.energy_slot",
+			},
 		},
-		background: {
-			standard: true
-		}
-	},
-	drawing: [
-		{
-			type: "bitmap",
-			x: 380,
-			y: 60,
-			bitmap: "generators.sunscale_0",
-			scale: 3.0,
-		},
-		{
-			type: "bitmap",
-			x: 460,
-			y: 65,
-			bitmap: "slace_en_0",
-			scale: 3,
-		},
-		{
-			type: "bitmap",
-			x: 600,
-			y: 65,
-			bitmap: "en_noy",
-			scale: 3,
-		},
-	],
-	elements: {
-		sunscale: {
-			type: "scale",
-			x: 380,
-			y: 60,
-			scale: 3.0,
-			bitmap: "generators.sunscale_1",
-			direction: 1,
-		},
-		ENERGYBar: {
-			type: "scale",
-			x: 460,
-			y: 65,
-			bitmap: "slace_en_1",
-			scale: 3,
-			direction: 0,
-		},
-		Energy: {
-			type: "scale",
-			x: 600,
-			y: 65,
-			bitmap: "en_yes",
-			scale: 3,
-			direction: 1,
-		},
-		EnergyText: {
-			type: "text",
-			x: 450,
-			y: 110,
-			width: 100,
-			height: 30,
-			text: "Space Joule",
-		},
+	});
+}
 
-		Status: {
-			type: "text",
-			x: 450,
-			y: 140,
-			width: 100,
-			height: 30,
-			text: "Status",
-		},
-		LightLevel: {
-			type: "text",
-			x: 450,
-			y: 170,
-			width: 100,
-			height: 30,
-			text: "Status",
-		},
-
-		EnergySlot: {
-			type: "slot",
-			x: 700,
-			y: 60,
-			size: 50,
-			bitmap: "Others.en_slot",
-		},
-	},
-});
+const BasicSolarPanelUI = createGalacticraftSolarPanelUI("tile.galacticraft.basic_solar");
+const AdvancedSolarPanelUI = createGalacticraftSolarPanelUI("tile.galacticraft.advanced_solar");
