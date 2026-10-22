@@ -60,7 +60,9 @@
         "copper":24,
         "tin":22,
         "silicon":3,
-        "aluminum":18
+        "aluminum":18,
+        "oilFactor": 1.8,
+        "oilRetrogen": false
       },
       "moon":{
         "copper":26,

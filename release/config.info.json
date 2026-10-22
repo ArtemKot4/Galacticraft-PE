@@ -6,6 +6,12 @@
                 "ru": "«Включить модификацию»"
             }
           },
+            "generation": {
+                "name": { "en": "Generation", "ru": "Генерация" }
+            },
+            "generation.earth": {
+                "name": { "en": "Earth", "ru": "Земля" }
+            },
                      "Generation.Venus": {
             "name": {
                 "en": "Venus",
@@ -241,8 +247,8 @@
     },
             "Fossils.Earth.oil": {
             "name": {
-                "en": "Count oil veins»",
-                "ru": "Количество жил нефти"
+                "en": "Oil veins (deprecated — ignored)",
+                "ru": "Жилы нефти (устарело — игнорируется)"
             }
     },        "Fossils.Mars.copper": {
             "name": {
@@ -328,7 +334,27 @@
                 "en": "«Count dense ice at the Mars»",
                 "ru": "«Количество льда на поверхности»"
             }
-                              },
+            },
+            "generation.earth.oilFactor": {
+                "name": {
+                    "en": "Oil generation factor",
+                    "ru": "Коэффициент генерации нефти"
+                },
+                "description": {
+                    "en": "Java-like oil lake chance factor. 0 disables generation; default 1.8.",
+                    "ru": "Коэффициент шанса генерации нефтяных озёр. 0 отключает генерацию; по умолчанию 1.8."
+                }
+            },
+            "generation.earth.oilRetrogen": {
+                "name": {
+                    "en": "Retro-generate oil in existing chunks",
+                    "ru": "Ретрогенерация нефти в существующих чанках"
+                },
+                "description": {
+                    "en": "Optional; default false. Requires a separate retrogen implementation.",
+                    "ru": "Опционально; по умолчанию false. Требует отдельной реализации ретрогенерации."
+                }
+            },
                         "Fossils.Moon.sapphire": {
             "name": {
                 "en": "Count sapphire veins",

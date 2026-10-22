@@ -144,6 +144,55 @@ namespace BlockList {
         return [[BlockList.ARCLAMP.id, 1, 0]];
     });
 
+    const stoneMaterialBlocks: BasicBlock[] = [
+        // ore
+        ORE_COPPER_EARTH,
+        ORE_TIN_EARTH,
+        ORE_SILICON_EARTH,
+        ORE_ALUMINUM_EARTH,
+        ORE_COPPER_MOON,
+        ORE_TIN_MOON,
+        MOON_SAPPHIRE,
+        VENUS_QUARTZ,
+
+        // blocks like stone
+        BLOCK_MOON_SAPPHIRE,
+        MOON_CHEESE,
+        DECORATION_DESH,
+        BLOCK_TIN,
+        BLOCK_LEAD,
+        BLOCK_COPPER,
+        BLOCK_ALUMINUM,
+        BLOCK_CARVED_IRON_STEEL,
+        BLOCK_BRONZE,
+        BLOCK_STEEL,
+        BLOCK_TITANIUM,
+        DESH,
+        TIN_DECORATION_BLOCK,
+        OXYGEN_TILE,
+        BLOCK_IRON_STEEL,
+        CARVED_TIN_DECORATION_BLOCK,
+        MOON_STONE_TOP,
+        MOON_STONE,
+        MOON_STONE_MIDDLE,
+        VENUS_ROCK_0,
+        VENUS_ROCK_1,
+        VENUS_ROCK_2,
+        VENUS_ROCK_3,
+        MARS_TOP_STONE,
+        MARS_MIDDLE_STONE,
+        MARS_BOTTOM_STONE,
+        MARS_COBBLESTONE,
+        BLOCK_METEORIC_IRON,
+        BLOCK_SILICON,
+        MOON_DUNGEON_BRICK,
+        GRATING
+    ];
+
+    for(const block of stoneMaterialBlocks) {
+        ToolAPI.registerBlockMaterial(block.id, "stone", block.getDestroyLevel());
+    }
+
     for(const key in (BlockList as any)) {
         const block = (BlockList as any)[key];
 
