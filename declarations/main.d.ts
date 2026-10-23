@@ -124,9 +124,9 @@ declare class ItemStack implements ItemInstance {
     /**
      *
      * @param comparator comparator for sort. You can use default comparators: {@link ItemStack.FILTER_COMPARATORS}
-     * @param stacks stacks to filter
+     * @param stacks stacks to sort
      */
-    static sort(stacks: ItemInstance[], comparator?: (stack1: ItemInstance, stack2: ItemInstance) => number): ItemStack[];
+    static sort(stacks: ItemInstance[], comparator?: (stack1: ItemInstance, stack2: ItemInstance) => number): ItemInstance[];
 }
 declare namespace ItemStack {
     namespace SortComparators {
@@ -549,7 +549,7 @@ declare function NetworkServerPacket(name: string): (target: Object, propertyKey
  */
 declare function NetworkServerPacket(target: unknown, key?: string, descriptor?: NetworkServerPacketMethodDescriptor): NetworkServerPacketMethodDescriptor;
 /**
- * Will be deleted in future. Don't use if you don't author of library
+ * Will be deleted or renamed in future. Don't use now if you don't author of library
  */
 declare namespace NetworkHelper {
     function sendToPlayer(playerUid: number, name: "send_particles", data: {
@@ -565,6 +565,10 @@ declare namespace NetworkHelper {
     function sendToPlayer(playerUid: number, name: "send_message", data: {
         message: string;
     }): any;
+    /**
+     * @returns failed clients
+     */
+    function sendToClients<Data extends Object = {}, Client = (number | NetworkClient)>(clients: Client[], name: string, data: Data): Nullable<Client[]>;
 }
 interface IItemHoldCallback {
     onItemHold?(item: ItemInstance, playerUid: number, slotIndex: number): void;
@@ -1054,6 +1058,7 @@ declare class PlayerWrapper {
     clearInventory(): void;
     getSelectedItem(): ItemStack;
     static isCreative(player: number): boolean;
+    static decreaseCarriedItem(playerUid: number, count?: number): void;
 }
 interface CustomGeneratorDescription {
     base?: string | number;

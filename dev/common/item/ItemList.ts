@@ -44,9 +44,11 @@ namespace ItemList {
 
     export const FLAG_CANE = new GalacticraftItem("flag_cane", { name: "flag_cane", meta: 0 });
 
-    export const CANISTER_COPPER = new Canister("canister_copper", "canister_copper");
+    export const CANISTER_COPPER = new GalacticraftItem("canister_copper", { name: "canister_copper", meta: 0 });
 
-    export const CANISTER_TIN = new Canister("canister_tin", "canister_tin");
+    export const CANISTER_TIN = new GalacticraftItem("canister_tin", { name: "canister_tin", meta: 0 });
+
+    export const CANISTER = new Canister("canister_gc", "empty_liquid_canister");
 
     export const IRON_STEEL_CANISTER = new GalacticraftItem("iron_steel_canister", { name: "iron_steel_canister", meta: 0 }, { stack: 16 });
 
@@ -169,8 +171,6 @@ namespace ItemList {
     export const OXYGEN_CONCENTRATOR = new GalacticraftItem("oxygen_concentrator", { name: "oxygen_concentrator", meta: 0 });
     
     export const FREQUENCY_MODULE = new GalacticraftItem("frequency_module", { name: "frequency_module", meta: 0 });  
-
-    export const CANISTER = new Canister("canister_gc", "empty_liquid_canister");
 
     export const BATTERY = new Battery("battery_gc", { name: "battery_gc", meta: 0 });
 

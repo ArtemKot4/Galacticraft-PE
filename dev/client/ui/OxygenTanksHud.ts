@@ -94,8 +94,9 @@ const OxygenTanksHud = (() => {
     };
 })();
 
-Callback.addCallback("LocalTick", function() {
-    if(World.getThreadTime() % 20 == 0) {
-        OxygenTanksHud.update();
-    }
-});
+//code below is useless for future
+// Callback.addCallback("LocalTick", function() {
+//     if(World.getThreadTime() % 20 == 0) {
+//         OxygenTanksHud.update();
+//     }
+// });
