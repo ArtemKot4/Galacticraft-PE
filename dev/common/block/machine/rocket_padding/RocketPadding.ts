@@ -102,7 +102,7 @@ class RocketPadding extends RotatableBlock implements IRocketPadding, IClickCall
                 Network.getClientForPlayer(playerUid).sendMessage(Native.Color.RED + Translation.translate("message.galacticraft.broken_load_of_resources"))
                 return;
             }
-            new PlayerUser(playerUid).decreaseCarriedItem(1);
+            new PlayerWrapper(playerUid).decreaseCarriedItem(1);
             RocketManager.addRocketEntity(rocket, entityID, extra.getInt("fuelAmount", 0), extra.getInt("slotCount", 0));
         }
     }
@@ -203,7 +203,7 @@ class RocketPadding extends RotatableBlock implements IRocketPadding, IClickCall
             }
             count++;
             if(playerUid != null) {
-                new PlayerActor(playerUid).addItemToInventory(id, 1, data, null);
+                new PlayerActor(playerUid).addItemToInventory(id, 1, data, null, true);
             }
         });
         return count;

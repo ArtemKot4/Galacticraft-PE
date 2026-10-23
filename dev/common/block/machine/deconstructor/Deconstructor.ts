@@ -6,7 +6,7 @@ class DeconstructorTile extends ElectricMachine.TileEntity {
         energy: 0,
         progress: 0
     };
-    public override data: typeof this.defaultValues;
+    public override data: typeof this.defaultValues & { disabled: boolean };
 
     public readonly outputSlots: string[] = MathHelper.range(1, 10).map(v => "output_slot_" + v);
 

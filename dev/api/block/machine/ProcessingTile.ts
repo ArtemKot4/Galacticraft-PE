@@ -6,10 +6,6 @@ abstract class ProcessingTile extends CommonTileEntity {
     public currentRecipe: ReturnType<typeof RecipeModule.Factory.prototype.getRecipe>;
     public openListenerRegistered?: boolean;
 
-    public override getScreenName(player?: PlayerActor, coords?: Vector3): string {
-        return TileAccess.isPlayerInRange(player, coords) ? "main" : null;
-    }
-
     public override onInit(): void {
         this.data.active = this.data.active || false;
         this.data.progress = this.data.progress || 0;
@@ -144,9 +140,9 @@ abstract class ProcessingTile extends CommonTileEntity {
     public abstract getFactory(): RecipeModule.Factory<unknown> & RecipeModule.IManageContainer;
 }
 
-interface ProcessingTile {
-    getPowerTier?(): number;
-}
+// interface ProcessingTile {
+//     getPowerTier?(): number;
+// }
 
 /*
 Описываю архитектуру для себя же

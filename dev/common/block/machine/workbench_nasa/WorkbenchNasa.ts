@@ -1,7 +1,4 @@
-const containersWithSlots = {
-    [VanillaBlockID.chest]: 36,
-    [VanillaBlockID.barrel]: 36
-}; //нужно будет перенести в Fireflies и переделать в более единый вид
+
 
 class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback, IDestroyCallback {
     public bottomData = 0;
@@ -149,8 +146,8 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
     }
 
     public getSlotCountFromContainer(id: number): number {
-        if(id in containersWithSlots) {
-            return containersWithSlots[id];
+        if(id in TileEntity.VanillaContainerSlotDataByID) {
+            return TileEntity.VanillaContainerSlotDataByID[id];
         }
         const tilePrototype = TileEntity.getPrototype(id);
         if(tilePrototype != null) {
@@ -230,9 +227,9 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
     }
 
     public registerPackets(): void {
-        Network.addServerPacket("packet.galacticraft.workbench_nasa.open_ui", (client, data) => {
+        Network.addServerPacket("packet.galacticraft.workbench_nasa.open_ui", (client, data: Vector) => {
             const playerUid = client.getPlayerUid();
-            if(data == null || typeof data.x != "number" || typeof data.y != "number" || typeof data.z != "number") {
+            if(data == null || !Vector3.isCompatible(data)) {
                 return;
             }
             const coords = { x: data.x, y: data.y, z: data.z };

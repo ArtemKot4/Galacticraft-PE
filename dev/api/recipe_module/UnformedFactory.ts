@@ -2,6 +2,15 @@ namespace RecipeModule {
     type UnformedStorageFormat = IDefaultRecipe<ItemInstance[], ItemInstance[]>;
     
     export class UnformedFactory<CachedStorage extends ICachedStorage = ICachedStorage> extends Factory<UnformedStorageFormat, CachedStorage> implements IManageContainer {
+        public override registerRecipe(obj: UnformedStorageFormat, fileName?: string): this {
+            const processed = {
+                ...obj,
+                input: ItemStack.sort([ ...obj.input ], ItemStack.SortComparators.ID_GRADATION)
+            };
+            super.registerRecipe(processed, fileName);
+            return this;
+        }
+        
         public getContainerManager(): typeof ContainerManagers.Default {
             return ContainerManagers.Default;    
         }
@@ -26,6 +35,7 @@ namespace RecipeModule {
             }
             const recipeInput = recipe.input;
             let index = -1;
+            let stacks = [];
 
             for(const inputSlotName of cachedStorage.inputSlots) {
                 const slot = slotGetter(inputSlotName);
@@ -33,12 +43,16 @@ namespace RecipeModule {
                     continue;
                 }
                 index++;
-                if(!ItemStack.contains(slot, recipeInput[index] || {} as ItemInstance)) {
-                    return false;
-                }
+                stacks.push(slot);
             }
             if(index != recipeInput.length - 1) {
                 return false;
+            }
+            stacks = ItemStack.sort(stacks, ItemStack.SortComparators.ID_GRADATION);
+            for(let i = 0; i < stacks.length; i++) {
+                if(!ItemStack.contains(stacks[i], recipeInput[i] || {} as ItemInstance)) {
+                    return false;
+                }
             }
             return true;
         }

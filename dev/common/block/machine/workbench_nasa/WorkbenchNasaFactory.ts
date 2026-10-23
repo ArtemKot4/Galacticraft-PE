@@ -48,7 +48,7 @@ namespace RecipeModule {
         }
 
         public hasSchemaOfItem(item: ItemInstance): boolean {
-            for(const schema of this.schemas.values()) {
+            for(const schema of Array.from(this.schemas.values())) {
                 if(ItemStack.equals(schema.item, item)) {
                     return true;
                 }
@@ -57,7 +57,7 @@ namespace RecipeModule {
         }
 
         public getSchemaByItem(item: ItemInstance): Nullable<WorkbenchNasaSchema> {
-            for(const schema of this.schemas.values()) {
+            for(const schema of Array.from(this.schemas.values())) {
                 if(ItemStack.equals(schema.item, item)) {
                     return schema;
                 }
@@ -66,7 +66,7 @@ namespace RecipeModule {
         }
 
         public getSchemaWithEntry(item: ItemInstance): [string, WorkbenchNasaSchema] {
-            for(const entry of this.schemas.entries()) {
+            for(const entry of Array.from(this.schemas.entries())) {
                 if(ItemStack.equals(entry[1].item, item)) {
                     return entry;
                 }

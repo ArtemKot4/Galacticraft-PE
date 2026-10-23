@@ -11,6 +11,8 @@ class CircuitFabricatorTile extends ProcessingTile {
         return 400;
     }
 
+    public getPowerTier?(): number;
+
     public override getProgressMax(): number {
         return Math.floor(300 * 2 / (1 + this.getPowerTier()));
     }

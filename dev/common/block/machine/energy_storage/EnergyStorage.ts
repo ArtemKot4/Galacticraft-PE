@@ -1,6 +1,6 @@
 const ENERGY_STORAGE_DEBUG = false;
 
-function energyStorageFillTextures(level: number, blue: boolean): any[][] {
+function energyStorageFillTextures(level: number, blue: boolean): [string, number][] {
     const clamped = Math.max(0, Math.min(16, level));
     let module: any;
     if(blue) {
@@ -20,7 +20,7 @@ function energyStorageFillTextures(level: number, blue: boolean): any[][] {
 }
 
 // Rotation permutations for engine block data 0..3 (same table as IndustrialCraft2 TileRenderer, same engine).
-function energyStorageRotatedTextures(textures: any[][], data: number): any[][] {
+function energyStorageRotatedTextures(textures: [string, number][], data: number): [string, number][] {
     switch(data & 3) {
         case 0: return [textures[0], textures[1], textures[3], textures[2], textures[5], textures[4]];
         case 2: return [textures[0], textures[1], textures[4], textures[5], textures[3], textures[2]];
@@ -76,7 +76,6 @@ class EnergyStorageTile extends ElectricMachine.TileEntity {
         fillLevel: -1
     };
     public override data: typeof this.defaultValues;
-    public networkData: any;
 
     public override getScreenByName(): UI.IWindow {
         return EnergyStorageUI;
@@ -121,7 +120,7 @@ class EnergyStorageTile extends ElectricMachine.TileEntity {
         }
     }
 
-    public client = createEnergyStorageClient(false);
+    public override client = createEnergyStorageClient(false);
 }
 
 class ClusterStorageTile extends EnergyStorageTile {

@@ -5,7 +5,7 @@ namespace StorageInterfaceHelper {
         slot[type] = true;
 
         if(type == "input") {
-            slot.isValid = function({ id, count, data, extra }, side, tileEntity) {
+            slot.isValid = function({ id, count, data, extra }, side: number, tileEntity: CommonTileEntity) {
                 if(side != 1) {
                     return;
                 }

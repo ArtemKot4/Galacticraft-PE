@@ -1,6 +1,7 @@
 //@ts-ignore
 namespace ElectricMachine {
     export interface ITileEntity extends EnergyTile {
+        readonly container: ItemContainer;
         batterySlotChecks?: Set<string>
         bindingCache?: { [key: string]: number };
         openListenerRegistered?: boolean;
@@ -14,7 +15,7 @@ namespace ElectricMachine {
         getEnergy?(type: string): number;
         isDisabled?(): boolean;
         getPowerTier?(): number;
-        redstone?(params: Callback.RedstoneSignalParams): void;
+        redstone(params: Callback.RedstoneSignalParams): void;
     }
 
     export class TileEntity extends CommonTileEntity implements ElectricMachine.TileEntity {
@@ -28,10 +29,5 @@ namespace ElectricMachine {
         getEnergy?(type: string): number;
         isDisabled?(): boolean;
         getPowerTier?(): number;
-        redstone?(params: Callback.RedstoneSignalParams): void;
-
-        public override getScreenName(player?: PlayerActor, coords?: Vector3): string {
-            return TileAccess.isPlayerInRange(player, coords) ? "main" : null;
-        }
     }
 }

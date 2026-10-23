@@ -2,6 +2,7 @@ class ElectricCompressorTile extends ProcessingTile {
     protected processTimeBase = 200;
     public override inputSlots: string[] = MathHelper.range(1, 10).map(v => "slot_" + v);
 
+    public getPowerTier?(): number;
     public override outputSlots: string[] = [
         "result_slot",
         "result_slot_2"

@@ -1,7 +1,7 @@
 {
-	"extends": "../tsconfig.json",
+	"extends": "..\\tsconfig.json",
 	"compilerOptions": {
-		"outFile": "./main.js",
+		"outFile": "C:\\Users\\Артём\\Documents\\toolchain\\toolchain\\toolchain\\build\\galacticraft-fc6ae\\sources\\main.js",
 		"lib": [
 			"esnext"
 		]
@@ -54,6 +54,7 @@
 		"api/rocket/RocketManager.ts",
 		"api/rocket/RocketType.ts",
 		"api/rocket/RocketEntity.ts",
+		"api/rocket/RocketNetworkPackets.ts",
 		"api/rocket/RocketEvents.ts",
 		"api/player/GalacticraftPlayer.ts",
 		"client/ui/menu/GalacticraftSettings.ts",

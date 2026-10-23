@@ -21,7 +21,7 @@ class CoalGeneratorTile extends ElectricMachine.TileEntity {
         this.data.energyTick ??= 0;
         this.data.heat ??= 0;
         BurnManager.addSlotPolicy(this);
-        this.networkData.addVerifier("has_energy", function(key, value) {
+        this.networkData.addVerifier("has_energy", function(key, value: Object) {
             return (typeof value == "boolean") ? value : null;
         });
     }
@@ -60,7 +60,6 @@ class CoalGeneratorTile extends ElectricMachine.TileEntity {
             // Java: idle -> heat decays with 0.3/t until zero
             if(this.data.heat > 0) {
                 this.data.heat = Math.max(0, this.data.heat - 0.3);
-                this.container.setScale("progress_scale", 0);
                 this.showHeatStatus();
                 if(this.data.heat <= 0) {
                     this.clearData();
@@ -143,7 +142,6 @@ class CoalGeneratorTile extends ElectricMachine.TileEntity {
                 this.data.energyTick = Math.min(this.data.energyTick + 1, maxEnergyTick);
             }
             this.setEnergy(Math.max(0, this.data.energyTick - this.getMinEnergyTick()), Galacticraft.EnergyTypes.JOULE.name);
-            this.container.setScale("progress_scale", this.data.burningMax > 0 ? this.data.burning / this.data.burningMax : 0);
         }
     }
 
@@ -171,7 +169,6 @@ class CoalGeneratorTile extends ElectricMachine.TileEntity {
     public clearData(): void {
         this.data.heat = 0;
         this.data.energyTick = 0;
-        this.container.setScale("progress_scale", 0);
         this.setEnergy(0, Galacticraft.EnergyTypes.JOULE.name);
     }
     
