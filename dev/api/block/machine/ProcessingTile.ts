@@ -9,13 +9,6 @@ abstract class ProcessingTile extends CommonTileEntity {
     public override onInit(): void {
         this.data.active = this.data.active || false;
         this.data.progress = this.data.progress || 0;
-        if(this.openListenerRegistered != true) {
-            this.openListenerRegistered = true;
-            this.container.addServerOpenListener(function(container) {
-                container.markAllSlotsDirty();
-                container.sendChanges();
-            });
-        }
     }
 
     protected getSpendEnergyAmount(): number {

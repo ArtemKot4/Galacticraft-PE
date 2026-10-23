@@ -1,23 +1,23 @@
 let RV: any = null;
 
 function rvIsPlainObject(value) {
-    return value !== null && typeof value === "object" && !Array.isArray(value);
+    return value != null && typeof value == "object" && !Array.isArray(value);
 }
 
 function rvToRecipeItem(source) {
-    if(source == null || typeof source !== "object") {
+    if(source == null || typeof source != "object") {
         return null;
     }
     var id = source.id;
     var count = source.count == null ? 1 : source.count;
     var data = source.data == null ? 0 : source.data;
-    if(typeof id !== "number" || !isFinite(id) || id <= 0) {
+    if(!isFinite(id) || id <= 0) {
         return null;
     }
-    if(typeof count !== "number" || !isFinite(count) || count < 1) {
+    if(!isFinite(count) || count < 1) {
         return null;
     }
-    if(typeof data !== "number" || !isFinite(data)) {
+    if(!isFinite(data)) {
         return null;
     }
     return {id: id | 0, count: count | 0, data: data | 0};

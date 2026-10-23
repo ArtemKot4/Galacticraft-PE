@@ -280,8 +280,9 @@ class WorkbenchNasa extends MachineBlock implements IBlockModel, IPlaceCallback,
 	    });
         Network.sendToServer("packet.galacticraft.workbench_nasa.open_ui", { x: coords.x, y: coords.y, z: coords.z });
     }
-}
 
-Callback.addCallback("ServerLevelLeft", function() {
-    WorkbenchNasa.returnOpenContainers();
-});
+    @SubscribeEvent
+    public static ServerLevelLeft() {
+        WorkbenchNasa.returnOpenContainers();
+    }
+}

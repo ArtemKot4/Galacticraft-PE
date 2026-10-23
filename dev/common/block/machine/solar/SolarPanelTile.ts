@@ -22,7 +22,7 @@ class SolarPanelTile extends ElectricMachine.TileEntity {
         StorageInterfaceHelper.addSlotInputPolicyFromContainer(this.blockID, "battery_slot_charge");
         StorageInterfaceHelper.addSlotOutputPolicyFromContainer(this.blockID, "battery_slot_charge");
         const lastRedstone = (this as any).redstone;
-        (this as any).redstone = (params: Callback.RedstoneSignalParams) => {
+        this.redstone = (params: Callback.RedstoneSignalParams) => {
             if(typeof lastRedstone == "function") {
                 lastRedstone.call(this, params);
             }
@@ -71,10 +71,10 @@ class SolarPanelTile extends ElectricMachine.TileEntity {
     }
 
     public isDaytime(celestialAngle?: number, worldTime?: number): boolean {
-        if(celestialAngle === undefined) {
+        if(celestialAngle == null) {
             celestialAngle = this.getCelestialAngle();
         }
-        if(worldTime === undefined) {
+        if(worldTime == null) {
             worldTime = World.getWorldTime();
         }
         return worldTime % 24000 < 12000 && (celestialAngle < 180.5 || celestialAngle > 359.5);
@@ -87,13 +87,13 @@ class SolarPanelTile extends ElectricMachine.TileEntity {
     }
 
     public updateAngle(celestialAngle?: number, daytime?: boolean, weatherClear?: boolean): void {
-        if(celestialAngle === undefined) {
+        if(celestialAngle == null) {
             celestialAngle = this.getCelestialAngle();
         }
-        if(daytime === undefined) {
+        if(daytime == null) {
             daytime = this.isDaytime(celestialAngle);
         }
-        if(weatherClear === undefined) {
+        if(weatherClear == null) {
             weatherClear = this.isWeatherClear();
         }
         if(!daytime || !weatherClear) {
@@ -270,71 +270,5 @@ class AdvancedSolarPanelTile extends SolarPanelTile {
 
     public override getBatteryChargeRate(): number {
         return 500;
-    }
-}
-
-@ElectricMachine({
-    [Galacticraft.EnergyTypes.JOULE.name]: {
-        type: ElectricMachine.Type.EXTRACTOR,
-        batteryManager: ElectricMachine.DEFAULT_BATTERY_MANAGERS.ENERGY_BATTERY_MANAGER,
-        energyKey: "energy",
-        capacity: 16000,
-        maxExtract: 200,
-        maxReceive: 200
-    }
-})
-class BasicSolarPanel extends MachineBlock {
-    public static tile = new SolarPanelTile();
-
-    public constructor() {
-        super("basic_solar_gc", [{
-            name: "tile.galacticraft.basic_solar",
-            texture: [
-                ["machine_gc", 0],
-                ["solar_basic", 0],
-                ["solar_basic", 1],
-                ["solar_basic", 1],
-                ["machine_output_gc", 0],
-                ["solar_basic", 1]
-            ],
-            inCreative: true
-        }]);
-    }
-
-    public override getTileEntity(): CommonTileEntity {
-        return BasicSolarPanel.tile;
-    }
-}
-
-@ElectricMachine({
-    [Galacticraft.EnergyTypes.JOULE.name]: {
-        type: ElectricMachine.Type.EXTRACTOR,
-        batteryManager: ElectricMachine.DEFAULT_BATTERY_MANAGERS.ENERGY_BATTERY_MANAGER,
-        energyKey: "energy",
-        capacity: 30000,
-        maxExtract: 200,
-        maxReceive: 200
-    }
-})
-class AdvancedSolarPanel extends MachineBlock {
-    public static tile = new AdvancedSolarPanelTile();
-
-    public constructor() {
-        super("advanced_solar_gc", [{
-            name: "tile.galacticraft.advanced_solar",
-            texture: [
-                ["machine_gc", 0],
-                ["solar_advanced", 0],
-                ["solar_advanced", 1],
-                ["solar_advanced", 1],
-                ["machine_output_gc", 0],
-                ["solar_advanced", 1]
-            ],
-            inCreative: true
-        }]);
-    }
-
-    public override getTileEntity(): CommonTileEntity {
-        return AdvancedSolarPanel.tile;
     }
 }

@@ -48,7 +48,7 @@ namespace RecipeModule {
             if(index != recipeInput.length - 1) {
                 return false;
             }
-            stacks = ItemStack.sort(stacks, ItemStack.SortComparators.ID_GRADATION);
+            ItemStack.sort(stacks, ItemStack.SortComparators.ID_GRADATION);
             for(let i = 0; i < stacks.length; i++) {
                 if(!ItemStack.contains(stacks[i], recipeInput[i] || {} as ItemInstance)) {
                     return false;

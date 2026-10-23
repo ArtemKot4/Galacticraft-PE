@@ -1,4 +1,3 @@
-
 const OxygenCollectorUI = new UI.StandartWindow({
     standard: {
         header: {

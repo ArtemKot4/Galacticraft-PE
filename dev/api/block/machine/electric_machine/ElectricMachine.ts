@@ -50,13 +50,6 @@ namespace ElectricMachine {
                         }
                     }
                 }
-                if(this.openListenerRegistered != true) {
-                    this.openListenerRegistered = true;
-                    this.container.addServerOpenListener(function(container) {
-                        container.markAllSlotsDirty();
-                        container.sendChanges();
-                    });
-                }
                 lastInit.call(this);
                 return;
             }

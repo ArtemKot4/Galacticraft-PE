@@ -110,12 +110,16 @@ common/block/machine/electric_compressor/ElectricCompressor.ts
 
 common/block/machine/energy_storage/EnergyStorage.ts
 
-common/block/machine/solar/SolarPanel.ts
+common/block/machine/solar/SolarPanelTile.ts
+common/block/machine/solar/BasicSolarPanel.ts
+common/block/machine/solar/AdvancedSolarPanel.ts
 
 common/block/machine/electric_furnace/ElectricFurnace.ts
 
 common/block/machine/advanced_compressor/AdvancedCompressor.ts
 
+common/block/machine/magnetic_table/MagneticTableTile.ts
+common/block/machine/magnetic_table/MagneticTableStorage.ts
 common/block/machine/magnetic_table/MagneticTable.ts
 
 common/block/machine/deconstructor/Deconstructor.ts

@@ -1,12 +1,10 @@
-function oxygenCollectorConfigs() {
+@ElectricMachine((() => {
     const joule = ElectricMachine.Config.DEFAULTS.GJ(ElectricMachine.Type.RECEIVER);
     joule[Galacticraft.EnergyTypes.JOULE.name].redstoneControl = false;
     const oxygen = ElectricMachine.Config.DEFAULTS.OXYGEN(ElectricMachine.Type.EXTRACTOR);
     oxygen[Galacticraft.EnergyTypes.OXYGEN.name].capacity = 6000;
     return ElectricMachine.Config.assembly(joule, oxygen);
-}
-
-@ElectricMachine(oxygenCollectorConfigs())
+})())
 class OxygenCollector extends MachineBlock {
     public static tile = new OxygenCollectorTile();
 

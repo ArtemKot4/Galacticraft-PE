@@ -4,7 +4,6 @@ namespace ElectricMachine {
         readonly container: ItemContainer;
         batterySlotChecks?: Set<string>
         bindingCache?: { [key: string]: number };
-        openListenerRegistered?: boolean;
         getCapacity?(energyType: string): number;
         /**
          * Returns added energy
@@ -21,7 +20,6 @@ namespace ElectricMachine {
     export class TileEntity extends CommonTileEntity implements ElectricMachine.TileEntity {
         batterySlotChecks?: Set<string>
         bindingCache?: { [key: string]: number };
-        openListenerRegistered?: boolean;
         getCapacity?(energyType: string): number;
         addEnergy?(amount: number, type: string): number;
         setEnergy?(count: number, type: string): void;

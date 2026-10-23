@@ -15,3 +15,5 @@ interface SyncedNetworkData {
     addVerifier(key: string, verifier: (key: string, value: unknown) => unknown): void;
     setGlobalVerifier(verifier: (key: string, value: unknown) => unknown): void;
 }
+
+declare const LiquidItemRegistry: any;
