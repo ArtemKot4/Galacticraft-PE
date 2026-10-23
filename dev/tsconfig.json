@@ -13,6 +13,7 @@
 		"api/StorageInterfaceHelper.ts",
 		"client/ui/lib/Component.tsx",
 		"api/utils/GalacticraftException.ts",
+		"api/utils/OilGen.ts",
 		"api/utils/UniqueGen.ts",
 		"api/utils/TileAccess.ts",
 		"api/recipe_module/ParseProvider.ts",

@@ -44,4 +44,8 @@ Callback.addCallback("GenerateChunkUniversal", (chunkX: number, chunkZ: number, 
             });
         }
     }
+    const region = BlockSource.getCurrentWorldGenRegion();
+    if(region != null) {
+        OilGen.generateForChunk(chunkX, chunkZ, dimensionId, worldSeed, region);
+    }
 });

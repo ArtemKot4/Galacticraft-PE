@@ -126,7 +126,6 @@ namespace BlockList {
     Block.setShape(GRATING.id, 0, 14 / 16, 0, 1, 1, 1, 0);
 
     export const ALUMINUM_WIRE = new AluminumWire();
-    
 
     export const OIL = new GalacticraftLiquidBlock("oil", "oil_gc_still", "oil_gc_flow");
     export const FUEL = new GalacticraftLiquidBlock("fuel", "fuel_gc_still", "fuel_gc_flow");
