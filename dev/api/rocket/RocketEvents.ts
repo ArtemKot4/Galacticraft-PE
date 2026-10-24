@@ -41,11 +41,6 @@ class RocketEvents {
     }
 
 	@SubscribeEvent
-	public static onLevelLeft() {
-		RocketManager.rocketEntities = {};
-	}
-
-	@SubscribeEvent
 	public static onServerLevelLoaded() {
 		for(const id in RocketManager.rocketEntities) {
 			const saved = RocketManager.rocketEntities[id];

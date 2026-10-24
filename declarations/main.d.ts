@@ -1287,6 +1287,46 @@ declare function SubscribeEvent(event: ECallback, priority?: number): MethodDeco
  */
 declare function SubscribeEvent(target: unknown, key: string, descriptor: PropertyDescriptor): PropertyDescriptor;
 /**
+ * Decorator to do work with saving data and deleting by player world unload so simplier.
+ * data will be serialized for {@link Saver.addSavesScope} and cleared for client by LevelLeft callback if it is not disabled
+ * @example
+ * ```ts
+ * \@SerializeableStorage({ scopeName: "mymod.storage" })
+ * class MyStorage {
+ *     public static data: Record<string, string> = {};
+ * }
+ * ```
+ */
+declare function SerializeableStorage(settings: SerializeableStorage.ISettings): <T extends new (...args: any[]) => any>(target: T) => T;
+declare namespace SerializeableStorage {
+    interface ISettings {
+        /**
+         * Key name of static field of your class
+         * @default data
+         */
+        keyName?: string;
+        /**
+         * Name of scope for save
+         */
+        scopeName?: string;
+        /**
+         * If true, data will be cleared by LevelLeft callback for client
+         */
+        clearOnUnload?: boolean;
+        /**
+         * Your logic of read if standard is not need you
+         * @default true
+         */
+        read?(saved: Object): void;
+        /**
+         * Your logic of save if standard is not need you
+         */
+        save?(): Object;
+    }
+    const clearOnUnloadList: [classLink: Function, keyName: string, defaultValue: unknown][];
+    function copyDefault<T>(value: T): T;
+}
+/**
  * Decorator to log your errors instead they be throwed.
  * @example
  * ```ts
