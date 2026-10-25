@@ -30,7 +30,7 @@ const OxygenCollectorUI = new UI.StandartWindow({
         type: "bitmap",
         x: 379,
         y: 300,
-        bitmap: "machine.energy_bar_empty",
+        bitmap: "machine.bar_empty",
         scale: 3.4
     },
     {

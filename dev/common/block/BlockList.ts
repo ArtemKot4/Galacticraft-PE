@@ -20,6 +20,8 @@ namespace BlockList {
     export const ADVANCED_COMPRESSOR = new AdvancedCompressor();
     export const MAGNETIC_TABLE = new MagneticTable();
     export const DECONSTRUCTOR = new Deconstructor();
+    export const OXYGEN_COMPRESSOR = new OxygenCompressor();
+    export const OXYGEN_DECOMPRESSOR = new OxygenDecompressor();
 
     export const BLOCK_MOON_SAPPHIRE = new BasicBlock("block_moon_sapphire_gc", [{ name: "block.galacticraft.sapphire_block", texture: [["block_moon_sapphire", 0]], inCreative: true }]);
     export const MOON_CHEESE = new BasicBlock("moon_cheese_gc", [{ name: "block.galacticraft.moon_cheese", texture: [["moon_cheese", 0]], inCreative: true }]);

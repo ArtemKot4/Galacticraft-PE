@@ -1139,6 +1139,16 @@ Translation.addTranslation("tile.galacticraft.advanced_compressor", {
     ru: "Улучшенный компрессор"
 });
 
+Translation.addTranslation("tile.galacticraft.oxygen_compressor", {
+    en: "Oxygen Compressor",
+    ru: "Кислородный компрессор"
+});
+
+Translation.addTranslation("tile.galacticraft.oxygen_decompressor", {
+    en: "Oxygen Deompressor",
+    ru: "Кислородный декомпрессор"
+});
+
 Translation.addTranslation("tile.galacticraft.magnetic_table", {
     en: "Magnetic Crafting Table",
     ru: "Магнитный верстак"

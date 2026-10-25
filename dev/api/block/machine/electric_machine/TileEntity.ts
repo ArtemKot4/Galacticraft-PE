@@ -13,7 +13,7 @@ namespace ElectricMachine {
         decreaseEnergy?(amount: number, type: string): void;
         getEnergy?(type: string): number;
         isDisabled?(): boolean;
-        getPowerTier?(): number;
+        //getPowerTier?(): number;
         redstone(params: Callback.RedstoneSignalParams): void;
     }
 

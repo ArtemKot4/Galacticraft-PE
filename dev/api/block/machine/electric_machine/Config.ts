@@ -73,10 +73,25 @@ namespace ElectricMachine {
 
             export function OXYGEN(type: ElectricMachine.Type): { [OB: string]: Config } {
                 return {
-                    [Galacticraft.EnergyTypes.OXYGEN.name]: {
+                      [Galacticraft.EnergyTypes.OXYGEN.name]: {
                         type: type,
                         batteryManager: DEFAULT_BATTERY_MANAGERS.OXYGEN_BATTERY_MANAGER,
-                        energyKey: "oxygen"
+                        energyKey: "oxygen",
+                        setWireConnecting(): void {
+                            ICRender.getGroup("galacticraft.machine_liquid_connecting_0").add(this.id, 0);
+                            ICRender.getGroup("galacticraft.machine_liquid_connecting_1").add(this.id, 1);
+                            ICRender.getGroup("galacticraft.machine_liquid_connecting_2").add(this.id, 2);
+                            ICRender.getGroup("galacticraft.machine_liquid_connecting_3").add(this.id, 3);
+                        },
+                        isValidEnergySide(side: number): boolean {
+                            const data = this.blockSource.getBlockData(this.x, this.y, this.z);
+                            return (
+                                data == 0 && side == 5 ||
+                                data == 1 && side == 4 ||
+                                data == 2 && side == 2 ||
+                                data == 3 && side == 3
+                            );
+                        }
                     }
                 }
             }

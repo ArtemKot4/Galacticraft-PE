@@ -24,7 +24,7 @@ const CircuitFabricatorUI = new UI.StandartWindow({
 			type: "bitmap",
 			x: 436,
 			y: 295,
-			bitmap: "machine.energy_bar_empty",
+			bitmap: "machine.bar_empty",
 			scale: 3.2
 		},
 		{

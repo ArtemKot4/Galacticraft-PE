@@ -25,7 +25,7 @@ function createGalacticraftCompressorUI(titleKey: string): UI.IWindow {
 			type: "bitmap",
 			x: 380,
 			y: 320,
-			bitmap: "machine.energy_bar_empty",
+			bitmap: "machine.bar_empty",
 			scale: 3,
 		},
 		{

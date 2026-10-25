@@ -18,6 +18,22 @@ namespace ElectricMachine {
         public override getSpecialTypeKey(): string {
             return "oxygen_tank.special_type";
         }
+
+        public override charge(tileEntity: ElectricMachine.ITileEntity, slotName: string): boolean {
+            if(tileEntity.getEnergy(Galacticraft.EnergyTypes.JOULE.name) < 5) {
+                return;
+            }
+            super.charge(tileEntity, slotName);
+            tileEntity.decreaseEnergy(5, Galacticraft.EnergyTypes.JOULE.name);
+        }
+
+        public override discharge(tileEntity: ElectricMachine.ITileEntity, slotName: string): boolean {
+            if(tileEntity.getEnergy(Galacticraft.EnergyTypes.JOULE.name) < 5) {
+                return;
+            }
+            super.discharge(tileEntity, slotName);
+            tileEntity.decreaseEnergy(5, Galacticraft.EnergyTypes.JOULE.name);
+        }
     }
 
     export namespace DEFAULT_BATTERY_MANAGERS {

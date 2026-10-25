@@ -24,7 +24,7 @@ const DeconstructorUI = new UI.StandartWindow({
 			type: "bitmap",
 			x: 360,
 			y: 230,
-			bitmap: "machine.energy_bar_empty",
+			bitmap: "machine.bar_empty",
 			scale: 3,
 		},
 	],

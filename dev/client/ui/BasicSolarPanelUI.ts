@@ -32,7 +32,7 @@ function createGalacticraftSolarPanelUI(titleKey: string): UI.IWindow {
 				type: "bitmap",
 				x: 333,
 				y: 57,
-				bitmap: "machine.energy_bar_empty",
+				bitmap: "machine.bar_empty",
 				scale: 4.5,
 			},
 		],

@@ -15,6 +15,7 @@ class LiquidPipe extends BasicWire {
         return ICRender.getGroup("galacticraft.liquid_pipe");
     }
 
+
     public override getMachineGroupCommonName(): string {
         return "galacticraft.machine_liquid_connecting";
     }

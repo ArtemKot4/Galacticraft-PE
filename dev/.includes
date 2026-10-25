@@ -83,6 +83,8 @@ client/ui/DeconstructorUI.ts
 client/ui/FuelLoaderUI.ts
 client/ui/GeothermalGeneratorUI.ts
 client/ui/OxygenCollectorUI.ts
+client/ui/OxygenCompressorUI.ts
+client/ui/OxygenDecompressorUI.ts
 client/ui/OxygenStorageUI.ts
 client/ui/RefineryUI.ts
 client/ui/WorkbenchUI.ts
@@ -107,6 +109,12 @@ common/block/machine/compressor/Compressor.ts
 
 common/block/machine/electric_compressor/ElectricCompressorTile.ts
 common/block/machine/electric_compressor/ElectricCompressor.ts
+
+common/block/machine/oxygen_compressor/OxygenCompressorTile.ts
+common/block/machine/oxygen_compressor/OxygenCompressor.ts
+
+common/block/machine/oxygen_decompressor/OxygenDecompressorTile.ts
+common/block/machine/oxygen_decompressor/OxygenDecompressor.ts
 
 common/block/machine/energy_storage/EnergyStorage.ts
 

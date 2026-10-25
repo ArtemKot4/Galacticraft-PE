@@ -77,7 +77,7 @@ class CoalGeneratorTile extends ElectricMachine.TileEntity {
         // Java output: additive (heat - MIN) into buffer (does NOT overwrite unextracted energy)
         this.addEnergy(Math.max(0, this.data.heat - this.getMinEnergyTick()), Galacticraft.EnergyTypes.JOULE.name);
         this.showEnergyStatus();
-        this.container.setScale("progress_scale", this.data.burningMax > 0 ? this.data.burning / this.data.burningMax : 0);
+        //this.container.setScale("progress_scale", this.data.burningMax > 0 ? this.data.burning / this.data.burningMax : 0);
 
         if(this.data.burning > 0) {
             this.data.burning--;

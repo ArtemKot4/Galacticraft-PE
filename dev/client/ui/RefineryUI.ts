@@ -31,7 +31,7 @@ const RefineryUI = new UI.StandartWindow({
 			type: "bitmap",
 			x: 500,
 			y: 70,
-			bitmap: "machine.energy_bar_empty",
+			bitmap: "machine.bar_empty",
 			scale: 3
 		},
 		{

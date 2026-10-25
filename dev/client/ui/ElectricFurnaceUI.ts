@@ -78,7 +78,7 @@ function createGalacticraftFurnaceUI(titleKey: string, showSecondOutput: boolean
 				type: "bitmap",
 				x: 350,
 				y: 270,
-				bitmap: "machine.energy_bar_empty",
+				bitmap: "machine.bar_empty",
 				scale: 3,
 			},
 		],

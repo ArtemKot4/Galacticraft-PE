@@ -15,7 +15,7 @@ const OxygenTanksHud = (() => {
             type: "bitmap",
             x: 10,
             y: y,
-            bitmap: "machine.energy_bar_empty",
+            bitmap: "machine.bar_empty",
             scale: 2
         });
         elements["o2_bar_" + i] = {

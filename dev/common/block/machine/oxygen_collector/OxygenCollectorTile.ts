@@ -8,10 +8,6 @@ class OxygenCollectorTile extends ElectricMachine.TileEntity {
         return OxygenCollectorUI;
     }   
 
-    public override onInit(): void {
-        StorageInterfaceHelper.addSlotInputPolicyFromContainer(this.blockID, "battery_slot_discharge");
-    }
-
     public override onLoad(): void {
         const body = Galacticraft.getCelestialBodyByID(this.dimension);
         if(body != null && !body.hasOxygen()) {
