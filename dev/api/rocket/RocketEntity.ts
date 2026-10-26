@@ -493,6 +493,12 @@ class RocketEntity {
 			//...something in future
 			//Entity.setMobile(this.riderUid, false);
 		}
+		this.setPerspective(false);
+		
+		// ? debug start: while ui is not done
+		let id = this.getDimension() == EDimension.OVERWORLD ? Galacticraft.getCelestialBodyByID(EDimension.OVERWORLD).satellites[0] : EDimension.OVERWORLD; 
+		Dimensions.transfer(this.riderUid, id);
+		// ? debug end
 		Callback.invokeCallback("Galacticraft:RocketFlightCompleted", this);
 	}
 
@@ -764,15 +770,6 @@ class RocketEntity {
 			return;
 		}
 		client.send("packet.galacticraft.register_rocket_screen_factory", data);
-	}
-
-	@SubscribeEvent
-	public static onServerPlayerLoaded(playerUid: number) {
-		const client = Network.getClientForPlayer(playerUid);
-
-		RocketManager.forEachRocketEntity((rocketEntity: RocketEntity) => {
-			RocketEntity.registerScreenFactoryOnClientSide(rocketEntity, client);
-		});
 	}
 }
 

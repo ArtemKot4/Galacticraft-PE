@@ -55,4 +55,13 @@ class RocketEvents {
 			entity.loadIfNeed();
 		}
 	}
+
+	@SubscribeEvent
+	public static onServerPlayerLoaded(playerUid: number) {
+		const client = Network.getClientForPlayer(playerUid);
+
+		RocketManager.forEachRocketEntity((rocketEntity: RocketEntity) => {
+			RocketEntity.registerScreenFactoryOnClientSide(rocketEntity, client);
+		});
+	}
 }

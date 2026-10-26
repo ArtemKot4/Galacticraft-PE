@@ -160,6 +160,20 @@ Recipes.addShaped({ id: BlockList.WORKBENCH_NASA.id, count: 1, data: 0 },
     ["XZX", "UWU", "YVY"],
     ["U", VanillaBlockID.lever, 0, "V", VanillaBlockID.redstone_torch, 0, "W", ItemList.WAFER_ADVANCED.id, 0, "X", ItemList.COMPRESSED_STEEL.id, 0, "Y", ItemList.COMPRESSED_STEEL.id, 0, "Z", VanillaBlockID.crafting_table, 0]);
 
+Recipes.addShaped({ id: ItemList.OXYGEN_CONCENTRATOR.id, count: 1, data: 0 }, [
+    "ABA", "BCB", "ADA"
+], ["A", ItemList.COMPRESSED_STEEL.id, "B", ItemList.COMPRESSED_TIN.id, 0, "C", ItemList.CANISTER_TIN.id, 0, "D", ItemList.AIR_VENT.id, 0])
+
+Recipes.addShaped({ id: BlockList.OXYGEN_DECOMPRESSOR.id, count: 1, data: 0 },
+    ["ABA", "CDC", "AEA"],
+    ["A", ItemList.COMPRESSED_STEEL.id, 0, "B", ItemList.AIR_FAN.id, 0, "C", ItemList.COMPRESSED_ALUMINUM.id, 0, "D", ItemList.OXYGEN_CONCENTRATOR.id, 0, "E", VanillaBlockID.redstone_torch, 0]
+);
+
+Recipes.addShaped({ id: BlockList.OXYGEN_COMPRESSOR.id, count: 1, data: 0 },
+    ["ABA", "BCB", "ADA"],
+    ["A", ItemList.COMPRESSED_STEEL.id, 0, "B", ItemList.COMPRESSED_ALUMINUM.id, 0, "C", ItemList.OXYGEN_CONCENTRATOR.id, 0, "D", ItemList.COMPRESSED_BRONZE.id, 0]
+);
+
 Recipes.addShaped({ id: ItemList.BATTERY.id, count: 2, data: 100 },
     [" T ", "TRT", "TCT"],
     ["T", ItemList.COMPRESSED_TIN.id, 0, "R", VanillaItemID.redstone, 0, "C", VanillaItemID.coal, 0]);
