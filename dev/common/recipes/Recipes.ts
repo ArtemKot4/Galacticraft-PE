@@ -162,7 +162,7 @@ Recipes.addShaped({ id: BlockList.WORKBENCH_NASA.id, count: 1, data: 0 },
 
 Recipes.addShaped({ id: ItemList.OXYGEN_CONCENTRATOR.id, count: 1, data: 0 }, [
     "ABA", "BCB", "ADA"
-], ["A", ItemList.COMPRESSED_STEEL.id, "B", ItemList.COMPRESSED_TIN.id, 0, "C", ItemList.CANISTER_TIN.id, 0, "D", ItemList.AIR_VENT.id, 0])
+], ["A", ItemList.COMPRESSED_STEEL.id, 0, "B", ItemList.COMPRESSED_TIN.id, 0, "C", ItemList.CANISTER_TIN.id, 0, "D", ItemList.AIR_VENT.id, 0])
 
 Recipes.addShaped({ id: BlockList.OXYGEN_DECOMPRESSOR.id, count: 1, data: 0 },
     ["ABA", "CDC", "AEA"],
