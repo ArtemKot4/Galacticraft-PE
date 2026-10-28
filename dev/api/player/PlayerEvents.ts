@@ -1,9 +1,21 @@
 class PlayerEvents {
     @SubscribeEvent
-    public static onServerPlayerLoaded(playerUid: number) {
-        if(!PlayerManager.has(playerUid)) {
-            PlayerManager.set(playerUid);
+    public static onServerPlayerLoaded(playerUid: number): void {
+        if(!PlayerManager.hasInventory(playerUid)) {
+            PlayerManager.setNewInventory(playerUid);
         }
+    }
+
+    @SubscribeEvent
+    public static onServerLevelLoaded(): void {
+        Network.sendServerMessage(JSON.stringify(PlayerManager.data))
+        
+        for(const playerUid in PlayerManager.data) {
+            const data = PlayerManager.data[playerUid] = new PlayerGearInventory(Number(playerUid), PlayerManager.data[playerUid].container);
+            data.container.setClientContainerTypeName("galacticraft.frequency.player");
+            data.makeCacheGearNeeded(null, null);
+            data.setPolicies();
+        } 
     }
 
     @SubscribeEvent
@@ -12,11 +24,18 @@ class PlayerEvents {
             if(screenName == "gear_inventory") {
                 return GearInventoryUI;
             }
-            if(screenName == "oxygen_bars") {
-                return //...
-            }
-            return new UI.Window(); //заглушка
         });
+    }
+
+    @SubscribeEvent
+    public static onEntityDeath(entityUid: number, attackerUid: number, damageType: Entity.DamageSource): void {
+        if(Entity.getType(entityUid) == EEntityType.PLAYER) {
+            const inventory = PlayerManager.getInventory(entityUid);
+            if(inventory != null) {
+                const position = Entity.getPosition(entityUid);
+                inventory.container.dropAt(BlockSource.getDefaultForDimension(Entity.getDimension(entityUid)), position.x, position.y, position.z);
+            }
+        }
     }
 
     @SubscribeEvent
@@ -27,4 +46,18 @@ class PlayerEvents {
             GearInventoryOpenButtonUI.close();
         }
     }
+
+    @SubscribeEvent
+    public static onServerPlayerTick(playerUid: number): void {
+        if(World.getThreadTime() % 20 != 0) {
+            return;
+        }
+        OxygenSystem.calculate(playerUid);
+    }
 }
+// ? debug
+// Callback.addCallback("ItemUse", (c, i, b, isE, p) => {
+//     if(i.id == VanillaItemID.bone) {
+//         Dimensions.transfer(p, Entity.getDimension(p) == EDimension.OVERWORLD ? Galacticraft.getCurrentGalaxy().getPlanet(EDimension.OVERWORLD).satellites[0] : EDimension.OVERWORLD);
+//     }
+// });

@@ -1,13 +1,17 @@
-@SerializeableStorage({ "scopeName": "galacticraft.player_storage" })
+@SerializeableStorage({ "scopeName": "galacticraft.player_storage", keyName: "data" })
 class PlayerManager {
     public static data: Record<number, PlayerGearInventory> = {};
 
-    public static has(playerUid: number): boolean {
+    public static hasInventory(playerUid: number): boolean {
         return playerUid in this.data;
     }
 
-    public static set(playerUid: number): void {
+    public static setNewInventory(playerUid: number): void {
         this.data[playerUid] = new PlayerGearInventory(playerUid);
+    }
+
+    public static getInventory(playerUid: number): Nullable<PlayerGearInventory> {
+        return this.data[playerUid] || null;
     }
 
     public static openInventoryFor(playerUid: number): void {

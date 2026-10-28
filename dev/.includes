@@ -89,10 +89,11 @@ client/ui/machine/OxygenDecompressorUI.ts
 client/ui/machine/OxygenStorageUI.ts
 client/ui/machine/RefineryUI.ts
 client/ui/machine/WorkbenchUI.ts
-client/ui/machine/OxygenTanksHud.ts
+client/ui/machine/OxygenTanksUI.ts
 
 api/player/PlayerGearInventory.ts
 api/player/PlayerManager.ts
+api/player/OxygenSystem.ts
 api/player/PlayerEvents.ts
 
 common/item/MachineWrench.ts

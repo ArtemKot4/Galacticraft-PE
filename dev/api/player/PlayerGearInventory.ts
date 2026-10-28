@@ -3,24 +3,41 @@ enum ECallback {
 }
 
 class PlayerGearInventory {
+    public static MAX_OXYGEN_CAPACITY = 5400;
     public container: ItemContainer;
+    protected cachedGearNeeded: boolean;
+    public sendedClosePacket: boolean = false;
 
-    public constructor(public playerUid: number) {
+    public constructor(public playerUid: number, container?: ItemContainer) {
+        if(container != null) {
+            this.container = container;
+            return;
+        }
         this.container = new ItemContainer();
         this.container.setGlobalSlotSavingEnabled(true);
         this.container.setClientContainerTypeName("galacticraft.frequency.player");
+        this.setPolicies();
+    }
+
+    public setPolicies(): void {
         this.container.setGlobalAddTransferPolicy((container, slotName, id, count, data, extra) => {
             const stack = new ItemStack(id, count, data, extra);
+            this.makeCacheGearNeeded(slotName, stack);
             const valid = this.isValidItemForSlot(slotName, stack);
+            
             if(valid == true) {
                 Callback.invokeCallback("Galacticraft:FrequencyChanged", slotName, stack);
                 return 1;
             }
             return 0;
         });
+        this.container.setGlobalGetTransferPolicy((container, slotName, id, count) => {
+            this.makeCacheGearNeeded(slotName, ItemStack.EMPTY);
+            return count;
+        });
     }
 
-    public isValidItemForSlot(slotName: string, stack: ItemStack): boolean {
+    public isValidItemForSlot(slotName: string, stack: ItemInstance): boolean {
         if(slotName.includes("oxygen_tank")) {
             const amount = ChargeItemRegistry.getEnergyStored(stack);
             
@@ -40,6 +57,79 @@ class PlayerGearInventory {
             slotName == "oxygen_gear" && stack.id == ItemList.OXYGEN_GEAR.id ||
             slotName == "shield_controller" && stack.id == ItemList.SHIELD_CONTROLLER.id
         );
+    }
+
+    public makeCacheGearNeeded(slotName: string, stack: ItemInstance): void {
+        let slots = new Set<string>();
+        slots.add("glass");
+        slots.add("oxygen_gear");
+        let needed = true;
+
+        slots.forEach((currentSlotName) => {
+            if(!this.isValidItemForSlot(currentSlotName, currentSlotName == slotName ? stack : this.container.getSlot(currentSlotName))) {
+                needed = false;
+            }
+        });
+        this.cachedGearNeeded = needed;
+    }
+
+    public getOxygenAmountFromStack(stack: ItemInstance): number {
+        return (
+            ChargeItemRegistry.getEnergyStored(stack, Galacticraft.EnergyTypes.OXYGEN.name) ||
+            (stack.extra != null && stack.extra.getString(ElectricMachine.DEFAULT_BATTERY_MANAGERS.OXYGEN_BATTERY_MANAGER.getSpecialTypeKey()) ? PlayerGearInventory.MAX_OXYGEN_CAPACITY / 2 : 0)
+        );
+    }
+
+    public getOxygenAmountSeparated(): [number, number] {
+        return [
+            this.getOxygenAmountFromStack(this.container.getSlot("oxygen_tank_left")),
+            this.getOxygenAmountFromStack(this.container.getSlot("oxygen_tank_right"))
+        ]
+    }
+
+    public hasGearNeeded(): boolean {
+        return this.cachedGearNeeded;
+    }
+
+    public decreaseOxygen(count: number): void {
+        const left = this.container.getSlot("oxygen_tank_left");
+        const right = this.container.getSlot("oxygen_tank_right");
+
+        const leftStored = ChargeItemRegistry.getEnergyStored(left, Galacticraft.EnergyTypes.OXYGEN.name);
+        const rightStored = ChargeItemRegistry.getEnergyStored(right, Galacticraft.EnergyTypes.OXYGEN.name);
+        let remaining = 0;
+
+        if(rightStored > 0) {
+            const set = rightStored - count; 
+            ChargeItemRegistry.setEnergyStored(right, Math.max(0, set));
+            remaining = set < 0 ? Math.abs(set) : 0;
+            this.container.setSlot("oxygen_tank_right", right.id, right.count, right.data, right.extra);
+        }
+        if((rightStored <= 0 || remaining > 0) && leftStored > 0) {
+            ChargeItemRegistry.setEnergyStored(left, Math.max(0, Math.max(0, leftStored - (remaining > 0 ? remaining : count))));
+            this.container.setSlot("oxygen_tank_left", left.id, left.count, left.data, left.extra);
+        }
+    }
+
+    @NetworkClientPacket("packet.galacticraft.update_gear_inventory_scale_for_client")
+    public static update_scale_for_client(data: { close?: boolean, oxygen: [number, number] }): void {
+        if(RuntimeData.local.screenName != EScreenName.IN_GAME_PLAY_SCREEN || GearInventoryUI.isOpened()) {
+            if(OxygenTanksUI.isOpened()) {
+                OxygenTanksUI.close();
+            }
+            return;
+        }
+        if(data.close == true) {
+            OxygenTanksUI.close();
+            return;
+        }
+        if(!OxygenTanksUI.isOpened()) {
+            OxygenTanksUI.open();
+        }
+        const elements = OxygenTanksUI.getElements();
+        elements.get("oxygen_tank_left").setBinding("value", data.oxygen[0] / (PlayerGearInventory.MAX_OXYGEN_CAPACITY / 2));
+        elements.get("oxygen_tank_right").setBinding("value", data.oxygen[1] / (PlayerGearInventory.MAX_OXYGEN_CAPACITY / 2));
+        return;
     }
 }
 
