@@ -1,4 +1,4 @@
-const GearInventoryOpenButton = new UI.Window({
+const GearInventoryOpenButtonUI = new UI.Window({
     location: {
         x: 500-104,
         y: 5,
@@ -16,11 +16,11 @@ const GearInventoryOpenButton = new UI.Window({
             height: 1000,
             clicker: {
                 onClick(position, container) {
-                    GearInventoryOpenButton.close();
+                    GearInventoryOpenButtonUI.close();
                     Network.sendToServer("packet.galacticraft.send_open_inventory_request", {});
                 }
             }
         }
     }
 });
-GearInventoryOpenButton.setTouchable(true);
+GearInventoryOpenButtonUI.setTouchable(true);

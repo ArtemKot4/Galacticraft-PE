@@ -1,4 +1,4 @@
-const GearInventory = new UI.Window({
+const GearInventoryUI = new UI.Window({
     location: {
         width: 1000,
         height: UI.getScreenHeight(),
@@ -26,7 +26,7 @@ const GearInventory = new UI.Window({
             clicker: {
                 onClick(position, container) {
                     container.close();
-                    GearInventoryOpenButton.open();
+                    GearInventoryOpenButtonUI.open();
                 }
             }
         },
@@ -77,6 +77,6 @@ const GearInventory = new UI.Window({
         })()
     }
 });
-GearInventory.setBlockingBackground(true);
-GearInventory.setInventoryNeeded(true);
-GearInventory.setTouchable(true);
+GearInventoryUI.setBlockingBackground(true);
+GearInventoryUI.setInventoryNeeded(true);
+GearInventoryUI.setTouchable(true);

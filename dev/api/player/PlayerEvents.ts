@@ -10,7 +10,7 @@ class PlayerEvents {
     public static onLevelDisplayed(): void {
         ItemContainer.registerScreenFactory("galacticraft.frequency.player", (container, screenName) => {
             if(screenName == "gear_inventory") {
-                return GearInventory;
+                return GearInventoryUI;
             }
             if(screenName == "oxygen_bars") {
                 return //...
@@ -22,9 +22,9 @@ class PlayerEvents {
     @SubscribeEvent
     public static onNativeGuiChanged(screenName: string, lastScreenName: string): void {
         if(screenName == EScreenName.IN_GAME_PLAY_SCREEN) {
-            GearInventoryOpenButton.open();
+            GearInventoryOpenButtonUI.open();
         } else {
-            GearInventoryOpenButton.close();
+            GearInventoryOpenButtonUI.close();
         }
     }
 }
