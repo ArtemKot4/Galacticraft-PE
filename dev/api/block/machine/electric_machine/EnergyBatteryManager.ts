@@ -21,14 +21,14 @@ namespace ElectricMachine {
             if(ChargeItemRegistry.isValidItem(item.id, this.energyType, 3)) {
                 return amount > 0;
             }
-            return item.extra && item.extra.getString("battery.special_type") != null;
+            return item.extra && item.extra.getString(this.getSpecialTypeKey()) != null;
         }
 
         public sameBatteryData(a?: Nullable<ItemExtraData>, b?: Nullable<ItemExtraData>): boolean {
             const aAmount = a ? a.getInt("energy") : 0;
             const bAmount = b ? b.getInt("energy") : 0;
-            const aType = a ? a.getString("battery.special_type") : null;
-            const bType = b ? b.getString("battery.special_type") : null;
+            const aType = a ? a.getString(this.getSpecialTypeKey()) : null;
+            const bType = b ? b.getString(this.getSpecialTypeKey()) : null;
 
             return aAmount == bAmount && aType == bType;
         }
@@ -49,7 +49,7 @@ namespace ElectricMachine {
                 if(current.id == id && current.count > 0 && !this.sameBatteryData(current.extra, extra)) {
                     return 0;
                 }
-                const isBattery = policy({ id, count, data, extra }, ChargeItemRegistry.getEnergyStored(new ItemStack(id, count, data, extra || null)), extra ? extra.getString("battery.special_type") as ElectricMachine.batteryAction : null);
+                const isBattery = policy({ id, count, data, extra }, ChargeItemRegistry.getEnergyStored(new ItemStack(id, count, data, extra || null)), extra ? extra.getString(this.getSpecialTypeKey()) as ElectricMachine.batteryAction : null);
                 if(isBattery == true) {
                     tileEntity.batterySlotChecks.add(slotName + ":" + action + ":" + this.energyType);
                     return Math.min(count, 1);

@@ -36,6 +36,7 @@ namespace ItemList {
     export const AIR_VENT = new GalacticraftItem("air_vent", { name: "air_vent", meta: 0 }, { stack: 16 });
 
     export const THERMAL_CONTROLLER = new GalacticraftItem("thermal_controller", { name: "thermal_controller", meta: 0 }, { stack: 1 });
+    
     export const CANVAS = new GalacticraftItem("canvas", { name: "canvas", meta: 0 });
 
     export const SOLAR_MODULE_0 = new GalacticraftItem("solar_module_0", { name: "solar_module", meta: 0 });
@@ -171,6 +172,8 @@ namespace ItemList {
     export const OXYGEN_CONCENTRATOR = new GalacticraftItem("oxygen_concentrator", { name: "oxygen_concentrator", meta: 0 });
     
     export const FREQUENCY_MODULE = new GalacticraftItem("frequency_module", { name: "frequency_module", meta: 0 });  
+
+    export const SHIELD_CONTROLLER = new GalacticraftItem("shield_controller", { name: "shield_controller", meta: 0 })
 
     export const BATTERY = new Battery("battery_gc", { name: "battery_gc", meta: 0 });
 
