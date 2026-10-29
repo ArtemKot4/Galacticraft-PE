@@ -66,6 +66,11 @@ api/rocket/RocketEntity.ts
 api/rocket/RocketNetworkPackets.ts
 api/rocket/RocketEvents.ts
 
+api/lander/ELanderPhase.ts
+api/lander/LanderEntity.ts
+api/lander/LanderEvents.ts
+
+
 client/ui/menu/GalacticraftSettings.ts
 
 client/ui/inventory/GearInventoryUI.ts
