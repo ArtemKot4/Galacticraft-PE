@@ -25,7 +25,7 @@ class PlayerManager {
     }
 
     @NetworkServerPacket("packet.galacticraft.send_open_inventory_request")
-    public static sendOpenInventoryRequest(client: NetworkClient, data: {}): void {
+    public static send_open_inventory_request(client: NetworkClient, data: {}): void {
         PlayerManager.openInventoryFor(client.getPlayerUid());
     }
 }

@@ -4,6 +4,7 @@ enum ECallback {
 
 class PlayerGearInventory {
     public static MAX_OXYGEN_CAPACITY = 5400;
+    public static slots: string[] = [ "oxygen_tank_left", "oxygen_tank_right", "oxygen_mask", "oxygen_gear", "shield_controller", "frequency_module",  "parachute"]
     public container: ItemContainer;
     protected cachedGearNeeded: boolean;
     public sendedClosePacket: boolean = false;
@@ -53,7 +54,7 @@ class PlayerGearInventory {
         }
         return (
             slotName == "frequency_module" && stack.id == ItemList.FREQUENCY_MODULE.id ||
-            slotName == "glass" && stack.id == ItemList.OXYGEN_MASK.id ||
+            slotName == "oxygen_mask" && stack.id == ItemList.OXYGEN_MASK.id ||
             slotName == "oxygen_gear" && stack.id == ItemList.OXYGEN_GEAR.id ||
             slotName == "shield_controller" && stack.id == ItemList.SHIELD_CONTROLLER.id
         );
@@ -61,7 +62,7 @@ class PlayerGearInventory {
 
     public makeCacheGearNeeded(slotName: string, stack: ItemInstance): void {
         let slots = new Set<string>();
-        slots.add("glass");
+        slots.add("oxygen_mask");
         slots.add("oxygen_gear");
         let needed = true;
 
@@ -109,6 +110,22 @@ class PlayerGearInventory {
             ChargeItemRegistry.setEnergyStored(left, Math.max(0, Math.max(0, leftStored - (remaining > 0 ? remaining : count))));
             this.container.setSlot("oxygen_tank_left", left.id, left.count, left.data, left.extra);
         }
+    }
+
+    public equipFromHand(playerUid: number): boolean {
+        const item = Entity.getCarriedItem(playerUid);
+        if(ItemStack.isEmpty(item)) {
+            return false;
+        }
+        for(const slot of PlayerGearInventory.slots) {
+            if(this.container.getSlot(slot).isEmpty() && this.isValidItemForSlot(slot, item)) {
+                this.container.setSlot(slot, item.id, 1, 0);
+                PlayerWrapper.decreaseCarriedItem(playerUid, 1);
+                this.makeCacheGearNeeded(slot, item);
+                return true; 
+            }
+        }
+        return false;
     }
 
     @NetworkClientPacket("packet.galacticraft.update_gear_inventory_scale_for_client")

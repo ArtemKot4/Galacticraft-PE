@@ -38,25 +38,25 @@ Recipes.addShaped({ id: ItemID.steel_boots, count: 1, data: 0 },
 Recipes.addShaped({ id: ItemList.STEEL_POLE.id, count: 2, data: 0 },
     ["X", "X", "X"], ["X", ItemList.COMPRESSED_STEEL.id, 0]);
 
-Recipes.addShaped({ id: ItemList.SENSOR_LENS.id, count: 1, data: 0 },
-    ["ZXZ", "XYX", "ZXZ"],
-    ["X", VanillaBlockID.glass_pane, 0, "Y", ItemList.COMPRESSED_METEORIC_ITEM.id, 0, "Z", VanillaItemID.redstone, 0]);
+// Recipes.addShaped({ id: ItemList.SENSOR_LENS.id, count: 1, data: 0 },
+//     ["ZXZ", "XYX", "ZXZ"],
+//     ["X", VanillaBlockID.glass_pane, 0, "Y", ItemList.COMPRESSED_METEORIC_ITEM.id, 0, "Z", VanillaItemID.redstone, 0]);
 
-Recipes.addShaped({ id: ItemID.sensor_glasses, count: 1, data: 0 },
-    ["ZWZ", "Z Z", "XYX"],
-    ["W", VanillaItemID.diamond, 0, "X", ItemList.SENSOR_LENS.id, 0, "Y", ItemList.INGOT_METEORIC_IRON.id, 0, "Z", VanillaItemID.string, 0]);
+// Recipes.addShaped({ id: ItemID.sensor_glasses, count: 1, data: 0 },
+//     ["ZWZ", "Z Z", "XYX"],
+//     ["W", VanillaItemID.diamond, 0, "X", ItemList.SENSOR_LENS.id, 0, "Y", ItemList.INGOT_METEORIC_IRON.id, 0, "Z", VanillaItemID.string, 0]);
 
 Recipes.addShaped({ id: BlockList.GLOWSTONE_TORCH.id, count: 4, data: 0 },
     ["Y", "X"], ["X", VanillaItemID.stick, 0, "Y", VanillaItemID.glowstone_dust, 0]);
 
-Recipes.addShaped({ id: BlockList.SPACE_GLASS_VANILLA.id, count: 5, data: 0 },
-    ["YXY", "XXX", "YXY"], ["X", VanillaBlockID.glass, 0, "Y", ItemList.INGOT_TIN.id, 0]);
+// Recipes.addShaped({ id: BlockList.SPACE_GLASS_VANILLA.id, count: 5, data: 0 },
+//     ["YXY", "XXX", "YXY"], ["X", VanillaBlockID.glass, 0, "Y", ItemList.INGOT_TIN.id, 0]);
 
-Recipes.addShaped({ id: BlockList.SPACE_GLASS_CLEAR.id, count: 5, data: 0 },
-    ["YXY", "XXX", "YXY"], ["X", VanillaBlockID.glass, 0, "Y", ItemList.INGOT_ALUMINUM.id, 0]);
+// Recipes.addShaped({ id: BlockList.SPACE_GLASS_CLEAR.id, count: 5, data: 0 },
+//     ["YXY", "XXX", "YXY"], ["X", VanillaBlockID.glass, 0, "Y", ItemList.INGOT_ALUMINUM.id, 0]);
 
-Recipes.addShaped({ id: BlockList.SPACE_GLASS_STRONG.id, count: 5, data: 0 },
-    ["YXY", "XXX", "YXY"], ["X", VanillaBlockID.glass, 0, "Y", ItemList.COMPRESSED_ALUMINUM.id, 0]);
+// Recipes.addShaped({ id: BlockList.SPACE_GLASS_STRONG.id, count: 5, data: 0 },
+//     ["YXY", "XXX", "YXY"], ["X", VanillaBlockID.glass, 0, "Y", ItemList.COMPRESSED_ALUMINUM.id, 0]);
 
 const PANEL_LIGHTING_MASKS = {
     square: ["XXX", "XYX", "XZX"],
@@ -68,11 +68,11 @@ const PANEL_LIGHTING_MASKS = {
 
 const PANEL_LIGHTING_ORDER = ["square", "spots", "linear", "sf", "sfdiag"];
 
-for(let data = 0; data < PANEL_LIGHTING_ORDER.length; data++) {
-    Recipes.addShaped({ id: BlockList.PANEL_LIGHTING.id, count: 1, data: data },
-        PANEL_LIGHTING_MASKS[PANEL_LIGHTING_ORDER[data]],
-        ["X", VanillaBlockID.glass_pane, 0, "Y", BlockList.GLOWSTONE_TORCH.id, 0, "Z", ItemList.COMPRESSED_STEEL.id, 0]);
-}
+// for(let data = 0; data < PANEL_LIGHTING_ORDER.length; data++) {
+//     Recipes.addShaped({ id: BlockList.PANEL_LIGHTING.id, count: 1, data: data },
+//         PANEL_LIGHTING_MASKS[PANEL_LIGHTING_ORDER[data]],
+//         ["X", VanillaBlockID.glass_pane, 0, "Y", BlockList.GLOWSTONE_TORCH.id, 0, "Z", ItemList.COMPRESSED_STEEL.id, 0]);
+// }
 
 Recipes.addShaped({ id: BlockList.SLAB_GC_HALF.id, count: 6, data: 0 },
     ["XXX"], ["X", BlockList.CARVED_TIN_DECORATION_BLOCK.id, 0]);
@@ -86,13 +86,13 @@ Recipes.addShaped({ id: BlockList.SLAB_GC_HALF.id, count: 6, data: 2 },
 Recipes.addShaped({ id: BlockList.SLAB_GC_HALF.id, count: 6, data: 3 },
     ["XXX"], ["X", BlockList.MOON_DUNGEON_BRICK.id, 0]);
 
-Recipes.addShapeless({ id: BlockList.GRATING.id, count: 4, data: 0 },
-    [
-        { id: VanillaBlockID.iron_bars, data: 0 },
-        { id: VanillaBlockID.iron_bars, data: 0 },
-        { id: VanillaBlockID.iron_bars, data: 0 },
-        { id: VanillaBlockID.iron_bars, data: 0 }
-    ]);
+// Recipes.addShapeless({ id: BlockList.GRATING.id, count: 4, data: 0 },
+//     [
+//         { id: VanillaBlockID.iron_bars, data: 0 },
+//         { id: VanillaBlockID.iron_bars, data: 0 },
+//         { id: VanillaBlockID.iron_bars, data: 0 },
+//         { id: VanillaBlockID.iron_bars, data: 0 }
+//     ]);
 
 Recipes.addShapeless({ id: BlockList.MAGNETIC_TABLE.id, count: 1, data: 0 },
     [
@@ -313,6 +313,6 @@ Recipes.addShapeless({ id: ItemList.CANNED_BEEF.id, count: 1, data: 0 },
     [{ id: ItemList.CANISTER_TIN.id, data: 0 }, { id: ItemList.BEEF_PATTY_RAW.id, data: 0 }, { id: ItemList.BEEF_PATTY_RAW.id, data: 0 }]);
 
 // IMP-705: Java arclamp recipe (desh_ingot x4 + glowstone dust x4 + battery); desh becomes obtainable after Mars (b129)
-Recipes.addShaped({ id: BlockList.ARCLAMP.id, count: 1, data: 0 },
-    ["XYX", "YZY", "XYX"],
-    ["X", ItemList.INGOT_DESH.id, 0, "Y", VanillaItemID.glowstone_dust, 0, "Z", ItemList.BATTERY.id, 0]);
+// Recipes.addShaped({ id: BlockList.ARCLAMP.id, count: 1, data: 0 },
+//     ["XYX", "YZY", "XYX"],
+//     ["X", ItemList.INGOT_DESH.id, 0, "Y", VanillaItemID.glowstone_dust, 0, "Z", ItemList.BATTERY.id, 0]);

@@ -165,15 +165,15 @@ namespace ItemList {
     
     export const SCHEMATIC_ROCKET_3 = new GalacticraftItem("schematic_rocket_3", { name: "schematic_rocket", meta: 3 }, { stack: 1 });    
 
-    export const OXYGEN_GEAR = new GalacticraftItem("oxygen_gear", { name: "oxygen_gear", meta: 0 });
+    export const OXYGEN_GEAR = new GalacticraftItem("oxygen_gear", { name: "oxygen_gear", meta: 0 }, { stack: 1 });
     
-    export const OXYGEN_MASK = new GalacticraftItem("oxygen_mask", { name: "oxygen_mask", meta: 0 });
+    export const OXYGEN_MASK = new GalacticraftItem("oxygen_mask", { name: "oxygen_mask", meta: 0 }, { stack: 1 });
     
     export const OXYGEN_CONCENTRATOR = new GalacticraftItem("oxygen_concentrator", { name: "oxygen_concentrator", meta: 0 });
     
-    export const FREQUENCY_MODULE = new GalacticraftItem("frequency_module", { name: "frequency_module", meta: 0 });  
+    export const FREQUENCY_MODULE = new GalacticraftItem("frequency_module", { name: "frequency_module", meta: 0 }, { stack: 1 });  
 
-    export const SHIELD_CONTROLLER = new GalacticraftItem("shield_controller", { name: "shield_controller", meta: 0 })
+    export const SHIELD_CONTROLLER = new GalacticraftItem("shield_controller", { name: "shield_controller", meta: 0 }, { stack: 1 })
 
     export const BATTERY = new Battery("battery_gc", { name: "battery_gc", meta: 0 });
 
@@ -205,9 +205,9 @@ namespace ItemList {
 
     export const STEEL_SWORD = new GalacticraftItem("steel_sword", { name: "steel_sword", meta: 0 }, { stack: 1, isTech: true });
 
-    export const SENSOR_LENS = new GalacticraftItem("sensor_lens", { name: "sensor_lens", meta: 0 });
+    //export const SENSOR_LENS = new GalacticraftItem("sensor_lens", { name: "sensor_lens", meta: 0 });
 
-    export const KEY = new GalacticraftItem("key", { name: "dungeon_key_t1", meta: 0 }, { stack: 1 });
+    //export const KEY = new GalacticraftItem("key", { name: "dungeon_key_t1", meta: 0 }, { stack: 1 });
 
     export const STEEL_POLE = new GalacticraftItem("steel_pole", { name: "steel_pole", meta: 0 });
 

@@ -3,8 +3,7 @@ const GearInventoryOpenButtonUI = new UI.Window({
         x: 500-104,
         y: 5,
         width: 38,
-        height: 38,
-        //globalScale: true
+        height: 38
     },
     elements: {
         "button": {

@@ -64,7 +64,7 @@ const GearInventoryUI = new UI.Window({
             thermal_boots: { type: "slot", x: armorX, y: row(3), bitmap: "inventory.thermal_boots", size: slotSize },
 
             shield_controller: { type: "slot", x: rightX, y: row(0), bitmap: "inventory.shield_controller", size: slotSize },
-            glass: { type: "slot", x: rightX, y: row(1), bitmap: "inventory.glass", size: slotSize },
+            oxygen_mask: { type: "slot", x: rightX, y: row(1), bitmap: "inventory.glass", size: slotSize },
             oxygen_gear: { type: "slot", x: rightX, y: row(2), bitmap: "inventory.oxygen_gear", size: slotSize },
 
             frequency_module: { type: "slot", x: centerX, y: row(1), bitmap: "inventory.frequency_module", size: slotSize },

@@ -96,11 +96,6 @@ api/player/PlayerManager.ts
 api/player/OxygenSystem.ts
 api/player/PlayerEvents.ts
 
-common/item/MachineWrench.ts
-common/item/RocketItem.ts
-common/item/ItemList.ts
-common/item/core/Tools.ts
-
 common/block/machine/BurnManager.ts
 
 common/block/machine/coal_generator/LocalCoalGeneratorTile.ts
@@ -130,6 +125,7 @@ common/block/machine/solar/AdvancedSolarPanel.ts
 
 common/block/machine/electric_furnace/ElectricFurnace.ts
 
+common/block/machine/advanced_compressor/AdvancedCompressorTile.ts
 common/block/machine/advanced_compressor/AdvancedCompressor.ts
 
 common/block/machine/magnetic_table/MagneticTableTile.ts
@@ -158,10 +154,17 @@ common/block/wire/ImprovedWire.ts
 common/block/wire/LiquidPipe.ts
 
 common/block/SpaceBlock.ts
-common/block/structural/Torches.ts
-common/block/structural/Decoratives.ts
-common/block/structural/Arclamp.ts
+common/block/decorative/Torches.ts
+common/block/decorative/Decoratives.ts
+common/block/decorative/Arclamp.ts
 common/block/BlockList.ts
+
+common/item/MachineWrench.ts
+common/item/RocketItem.ts
+common/item/ItemList.ts
+
+common/item/core/Tools.ts
+
 common/recipes/Recipes.ts
 
 common/rocket/RocketTier1.ts

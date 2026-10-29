@@ -1,11 +1,3 @@
-class AdvancedCompressorTile extends ElectricCompressorTile {
-    protected override processTimeBase = 120;
-
-    public override getScreenByName(): UI.IWindow {
-        return AdvancedCompressorUI;
-    }
-}
-
 @ElectricMachine(ElectricMachine.Config.DEFAULTS.GJ(ElectricMachine.Type.RECEIVER))
 class AdvancedCompressor extends ProcessingBlock {
     public static tile = new AdvancedCompressorTile();

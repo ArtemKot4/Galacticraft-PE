@@ -22,6 +22,17 @@ namespace BlockList {
     export const DECONSTRUCTOR = new Deconstructor();
     export const OXYGEN_COMPRESSOR = new OxygenCompressor();
     export const OXYGEN_DECOMPRESSOR = new OxygenDecompressor();
+    export const ENCLOSED_ALUMINUM_WIRE = new BasicBlock("enclosed_aluminum_wire", [{ name: "block.galacticraft.enclosed_aluminum_wire", texture: [["Enclosed Aluminum Wire", 0]], inCreative: true }]);
+    Galacticraft.EnergyTypes.JOULE.registerWire(ENCLOSED_ALUMINUM_WIRE.id, 200);
+    ICRender.getGroup("galacticraft.wire").add(ENCLOSED_ALUMINUM_WIRE.id, -1);
+
+    export const ENCLOSED_FLUID_PIPE = new BasicBlock("enclosed_fluid_pipe", [{ name: "block.galacticraft.enclosed_fluid_pipe", texture: [["Enclosed Fluid Pipe", 0]], inCreative: true }]);
+    Galacticraft.EnergyTypes.JOULE.registerWire(ENCLOSED_FLUID_PIPE.id, 200);
+    ICRender.getGroup("galacticraft.liquid_pipe").add(ENCLOSED_FLUID_PIPE.id, -1);
+
+    export const ENCLOSED_HEAVY_ALUMINUM_WIRE = new BasicBlock("enclosed_heavy_aluminum_wire", [{ name: "block.galacticraft.enclosed_heavy_aluminum_wire", texture: [["Enclosed Heavy Aluminum Wire", 0]], inCreative: true }]);
+    Galacticraft.EnergyTypes.JOULE.registerWire(ENCLOSED_HEAVY_ALUMINUM_WIRE.id, 200);
+    ICRender.getGroup("galacticraft.improved_wire").add(ENCLOSED_HEAVY_ALUMINUM_WIRE.id, -1);
 
     export const BLOCK_MOON_SAPPHIRE = new BasicBlock("block_moon_sapphire_gc", [{ name: "block.galacticraft.sapphire_block", texture: [["block_moon_sapphire", 0]], inCreative: true }]);
     export const MOON_CHEESE = new BasicBlock("moon_cheese_gc", [{ name: "block.galacticraft.moon_cheese", texture: [["moon_cheese", 0]], inCreative: true }]);
@@ -47,18 +58,6 @@ namespace BlockList {
     export const OXYGEN_TILE = new BasicBlock("oxygen_tile", [{ name: "block.galacticraft.oxygen_tile", texture: [["oxygen_tile", 0]], inCreative: true }]);
     export const BLOCK_IRON_STEEL = new BasicBlock("block_iron_steel_gc", [{ name: "block.galacticraft.iron_steel", texture: [["Iron Steel Block Side", 0], ["Iron Steel Block 3", 0], ["Iron Steel Block 2", 0], ["Iron Steel Block 2", 0], ["Iron Steel Block 2", 0], ["Iron Steel Block 2", 0]], inCreative: true }]);
     export const CARVED_TIN_DECORATION_BLOCK = new BasicBlock("carved_tin_decoration_block", [{ name: "block.galacticraft.carved_tin_decoration_block", texture: [["deco_block_up", 0], ["deco_block_up", 0], ["deco_block_side", 0], ["deco_block_side", 0], ["deco_block_side", 0], ["deco_block_side", 0]], inCreative: true }]);
-
-    export const ENCLOSED_ALUMINUM_WIRE = new BasicBlock("enclosed_aluminum_wire", [{ name: "block.galacticraft.enclosed_aluminum_wire", texture: [["Enclosed Aluminum Wire", 0]], inCreative: true }]);
-    Galacticraft.EnergyTypes.JOULE.registerWire(ENCLOSED_ALUMINUM_WIRE.id, 200);
-    ICRender.getGroup("galacticraft.wire").add(ENCLOSED_ALUMINUM_WIRE.id, -1);
-
-    export const ENCLOSED_FLUID_PIPE = new BasicBlock("enclosed_fluid_pipe", [{ name: "block.galacticraft.enclosed_fluid_pipe", texture: [["Enclosed Fluid Pipe", 0]], inCreative: true }]);
-    Galacticraft.EnergyTypes.JOULE.registerWire(ENCLOSED_FLUID_PIPE.id, 200);
-    ICRender.getGroup("galacticraft.liquid_pipe").add(ENCLOSED_FLUID_PIPE.id, -1);
-
-    export const ENCLOSED_HEAVY_ALUMINUM_WIRE = new BasicBlock("enclosed_heavy_aluminum_wire", [{ name: "block.galacticraft.enclosed_heavy_aluminum_wire", texture: [["Enclosed Heavy Aluminum Wire", 0]], inCreative: true }]);
-    Galacticraft.EnergyTypes.JOULE.registerWire(ENCLOSED_HEAVY_ALUMINUM_WIRE.id, 200);
-    ICRender.getGroup("galacticraft.improved_wire").add(ENCLOSED_HEAVY_ALUMINUM_WIRE.id, -1);
 
     export const SPACE = new SpaceBlock();
     export const MOON_STONE_TOP = new BasicBlock("moon_stone_top",[{ name: "Lunar Top Side", texture: [["Top Side", 0],["Top", 0],["Top Side", 0],["Top", 0],["Top Side", 0],["Top Side", 0]], inCreative: true }]);
@@ -94,15 +93,15 @@ namespace BlockList {
 
     export const BLOCK_METEORIC_IRON = new BasicBlock("block_meteoric_iron_gc", [{ name: "Solid Meteoric Iron", texture: [["block_meteoric_iron", 0]], inCreative: true }]);
     export const BLOCK_SILICON = new BasicBlock("block_silicon_gc", [{ name: "Silicon Block", texture: [["block_silicon", 0]], inCreative: true }]);
-    export const PANEL_LIGHTING = new PanelLighting();
-    export const SPACE_GLASS_VANILLA = new SpaceGlass("space_glass_vanilla", "Space Glass", "space_glass_vanilla", 0.3);
-    export const SPACE_GLASS_CLEAR = new SpaceGlass("space_glass_clear", "Clear Space Glass", "space_glass_clear", 0.3);
-    export const SPACE_GLASS_STRONG = new SpaceGlass("space_glass_strong", "Strong Space Glass", "space_glass_strong", 4);
-    export const FALLEN_METEOR = new FallenMeteor();
+    //export const PANEL_LIGHTING = new PanelLighting();
+    //export const SPACE_GLASS_VANILLA = new SpaceGlass("space_glass_vanilla", "Space Glass", "space_glass_vanilla", 0.3);
+    //export const SPACE_GLASS_CLEAR = new SpaceGlass("space_glass_clear", "Clear Space Glass", "space_glass_clear", 0.3);
+    //export const SPACE_GLASS_STRONG = new SpaceGlass("space_glass_strong", "Strong Space Glass", "space_glass_strong", 4);
+    //export const FALLEN_METEOR = new FallenMeteor();
 
-    Block.registerDropFunction(FALLEN_METEOR.id, function(coords, blockID){
-        return [[ItemList.METEORIC_IRON_RAW.id, 1, 0]];
-    });
+    // Block.registerDropFunction(FALLEN_METEOR.id, function(coords, blockID){
+    //     return [[ItemList.METEORIC_IRON_RAW.id, 1, 0]];
+    // });
 
     export const MOON_DUNGEON_BRICK = new BasicBlock("moon_dungeon_brick", [{ name: "Moon Dungeon Brick", texture: [["moon_brick", 0]], inCreative: true }]);
 
@@ -124,14 +123,14 @@ namespace BlockList {
         Block.setShape(SLAB_GC_HALF.id, 0, 0, 0, 1, 0.5, 1, data);
     }
 
-    export const GRATING = new BasicBlock("grating", [{ name: "Grating", texture: [["Screen Side", 0]], inCreative: true }]);
-    Block.setShape(GRATING.id, 0, 14 / 16, 0, 1, 1, 1, 0);
+    // export const GRATING = new BasicBlock("grating", [{ name: "Grating", texture: [["Screen Side", 0]], inCreative: true }]);
+    // Block.setShape(GRATING.id, 0, 14 / 16, 0, 1, 1, 1, 0);
 
     export const ALUMINUM_WIRE = new AluminumWire();
 
     export const OIL = new GalacticraftLiquidBlock("oil", "oil_gc_still", "oil_gc_flow");
     export const FUEL = new GalacticraftLiquidBlock("fuel", "fuel_gc_still", "fuel_gc_flow");
 
-    export const ARCLAMP = new Arclamp();
-    export const ARCLAMP_OFF = new ArclampOff();
+    //export const ARCLAMP = new Arclamp();
+    //export const ARCLAMP_OFF = new ArclampOff();
 }
