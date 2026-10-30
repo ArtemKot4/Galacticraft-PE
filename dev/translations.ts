@@ -1024,6 +1024,11 @@ Translation.addTranslation("item.galacticraft.rocket_tier_3", {
     ru: "Ракета 3-го уровня",
 });
 
+Translation.addTranslation("entity.galacticraft:lander_1.name", {
+    en: "Space Lander",
+    ru: "Посадочный модуль",
+});
+
 Translation.addTranslation("message.galacticraft.broken_load_of_resources", {
     en: "Guess, import of resources and behavior was failed. Please, add resources and behavior with yourself.",
     ru: "Где-то произошла ошибка при импорте ресурсов и поведения. Пожалуйста, добавьте ресурсы и поведение самостоятельно."
