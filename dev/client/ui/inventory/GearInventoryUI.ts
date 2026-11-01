@@ -26,7 +26,7 @@ const GearInventoryUI = new UI.Window({
             clicker: {
                 onClick(position, container) {
                     container.close();
-                    GearInventoryOpenButtonUI.open();
+                    GearInventoryOpenButtonUI.openInventoryButton();
                 }
             }
         },

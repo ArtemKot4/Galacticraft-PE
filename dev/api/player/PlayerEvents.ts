@@ -59,24 +59,24 @@ class PlayerEvents {
     @SubscribeEvent
     public static onNativeGuiChanged(screenName: string, lastScreenName: string): void {
         if(screenName == EScreenName.IN_GAME_PLAY_SCREEN) {
-            PlayerEvents.openInventoryButton();
+            GearInventoryOpenButtonUI.openInventoryButton();
         } else {
-            GearInventoryOpenButtonUI.close();
+            GearInventoryOpenButtonUI.window.close();
             OxygenTanksUI.close();
         }
     }
 
-    @SubscribeEvent
-    public static onCustomWindowOpened(window: UI.IWindow): void {
-        if(PlayerEvents.isStandardWindow(window)) {
-            GearInventoryOpenButtonUI.close();
-        }
-    }
+    // @SubscribeEvent
+    // public static onCustomWindowOpened(window: UI.IWindow): void {
+    //     if(PlayerEvents.isStandardWindow(window)) {
+    //         GearInventoryOpenButtonUI.close();
+    //     }
+    // }
 
     @SubscribeEvent
     public static onCustomWindowClosed(window: UI.IWindow): void {
-        if(RuntimeData.local.screenName == EScreenName.IN_GAME_PLAY_SCREEN && PlayerEvents.isStandardWindow(window)) {
-            PlayerEvents.openInventoryButton();
+        if(RuntimeData.local.screenName == EScreenName.IN_GAME_PLAY_SCREEN && GearInventoryOpenButtonUI.isStandardWindow(window)) {
+            GearInventoryOpenButtonUI.openInventoryButton();
         }
     }
 
@@ -86,30 +86,6 @@ class PlayerEvents {
             return;
         }
         OxygenSystem.calculate(playerUid);
-    }
-
-    public static isStandardWindow(window: UI.IWindow): window is UI.StandardWindow | UI.StandartWindow {
-        const content = window.getContent();
-        return "standard" in content || "standart" in content;
-    }
-
-    public static openInventoryButton(): void {
-        GearInventoryOpenButtonUI.close();
-        const size = GearInventoryOpenButtonUI.getLocation().width;
-        GearInventoryOpenButtonUI.content.elements["button"].y = -(size + 4.78);
-        GearInventoryOpenButtonUI.open();
-
-        Threading.initThread("galacticraft:gear_inventory_open_button_ui.open_animation", () => {
-            while(true) {
-                const y = GearInventoryOpenButtonUI.content.elements["button"].y;
-                if(!GearInventoryOpenButtonUI.isOpened() && y >= 4.78) {
-                    break;
-                }
-                GearInventoryOpenButtonUI.content.elements["button"].y = Math.min(4.78, y + 0.48);
-                GearInventoryOpenButtonUI.forceRefresh();
-                java.lang.Thread.sleep(2);
-            }
-        });
     }
 }
 // ? debug
