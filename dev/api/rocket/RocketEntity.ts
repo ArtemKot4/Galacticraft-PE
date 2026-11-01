@@ -202,6 +202,7 @@ class RocketEntity {
 			result = Math.min(amount, capacity - this.fuel);
 			this.fuel = this.fuel + result;
 		}
+		this.validateFuelScale();
 		this.container.sendChanges();
 		return result;
 	}
@@ -497,7 +498,9 @@ class RocketEntity {
 		
 		// ? debug start: while ui is not done
 		let id = this.getDimension() == EDimension.OVERWORLD ? Galacticraft.getCelestialBodyByID(EDimension.OVERWORLD).satellites[0] : EDimension.OVERWORLD; 
-		Dimensions.transfer(this.riderUid, id);
+		if(this.riderUid != null) {
+			Dimensions.transfer(this.riderUid, id);
+		}
 		// ? debug end
 		Callback.invokeCallback("Galacticraft:RocketFlightCompleted", this);
 	}
@@ -609,6 +612,10 @@ class RocketEntity {
 		}
 	}
 
+	public validateFuelScale(): void {
+		this.container.setScale("fuel_scale", this.fuel / this.rocketType.getFuelCapacity());
+	}
+
 	/**
 	 * Method to open container
 	 * @param player player unique identifier
@@ -617,7 +624,7 @@ class RocketEntity {
 	public openContainer(player: number): void {
 		const client = Network.getClientForPlayer(player);
 		if(client != null) {
-			this.container.setScale("fuel_scale", this.fuel / this.rocketType.getFuelCapacity());
+			this.validateFuelScale();
 			this.container.validateAll();
 			this.container.sendChanges();
 			this.container.openFor(client, "fuel_storage");
