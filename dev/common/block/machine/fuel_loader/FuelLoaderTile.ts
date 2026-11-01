@@ -38,8 +38,8 @@ class FuelLoaderTile extends ElectricMachine.TileEntity {
     public transferFuel(): void {
         const rocket = this.getRocketEntity();
         const amount = this.liquidStorage.getAmount("fuel");
-        // Java: 2 mB per tick
-        const add = amount >= 2 ? 2 : amount;
+        // Java: 2 mB per tick - CANCELLED, it's really bad for 12k fuel
+        const add = amount >= 10 ? 10 : amount;
         const added = rocket.addFuel(add);
 
         if(added <= 0) {

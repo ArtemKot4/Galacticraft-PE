@@ -1,7 +1,5 @@
 class ElectricCompressorTile extends ProcessingTile {
-    protected processTimeBase = 200;
     public override inputSlots: string[] = MathHelper.range(1, 10).map(v => "slot_" + v);
-    public getPowerTier?(): number;
 
     public override outputSlots: string[] = [
         "result_slot",
@@ -17,7 +15,6 @@ class ElectricCompressorTile extends ProcessingTile {
     }
 
     public override getProgressMax(): number {
-        const tier = this.getPowerTier ? this.getPowerTier() : 0;
-        return Math.floor(this.processTimeBase / (1 + tier * 2));
+        return 50;
     }
 }
