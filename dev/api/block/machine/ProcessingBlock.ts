@@ -12,6 +12,7 @@ abstract class ProcessingBlock extends MachineBlock {
         }
         const factory = tilePrototype.getFactory();
         let policy: (slotName: string, id: number) => boolean;
+        
         if(factory instanceof RecipeModule.FormedFactory) {
             policy = (slotName, id) => factory.storage.some((recipe) => id == recipe.input[slotName].id);
         }  

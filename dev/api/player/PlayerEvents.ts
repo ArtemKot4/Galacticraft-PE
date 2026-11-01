@@ -23,6 +23,15 @@ class PlayerEvents {
                 return GearInventoryUI;
             }
         });
+
+        // RecipeModule.factories.forEach((factory, key) => {
+        //     Game.message("\n\n\"" + key + "\": ");
+        //     let index = 1;
+
+        //     for(const recipe of factory.getRecipes()) {
+        //         Game.message("  " + index++ + ". " + JSON.stringify(recipe));
+        //     }
+        // });
     }
 
     @SubscribeEvent

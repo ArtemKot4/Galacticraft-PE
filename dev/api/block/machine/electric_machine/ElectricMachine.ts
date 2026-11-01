@@ -36,11 +36,13 @@ namespace ElectricMachine {
 
             tilePrototype.init = function(this: ElectricMachine.ITileEntity) {
                 this.batterySlotChecks ??= new Set();
+
                 for(const energyType in configs) {
                     const config = configs[energyType];
                     this.data[config.energyKey] ??= 0;
                     this.data.disabled ??= false;
                     this.data.disableCooldown ??= 0;
+                    
                     if(Object.keys(config.batteryDescriptors).length > 0) {
                         for(const slotName in config.batteryDescriptors) {
                             const action = config.batteryDescriptors[slotName];
